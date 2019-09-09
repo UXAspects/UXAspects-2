@@ -1,12 +1,11 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('angular-split'), require('resize-observer-polyfill'), require('dragula/dist/dragula'), require('@angular/cdk/observers'), require('@angular/cdk/overlay'), require('@angular/common/http'), require('d3-ease'), require('@angular/cdk/portal'), require('d3-interpolate'), require('d3-shape'), require('d3-zoom'), require('@angular/router'), require('d3-hierarchy'), require('d3-scale'), require('d3-selection'), require('d3-transition'), require('d3-array'), require('@angular/cdk/platform'), require('@angular/cdk/coercion'), require('@angular/cdk/a11y'), require('@angular/animations'), require('@angular/forms'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/cdk/keycodes'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@ux-aspects/ux-aspects', ['exports', 'angular-split', 'resize-observer-polyfill', 'dragula/dist/dragula', '@angular/cdk/observers', '@angular/cdk/overlay', '@angular/common/http', 'd3-ease', '@angular/cdk/portal', 'd3-interpolate', 'd3-shape', 'd3-zoom', '@angular/router', 'd3-hierarchy', 'd3-scale', 'd3-selection', 'd3-transition', 'd3-array', '@angular/cdk/platform', '@angular/cdk/coercion', '@angular/cdk/a11y', '@angular/animations', '@angular/forms', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/cdk/keycodes', '@angular/core'], factory) :
-    (factory((global['ux-aspects'] = global['ux-aspects'] || {}, global['ux-aspects']['ux-aspects'] = {}),global.angularSplit,global.ResizeObserver,global.dragulaNamespace,global.ng.cdk.observers,global.ng.cdk.overlay,global.ng.common.http,global.d3Ease,global.ng.cdk.portal,global.d3Interpolate,global.d3Shape,global.d3Zoom,global.ng.router,global.d3Hierarchy,global.d3Scale,global.d3Selection,global.d3Transition,global.d3Array,global.ng.cdk.platform,global.ng.cdk.coercion,global.ng.cdk.a11y,global.ng.animations,global.ng.forms,global.ng.common,global.rxjs,global.rxjs.operators,global.ng.cdk.keycodes,global.ng.core));
-}(this, (function (exports,angularSplit,ResizeObserver,dragulaNamespace,observers,overlay,http,d3Ease,portal,d3Interpolate,d3Shape,d3Zoom,router,d3Hierarchy,d3Scale,d3Selection,d3Transition,d3Array,platform,coercion,a11y,animations,forms,common,rxjs,operators,keycodes,i0) { 'use strict';
-
+        typeof define === 'function' && define.amd ? define('@ux-aspects/ux-aspects', ['exports', 'angular-split', 'resize-observer-polyfill', 'dragula/dist/dragula', '@angular/cdk/observers', '@angular/cdk/overlay', '@angular/common/http', 'd3-ease', '@angular/cdk/portal', 'd3-interpolate', 'd3-shape', 'd3-zoom', '@angular/router', 'd3-hierarchy', 'd3-scale', 'd3-selection', 'd3-transition', 'd3-array', '@angular/cdk/platform', '@angular/cdk/coercion', '@angular/cdk/a11y', '@angular/animations', '@angular/forms', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/cdk/keycodes', '@angular/core'], factory) :
+            (factory((global['ux-aspects'] = global['ux-aspects'] || {}, global['ux-aspects']['ux-aspects'] = {}), global.angularSplit, global.ResizeObserver, global.dragulaNamespace, global.ng.cdk.observers, global.ng.cdk.overlay, global.ng.common.http, global.d3Ease, global.ng.cdk.portal, global.d3Interpolate, global.d3Shape, global.d3Zoom, global.ng.router, global.d3Hierarchy, global.d3Scale, global.d3Selection, global.d3Transition, global.d3Array, global.ng.cdk.platform, global.ng.cdk.coercion, global.ng.cdk.a11y, global.ng.animations, global.ng.forms, global.ng.common, global.rxjs, global.rxjs.operators, global.ng.cdk.keycodes, global.ng.core));
+}(this, (function (exports, angularSplit, ResizeObserver, dragulaNamespace, observers, overlay, http, d3Ease, portal, d3Interpolate, d3Shape, d3Zoom, router, d3Hierarchy, d3Scale, d3Selection, d3Transition, d3Array, platform, coercion, a11y, animations, forms, common, rxjs, operators, keycodes, i0) {
+    'use strict';
     ResizeObserver = ResizeObserver && ResizeObserver.hasOwnProperty('default') ? ResizeObserver['default'] : ResizeObserver;
     var dragulaNamespace__default = 'default' in dragulaNamespace ? dragulaNamespace['default'] : dragulaNamespace;
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -48,12 +47,41 @@
         SocialChartNode: 'social-chart-node',
         SocialChartEdge: 'social-chart-edge',
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /**
+     * Determine the type of icon based upon the identifier.
+     *
+     * We support the following iconset:
+     *
+     * - `hpe-icons` - HPE Icon Set
+     * - `ux-icon` - UX Icon Set
+     * - `component` - Component icon not tied to a specific set
+     *
+     * @param {?} identifier - The name of the icon
+     * @return {?}
+     */
+    function getIconType(identifier) {
+        if (identifier && identifier.trim().indexOf('hpe-') === 0) {
+            return IconType.HpeIcon;
+        }
+        if (identifier && identifier.trim().indexOf('ux-') === 0) {
+            return IconType.UxIcon;
+        }
+        return IconType.Component;
+    }
+    /** @enum {string} */
+    var IconType = {
+        HpeIcon: 'hpe-icon',
+        UxIcon: 'ux-icon',
+        Component: 'component',
+    };
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -85,17 +113,41 @@
             });
         };
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
+    /**
+     * A button will trigger a click event whenever the a mouse click occurs or the enter key is pressed.
+     * These functions can be used to identify if a `click` event was caused by the keyboard or
+     * by a mouse.
+     *
+     * The `event.detail` property will change based on the source of the event.
+     * A mouse click will have varying values based on the browser, however
+     * the enter key will always have a value of `0` so we can check against that
+     */
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    function isKeyboardTrigger(event) {
+        return event.detail === 0;
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    function isMouseTrigger(event) {
+        return !isKeyboardTrigger(event);
+    }
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -110,7 +162,6 @@
         ];
         return AccordionPanelHeadingDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -134,7 +185,6 @@
         ];
         return AccordionService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -220,7 +270,6 @@
         };
         return AccordionPanelComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -262,7 +311,6 @@
         };
         return AccordionComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -304,7 +352,6 @@
         'social-chart-node': '#00cceb',
         'social-chart-edge': '#00cceb'
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -389,7 +436,6 @@
         'social-chart-node': '#ff00ff',
         'social-chart-edge': '#ff00ff'
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -408,7 +454,6 @@
      * @type {?}
      */
     var COLOR_SET_TOKEN = new i0.InjectionToken('COLOR_SET_TOKEN');
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -455,7 +500,6 @@
         ];
         return ColorServiceModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -770,7 +814,6 @@
             };
         return ThemeColor;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -953,12 +996,10 @@
         /** @nocollapse */ ColorService.ngInjectableDef = i0.defineInjectable({ factory: function ColorService_Factory() { return new ColorService(i0.inject(COLOR_SET_TOKEN, 8)); }, token: ColorService, providedIn: "root" });
         return ColorService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1035,7 +1076,6 @@
         ];
         return ContrastService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1138,7 +1178,6 @@
         };
         return ColorContrastDirective;
     }());
-
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -1157,9 +1196,11 @@
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) {
+                for (var p in b)
+                    if (b.hasOwnProperty(p))
+                        d[p] = b[p];
+            };
         return extendStatics(d, b);
     };
     function __extends(d, b) {
@@ -1181,25 +1222,32 @@
     };
     function __awaiter(thisArg, _arguments, P, generator) {
         return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try {
-                step(generator.next(value));
+            function fulfilled(value) {
+                try {
+                    step(generator.next(value));
+                }
+                catch (e) {
+                    reject(e);
+                }
             }
-            catch (e) {
-                reject(e);
-            } }
-            function rejected(value) { try {
-                step(generator["throw"](value));
+            function rejected(value) {
+                try {
+                    step(generator["throw"](value));
+                }
+                catch (e) {
+                    reject(e);
+                }
             }
-            catch (e) {
-                reject(e);
-            } }
             function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     }
     function __generator(thisArg, body) {
-        var _ = { label: 0, sent: function () { if (t[0] & 1)
-                throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        var _ = { label: 0, sent: function () {
+                if (t[0] & 1)
+                    throw t[1];
+                return t[1];
+            }, trys: [], ops: [] }, f, y, t, g;
         return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
         function verb(n) { return function (v) { return step([n, v]); }; }
         function step(op) {
@@ -1307,14 +1355,12 @@
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     /** @type {?} */
     var ACCESSIBILITY_OPTIONS_TOKEN = new i0.InjectionToken('ACCESSIBILITY_OPTIONS');
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1358,7 +1404,6 @@
         };
         return AccessibilityOptionsService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1368,7 +1413,6 @@
         }
         return LocalFocusIndicatorOptions;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1525,7 +1569,6 @@
             };
         return FocusIndicator;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1572,7 +1615,6 @@
         /** @nocollapse */ FocusIndicatorOriginService.ngInjectableDef = i0.defineInjectable({ factory: function FocusIndicatorOriginService_Factory() { return new FocusIndicatorOriginService(); }, token: FocusIndicatorOriginService, providedIn: "root" });
         return FocusIndicatorOriginService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1620,7 +1662,6 @@
         };
         return FocusIndicatorService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1664,6 +1705,8 @@
              * @param {?} checkChildren
              * @return {?}
              */ function (checkChildren) {
+                // allow a string to be used so we can skip checking a binding for performance benefits
+                checkChildren = coercion.coerceBooleanProperty(checkChildren);
                 if (checkChildren !== null && checkChildren !== undefined) {
                     this._checkChildren = checkChildren;
                     this.setOptions();
@@ -1679,6 +1722,8 @@
              * @param {?} mouseFocusIndicator
              * @return {?}
              */ function (mouseFocusIndicator) {
+                // allow a string to be used so we can skip checking a binding for performance benefits
+                mouseFocusIndicator = coercion.coerceBooleanProperty(mouseFocusIndicator);
                 if (mouseFocusIndicator !== null && mouseFocusIndicator !== undefined) {
                     this._options.set('mouseFocusIndicator', mouseFocusIndicator);
                     this.setOptions();
@@ -1694,6 +1739,8 @@
              * @param {?} touchFocusIndicator
              * @return {?}
              */ function (touchFocusIndicator) {
+                // allow a string to be used so we can skip checking a binding for performance benefits
+                touchFocusIndicator = coercion.coerceBooleanProperty(touchFocusIndicator);
                 if (touchFocusIndicator !== null && touchFocusIndicator !== undefined) {
                     this._options.set('touchFocusIndicator', touchFocusIndicator);
                     this.setOptions();
@@ -1709,6 +1756,8 @@
              * @param {?} keyboardFocusIndicator
              * @return {?}
              */ function (keyboardFocusIndicator) {
+                // allow a string to be used so we can skip checking a binding for performance benefits
+                keyboardFocusIndicator = coercion.coerceBooleanProperty(keyboardFocusIndicator);
                 if (keyboardFocusIndicator !== null && keyboardFocusIndicator !== undefined) {
                     this._options.set('keyboardFocusIndicator', keyboardFocusIndicator);
                     this.setOptions();
@@ -1724,6 +1773,8 @@
              * @param {?} programmaticFocusIndicator
              * @return {?}
              */ function (programmaticFocusIndicator) {
+                // allow a string to be used so we can skip checking a binding for performance benefits
+                programmaticFocusIndicator = coercion.coerceBooleanProperty(programmaticFocusIndicator);
                 if (programmaticFocusIndicator !== null && programmaticFocusIndicator !== undefined) {
                     this._options.set('programmaticFocusIndicator', programmaticFocusIndicator);
                     this.setOptions();
@@ -1774,6 +1825,22 @@
                 this._onDestroy.next();
                 this._onDestroy.complete();
             };
+        /** Focus this element with a specific origin */
+        /**
+         * Focus this element with a specific origin
+         * @param {?=} origin
+         * @param {?=} options
+         * @return {?}
+         */
+        FocusIndicatorDirective.prototype.focus = /**
+         * Focus this element with a specific origin
+         * @param {?=} origin
+         * @param {?=} options
+         * @return {?}
+         */
+            function (origin, options) {
+                this._focusIndicator.focus(origin, options);
+            };
         /** Update the focus indicator with the latest options */
         /**
          * Update the focus indicator with the latest options
@@ -1820,7 +1887,6 @@
         };
         return FocusIndicatorDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1857,7 +1923,6 @@
         };
         return DefaultFocusIndicatorDirective;
     }(FocusIndicatorDirective));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -1934,7 +1999,6 @@
         };
         return FocusIndicatorOptionsDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -2012,7 +2076,6 @@
             };
         return FocusIndicatorOrigin;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -2045,7 +2108,6 @@
         };
         return FocusIndicatorOriginDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -2116,7 +2178,6 @@
         };
         return FocusWithinDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -2390,7 +2451,6 @@
             };
         return ManagedFocusContainerWithReferences;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -2432,7 +2492,6 @@
         };
         return ManagedFocusContainerDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -2849,7 +2908,6 @@
         };
         return SplitterAccessibilityDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -3241,7 +3299,6 @@
         ];
         return TabbableListService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -3275,6 +3332,10 @@
              * Emit when the expanded state changes.
              */
             this.expandedChange = new i0.EventEmitter();
+            /**
+             * Emit when the element receives focus via the tabbable list.
+             */
+            this.activated = new i0.EventEmitter();
             /**
              * Give each tabbable item a unique id
              */
@@ -3411,10 +3472,15 @@
                 // check if there are currently any items that are tabbable
                 /** @type {?} */
                 var hasTabbableItem = this._tabbableList.hasTabbableItem();
+                // determine the focus origin
+                /** @type {?} */
+                var origin = hasTabbableItem ? this._focusOriginService.getOrigin() || 'keyboard' : 'keyboard';
                 // apply focus to the element
-                this.focusWithOrigin(hasTabbableItem ? this._focusOriginService.getOrigin() || 'keyboard' : 'keyboard', !this._tabbableList.shouldScrollInView);
+                this.focusWithOrigin(origin, !this._tabbableList.shouldScrollInView);
                 // ensure the focus key manager updates the active item correctly
                 this._tabbableList.activate(this, hasTabbableItem);
+                // emit the focus event
+                this.activated.emit(origin);
             };
         /**
          * @return {?}
@@ -3535,13 +3601,13 @@
             expanded: [{ type: i0.Input }],
             key: [{ type: i0.Input }],
             expandedChange: [{ type: i0.Output }],
+            activated: [{ type: i0.Output }],
             onFocus: [{ type: i0.HostListener, args: ['focus',] }, { type: i0.HostListener, args: ['click',] }],
             onBlur: [{ type: i0.HostListener, args: ['blur',] }],
             onKeydown: [{ type: i0.HostListener, args: ['keydown', ['$event'],] }]
         };
         return TabbableListItemDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -3737,7 +3803,6 @@
         };
         return TabbableListDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -3804,42 +3869,34 @@
         ];
         return AccessibilityModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -3867,12 +3924,10 @@
         ];
         return AccordionModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -3887,7 +3942,6 @@
         ];
         return AlertIconDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -3960,7 +4014,7 @@
         AlertComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-alert',
-                        template: "<div class=\"alert-icon\" *ngIf=\"icon\">\n    <ng-content select=\"[uxAlertIcon]\"></ng-content>\n</div>\n\n<div class=\"alert-content\">\n    <ng-content></ng-content>\n</div>\n\n<button *ngIf=\"dismissible\"\n        uxFocusIndicator\n        class=\"alert-close\"\n        type=\"button\"\n        (click)=\"dismiss.emit()\"\n        [attr.aria-label]=\"dismissAriaLabel\">\n    <i class=\"hpe-icon hpe-close\"></i>\n</button>\n",
+                        template: "<div class=\"alert-icon\" *ngIf=\"icon\">\n    <ng-content select=\"[uxAlertIcon]\"></ng-content>\n</div>\n\n<div class=\"alert-content\">\n    <ng-content></ng-content>\n</div>\n\n<button *ngIf=\"dismissible\"\n        uxFocusIndicator\n        class=\"alert-close\"\n        type=\"button\"\n        (click)=\"dismiss.emit()\"\n        [attr.aria-label]=\"dismissAriaLabel\">\n    <ux-icon name=\"close\" class=\"alert-close-icon\"></ux-icon>\n</button>\n",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         host: {
                             'role': 'alert',
@@ -3987,11 +4041,793 @@
             foregroundColor: [{ type: i0.Input }],
             dismissAriaLabel: [{ type: i0.Input }],
             dismiss: [{ type: i0.Output }],
-            icon: [{ type: i0.ContentChild, args: [AlertIconDirective,] }]
+            icon: [{ type: i0.ContentChild, args: [AlertIconDirective, { static: false },] }]
         };
         return AlertComponent;
     }());
-
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var ICON_OPTIONS_TOKEN = new i0.InjectionToken('ICON_OPTIONS_TOKEN');
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /** AUTOGENERATED: DO NOT MODIFY **/
+    /** @type {?} */
+    var commonIcons = [
+        '3d',
+        'achievement',
+        'action',
+        'actions',
+        'active',
+        'add',
+        'advanced-search',
+        'aggregate',
+        'alarm',
+        'alert-filled',
+        'alert',
+        'analytics',
+        'announcement',
+        'app',
+        'archive',
+        'article',
+        'ascend',
+        'assistant',
+        'attachment',
+        'bar-chart',
+        'blog',
+        'book',
+        'bookmark-filled',
+        'bookmark',
+        'bundle',
+        'calculator',
+        'calendar',
+        'camera-filled',
+        'camera',
+        'capacity',
+        'caret-down-filled',
+        'caret-down',
+        'caret-next-filled',
+        'caret-next',
+        'caret-previous-filled',
+        'caret-previous',
+        'caret-up-filled',
+        'caret-up',
+        'catalog',
+        'chapter-add',
+        'chapter-next-filled',
+        'chapter-next',
+        'chapter-previous-filled',
+        'chapter-previous',
+        'chart-organization',
+        'chart-partition',
+        'chart-sankey',
+        'chat-attachment',
+        'chat',
+        'checkbox-selected',
+        'checkbox',
+        'checkmark',
+        'chevron-down',
+        'chevron-left-double',
+        'chevron-left',
+        'chevron-right-double',
+        'chevron-right',
+        'chevron-up',
+        'circular-view',
+        'clipboard',
+        'clone',
+        'close',
+        'cloud-computer',
+        'cloud-download',
+        'cloud-software',
+        'cloud-upload',
+        'cloud',
+        'cluster',
+        'code',
+        'command-line',
+        'compare',
+        'compass',
+        'compliance',
+        'computer-personal',
+        'configuration-filled',
+        'configuration',
+        'connect',
+        'contact-card',
+        'contact-us-filled',
+        'contact-us',
+        'contract',
+        'copy',
+        'cube-filled',
+        'cube',
+        'cubes',
+        'cursor-filled',
+        'cursor',
+        'cut',
+        'cycle',
+        'dashboard',
+        'database',
+        'defect',
+        'deliver',
+        'deployment',
+        'descend',
+        'desktop',
+        'detach',
+        'directions',
+        'dislike-filled',
+        'dislike',
+        'divide-four',
+        'divide-right',
+        'divide-three',
+        'divide',
+        'document-cloud',
+        'document-compress',
+        'document-config',
+        'document-csv',
+        'document-data',
+        'document-download',
+        'document-excel',
+        'document-executable',
+        'document-image',
+        'document-locked',
+        'document-missing',
+        'document-notes',
+        'document-outlook',
+        'document-pdf',
+        'document-performance',
+        'document-powerpoint',
+        'document-rtf',
+        'document-sound',
+        'document-test',
+        'document-text',
+        'document-threat',
+        'document-time',
+        'document-transfer',
+        'document-txt',
+        'document-update',
+        'document-upload',
+        'document-user',
+        'document-verified',
+        'document-video',
+        'document-word',
+        'document',
+        'domain',
+        'down',
+        'download',
+        'drag',
+        'drive-cage',
+        'duplicate',
+        'edit-filled',
+        'edit',
+        'eject-filled',
+        'eject',
+        'expand',
+        'fan',
+        'fast-forward-filled',
+        'fast-forward',
+        'favorite-filled',
+        'favorite',
+        'filter-filled',
+        'filter',
+        'first-aid',
+        'flag-filled',
+        'flag',
+        'folder-cycle',
+        'folder-open',
+        'folder',
+        'gallery-filled',
+        'gallery',
+        'globe',
+        'grid',
+        'group',
+        'grow',
+        'halt',
+        'help-circle',
+        'help',
+        'history',
+        'home-filled',
+        'home',
+        'host-maintenance',
+        'host',
+        'image-filled',
+        'image',
+        'impact',
+        'in-progress',
+        'inactive',
+        'inbox',
+        'indicator-filled',
+        'indicator',
+        'information-filled',
+        'information',
+        'inherit-filled',
+        'inherit',
+        'input-to-process',
+        'install',
+        'integration',
+        'iteration-filled',
+        'iteration',
+        'java-filled',
+        'java',
+        'language',
+        'launch',
+        'license-filled',
+        'license',
+        'like-filled',
+        'like',
+        'line-chart',
+        'link-bottom',
+        'link-down',
+        'link-next',
+        'link-previous',
+        'link-top',
+        'link-up',
+        'link',
+        'list',
+        'location-filled',
+        'location-pin-filled',
+        'location-pin',
+        'location',
+        'lock',
+        'login',
+        'logout',
+        'mail-attachment',
+        'mail-filled',
+        'mail',
+        'manual',
+        'map-location',
+        'map',
+        'menu',
+        'microphone-filled',
+        'microphone',
+        'monitor',
+        'more',
+        'multiple',
+        'navigate',
+        'new-window',
+        'new',
+        'news-aggregation',
+        'news-collection',
+        'news-content',
+        'news',
+        'next',
+        'notes',
+        'notification-filled',
+        'notification',
+        'optimization',
+        'organization',
+        'overview',
+        'pan',
+        'pause-filled',
+        'pause',
+        'payment-google-wallet',
+        'payment-mastercard',
+        'payment-paypal',
+        'payment-square',
+        'payment-visa',
+        'pin-filled',
+        'pin',
+        'plan',
+        'platform-apple',
+        'platform-chrome',
+        'platform-dropbox',
+        'platform-edge',
+        'platform-firefox',
+        'platform-internet-explorer',
+        'platform-skype',
+        'platform-windows',
+        'play-filled',
+        'play',
+        'power',
+        'previous',
+        'print',
+        'quick-view',
+        'radial-selected',
+        'radial',
+        'refresh',
+        'resources',
+        'rewind-filled',
+        'rewind',
+        'risk',
+        'rss',
+        'satellite',
+        'save-filled',
+        'save',
+        'schedule-clone',
+        'schedule-new',
+        'schedule-play',
+        'schedule',
+        'scorecard',
+        'search',
+        'secure',
+        'select-left',
+        'select',
+        'server-cluster',
+        'server',
+        'servers',
+        'service-business',
+        'service-start',
+        'share',
+        'shield-configure',
+        'shield-filled',
+        'shield',
+        'shift',
+        'shop-basket',
+        'shop-cart',
+        'soa',
+        'social-email',
+        'social-facebook',
+        'social-github',
+        'social-instagram',
+        'social-linkedin',
+        'social-medium',
+        'social-pinterest',
+        'social-reddit',
+        'social-slack',
+        'social-tumblr',
+        'social-twitter',
+        'social-vimeo',
+        'social-youtube',
+        'sort',
+        'stakeholder',
+        'star-filled',
+        'star-half',
+        'star',
+        'status-approved-filled',
+        'status-error-filled',
+        'status-information-filled',
+        'status-warning-filled',
+        'steps-filled',
+        'steps',
+        'storage',
+        'street-view-filled',
+        'street-view',
+        'subtitles',
+        'subtract',
+        'support',
+        'sync',
+        'system',
+        'tab-next',
+        'tab-previous',
+        'tab-up',
+        'table-add',
+        'table',
+        'tag-filled',
+        'tag',
+        'target',
+        'task',
+        'template',
+        'test-desktop',
+        'test',
+        'text-wrap',
+        'threats',
+        'ticket',
+        'tools',
+        'tooltip',
+        'transaction-filled',
+        'transaction',
+        'trash-filled',
+        'trash',
+        'tree',
+        'trigger',
+        'trophy-filled',
+        'trophy',
+        'troubleshooting',
+        'unlock',
+        'up',
+        'update',
+        'upgrade-filled',
+        'upgrade',
+        'upload',
+        'user-add-filled',
+        'user-add',
+        'user-admin',
+        'user-expert',
+        'user-female-filled',
+        'user-female',
+        'user-filled',
+        'user-manager',
+        'user-new',
+        'user-police',
+        'user-settings',
+        'user-worker',
+        'user',
+        'validation-filled',
+        'validation',
+        'video-filled',
+        'video',
+        'view-filled',
+        'view',
+        'virtual-machine',
+        'vm-maintenance',
+        'volume-filled',
+        'volume-low-filled',
+        'volume-low',
+        'volume-mute-filled',
+        'volume-mute',
+        'volume',
+        'vulnerability',
+        'waypoint-filled',
+        'waypoint',
+        'workshop',
+        'zoom-in',
+        'zoom-out'
+    ];
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var ɵ0 = function (icon) {
+        return { name: icon, iconset: 'ux-icon', icon: "ux-icon-" + icon };
+    };
+    /**
+     * We generate the iconset definition as hardcoding it increases bundle size by ~40kb per iconset
+     * @type {?}
+     */
+    var uxIconset = __spread(commonIcons.map(ɵ0));
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var IconService = /** @class */ (function () {
+        /** Inject a parent service if one exists */
+        function IconService(_iconService, options) {
+            this._iconService = _iconService;
+            /**
+             * Emit whenever the iconset changes
+             */
+            this.iconsChanged$ = new rxjs.Subject();
+            /**
+             * Store a list of all icon
+             */
+            this._icons = __spread(uxIconset);
+            // if the iconset was defined at the root or child module level apply this configuration
+            if (options && options.icons) {
+                this.setIcons(options.icons);
+            }
+        }
+        /** Define multiple icon definitions. This will override icon definitions if a name and size collision occurs */
+        /**
+         * Define multiple icon definitions. This will override icon definitions if a name and size collision occurs
+         * @param {?} icons
+         * @return {?}
+         */
+        IconService.prototype.setIcons = /**
+         * Define multiple icon definitions. This will override icon definitions if a name and size collision occurs
+         * @param {?} icons
+         * @return {?}
+         */
+            function (icons) {
+                var _this = this;
+                icons.forEach(function (icon) { return _this.setIcon(icon); });
+            };
+        /** Provide an icon definition which will override if necessary */
+        /**
+         * Provide an icon definition which will override if necessary
+         * @param {?} __0
+         * @return {?}
+         */
+        IconService.prototype.setIcon = /**
+         * Provide an icon definition which will override if necessary
+         * @param {?} __0
+         * @return {?}
+         */
+            function (_a) {
+                var _this = this;
+                var name = _a.name, icon = _a.icon, iconset = _a.iconset, size = _a.size;
+                // if there are multiple sizes specified add them all as individual records
+                if (Array.isArray(size)) {
+                    return size.forEach(function (variant) { return _this.setIcon({ name: name, icon: icon, iconset: iconset, size: variant }); });
+                }
+                // remove any existing definition with the same parameters
+                this._icons = this._icons.filter(function (definition) { return !(definition.name === name && definition.size === size); });
+                // insert the new definition
+                this._icons = __spread(this._icons, [{ name: name, icon: icon, iconset: iconset, size: size }]);
+                // emit the icon change
+                this.iconsChanged$.next({ name: name, size: size });
+            };
+        /** Find an icon based on the given name and size if provided */
+        /**
+         * Find an icon based on the given name and size if provided
+         * @param {?} name
+         * @param {?=} size
+         * @return {?}
+         */
+        IconService.prototype.getIcon = /**
+         * Find an icon based on the given name and size if provided
+         * @param {?} name
+         * @param {?=} size
+         * @return {?}
+         */
+            function (name, size) {
+                // if no name was specified then do nothing (this can occur if the name input on the component is not initially defined)
+                if (!name) {
+                    return;
+                }
+                // if there is a size specified then check for an exact match
+                if (size) {
+                    // get an icon definition that matches both name and size
+                    /** @type {?} */
+                    var sizedIcon = this._icons.find(function (definition) { return definition.name === name && definition.size === size; });
+                    // if there is a match then return otherwise fallthrough to the default
+                    if (sizedIcon) {
+                        return sizedIcon;
+                    }
+                }
+                // find a general match with no size constraint
+                /** @type {?} */
+                var icon = this._icons.find(function (definition) { return definition.name === name && definition.size === undefined; });
+                // if no match is found and there is a parent service then we should check it
+                if (!icon && this._iconService) {
+                    return this._iconService.getIcon(name, size);
+                }
+                else if (!icon) {
+                    console.warn("Icon '" + name + "' was not found.");
+                }
+                return icon;
+            };
+        IconService.decorators = [
+            { type: i0.Injectable }
+        ];
+        /** @nocollapse */
+        IconService.ctorParameters = function () {
+            return [
+                { type: IconService, decorators: [{ type: i0.Optional }, { type: i0.SkipSelf }] },
+                { type: undefined, decorators: [{ type: i0.Optional }, { type: i0.Inject, args: [ICON_OPTIONS_TOKEN,] }] }
+            ];
+        };
+        return IconService;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var IconComponent = /** @class */ (function () {
+        function IconComponent(_elementRef, _renderer, _iconService) {
+            this._elementRef = _elementRef;
+            this._renderer = _renderer;
+            this._iconService = _iconService;
+            /**
+             * Store the boolean value of flip vertical
+             */
+            this._flipVertical = false;
+            /**
+             * Store the boolean value of flip horizontal
+             */
+            this._flipHorizontal = false;
+            /**
+             * Automatically unsubscribe from observables
+             */
+            this._onDestroy = new rxjs.Subject();
+        }
+        Object.defineProperty(IconComponent.prototype, "rotate", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._rotate;
+            },
+            /** The number of degrees to rotate the icon */
+            set: /**
+             * The number of degrees to rotate the icon
+             * @param {?} rotation
+             * @return {?}
+             */ function (rotation) {
+                this._rotate = ( /** @type {?} */(coercion.coerceNumberProperty(rotation)));
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(IconComponent.prototype, "flipHorizontal", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._flipHorizontal;
+            },
+            /** Define if the icon should be horizontally flipped */
+            set: /**
+             * Define if the icon should be horizontally flipped
+             * @param {?} flipHorizontal
+             * @return {?}
+             */ function (flipHorizontal) {
+                this._flipHorizontal = coercion.coerceBooleanProperty(flipHorizontal);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(IconComponent.prototype, "flipVertical", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._flipVertical;
+            },
+            /** Define if the icon should be horizontally flipped */
+            set: /**
+             * Define if the icon should be horizontally flipped
+             * @param {?} flipVertical
+             * @return {?}
+             */ function (flipVertical) {
+                this._flipVertical = coercion.coerceBooleanProperty(flipVertical);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /** When inputs change ensure we have the best icon definition */
+        /**
+         * When inputs change ensure we have the best icon definition
+         * @param {?} changes
+         * @return {?}
+         */
+        IconComponent.prototype.ngOnChanges = /**
+         * When inputs change ensure we have the best icon definition
+         * @param {?} changes
+         * @return {?}
+         */
+            function (changes) {
+                // if the name or size changes then update the icon
+                if (changes.name && changes.name.currentValue !== changes.name.previousValue ||
+                    changes.size && changes.size.currentValue !== changes.size.previousValue) {
+                    this.updateIcon();
+                }
+            };
+        /** Watch for changes to the iconset */
+        /**
+         * Watch for changes to the iconset
+         * @return {?}
+         */
+        IconComponent.prototype.ngAfterViewInit = /**
+         * Watch for changes to the iconset
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                // watch for changes to the iconset to check if we need to update.
+                this._iconService.iconsChanged$.pipe(operators.filter(function (event) { return _this._icon && event.name === _this._icon.name; }), operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.updateIcon(); });
+            };
+        /** Cleanup on component destroy */
+        /**
+         * Cleanup on component destroy
+         * @return {?}
+         */
+        IconComponent.prototype.ngOnDestroy = /**
+         * Cleanup on component destroy
+         * @return {?}
+         */
+            function () {
+                this._onDestroy.next();
+                this._onDestroy.complete();
+            };
+        /** get the icon definition based on the name and size specified */
+        /**
+         * get the icon definition based on the name and size specified
+         * @return {?}
+         */
+        IconComponent.prototype.updateIcon = /**
+         * get the icon definition based on the name and size specified
+         * @return {?}
+         */
+            function () {
+                // remove the current icon set and icon classes of the old icon.
+                // note we are using the renderer and not HostBindings as a HostBinding
+                // on the `class` property will override any user added classes which is
+                // not desirable.
+                if (this._icon) {
+                    this._renderer.removeClass(this._elementRef.nativeElement, this._icon.iconset);
+                    this._renderer.removeClass(this._elementRef.nativeElement, this._icon.icon);
+                }
+                // update the stored icon definition with the best match based on name and size
+                this._icon = this._iconService.getIcon(this.name, this.size);
+                // add the new icon classes, again using the renderer to avoid overriding user classes
+                if (this._icon) {
+                    this._renderer.addClass(this._elementRef.nativeElement, this._icon.iconset);
+                    this._renderer.addClass(this._elementRef.nativeElement, this._icon.icon);
+                }
+                else if (!!this.name) {
+                    console.warn("The icon " + this.name + " could not be found. Ensure you are using the correct iconset.");
+                }
+            };
+        IconComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ux-icon',
+                        template: '',
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
+                        host: {
+                            '[style.font-size]': 'size',
+                            '[class.ux-flip-horizontal]': 'flipHorizontal',
+                            '[class.ux-flip-vertical]': 'flipVertical',
+                            '[class.ux-rotate-90]': 'rotate == 90',
+                            '[class.ux-rotate-180]': 'rotate == 180',
+                            '[class.ux-rotate-270]': 'rotate == 270',
+                        }
+                    }] }
+        ];
+        /** @nocollapse */
+        IconComponent.ctorParameters = function () {
+            return [
+                { type: i0.ElementRef },
+                { type: i0.Renderer2 },
+                { type: IconService }
+            ];
+        };
+        IconComponent.propDecorators = {
+            name: [{ type: i0.Input }],
+            size: [{ type: i0.Input }],
+            rotate: [{ type: i0.Input }],
+            flipHorizontal: [{ type: i0.Input }],
+            flipVertical: [{ type: i0.Input }]
+        };
+        return IconComponent;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var IconModule = /** @class */ (function () {
+        function IconModule() {
+        }
+        /** Allow configuration at AppModule level */
+        /**
+         * Allow configuration at AppModule level
+         * @param {?=} options
+         * @return {?}
+         */
+        IconModule.forRoot = /**
+         * Allow configuration at AppModule level
+         * @param {?=} options
+         * @return {?}
+         */
+            function (options) {
+                return {
+                    ngModule: IconModule,
+                    providers: [
+                        { provide: ICON_OPTIONS_TOKEN, useValue: options }
+                    ]
+                };
+            };
+        /** Allow configuration at a child module level */
+        /**
+         * Allow configuration at a child module level
+         * @param {?=} options
+         * @return {?}
+         */
+        IconModule.forChild = /**
+         * Allow configuration at a child module level
+         * @param {?=} options
+         * @return {?}
+         */
+            function (options) {
+                // the `forChild` does the same as `forRoot` however this having
+                // `forChild` follows the correct conventions as we should never
+                // import `forRoot` in a child module
+                return IconModule.forRoot(options);
+            };
+        IconModule.decorators = [
+            { type: i0.NgModule, args: [{
+                        declarations: [
+                            IconComponent
+                        ],
+                        exports: [
+                            IconComponent
+                        ],
+                        providers: [
+                            IconService
+                        ]
+                    },] }
+        ];
+        return IconModule;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var ɵ0$1 = function (icon) {
+        return { name: icon, iconset: 'hpe-icon', icon: "hpe-" + icon };
+    };
+    /**
+     * We generate the iconset definition as hardcoding it increases bundle size by ~40kb per iconset
+     * @type {?}
+     */
+    var hpeIconset = __spread(commonIcons.map(ɵ0$1));
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4003,7 +4839,8 @@
             { type: i0.NgModule, args: [{
                         imports: [
                             AccessibilityModule,
-                            common.CommonModule
+                            common.CommonModule,
+                            IconModule
                         ],
                         declarations: [
                             AlertComponent,
@@ -4017,12 +4854,10 @@
         ];
         return AlertModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4057,7 +4892,6 @@
         };
         return BreadcrumbsComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4078,12 +4912,10 @@
         ];
         return BreadcrumbsModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4183,7 +5015,6 @@
         };
         return ResizeService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4249,7 +5080,6 @@
         };
         return ResizeDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4266,12 +5096,10 @@
         ];
         return ResizeModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4286,7 +5114,6 @@
         ];
         return CardTabContentDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4380,7 +5207,6 @@
         CardTabsService.ctorParameters = function () { return []; };
         return CardTabsService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4415,11 +5241,10 @@
             ];
         };
         CardTabComponent.propDecorators = {
-            content: [{ type: i0.ContentChild, args: [CardTabContentDirective, { read: i0.TemplateRef },] }]
+            content: [{ type: i0.ContentChild, args: [CardTabContentDirective, { read: i0.TemplateRef, static: false },] }]
         };
         return CardTabComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4532,7 +5357,7 @@
         CardTabsetComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-card-tabset',
-                        template: "<div class=\"card-tab-content\" role=\"tabpanel\" *ngIf=\"(tabService.tab$ | async)\">\n    <ng-content></ng-content>\n</div>\n\n<div class=\"card-tabs\" #tabs>\n\n    <button type=\"button\" class=\"card-tabs-paging-btn card-tabs-paging-btn-previous\" aria-label=\"Previous Tabs\" (click)=\"previous()\" *ngIf=\"offset < bounds.lower\">\n        <i class=\"hpe-icon hpe-previous\"></i>\n    </button>\n\n    <div class=\"card-tabs-list\" role=\"tablist\" #tablist (uxResize)=\"resize($event)\" [style.transform]=\"'translateX(' + offset + 'px)'\">\n\n        <div class=\"card-tab\"\n            role=\"tab\"\n            tabindex=\"0\" #card\n            *ngFor=\"let tab of tabService.tabs$ | async\"\n            [ngClass]=\"tabService.position$ | async\"\n            [class.active]=\"tab.active$ | async\"\n            [attr.aria-selected]=\"tab.active$ | async\"\n            (click)=\"select(tab, card)\"\n            (focus)=\"tabs.scrollLeft = 0\"\n            (keydown.enter)=\"select(tab, card)\">\n\n            <ng-container [ngTemplateOutlet]=\"tab.content\"></ng-container>\n        </div>\n\n    </div>\n\n    <button type=\"button\" class=\"card-tabs-paging-btn card-tabs-paging-btn-next\" aria-label=\"Next Tabs\" (click)=\"next()\" *ngIf=\"offset > bounds.upper\">\n        <i class=\"hpe-icon hpe-next\"></i>\n    </button>\n</div>",
+                        template: "<div class=\"card-tab-content\" role=\"tabpanel\" *ngIf=\"(tabService.tab$ | async)\">\n    <ng-content></ng-content>\n</div>\n\n<div class=\"card-tabs\" #tabs>\n\n    <button type=\"button\" class=\"card-tabs-paging-btn card-tabs-paging-btn-previous\" aria-label=\"Previous Tabs\" (click)=\"previous()\" *ngIf=\"offset < bounds.lower\">\n        <ux-icon name=\"previous\"></ux-icon>\n    </button>\n\n    <div class=\"card-tabs-list\" role=\"tablist\" #tablist (uxResize)=\"resize($event)\" [style.transform]=\"'translateX(' + offset + 'px)'\">\n\n        <div class=\"card-tab\"\n            role=\"tab\"\n            tabindex=\"0\" #card\n            *ngFor=\"let tab of tabService.tabs$ | async\"\n            [ngClass]=\"tabService.position$ | async\"\n            [class.active]=\"tab.active$ | async\"\n            [attr.aria-selected]=\"tab.active$ | async\"\n            (click)=\"select(tab, card)\"\n            (focus)=\"tabs.scrollLeft = 0\"\n            (keydown.enter)=\"select(tab, card)\">\n\n            <ng-container [ngTemplateOutlet]=\"tab.content\"></ng-container>\n        </div>\n\n    </div>\n\n    <button type=\"button\" class=\"card-tabs-paging-btn card-tabs-paging-btn-next\" aria-label=\"Next Tabs\" (click)=\"next()\" *ngIf=\"offset > bounds.upper\">\n        <ux-icon name=\"next\"></ux-icon>\n    </button>\n</div>",
                         providers: [CardTabsService]
                     }] }
         ];
@@ -4544,11 +5369,10 @@
         };
         CardTabsetComponent.propDecorators = {
             position: [{ type: i0.HostBinding, args: ['class',] }, { type: i0.Input }],
-            tablist: [{ type: i0.ViewChild, args: ['tablist',] }]
+            tablist: [{ type: i0.ViewChild, args: ['tablist', { static: true },] }]
         };
         return CardTabsetComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4560,20 +5384,27 @@
             { type: i0.NgModule, args: [{
                         imports: [
                             common.CommonModule,
-                            ResizeModule
+                            ResizeModule,
+                            IconModule
                         ],
-                        declarations: [CardTabsetComponent, CardTabComponent, CardTabContentDirective],
-                        exports: [CardTabsetComponent, CardTabComponent, CardTabContentDirective]
+                        declarations: [
+                            CardTabsetComponent,
+                            CardTabComponent,
+                            CardTabContentDirective
+                        ],
+                        exports: [
+                            CardTabsetComponent,
+                            CardTabComponent,
+                            CardTabContentDirective
+                        ]
                     },] }
         ];
         return CardTabsModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4740,7 +5571,7 @@
         CheckboxComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-checkbox',
-                        template: "<label [attr.for]=\"inputId\"\n       class=\"ux-checkbox\"\n       [class.ux-checkbox-checked]=\"value === true\"\n       [class.ux-checkbox-indeterminate]=\"indeterminate\"\n       [class.ux-checkbox-simplified]=\"simplified\"\n       [class.ux-checkbox-disabled]=\"disabled\"\n       [class.ux-checkbox-focused]=\"focused\">\n\n    <div class=\"ux-checkbox-container\">\n        <input type=\"checkbox\"\n               uxFocusIndicator\n               class=\"ux-checkbox-input\"\n               [id]=\"inputId\"\n               [required]=\"required\"\n               [checked]=\"value\"\n               [attr.value]=\"value\"\n               [disabled]=\"disabled\"\n               [attr.name]=\"name\"\n               [tabindex]=\"tabindex\"\n               [indeterminate]=\"indeterminate\"\n               [attr.aria-label]=\"ariaLabel\"\n               [attr.aria-labelledby]=\"ariaLabelledby\"\n               [attr.aria-checked]=\"ariaChecked\"\n               (indicator)=\"focused = $event\"\n               (change)=\"$event.stopPropagation()\"\n               (click)=\"toggle()\">\n    </div>\n\n    <span class=\"ux-checkbox-label\">\n        <ng-content></ng-content>\n    </span>\n</label>\n",
+                        template: "<label [attr.for]=\"inputId\"\n       class=\"ux-checkbox\"\n       [class.ux-checkbox-checked]=\"value === true\"\n       [class.ux-checkbox-indeterminate]=\"indeterminate\"\n       [class.ux-checkbox-simplified]=\"simplified\"\n       [class.ux-checkbox-disabled]=\"disabled\"\n       [class.ux-checkbox-focused]=\"focused\">\n\n    <div class=\"ux-checkbox-container\">\n\n        <input type=\"checkbox\"\n               uxFocusIndicator\n               class=\"ux-checkbox-input\"\n               [id]=\"inputId\"\n               [required]=\"required\"\n               [checked]=\"value\"\n               [attr.value]=\"value\"\n               [disabled]=\"disabled\"\n               [attr.name]=\"name\"\n               [tabindex]=\"tabindex\"\n               [indeterminate]=\"indeterminate\"\n               [attr.aria-label]=\"ariaLabel\"\n               [attr.aria-labelledby]=\"ariaLabelledby\"\n               [attr.aria-checked]=\"ariaChecked\"\n               (indicator)=\"focused = $event\"\n               (change)=\"$event.stopPropagation()\"\n               (click)=\"toggle()\">\n    </div>\n\n    <span class=\"ux-checkbox-label\">\n        <ng-content></ng-content>\n    </span>\n</label>\n",
                         providers: [CHECKBOX_VALUE_ACCESSOR]
                     }] }
         ];
@@ -4760,7 +5591,6 @@
         };
         return CheckboxComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4784,12 +5614,10 @@
         ];
         return CheckboxModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -4884,7 +5712,6 @@
             };
         return ColorPickerColor;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -5090,7 +5917,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-color-picker',
                         exportAs: 'ux-color-picker',
-                        template: "<div class=\"ux-color-picker\" uxTabbableList direction=\"horizontal\">\n    <div class=\"ux-color-picker-swatch\">\n        <div *ngFor=\"let row of colors\" class=\"ux-color-picker-swatch-row\">\n\n            <div *ngFor=\"let color of row\"\n                class=\"ux-color-picker-color\"\n                [class.ux-small]=\"(buttonSize$ | async) === 'sm'\"\n                [class.ux-large]=\"(buttonSize$ | async) === 'lg'\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\"\n                [class.ux-selected]=\"color === (selected$ | async)\">\n\n                <button type=\"button\"\n                    uxFocusIndicator\n                    attr.aria-label=\"Select color {{color.name}}\"\n                    i18n-aria-label\n                    aria-selected=\"color === (selected$ | async)\"\n                    class=\"btn btn-icon\"\n                    [uxColorContrast]=\"color.hex\"\n                    [style.background-color]=\"color.rgba\"\n                    (click)=\"selected$.next(color)\"\n                    uxTabbableListItem\n                    [uxTooltip]=\"color.name\"\n                    [tooltipDisabled]=\"!showTooltips\">\n                    <i class=\"hpe-icon hpe-checkmark\"></i>\n                </button>\n\n            </div>\n        </div>\n    </div>\n\n    <div *ngIf=\"showInput\" class=\"ux-color-picker-input-panel\">\n        <div class=\"ux-color-picker-input-header\">\n\n            <div class=\"ux-color-picker-preview\"\n                [style.background-color]=\"(selected$ | async).rgba\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\">\n            </div>\n\n            <label *ngIf=\"inputMode === 'hex'\" attr.for=\"{{id}}-input-field\">HEX</label>\n            <label *ngIf=\"inputMode === 'rgba'\" attr.for=\"{{id}}-input-field\">RGBA</label>\n\n            <button type=\"button\"\n                attr.aria-label=\"Switch input mode to {{inputMode === 'hex' ? 'RGBA' : 'hex'}}\" i18n-aria-label\n                class=\"btn btn-link btn-icon button-secondary ux-color-picker-input-toggle\"\n                (click)=\"toggleColorEntryType(); $event.stopPropagation()\">\n                <span class=\"hpe-icon hpe-chevron-right\"></span>\n            </button>\n        </div>\n\n        <div class=\"ux-color-picker-input\"\n            [class.has-error]=\"inputField.errors\"\n            [class.has-feedback]=\"inputField.errors\">\n\n            <input type=\"text\"\n                attr.id=\"{{id}}-input-field\"\n                attr.aria-description=\"Edit {{inputMode}} color value\" i18n-aria-description\n                class=\"form-control\"\n                #inputField=\"ngModel\"\n                [ngModel]=\"(selected$ | async)[inputMode]\"\n                (ngModelChange)=\"updateColorValue($event, inputMode)\"\n                [pattern]=\"inputPatterns[inputMode].source\"\n                (keyup.enter)=\"inputSubmit.emit()\">\n\n            <span class=\"hpe-icon hpe-alert form-control-feedback\"></span>\n        </div>\n    </div>\n</div>\n"
+                        template: "<div class=\"ux-color-picker\" uxTabbableList direction=\"horizontal\">\n    <div class=\"ux-color-picker-swatch\">\n        <div *ngFor=\"let row of colors\" class=\"ux-color-picker-swatch-row\">\n\n            <div *ngFor=\"let color of row\"\n                class=\"ux-color-picker-color\"\n                [class.ux-small]=\"(buttonSize$ | async) === 'sm'\"\n                [class.ux-large]=\"(buttonSize$ | async) === 'lg'\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\"\n                [class.ux-selected]=\"color === (selected$ | async)\">\n\n                <button type=\"button\"\n                    uxFocusIndicator\n                    attr.aria-label=\"Select color {{color.name}}\"\n                    i18n-aria-label\n                    aria-selected=\"color === (selected$ | async)\"\n                    class=\"btn btn-icon\"\n                    [uxColorContrast]=\"color.hex\"\n                    [style.background-color]=\"color.rgba\"\n                    (click)=\"selected$.next(color)\"\n                    uxTabbableListItem\n                    [uxTooltip]=\"color.name\"\n                    [tooltipDisabled]=\"!showTooltips\">\n\n                    <ux-icon name=\"checkmark\"></ux-icon>\n                </button>\n\n            </div>\n        </div>\n    </div>\n\n    <div *ngIf=\"showInput\" class=\"ux-color-picker-input-panel\">\n        <div class=\"ux-color-picker-input-header\">\n\n            <div class=\"ux-color-picker-preview\"\n                [style.background-color]=\"(selected$ | async).rgba\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\">\n            </div>\n\n            <label *ngIf=\"inputMode === 'hex'\" attr.for=\"{{id}}-input-field\">HEX</label>\n            <label *ngIf=\"inputMode === 'rgba'\" attr.for=\"{{id}}-input-field\">RGBA</label>\n\n            <button type=\"button\"\n                attr.aria-label=\"Switch input mode to {{inputMode === 'hex' ? 'RGBA' : 'hex'}}\" i18n-aria-label\n                class=\"btn btn-link btn-icon button-secondary ux-color-picker-input-toggle\"\n                (click)=\"toggleColorEntryType(); $event.stopPropagation()\">\n                <ux-icon name=\"chevron-right\"></ux-icon>\n            </button>\n        </div>\n\n        <div class=\"ux-color-picker-input\"\n            [class.has-error]=\"inputField.errors\"\n            [class.has-feedback]=\"inputField.errors\">\n\n            <input type=\"text\"\n                attr.id=\"{{id}}-input-field\"\n                attr.aria-description=\"Edit {{inputMode}} color value\" i18n-aria-description\n                class=\"form-control\"\n                #inputField=\"ngModel\"\n                [ngModel]=\"(selected$ | async)[inputMode]\"\n                (ngModelChange)=\"updateColorValue($event, inputMode)\"\n                [pattern]=\"inputPatterns[inputMode].source\"\n                (keyup.enter)=\"inputSubmit.emit()\">\n\n                <ux-icon class=\"form-control-feedback\" name=\"alert\"></ux-icon>\n        </div>\n    </div>\n</div>\n"
                     }] }
         ];
         ColorPickerComponent.propDecorators = {
@@ -5109,7 +5936,6 @@
         };
         return ColorPickerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -5353,7 +6179,7 @@
         NumberPickerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-number-picker, ux-number-picker-inline',
-                        template: "<input type=\"number\"\n    [id]=\"inputId\"\n    role=\"spinbutton\"\n    class=\"form-control number-picker-input\"\n    [(ngModel)]=\"value\"\n    [min]=\"min\"\n    [max]=\"max\"\n    (keydown.ArrowDown)=\"decrement($event)\"\n    (keydown.ArrowUp)=\"increment($event)\"\n    (wheel)=\"onScroll($event)\"\n    step=\"any\"\n    [disabled]=\"disabled\"\n    [attr.aria-valuemin]=\"min\"\n    [attr.aria-valuenow]=\"value\"\n    [attr.aria-valuemax]=\"max\"\n    [attr.aria-labelledby]=\"labelledBy\">\n\n<div class=\"number-picker-controls\">\n\n    <div class=\"number-picker-control-up\"\n         (click)=\"increment($event)\"\n         [class.disabled]=\"disabled || value >= max\">\n\n        <span class=\"hpe-icon hpe-up\"></span>\n    </div>\n\n    <div class=\"number-picker-control-down\"\n         (click)=\"decrement($event)\"\n         [class.disabled]=\"disabled || value <= min\">\n\n        <span class=\"hpe-icon hpe-down\"></span>\n    </div>\n\n</div>",
+                        template: "<input type=\"number\"\n    [id]=\"inputId\"\n    role=\"spinbutton\"\n    class=\"form-control number-picker-input\"\n    [(ngModel)]=\"value\"\n    [min]=\"min\"\n    [max]=\"max\"\n    (keydown.ArrowDown)=\"decrement($event)\"\n    (keydown.ArrowUp)=\"increment($event)\"\n    (wheel)=\"onScroll($event)\"\n    step=\"any\"\n    [disabled]=\"disabled\"\n    [attr.aria-valuemin]=\"min\"\n    [attr.aria-valuenow]=\"value\"\n    [attr.aria-valuemax]=\"max\"\n    [attr.aria-labelledby]=\"labelledBy\">\n\n<div class=\"number-picker-controls\">\n\n    <div class=\"number-picker-control number-picker-control-up\"\n         (click)=\"increment($event)\"\n         [class.disabled]=\"disabled || value >= max\">\n\n        <ux-icon name=\"up\"></ux-icon>\n    </div>\n\n    <div class=\"number-picker-control number-picker-control-down\"\n         (click)=\"decrement($event)\"\n         [class.disabled]=\"disabled || value <= min\">\n\n         <ux-icon name=\"down\"></ux-icon>\n    </div>\n\n</div>",
                         providers: [NUMBER_PICKER_VALUE_ACCESSOR],
                         host: {
                             '[class.has-error]': '!isValid()'
@@ -5374,7 +6200,6 @@
         };
         return NumberPickerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -5386,6 +6211,7 @@
             { type: i0.NgModule, args: [{
                         imports: [
                             common.CommonModule,
+                            IconModule,
                             forms.FormsModule
                         ],
                         exports: [NumberPickerComponent],
@@ -5394,12 +6220,10 @@
         ];
         return NumberPickerModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -5590,7 +6414,6 @@
         };
         return TooltipComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -5604,7 +6427,6 @@
         ];
         return TooltipService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6232,7 +7054,6 @@
         };
         return TooltipDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6255,12 +7076,10 @@
         ];
         return TooltipModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6276,6 +7095,7 @@
                             forms.FormsModule,
                             NumberPickerModule,
                             TooltipModule,
+                            IconModule
                         ],
                         exports: [
                             ColorPickerComponent
@@ -6287,12 +7107,10 @@
         ];
         return ColorPickerModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6392,7 +7210,6 @@
         Descending: 'descending',
         NoSort: 'none',
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6420,6 +7237,30 @@
             this._sorter.events.pipe(operators.takeUntil(this._onDestroy))
                 .subscribe(this.updateState.bind(this));
         }
+        Object.defineProperty(ColumnSortingComponent.prototype, "state", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._state;
+            },
+            /** Defines the sorting order of a column: `NoSort`, `Ascending` or `Descending`. */
+            set: /**
+             * Defines the sorting order of a column: `NoSort`, `Ascending` or `Descending`.
+             * @param {?} state
+             * @return {?}
+             */ function (state) {
+                this._state = state;
+                // update the column sorting icon
+                if (this.state === ColumnSortingState.Ascending) {
+                    this._icon = 'ascend';
+                }
+                if (this.state === ColumnSortingState.Descending) {
+                    this._icon = 'descend';
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(ColumnSortingComponent.prototype, "_sortIndicator", {
             /** Access the custom sort indicator if one was provided */
             get: /**
@@ -6496,7 +7337,7 @@
         ColumnSortingComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-column-sorting',
-                        template: "<div class=\"ux-column-sorting\">\n\n    <!-- The default sort indicator -->\n    <ng-container *ngIf=\"!_sortIndicator\">\n        <i class=\"ux-column-sorting-icon hpe-icon\"\n           [class.hpe-ascend]=\"state === columnSortingState.Ascending\"\n           [class.hpe-descend]=\"state === columnSortingState.Descending\"\n           [class.column-sorting-icon-hidden]=\"state === columnSortingState.NoSort\">\n        </i>\n\n        <p class=\"ux-column-sorting-number\" aria-hidden=\"true\">{{ order }}</p>\n    </ng-container>\n\n    <!-- Custom sort indicator -->\n    <ng-container\n        *ngIf=\"_sortIndicator\"\n        [ngTemplateOutlet]=\"_sortIndicator\"\n        [ngTemplateOutletContext]=\"{ state: state, order: order }\">\n    </ng-container>\n\n</div>",
+                        template: "<div class=\"ux-column-sorting\">\n\n    <!-- The default sort indicator -->\n    <ng-container *ngIf=\"!_sortIndicator\">\n\n        <ux-icon\n            class=\"ux-column-sorting-icon\"\n            [class.column-sorting-icon-hidden]=\"_state === columnSortingState.NoSort\"\n            [name]=\"_icon\">\n        </ux-icon>\n\n        <p class=\"ux-column-sorting-number\" aria-hidden=\"true\">{{ order }}</p>\n    </ng-container>\n\n    <!-- Custom sort indicator -->\n    <ng-container\n        *ngIf=\"_sortIndicator\"\n        [ngTemplateOutlet]=\"_sortIndicator\"\n        [ngTemplateOutletContext]=\"{ state: _state, order: order }\">\n    </ng-container>\n\n</div>",
                         exportAs: 'ux-column-sorting',
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
@@ -6515,7 +7356,6 @@
         };
         return ColumnSortingComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6526,7 +7366,8 @@
         ColumnSortingModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
-                            common.CommonModule
+                            common.CommonModule,
+                            IconModule
                         ],
                         exports: [
                             ColumnSortingComponent,
@@ -6540,12 +7381,10 @@
         ];
         return ColumnSortingModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6673,7 +7512,6 @@
             };
         return ConduitSubject;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6707,7 +7545,6 @@
             functionList.forEach(function (func) { return func.call.apply(func, __spread([target], args)); });
         };
     }
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6917,7 +7754,6 @@
         ];
         return ConduitZone;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -6994,7 +7830,6 @@
         };
         return ConduitComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -7020,7 +7855,6 @@
             };
         return ConduitZoneComponent;
     }(ConduitComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -7030,7 +7864,6 @@
         acceptsInput: true,
         producesOutput: true,
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -7058,12 +7891,10 @@
             target[CONDUITS].push(( /** @type {?} */(__assign({}, defaultConduitProps, properties, { target: target, propertyKey: propertyKey }))));
         };
     }
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -7120,7 +7951,6 @@
         ];
         return DragService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -7396,7 +8226,6 @@
         };
         return DragDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -7560,7 +8389,6 @@
         };
         return DropDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -7577,12 +8405,10 @@
         ];
         return DragModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -9268,7 +10094,6 @@
     Rounding[Rounding.RoundDownBelowHalf] = 'RoundDownBelowHalf';
     Rounding[Rounding.RoundUp] = 'RoundUp';
     Rounding[Rounding.RoundUpOverHalf] = 'RoundUpOverHalf';
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -9703,7 +10528,6 @@
         };
         return DashboardWidgetComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -9930,7 +10754,6 @@
         };
         return DashboardGrabHandleService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -10637,7 +11460,6 @@
         };
         return DashboardGrabHandleDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -10786,12 +11608,11 @@
             options: [{ type: i0.Input }],
             layoutChange: [{ type: i0.Output }],
             ariaLabel: [{ type: i0.HostBinding, args: ['attr.aria-label',] }],
-            dashboardElement: [{ type: i0.ViewChild, args: ['dashboard',] }],
+            dashboardElement: [{ type: i0.ViewChild, args: ['dashboard', { static: true },] }],
             handles: [{ type: i0.ContentChildren, args: [DashboardGrabHandleDirective, { descendants: true },] }]
         };
         return DashboardComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -10828,7 +11649,6 @@
         };
         return DashboardDragHandleDirective;
     }(DragDirective));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -10858,12 +11678,10 @@
         ];
         return DashboardModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -11021,15 +11839,17 @@
      * @type {?}
      */
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var ɵ0$2 = function (month) { return month.substring(0, 3); };
     /** @type {?} */
-    var monthsShort = months.map(function (month) { return month.substring(0, 3); });
+    var monthsShort = months.map(ɵ0$2);
     /**
      * Export an array of all the available days of the week
      * @type {?}
      */
     var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var ɵ1 = function (weekday) { return weekday.substring(0, 3); };
     /** @type {?} */
-    var weekdaysShort = weekdays.map(function (weekday) { return weekday.substring(0, 3); });
+    var weekdaysShort = weekdays.map(ɵ1);
     /** @type {?} */
     var meridians = ['AM', 'PM'];
     /**
@@ -11062,7 +11882,6 @@
         { name: 'GMT+11', offset: -660 },
         { name: 'GMT+12', offset: -720 }
     ];
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -11199,7 +12018,6 @@
         Start: 'start',
         End: 'end',
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -11461,7 +12279,7 @@
         DateRangePickerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-date-range-picker',
-                        template: "<div class=\"range-header\">\n\n  <div class=\"header-section\">\n    <div *ngIf=\"!rangeService.start\" class=\"select-header\">{{ selectStartTitle }}</div>\n    <div *ngIf=\"rangeService.start\" class=\"date-header\">{{ rangeService.start | date: 'd MMMM y' }}</div>\n    <div [style.visibility]=\"rangeService.start && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n        {{ rangeService.start | date: showMeridian ? 'shortTime' : 'HH:mm' }}\n    </div>\n  </div>\n\n  <div class=\"header-separator\">\n    <i class=\"hpe-icon hpe-link-next\"></i>\n    <p class=\"duration\" [style.visibility]=\"_duration !== null && _duration !== undefined ? 'visible' : 'hidden'\">\n        {{ durationTitle(_duration || 0) }}\n    </p>\n  </div>\n\n  <div class=\"header-section\">\n    <div *ngIf=\"!rangeService.end\" class=\"select-header\">{{ selectEndTitle }}</div>\n    <div *ngIf=\"rangeService.end\" class=\"date-header\">{{ rangeService.end | date: 'd MMMM y' }}</div>\n    <div [style.visibility]=\"rangeService.end && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n        {{ rangeService.end | date: showMeridian ? 'shortTime' : 'HH:mm' }}\n    </div>\n  </div>\n\n</div>\n\n<div class=\"content\">\n  <ux-date-time-picker\n    uxDateRangePicker\n    picker=\"start\"\n    class=\"start-date-picker\"\n    [date]=\"rangeService.start\"\n    (dateChange)=\"startChange$.next($event)\"\n    [min]=\"min\"\n    [max]=\"max\"\n    [weekdays]=\"weekdays\"\n    [startOfWeek]=\"startOfWeek\"\n    [showTime]=\"showTime\"\n    [showTimezone]=\"showTimezone\"\n    [showSeconds]=\"showSeconds\"\n    [showMeridian]=\"showMeridian\"\n    [showSpinners]=\"showSpinners\"\n    [months]=\"months\"\n    [monthsShort]=\"monthsShort\"\n    [meridians]=\"meridians\"\n    [nowBtnText]=\"nowBtnText\"\n    [showNowBtn]=\"showNowBtn\"\n    [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n    [timezones]=\"timezones\"\n    [(timezone)]=\"startTimezone\"\n    (timezoneChange)=\"startTimezoneChange.emit($event)\">\n  </ux-date-time-picker>\n\n  <ux-date-time-picker\n    uxDateRangePicker\n    picker=\"end\"\n    class=\"end-date-picker\"\n    [date]=\"rangeService.end\"\n    (dateChange)=\"endChange$.next($event)\"\n    [min]=\"min\"\n    [max]=\"max\"\n    [weekdays]=\"weekdays\"\n    [startOfWeek]=\"startOfWeek\"\n    [showTime]=\"showTime\"\n    [showTimezone]=\"showTimezone\"\n    [showSeconds]=\"showSeconds\"\n    [showMeridian]=\"showMeridian\"\n    [showSpinners]=\"showSpinners\"\n    [months]=\"months\"\n    [monthsShort]=\"monthsShort\"\n    [meridians]=\"meridians\"\n    [nowBtnText]=\"nowBtnText\"\n    [showNowBtn]=\"showNowBtn\"\n    [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n    [timezones]=\"timezones\"\n    [(timezone)]=\"endTimezone\"\n    (timezoneChange)=\"endTimezoneChange.emit($event)\">\n  </ux-date-time-picker>\n</div>\n",
+                        template: "<div class=\"range-header\">\n\n  <div class=\"header-section\">\n    <div *ngIf=\"!rangeService.start\" class=\"select-header\">{{ selectStartTitle }}</div>\n    <div *ngIf=\"rangeService.start\" class=\"date-header\">{{ rangeService.start | date: 'd MMMM y' }}</div>\n    <div [style.visibility]=\"rangeService.start && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n        {{ rangeService.start | date: showMeridian ? 'shortTime' : 'HH:mm' }}\n    </div>\n  </div>\n\n  <div class=\"header-separator\">\n    <ux-icon name=\"link-next\"></ux-icon>\n    <p class=\"duration\" [style.visibility]=\"_duration !== null && _duration !== undefined ? 'visible' : 'hidden'\">\n        {{ durationTitle(_duration || 0) }}\n    </p>\n  </div>\n\n  <div class=\"header-section\">\n    <div *ngIf=\"!rangeService.end\" class=\"select-header\">{{ selectEndTitle }}</div>\n    <div *ngIf=\"rangeService.end\" class=\"date-header\">{{ rangeService.end | date: 'd MMMM y' }}</div>\n    <div [style.visibility]=\"rangeService.end && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n        {{ rangeService.end | date: showMeridian ? 'shortTime' : 'HH:mm' }}\n    </div>\n  </div>\n\n</div>\n\n<div class=\"content\">\n  <ux-date-time-picker\n    uxDateRangePicker\n    picker=\"start\"\n    class=\"start-date-picker\"\n    [date]=\"rangeService.start\"\n    (dateChange)=\"startChange$.next($event)\"\n    [min]=\"min\"\n    [max]=\"max\"\n    [weekdays]=\"weekdays\"\n    [startOfWeek]=\"startOfWeek\"\n    [showTime]=\"showTime\"\n    [showTimezone]=\"showTimezone\"\n    [showSeconds]=\"showSeconds\"\n    [showMeridian]=\"showMeridian\"\n    [showSpinners]=\"showSpinners\"\n    [months]=\"months\"\n    [monthsShort]=\"monthsShort\"\n    [meridians]=\"meridians\"\n    [nowBtnText]=\"nowBtnText\"\n    [showNowBtn]=\"showNowBtn\"\n    [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n    [timezones]=\"timezones\"\n    [(timezone)]=\"startTimezone\"\n    (timezoneChange)=\"startTimezoneChange.emit($event)\">\n  </ux-date-time-picker>\n\n  <ux-date-time-picker\n    uxDateRangePicker\n    picker=\"end\"\n    class=\"end-date-picker\"\n    [date]=\"rangeService.end\"\n    (dateChange)=\"endChange$.next($event)\"\n    [min]=\"min\"\n    [max]=\"max\"\n    [weekdays]=\"weekdays\"\n    [startOfWeek]=\"startOfWeek\"\n    [showTime]=\"showTime\"\n    [showTimezone]=\"showTimezone\"\n    [showSeconds]=\"showSeconds\"\n    [showMeridian]=\"showMeridian\"\n    [showSpinners]=\"showSpinners\"\n    [months]=\"months\"\n    [monthsShort]=\"monthsShort\"\n    [meridians]=\"meridians\"\n    [nowBtnText]=\"nowBtnText\"\n    [showNowBtn]=\"showNowBtn\"\n    [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n    [timezones]=\"timezones\"\n    [(timezone)]=\"endTimezone\"\n    (timezoneChange)=\"endTimezoneChange.emit($event)\">\n  </ux-date-time-picker>\n</div>\n",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         providers: [DateRangeService]
                     }] }
@@ -11505,7 +12323,6 @@
         };
         return DateRangePickerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -11549,7 +12366,6 @@
         };
         return DateRangePickerDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -11577,7 +12393,6 @@
         ];
         return DateTimePickerConfig;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -11618,14 +12433,16 @@
              */
             this.initialised = false;
             // when the active date changes set the currently selected date
-            this._subscription = this.selected$.pipe(operators.distinctUntilChanged(dateComparator)).subscribe(function (date) {
+            this._subscription = this.selected$.subscribe(function (date) {
                 // the month and year displayed in the viewport should reflect the newly selected items
                 if (date instanceof Date) {
                     _this.setViewportMonth(date.getMonth());
                     _this.setViewportYear(date.getFullYear());
                 }
-                // emit the new date to the component host
-                _this.date$.next(date);
+                // emit the new date to the component host but only if they are different
+                if (dateComparator(date, _this.date$.value)) {
+                    _this.date$.next(date);
+                }
             });
         }
         /**
@@ -11860,7 +12677,6 @@
     };
     DatePickerHeaderEvent[DatePickerHeaderEvent.Previous] = 'Previous';
     DatePickerHeaderEvent[DatePickerHeaderEvent.Next] = 'Next';
-
     var DateTimePickerComponent = /** @class */ (function () {
         function DateTimePickerComponent(datepicker, _rangeService, _rangeOptions) {
             var _this = this;
@@ -12289,7 +13105,6 @@
         };
         return DateTimePickerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -12359,7 +13174,6 @@
         };
         return FocusIfDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -12375,12 +13189,10 @@
         ];
         return FocusIfModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -12512,7 +13324,7 @@
         SpinButtonComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-spin-button',
-                        template: "<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"incrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerIncrement()\">\n\n  <span class=\"hpe-icon hpe-up\"></span>\n</button>\n\n<input [type]=\"type\"\n       role=\"spinbutton\"\n       [min]=\"min\"\n       [max]=\"max\"\n       [tabindex]=\"0\"\n       class=\"form-control\"\n       [placeholder]=\"placeholder\"\n       [readOnly]=\"readOnly\"\n       [disabled]=\"disabled\"\n       [attr.aria-label]=\"inputAriaLabel\"\n       [attr.aria-disabled]=\"disabled\"\n       [attr.aria-valuemin]=\"min\"\n       [attr.aria-valuenow]=\"value\"\n       [attr.aria-valuemax]=\"max\"\n       [attr.aria-readonly]=\"readOnly\"\n       [ngModel]=\"value\"\n       (ngModelChange)=\"valueChange.emit($event)\"\n       (wheel)=\"scroll($event)\"\n       (keydown.arrowup)=\"arrowkeys ? triggerIncrement() : null; $event.preventDefault()\"\n       (keydown.arrowdown)=\"arrowkeys ? triggerDecrement() : null; $event.preventDefault()\">\n\n<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"decrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerDecrement()\">\n\n  <span class=\"hpe-icon hpe-down\"></span>\n</button>",
+                        template: "<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"incrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerIncrement()\">\n\n    <ux-icon name=\"up\" class=\"spin-button-up-icon\"></ux-icon>\n</button>\n\n<input [type]=\"type\"\n       role=\"spinbutton\"\n       [min]=\"min\"\n       [max]=\"max\"\n       [tabindex]=\"0\"\n       class=\"form-control\"\n       [placeholder]=\"placeholder\"\n       [readOnly]=\"readOnly\"\n       [disabled]=\"disabled\"\n       [attr.aria-label]=\"inputAriaLabel\"\n       [attr.aria-disabled]=\"disabled\"\n       [attr.aria-valuemin]=\"min\"\n       [attr.aria-valuenow]=\"value\"\n       [attr.aria-valuemax]=\"max\"\n       [attr.aria-readonly]=\"readOnly\"\n       [ngModel]=\"value\"\n       (ngModelChange)=\"valueChange.emit($event)\"\n       (wheel)=\"scroll($event)\"\n       (keydown.arrowup)=\"arrowkeys ? triggerIncrement() : null; $event.preventDefault()\"\n       (keydown.arrowdown)=\"arrowkeys ? triggerDecrement() : null; $event.preventDefault()\">\n\n<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"decrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerDecrement()\">\n\n    <ux-icon name=\"down\" class=\"spin-button-down-icon\"></ux-icon>\n</button>",
                         encapsulation: i0.ViewEncapsulation.None,
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         providers: [SPIN_BUTTON_VALUE_ACCESSOR]
@@ -12538,7 +13350,6 @@
         };
         return SpinButtonComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -12551,7 +13362,8 @@
                         imports: [
                             AccessibilityModule,
                             common.CommonModule,
-                            forms.FormsModule
+                            forms.FormsModule,
+                            IconModule,
                         ],
                         exports: [SpinButtonComponent],
                         declarations: [SpinButtonComponent]
@@ -12559,12 +13371,10 @@
         ];
         return SpinButtonModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -13096,7 +13906,6 @@
         };
         return TimePickerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -13118,12 +13927,10 @@
         ];
         return TimePickerModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -13274,7 +14081,6 @@
         };
         return DayViewService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -13804,7 +14610,6 @@
         };
         return DayViewComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -14084,7 +14889,7 @@
         HeaderComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-date-time-picker-header',
-                        template: "<header class=\"header\">\n\n  <button type=\"button\"\n          uxFocusIndicator\n          [disabled]=\"isPreviousDisabled()\"\n          class=\"header-navigation\"\n          (click)=\"previous(); $event.stopPropagation()\"\n          [attr.aria-label]=\"previousAria$ | async\"\n          tabindex=\"0\">\n\n    <i class=\"hpe-icon hpe-previous\"></i>\n  </button>\n\n  <button type=\"button\"\n          uxFocusIndicator\n          class=\"header-title\"\n          [attr.aria-label]=\"headerAria$ | async\"\n          [class.active]=\"canAscend$ | async\"\n          (click)=\"ascend(); $event.stopPropagation()\"\n          [tabindex]=\"(canAscend$ | async) ? 0 : -1\">\n       {{ datepicker.header$ | async }}\n  </button>\n\n  <button type=\"button\"\n          uxFocusIndicator\n          [disabled]=\"isNextDisabled()\"\n          class=\"header-navigation\"\n          (click)=\"next(); $event.stopPropagation()\"\n          [attr.aria-label]=\"nextAria$ | async\"\n          tabindex=\"0\">\n\n    <i class=\"hpe-icon hpe-next\"></i>\n  </button>\n</header>",
+                        template: "<header class=\"header\">\n\n  <button type=\"button\"\n          uxFocusIndicator\n          [disabled]=\"isPreviousDisabled()\"\n          class=\"header-navigation\"\n          (click)=\"previous(); $event.stopPropagation()\"\n          [attr.aria-label]=\"previousAria$ | async\"\n          tabindex=\"0\">\n\n    <ux-icon name=\"previous\" class=\"header-navigation-previous-icon\"></ux-icon>\n  </button>\n\n  <button type=\"button\"\n          uxFocusIndicator\n          class=\"header-title\"\n          [attr.aria-label]=\"headerAria$ | async\"\n          [class.active]=\"canAscend$ | async\"\n          (click)=\"ascend(); $event.stopPropagation()\"\n          [tabindex]=\"(canAscend$ | async) ? 0 : -1\">\n       {{ datepicker.header$ | async }}\n  </button>\n\n  <button type=\"button\"\n          uxFocusIndicator\n          [disabled]=\"isNextDisabled()\"\n          class=\"header-navigation\"\n          (click)=\"next(); $event.stopPropagation()\"\n          [attr.aria-label]=\"nextAria$ | async\"\n          tabindex=\"0\">\n\n    <ux-icon name=\"next\" class=\"header-navigation-next-icon\"></ux-icon>\n  </button>\n</header>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -14099,7 +14904,6 @@
         };
         return HeaderComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -14193,15 +14997,14 @@
         };
         return MonthViewService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var MonthViewComponent = /** @class */ (function () {
         function MonthViewComponent(_datePicker, monthService, _liveAnnouncer, _changeDetector, _rangeService, _rangeOptions) {
-            var e_1, _a, e_2, _b;
             var _this = this;
+            var e_1, _a, e_2, _b;
             this._datePicker = _datePicker;
             this.monthService = monthService;
             this._liveAnnouncer = _liveAnnouncer;
@@ -14601,7 +15404,6 @@
         };
         return MonthViewComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -14637,7 +15439,6 @@
         ];
         return WeekDaySortPipe;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -14910,7 +15711,6 @@
         };
         return TimeViewComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15037,7 +15837,6 @@
         };
         return YearViewService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15336,7 +16135,6 @@
         };
         return YearViewComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15364,10 +16162,11 @@
                             a11y.A11yModule,
                             AccessibilityModule,
                             common.CommonModule,
+                            FocusIfModule,
                             forms.FormsModule,
-                            TimePickerModule,
+                            IconModule,
                             SpinButtonModule,
-                            FocusIfModule
+                            TimePickerModule,
                         ],
                         exports: [DateTimePickerComponent],
                         declarations: [
@@ -15383,12 +16182,10 @@
         ];
         return DateTimePickerModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15400,7 +16197,8 @@
             { type: i0.NgModule, args: [{
                         imports: [
                             common.CommonModule,
-                            DateTimePickerModule
+                            DateTimePickerModule,
+                            IconModule
                         ],
                         declarations: [
                             DateRangePickerComponent,
@@ -15413,12 +16211,10 @@
         ];
         return DateRangePickerModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15455,7 +16251,6 @@
         ];
         return EboxContentDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15471,12 +16266,10 @@
         ];
         return EboxModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15491,7 +16284,6 @@
         ];
         return FacetClearButtonDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15513,7 +16305,6 @@
         }
         return FacetDeselectAll;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15604,7 +16395,6 @@
         ];
         return FacetService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -15824,7 +16614,7 @@
         FacetContainerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-facet-container',
-                        template: "<!-- Display Any Selected Facets -->\n<div class=\"facets-selected-container\">\n\n    <!-- Display Title an Clear Button -->\n    <div class=\"facets-selected-header-container\">\n\n        <!-- Show The Selected Text -->\n        <span class=\"facets-selected-header-label\">{{ header }}</span>\n\n        <!-- Add a Clear Button -->\n        <ng-container *ngIf=\"(facetService.facets$ | async).length > 0\" [ngTemplateOutlet]=\"clearButton || clearButtonDefault\"></ng-container>\n\n    </div>\n\n    <!-- Display Tags For Selected Items -->\n    <div class=\"facets-selected-list\"\n        uxReorderable\n        role=\"list\"\n        [reorderingDisabled]=\"!facetsReorderable\"\n        [(reorderableModel)]=\"facets\"\n        (reorderableModelChange)=\"facetsChange.emit(facets)\">\n\n        <!-- Show Selected Tags -->\n        <div #tag\n            class=\"facet-selected-tag\"\n            role=\"listitem\"\n            tabindex=\"0\"\n            uxReorderableHandle\n            *ngFor=\"let facet of (facetService.facets$ | async); trackBy: trackBy\"\n            [attr.aria-label]=\"facet.title\"\n            [uxReorderableModel]=\"facet\"\n            (mousedown)=\"tag.focus()\"\n            (keydown.ArrowRight)=\"shiftRight(facet, tag)\"\n            (keydown.ArrowLeft)=\"shiftLeft(facet, tag)\">\n\n            <!-- Display Label -->\n            <span class=\"facet-selected-tag-label\">{{ facet.title }}</span>\n\n            <!-- Display Remove Icon -->\n            <button type=\"button\"\n                uxFocusIndicator\n                class=\"facet-selected-remove-btn\"\n                i18n-aria-label\n                aria-label=\"Deselect Facet\"\n                (click)=\"deselectFacet(facet, tag)\">\n\n                <i class=\"hpe-icon hpe-close\"></i>\n            </button>\n        </div>\n\n    </div>\n\n    <!-- Show Message Here if No Facets Selected -->\n    <p class=\"facets-selected-none-label\" *ngIf=\"emptyText && (facetService.facets$ | async).length === 0\">{{ emptyText }}</p>\n\n</div>\n\n<!-- Any Facet Elements Should be Added Here By User -->\n<div class=\"facets-region\">\n    <ng-content></ng-content>\n</div>\n\n<ng-template #clearButtonDefault>\n    <button type=\"button\"\n            class=\"btn btn-link btn-icon button-secondary\"\n            tabindex=\"0\"\n            [attr.aria-label]=\"clearTooltip\"\n            [uxTooltip]=\"clearTooltip\"\n            placement=\"left\"\n            (click)=\"deselectAllFacets()\">\n\n            <svg class=\"facets-selected-clear-graphic\" focusable=\"false\" viewBox=\"0 0 19 12\" shape-rendering=\"geometricPrecision\">\n                <rect class=\"light-grey\" x=\"0\" y=\"2\" width=\"7\" height=\"2\"></rect>\n                <rect class=\"dark-grey\" x=\"0\" y=\"5\" width=\"9\" height=\"2\"></rect>\n                <rect class=\"light-grey\" x=\"0\" y=\"8\" width=\"7\" height=\"2\"></rect>\n                <path class=\"dark-grey\" d=\"M9,1 h1 l9,9 v1 h-1 l-9,-9 v-1 Z\"></path>\n                <path class=\"dark-grey\" d=\"M9,11 v-1 l9,-9 h1 v1 l-9,9 h-1 Z\"></path>\n            </svg>\n        </button>\n</ng-template>",
+                        template: "<!-- Display Any Selected Facets -->\n<div class=\"facets-selected-container\">\n\n    <!-- Display Title an Clear Button -->\n    <div class=\"facets-selected-header-container\">\n\n        <!-- Show The Selected Text -->\n        <span class=\"facets-selected-header-label\">{{ header }}</span>\n\n        <!-- Add a Clear Button -->\n        <ng-container *ngIf=\"(facetService.facets$ | async).length > 0\" [ngTemplateOutlet]=\"clearButton || clearButtonDefault\"></ng-container>\n\n    </div>\n\n    <!-- Display Tags For Selected Items -->\n    <div class=\"facets-selected-list\"\n        uxReorderable\n        role=\"list\"\n        [reorderingDisabled]=\"!facetsReorderable\"\n        [(reorderableModel)]=\"facets\"\n        (reorderableModelChange)=\"facetsChange.emit(facets)\">\n\n        <!-- Show Selected Tags -->\n        <div #tag\n            class=\"facet-selected-tag\"\n            role=\"listitem\"\n            tabindex=\"0\"\n            uxReorderableHandle\n            *ngFor=\"let facet of (facetService.facets$ | async); trackBy: trackBy\"\n            [attr.aria-label]=\"facet.title\"\n            [uxReorderableModel]=\"facet\"\n            (mousedown)=\"tag.focus()\"\n            (keydown.ArrowRight)=\"shiftRight(facet, tag)\"\n            (keydown.ArrowLeft)=\"shiftLeft(facet, tag)\">\n\n            <!-- Display Label -->\n            <span class=\"facet-selected-tag-label\">{{ facet.title }}</span>\n\n            <!-- Display Remove Icon -->\n            <button type=\"button\"\n                uxFocusIndicator\n                class=\"facet-selected-remove-btn\"\n                i18n-aria-label\n                aria-label=\"Deselect Facet\"\n                (click)=\"deselectFacet(facet, tag)\">\n\n                <ux-icon name=\"close\"></ux-icon>\n            </button>\n        </div>\n\n    </div>\n\n    <!-- Show Message Here if No Facets Selected -->\n    <p class=\"facets-selected-none-label\" *ngIf=\"emptyText && (facetService.facets$ | async).length === 0\">{{ emptyText }}</p>\n\n</div>\n\n<!-- Any Facet Elements Should be Added Here By User -->\n<div class=\"facets-region\">\n    <ng-content></ng-content>\n</div>\n\n<ng-template #clearButtonDefault>\n    <button type=\"button\"\n            class=\"btn btn-link btn-icon button-secondary\"\n            tabindex=\"0\"\n            [attr.aria-label]=\"clearTooltip\"\n            [uxTooltip]=\"clearTooltip\"\n            placement=\"left\"\n            (click)=\"deselectAllFacets()\">\n\n            <svg class=\"facets-selected-clear-graphic\" focusable=\"false\" viewBox=\"0 0 19 12\" shape-rendering=\"geometricPrecision\">\n                <rect class=\"light-grey\" x=\"0\" y=\"2\" width=\"7\" height=\"2\"></rect>\n                <rect class=\"dark-grey\" x=\"0\" y=\"5\" width=\"9\" height=\"2\"></rect>\n                <rect class=\"light-grey\" x=\"0\" y=\"8\" width=\"7\" height=\"2\"></rect>\n                <path class=\"dark-grey\" d=\"M9,1 h1 l9,9 v1 h-1 l-9,-9 v-1 Z\"></path>\n                <path class=\"dark-grey\" d=\"M9,11 v-1 l9,-9 h1 v1 l-9,9 h-1 Z\"></path>\n            </svg>\n        </button>\n</ng-template>",
                         providers: [FacetService]
                     }] }
         ];
@@ -15843,11 +16633,10 @@
             facets: [{ type: i0.Input }],
             facetsChange: [{ type: i0.Output }],
             events: [{ type: i0.Output }],
-            clearButton: [{ type: i0.ContentChild, args: [FacetClearButtonDirective, { read: i0.TemplateRef },] }]
+            clearButton: [{ type: i0.ContentChild, args: [FacetClearButtonDirective, { read: i0.TemplateRef, static: false },] }]
         };
         return FacetContainerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16018,7 +16807,6 @@
         };
         return FacetBaseComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16030,7 +16818,7 @@
              */
             this.canExpand = true;
             /**
-             * Can be used to set the initial expanded.
+             * Can be used to set the initial expanded state.
              */
             this.expanded = true;
             /**
@@ -16064,7 +16852,7 @@
         FacetHeaderComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-facet-header',
-                        template: "<span class=\"facet-header-title\">{{ header }}</span>\n<span class=\"hpe-icon\" [class.hpe-down]=\"expanded\" [class.hpe-previous]=\"!expanded\" *ngIf=\"canExpand\"></span>",
+                        template: "<span class=\"facet-header-title\">{{ header }}</span>\n<ux-icon *ngIf=\"canExpand\" [name]=\"expanded ? 'down' : 'previous'\" class=\"facet-header-icon\"></ux-icon>\n",
                         host: {
                             'role': 'button',
                             'tabindex': '0',
@@ -16085,12 +16873,11 @@
         FacetHeaderComponent.propDecorators = {
             header: [{ type: i0.Input }],
             canExpand: [{ type: i0.Input }],
-            expanded: [{ type: i0.Input }],
+            expanded: [{ type: i0.Input }, { type: i0.HostBinding, args: ['class.expanded',] }],
             expandedChange: [{ type: i0.Output }]
         };
         return FacetHeaderComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16147,11 +16934,10 @@
             selectedChange: [{ type: i0.Output }],
             itemFocus: [{ type: i0.Output }],
             itemBlur: [{ type: i0.Output }],
-            option: [{ type: i0.ViewChild, args: ['option',] }]
+            option: [{ type: i0.ViewChild, args: ['option', { static: true },] }]
         };
         return FacetCheckListItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16323,7 +17109,6 @@
         };
         return FacetCheckListComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16340,10 +17125,12 @@
         }
         return TypeaheadOptionEvent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /**
+     * @template T
      */
     var TypeaheadKeyService = /** @class */ (function () {
         function TypeaheadKeyService() {
@@ -16395,7 +17182,6 @@
         ];
         return TypeaheadKeyService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16410,7 +17196,6 @@
         ];
         return TypeaheadService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16521,7 +17306,7 @@
                 _this.highlightedKey = next ? next.key : null;
                 _this.highlightedChange.emit(next ? next.value : null);
             });
-            rxjs.combineLatest(this._service.open$, this._service.highlightedElement$, this.visibleOptions$)
+            rxjs.combineLatest([this._service.open$, this._service.highlightedElement$, this.visibleOptions$])
                 .pipe(operators.takeUntil(this._onDestroy))
                 .subscribe(function (_a) {
                 var _b = __read(_a, 3), open = _b[0], highlightedElement = _b[1], visibleOptions = _b[2];
@@ -16580,6 +17365,13 @@
                 // Open the dropdown if the filter value updates
                 if (changes.filter) {
                     if (this.openOnFilterChange && changes.filter.currentValue && changes.filter.currentValue.length > 0) {
+                        // if the dropdown item was just selected, and we set the filter value to match the
+                        // selected value then open will have also just been set to `false`, in which case we do
+                        // not want to set open to `true`
+                        if (changes.open && changes.open.previousValue === true && changes.open.currentValue === false) {
+                            return;
+                        }
+                        // show the dropdown
                         this.open = true;
                     }
                 }
@@ -16862,6 +17654,25 @@
                 }
             };
         /**
+         * Display the first item as highlighted when there are several pages
+         */
+        /**
+         * Display the first item as highlighted when there are several pages
+         * @param {?} event
+         * @return {?}
+         */
+        TypeaheadComponent.prototype.onLoadedHighlight = /**
+         * Display the first item as highlighted when there are several pages
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                if (this.selectFirst && this.options && event.pageNumber === 0) {
+                    // This will highlight the first non-disabled option.
+                    this.moveHighlight(1);
+                }
+            };
+        /**
          * Update the visibleOptions array with the current filter.
          */
         /**
@@ -16919,7 +17730,7 @@
         TypeaheadComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-typeahead',
-                        template: "<div class=\"ux-typeahead-options\"\n    [uxInfiniteScroll]=\"loadOptionsCallback\"\n    [collection]=\"visibleOptions$ | async\"\n    (collectionChange)=\"visibleOptions$.next($event)\"\n    [enabled]=\"hasBeenOpened && isInfiniteScroll()\"\n    [filter]=\"filter\"\n    [loadOnScroll]=\"true\"\n    [pageSize]=\"pageSize\"\n    [scrollElement]=\"typeaheadElement\"\n    (loading)=\"loading = true\"\n    (loaded)=\"loading = false\">\n\n    <ol *ngIf=\"(visibleOptions$ | async).length > 0\">\n        <li *ngFor=\"let option of (visibleOptions$ | async); let i = index\"\n            [attr.id]=\"id + '-option-' + i\"\n            [class.disabled]=\"isDisabled(option)\"\n            [class.highlighted]=\"highlightedKey === option.key\"\n            [class.active]=\"activeKey === option.key\"\n            [attr.aria-selected]=\"multiselectable ? isDisabled(option) : (activeKey === option.key ? true : null)\"\n            [uxTypeaheadHighlight]=\"highlightedKey === option.key\"\n            [uxScrollIntoViewIf]=\"highlightedKey === option.key\"\n            [scrollParent]=\"typeaheadElement.nativeElement\"\n            (mousedown)=\"optionMousedownHandler($event)\"\n            (click)=\"optionClickHandler($event, option)\"\n            (mouseover)=\"highlight(option)\">\n\n            <ng-container [ngTemplateOutlet]=\"optionTemplate || defaultOptionTemplate\"\n                [ngTemplateOutletContext]=\"{option: option.value, api: optionApi}\">\n            </ng-container>\n\n        </li>\n    </ol>\n\n    <div *uxInfiniteScrollLoading>\n        <ng-container [ngTemplateOutlet]=\"loadingTemplate || defaultLoadingTemplate\"></ng-container>\n    </div>\n\n    <div *ngIf=\"isInfiniteScroll() === false && (visibleOptions$ | async).length === 0 && loading\">\n        <ng-container [ngTemplateOutlet]=\"loadingTemplate || defaultLoadingTemplate\"></ng-container>\n    </div>\n\n</div>\n<div *ngIf=\"(visibleOptions$ | async).length === 0 && !loading\">\n    <ng-container [ngTemplateOutlet]=\"noOptionsTemplate || defaultNoOptionsTemplate\">\n    </ng-container>\n</div>\n\n<ng-template #defaultLoadingTemplate>\n    <div class=\"ux-typeahead-loading\">\n        <div class=\"spinner spinner-accent spinner-bounce-middle\"></div>\n        <div>Loading...</div>\n    </div>\n</ng-template>\n\n<ng-template #defaultOptionTemplate let-option=\"option\" let-api=\"api\">\n    <span class=\"ux-typeahead-option\" [innerHtml]=\"api.getDisplayHtml(option)\"></span>\n</ng-template>\n\n<ng-template #defaultNoOptionsTemplate>\n    <span class=\"ux-typeahead-no-options\">No results</span>\n</ng-template>",
+                        template: "<div class=\"ux-typeahead-options\"\n     [uxInfiniteScroll]=\"loadOptionsCallback\"\n     [collection]=\"visibleOptions$ | async\"\n     (collectionChange)=\"visibleOptions$.next($event)\"\n     [enabled]=\"hasBeenOpened && isInfiniteScroll()\"\n     [filter]=\"filter\"\n     [loadOnScroll]=\"true\"\n     [pageSize]=\"pageSize\"\n     [scrollElement]=\"typeaheadElement\"\n     (loading)=\"loading = true\"\n     (loaded)=\"loading = false; onLoadedHighlight($event)\">\n\n    <ol *ngIf=\"(visibleOptions$ | async).length > 0\">\n        <li *ngFor=\"let option of (visibleOptions$ | async); let i = index\"\n            [attr.id]=\"id + '-option-' + i\"\n            [class.disabled]=\"isDisabled(option)\"\n            [class.highlighted]=\"highlightedKey === option.key\"\n            [class.active]=\"activeKey === option.key\"\n            [attr.aria-selected]=\"multiselectable ? isDisabled(option) : (activeKey === option.key ? true : null)\"\n            [uxTypeaheadHighlight]=\"highlightedKey === option.key\"\n            [uxScrollIntoViewIf]=\"highlightedKey === option.key\"\n            [scrollParent]=\"typeaheadElement.nativeElement\"\n            (mousedown)=\"optionMousedownHandler($event)\"\n            (click)=\"optionClickHandler($event, option)\"\n            (mouseover)=\"highlight(option)\">\n\n            <ng-container [ngTemplateOutlet]=\"optionTemplate || defaultOptionTemplate\"\n                [ngTemplateOutletContext]=\"{option: option.value, api: optionApi}\">\n            </ng-container>\n\n        </li>\n    </ol>\n\n    <div *uxInfiniteScrollLoading>\n        <ng-container [ngTemplateOutlet]=\"loadingTemplate || defaultLoadingTemplate\"></ng-container>\n    </div>\n\n    <div *ngIf=\"isInfiniteScroll() === false && (visibleOptions$ | async).length === 0 && loading\">\n        <ng-container [ngTemplateOutlet]=\"loadingTemplate || defaultLoadingTemplate\"></ng-container>\n    </div>\n\n</div>\n<div *ngIf=\"(visibleOptions$ | async).length === 0 && !loading\">\n    <ng-container [ngTemplateOutlet]=\"noOptionsTemplate || defaultNoOptionsTemplate\">\n    </ng-container>\n</div>\n\n<ng-template #defaultLoadingTemplate>\n    <div class=\"ux-typeahead-loading\">\n        <div class=\"spinner spinner-accent spinner-bounce-middle\"></div>\n        <div>Loading...</div>\n    </div>\n</ng-template>\n\n<ng-template #defaultOptionTemplate let-option=\"option\" let-api=\"api\">\n    <span class=\"ux-typeahead-option\" [innerHtml]=\"api.getDisplayHtml(option)\"></span>\n</ng-template>\n\n<ng-template #defaultNoOptionsTemplate>\n    <span class=\"ux-typeahead-no-options\">No results</span>\n</ng-template>",
                         providers: [TypeaheadService],
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         host: {
@@ -16967,7 +17778,6 @@
         };
         return TypeaheadComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -16980,7 +17790,7 @@
             this._renderer = _renderer;
             this._visible = false;
             this._load = new rxjs.Subject();
-            this.load = ( /** @type {?} */(this._load.asObservable()));
+            this.loading = ( /** @type {?} */(this._load.asObservable()));
         }
         Object.defineProperty(InfiniteScrollLoadButtonDirective.prototype, "visible", {
             get: /**
@@ -17054,11 +17864,10 @@
         };
         InfiniteScrollLoadButtonDirective.propDecorators = {
             visible: [{ type: i0.Input, args: ['uxInfiniteScrollLoadButton',] }],
-            load: [{ type: i0.Output }]
+            loading: [{ type: i0.Output }]
         };
         return InfiniteScrollLoadButtonDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17109,7 +17918,6 @@
         };
         return InfiniteScrollLoadingDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17432,23 +18240,26 @@
                 }
             };
         /**
-         * Remove any existing event subscriptions for the load button `load` event, then attach subscriptions
+         * Remove any existing event subscriptions for the load button `loading` event, then attach
+         * subscriptions
          * for any in the query.
          */
         /**
-         * Remove any existing event subscriptions for the load button `load` event, then attach subscriptions
+         * Remove any existing event subscriptions for the load button `loading` event, then attach
+         * subscriptions
          * for any in the query.
          * @return {?}
          */
         InfiniteScrollDirective.prototype.attachLoadButtonEvents = /**
-         * Remove any existing event subscriptions for the load button `load` event, then attach subscriptions
+         * Remove any existing event subscriptions for the load button `loading` event, then attach
+         * subscriptions
          * for any in the query.
          * @return {?}
          */
             function () {
                 var _this = this;
                 this._loadButtonSubscriptions.forEach(function (s) { return s.unsubscribe(); });
-                this._loadButtonSubscriptions = this._loadButtonQuery.map(function (loadButton) { return loadButton.load.subscribe(_this.loadNextPage.bind(_this)); });
+                this._loadButtonSubscriptions = this._loadButtonQuery.map(function (loadButton) { return loadButton.loading.subscribe(_this.loadNextPage.bind(_this)); });
             };
         /**
          * Conditionally loads a page into the collection based on directive state and request parameters.
@@ -17711,7 +18522,6 @@
         }
         return InfiniteScrollLoadErrorEvent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17737,12 +18547,10 @@
         ];
         return InfiniteScrollModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17779,7 +18587,6 @@
         ];
         return ScrollIntoViewService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17821,7 +18628,6 @@
         };
         return ScrollIntoViewIfDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17866,7 +18672,6 @@
         };
         return ScrollIntoViewDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17882,12 +18687,10 @@
         ];
         return ScrollModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17926,7 +18729,6 @@
         };
         return TypeaheadHighlightDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -17948,12 +18750,10 @@
         ];
         return TypeaheadModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -18007,11 +18807,10 @@
             tabbable: [{ type: i0.Input }],
             itemFocus: [{ type: i0.Output }],
             selectedChange: [{ type: i0.Output }],
-            option: [{ type: i0.ViewChild, args: ['option',] }]
+            option: [{ type: i0.ViewChild, args: ['option', { static: true },] }]
         };
         return FacetTypeaheadListItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -18340,7 +19139,6 @@
         ];
         return FacetTypeaheadHighlight;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -18355,7 +19153,6 @@
         ];
         return ReorderableHandleDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -18384,14 +19181,12 @@
         };
         return ReorderableModelDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     /** @type {?} */
     var dragula = dragulaNamespace__default || dragulaNamespace;
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -18734,7 +19529,6 @@
             };
         return ReorderableGroup;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19049,7 +19843,6 @@
         };
         return ReorderableDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19079,7 +19872,6 @@
         ];
         return ReorderableModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19104,12 +19896,13 @@
                         imports: [
                             a11y.A11yModule,
                             AccessibilityModule,
+                            CheckboxModule,
                             common.CommonModule,
                             forms.FormsModule,
-                            CheckboxModule,
-                            TooltipModule,
+                            IconModule,
                             ReorderableModule,
-                            TypeaheadModule
+                            TooltipModule,
+                            TypeaheadModule,
                         ],
                         exports: DECLARATIONS$1,
                         declarations: DECLARATIONS$1
@@ -19117,7 +19910,6 @@
         ];
         return FacetsModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19138,12 +19930,10 @@
         }
         return Facet;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19154,7 +19944,6 @@
         }
         return FilterAddEvent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19164,7 +19953,6 @@
         }
         return FilterRemoveAllEvent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19175,7 +19963,6 @@
         }
         return FilterRemoveEvent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19255,7 +20042,6 @@
         ];
         return FilterService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19327,7 +20113,6 @@
         };
         return FilterContainerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19398,7 +20183,6 @@
         };
         return FilterBaseComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19479,7 +20263,7 @@
         FilterDropdownComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-filter-dropdown',
-                        template: "<div class=\"btn-group\">\n    <button\n        type=\"button\"\n        class=\"filter-dropdown btn dropdown-toggle\"\n        [class.active]=\"selected !== initial\"\n        [uxMenuTriggerFor]=\"menu\">\n\n        {{ selected?.title }} <span class=\"hpe-icon hpe-down\"></span>\n    </button>\n\n    <ux-menu #menu menuClass=\"ux-filter-menu\">\n        <button\n            type=\"button\"\n            *ngFor=\"let filter of filters\"\n            uxMenuItem\n            [attr.aria-selected]=\"filter === selected\"\n            (click)=\"selectFilter(filter, $event)\"\n            (keydown.enter)=\"selectFilter(filter, $event)\">\n\n            <i class=\"hpe-icon\" [class.hpe-checkmark]=\"filter === selected\"></i>\n            <span class=\"filter-dropdown-title\">{{ filter.name }}</span>\n        </button>\n    </ux-menu>\n</div>"
+                        template: "<div class=\"btn-group\">\n    <button\n        type=\"button\"\n        class=\"filter-dropdown btn dropdown-toggle\"\n        [class.active]=\"selected !== initial\"\n        [uxMenuTriggerFor]=\"menu\">\n\n        {{ selected?.title }} <ux-icon name=\"down\"></ux-icon>\n    </button>\n\n    <ux-menu #menu menuClass=\"ux-filter-menu\">\n        <button\n            type=\"button\"\n            *ngFor=\"let filter of filters\"\n            uxMenuItem\n            [attr.aria-selected]=\"filter === selected\"\n            (click)=\"selectFilter(filter, $event)\"\n            (keydown.enter)=\"selectFilter(filter, $event)\">\n\n            <ux-icon\n                name=\"checkmark\"\n                [style.visibility]=\"filter === selected ? 'visible' : 'hidden'\">\n            </ux-icon>\n\n            <span class=\"filter-dropdown-title\">{{ filter.name }}</span>\n        </button>\n    </ux-menu>\n</div>"
                     }] }
         ];
         /** @nocollapse */
@@ -19494,7 +20278,6 @@
         };
         return FilterDropdownComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19713,7 +20496,7 @@
         FilterDynamicComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-filter-dynamic',
-                        template: "<div class=\"btn-group ux-dynamic-filter\">\n\n    <button\n        type=\"button\"\n        [class.active]=\"selected !== initial\"\n        class=\"filter-dropdown btn dropdown-toggle\"\n        [uxMenuTriggerFor]=\"menu\"\n        #trigger=\"ux-menu-trigger\">\n        {{ selected?.title }}\n        <span class=\"hpe-icon hpe-down\"></span>\n    </button>\n\n    <ux-menu #menu menuClass=\"ux-dynamic-filter-menu\" (closed)=\"onClose()\">\n        <!-- Initial Option -->\n        <button\n            uxMenuItem\n            *ngIf=\"showTypeahead\"\n            (click)=\"removeFilter()\"\n            (keydown.enter)=\"removeFilter()\">\n            <i class=\"hpe-icon\" [class.hpe-checkmark]=\"initial === selected\"></i>\n            <span class=\"filter-dropdown-title\">{{ initial.name }}</span>\n        </button>\n\n        <!-- Selected Options -->\n        <button uxMenuItem *ngIf=\"selected !== initial && showTypeahead\">\n            <i class=\"hpe-icon hpe-checkmark\"></i>\n            <span class=\"filter-dropdown-title\">{{ selected.name }}</span>\n        </button>\n\n        <ux-menu-divider *ngIf=\"showTypeahead\"></ux-menu-divider>\n\n        <div *ngIf=\"showTypeahead\" class=\"typeahead-box\" role=\"none\">\n\n            <input type=\"text\"\n                class=\"form-control\"\n                [placeholder]=\"options?.placeholder\"\n                [attr.aria-activedescendant]=\"highlightedElement?.id\"\n                [attr.aria-controls]=\"typeaheadId\"\n                aria-autocomplete=\"list\"\n                aria-multiline=\"false\"\n                [ngModel]=\"query$ | async\"\n                (ngModelChange)=\"query$.next($event); updateTypeahead($event)\"\n                (keydown)=\"typeaheadKeyService.handleKey($event, typeahead); $event.stopPropagation();\"\n                (keydown.enter)=\"$event.preventDefault()\"\n                (blur)=\"typeaheadOpen = false\"\n                (click)=\"$event.stopPropagation()\">\n\n            <ux-typeahead #typeahead\n                [id]=\"typeaheadId\"\n                [(open)]=\"typeaheadOpen\"\n                display=\"title\"\n                [selectOnEnter]=\"true\"\n                [options]=\"typeaheadItems\"\n                [optionTemplate]=\"filterOptionTemplate\"\n                (optionSelected)=\"select($event); trigger.closeMenu($event.origin)\"\n                (highlightedElementChange)=\"highlightedElement = $event\">\n            </ux-typeahead>\n        </div>\n\n        <ng-container *ngIf=\"!showTypeahead\">\n\n            <button\n                *ngFor=\"let filter of filters\"\n                type=\"button\"\n                uxMenuItem\n                (click)=\"selectFilter(filter); trigger.closeMenu('mouse')\"\n                (keydown.enter)=\"selectFilter(filter); trigger.closeMenu('keyboard')\">\n                <i class=\"hpe-icon\" [class.hpe-checkmark]=\"filter === selected\"></i>\n                <span class=\"filter-dropdown-title\">{{ filter.name }}</span>\n            </button>\n\n        </ng-container>\n\n    </ux-menu>\n</div>\n\n<ng-template #filterOptionTemplate let-option=\"option\" let-api=\"api\">\n    <span [attr.aria-label]=\"option\" [innerHTML]=\"option | filterTypeaheadHighlight: (query$ | async)\"></span>\n</ng-template>"
+                        template: "<div class=\"btn-group ux-dynamic-filter\">\n\n    <button\n        type=\"button\"\n        [class.active]=\"selected !== initial\"\n        class=\"filter-dropdown btn dropdown-toggle\"\n        [uxMenuTriggerFor]=\"menu\"\n        #trigger=\"ux-menu-trigger\">\n        {{ selected?.title }}\n        <ux-icon name=\"down\"></ux-icon>\n    </button>\n\n    <ux-menu #menu menuClass=\"ux-dynamic-filter-menu\" (closed)=\"onClose()\">\n        <!-- Initial Option -->\n        <button\n            uxMenuItem\n            *ngIf=\"showTypeahead\"\n            (click)=\"removeFilter()\"\n            (keydown.enter)=\"removeFilter()\">\n            <ux-icon\n                name=\"checkmark\"\n                [style.visibility]=\"initial === selected ? 'visible' : 'hidden'\">\n            </ux-icon>\n            <span class=\"filter-dropdown-title\">{{ initial.name }}</span>\n        </button>\n\n        <!-- Selected Options -->\n        <button uxMenuItem *ngIf=\"selected !== initial && showTypeahead\">\n            <ux-icon name=\"checkmark\"></ux-icon>\n            <span class=\"filter-dropdown-title\">{{ selected.name }}</span>\n        </button>\n\n        <ux-menu-divider *ngIf=\"showTypeahead\"></ux-menu-divider>\n\n        <div *ngIf=\"showTypeahead\" class=\"typeahead-box\" role=\"none\">\n\n            <input type=\"text\"\n                class=\"form-control\"\n                [placeholder]=\"options?.placeholder\"\n                [attr.aria-activedescendant]=\"highlightedElement?.id\"\n                [attr.aria-controls]=\"typeaheadId\"\n                aria-autocomplete=\"list\"\n                aria-multiline=\"false\"\n                [ngModel]=\"query$ | async\"\n                (ngModelChange)=\"query$.next($event); updateTypeahead($event)\"\n                (keydown)=\"typeaheadKeyService.handleKey($event, typeahead); $event.stopPropagation();\"\n                (keydown.enter)=\"$event.preventDefault()\"\n                (blur)=\"typeaheadOpen = false\"\n                (click)=\"$event.stopPropagation()\">\n\n            <ux-typeahead #typeahead\n                [id]=\"typeaheadId\"\n                [(open)]=\"typeaheadOpen\"\n                display=\"title\"\n                [selectOnEnter]=\"true\"\n                [options]=\"typeaheadItems\"\n                [optionTemplate]=\"filterOptionTemplate\"\n                (optionSelected)=\"select($event); trigger.closeMenu($event.origin)\"\n                (highlightedElementChange)=\"highlightedElement = $event\">\n            </ux-typeahead>\n        </div>\n\n        <ng-container *ngIf=\"!showTypeahead\">\n\n            <button\n                *ngFor=\"let filter of filters\"\n                type=\"button\"\n                uxMenuItem\n                (click)=\"selectFilter(filter); trigger.closeMenu('mouse')\"\n                (keydown.enter)=\"selectFilter(filter); trigger.closeMenu('keyboard')\">\n\n                <ux-icon\n                    name=\"checkmark\"\n                    [style.visibility]=\"filter === selected ? 'visible' : 'hidden'\">\n                </ux-icon>\n\n                <span class=\"filter-dropdown-title\">{{ filter.name }}</span>\n            </button>\n\n        </ng-container>\n\n    </ux-menu>\n</div>\n\n<ng-template #filterOptionTemplate let-option=\"option\" let-api=\"api\">\n    <span [attr.aria-label]=\"option\" [innerHTML]=\"option | filterTypeaheadHighlight: (query$ | async)\"></span>\n</ng-template>"
                     }] }
         ];
         /** @nocollapse */
@@ -19730,7 +20513,6 @@
         };
         return FilterDynamicComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19760,7 +20542,6 @@
         ];
         return FilterTypeaheadHighlight;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19780,7 +20561,6 @@
         ];
         return MenuDividerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -19792,14 +20572,12 @@
     };
     MenuItemType[MenuItemType.Default] = 'Default';
     MenuItemType[MenuItemType.Custom] = 'Custom';
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     /** @type {?} */
     var MENU_OPTIONS_TOKEN = new i0.InjectionToken('MENU_OPTIONS_TOKEN');
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -20144,11 +20922,10 @@
             opened: [{ type: i0.Output }],
             closing: [{ type: i0.Output }],
             closed: [{ type: i0.Output }],
-            templateRef: [{ type: i0.ViewChild, args: [i0.TemplateRef, ( /** @type {?} */({ static: false })),] }]
+            templateRef: [{ type: i0.ViewChild, args: [i0.TemplateRef, { static: false },] }]
         };
         return MenuComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -20304,7 +21081,7 @@
          */
             function (event) {
                 if (!this.disabled) {
-                    this.onClick$.next(event.detail === 0 ? 'keyboard' : 'mouse');
+                    this.onClick$.next(isKeyboardTrigger(event) ? 'keyboard' : 'mouse');
                 }
             };
         /** Forward any keyboard events to the MenuComponent for accessibility */
@@ -20369,7 +21146,6 @@
         };
         return MenuItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -20494,7 +21270,6 @@
         };
         return MenuTabbableItemDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -20990,7 +21765,6 @@
         };
         return MenuTriggerDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21054,12 +21828,10 @@
         ];
         return MenuModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21080,11 +21852,12 @@
                         imports: [
                             a11y.A11yModule,
                             AccessibilityModule,
-                            MenuModule,
                             common.CommonModule,
                             forms.FormsModule,
+                            IconModule,
+                            MenuModule,
                             TooltipModule,
-                            TypeaheadModule
+                            TypeaheadModule,
                         ],
                         exports: DECLARATIONS$2,
                         declarations: DECLARATIONS$2
@@ -21092,12 +21865,10 @@
         ];
         return FilterModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21264,7 +22035,6 @@
         ];
         return FlippableCardBackDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21291,12 +22061,10 @@
         ];
         return FlippableCardModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21459,7 +22227,6 @@
         ];
         return FloatingActionButtonsService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21468,11 +22235,49 @@
         function FloatingActionButtonComponent(primary, fab, _tooltip) {
             this.fab = fab;
             this._tooltip = _tooltip;
+            /**
+             * Determine if this is the primary button in the set
+             */
             this.primary = false;
+            /**
+             * Store the tabindex
+             */
             this.tabindex$ = new rxjs.BehaviorSubject(-1);
+            /**
+             * Determine if the icon is from the legacy `hpe` iconset or `ux` iconset
+             */
+            this._isLegacyIcon = false;
+            /**
+             * Unsubscribe from all observables on component destroy
+             */
             this._onDestroy = new rxjs.Subject();
             this.primary = primary !== null;
         }
+        Object.defineProperty(FloatingActionButtonComponent.prototype, "icon", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._icon;
+            },
+            /**
+             * @deprecated - Use ng-content instead
+             * If specified, defines which icon from the icon set to display in the button.
+             * If you wish to display custom content you can simply add children to the
+             * component and they will be displayed within the button. */
+            set: /**
+             * @deprecated - Use ng-content instead
+             * If specified, defines which icon from the icon set to display in the button.
+             * If you wish to display custom content you can simply add children to the
+             * component and they will be displayed within the button.
+             * @param {?} icon
+             * @return {?}
+             */ function (icon) {
+                this._icon = icon;
+                this._isLegacyIcon = this._icon.indexOf('hpe-') === 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -21481,6 +22286,10 @@
          */
             function () {
                 var _this = this;
+                // warn about use of deprecated input
+                if (this.icon) {
+                    console.warn('ux-floating-action-button - `icon` input is deprecated. Instead add the icon as content of the `ux-floating-action-button` element.');
+                }
                 if (this._tooltip) {
                     // ensure the tooltip gets hidden when the button is hidden
                     this.fab.open$.pipe(operators.takeUntil(this._onDestroy), operators.filter(function (isOpen) { return !isOpen && !_this.primary; }))
@@ -21585,7 +22394,7 @@
         FloatingActionButtonComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-floating-action-button',
-                        template: "<button #button\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        type=\"button\"\n        class=\"btn floating-action-button\"\n        [class.button-primary]=\"primary\"\n        [class.button-secondary]=\"!primary\"\n        [attr.aria-label]=\"ariaLabel\"\n        [tabIndex]=\"tabindex$ | async\"\n        (focus)=\"onFocus()\"\n        (blur)=\"onBlur()\"\n        (click)=\"primary ? fab.toggle() : close()\">\n\n    <span class=\"hpe-icon floating-action-button-icon\" *ngIf=\"icon\" [ngClass]=\"icon\"></span>\n    <ng-content *ngIf=\"!icon\"></ng-content>\n\n</button>",
+                        template: "<button #button\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        type=\"button\"\n        class=\"btn floating-action-button\"\n        [class.button-primary]=\"primary\"\n        [class.button-secondary]=\"!primary\"\n        [attr.aria-label]=\"ariaLabel\"\n        [tabIndex]=\"tabindex$ | async\"\n        (focus)=\"onFocus()\"\n        (blur)=\"onBlur()\"\n        (click)=\"primary ? fab.toggle() : close()\">\n\n    <span *ngIf=\"icon\"\n          class=\"floating-action-button-icon\"\n          [class.hpe-icon]=\"_isLegacyIcon\"\n          [class.ux-icon]=\"!_isLegacyIcon\"\n          [ngClass]=\"_icon\">\n    </span>\n\n    <ng-content *ngIf=\"!_icon\"></ng-content>\n\n</button>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         preserveWhitespaces: false
                     }] }
@@ -21601,12 +22410,11 @@
         FloatingActionButtonComponent.propDecorators = {
             icon: [{ type: i0.Input }],
             ariaLabel: [{ type: i0.Input, args: ['aria-label',] }],
-            button: [{ type: i0.ViewChild, args: ['button',] }],
+            button: [{ type: i0.ViewChild, args: ['button', { static: true },] }],
             onKeydown: [{ type: i0.HostListener, args: ['keydown', ['$event'],] }]
         };
         return FloatingActionButtonComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21708,7 +22516,6 @@
         };
         return FloatingActionButtonsComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21720,7 +22527,8 @@
             { type: i0.NgModule, args: [{
                         imports: [
                             AccessibilityModule,
-                            common.CommonModule
+                            common.CommonModule,
+                            IconModule
                         ],
                         exports: [
                             FloatingActionButtonsComponent,
@@ -21734,12 +22542,10 @@
         ];
         return FloatingActionButtonsModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21754,7 +22560,6 @@
         ];
         return HierarchyBarNodeIconDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -21996,7 +22801,6 @@
         ];
         return HierarchyBarService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22151,11 +22955,10 @@
             popoverHideTriggers: [{ type: i0.Input }],
             showSiblingsAriaLabel: [{ type: i0.Input }],
             selectedChange: [{ type: i0.Output }],
-            icon: [{ type: i0.ContentChild, args: [HierarchyBarNodeIconDirective, { read: i0.TemplateRef },] }]
+            icon: [{ type: i0.ContentChild, args: [HierarchyBarNodeIconDirective, { read: i0.TemplateRef, static: false },] }]
         };
         return HierarchyBarComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22201,7 +23004,6 @@
         };
         return ClickOutsideDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22217,12 +23019,10 @@
         ];
         return ClickOutsideModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22273,7 +23073,6 @@
         };
         return PopoverComponent;
     }(TooltipComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22470,7 +23269,6 @@
         };
         return PopoverDirective;
     }(TooltipDirective));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22494,12 +23292,10 @@
         ];
         return PopoverModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22614,7 +23410,7 @@
         HierarchyBarCollapsedComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar-collapsed',
-                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodes class=\"hierarchy-bar-nodes\">\n\n    <ux-hierarchy-bar-node\n        [popoverTemplate]=\"content\"\n        [node]=\"_first\"\n        (select)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <div class=\"hierarchy-bar-overflow\" *ngIf=\"_parents.length > 0\">\n        <div class=\"hierarchy-bar-overflow-container\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                          [ngTemplateOutletContext]=\"{ $implicit: _parents }\">\n            </ng-container>\n        </div>\n\n        <button [attr.aria-label]=\"hierarchyBar.showSiblingsAriaLabel\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            class=\"hierarchy-bar-node-arrow\"\n            placement=\"bottom\"\n            [uxPopover]=\"siblingsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            type=\"button\">\n            <i class=\"hpe-icon hpe-next\"></i>\n        </button>\n    </div>\n\n\n    <ux-hierarchy-bar-node\n        *ngIf=\"_last !== _first\"\n        [popoverTemplate]=\"content\"\n        [node]=\"_last\"\n        (select)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (select)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the siblings popover list -->\n<ng-template #siblingsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"(_siblings | async)?.children\"\n        [loading]=\"(_siblings | async)?.loading\"\n        (select)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the parents popover list -->\n<ng-template #parentsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"_parents\"\n        [separator]=\"true\"\n        (select)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    <button uxFocusIndicator\n            uxFocusIndicatorOrigin\n            class=\"overflow-button\"\n            aria-label=\"Show parents\"\n            [uxPopover]=\"parentsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            placement=\"bottom\"\n            type=\"button\">\n        <i class=\"hpe-icon hpe-more\"></i>\n    </button>\n</ng-template>",
+                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodes class=\"hierarchy-bar-nodes\">\n\n    <ux-hierarchy-bar-node\n        [popoverTemplate]=\"content\"\n        [node]=\"_first\"\n        (selected)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <div class=\"hierarchy-bar-overflow\" *ngIf=\"_parents.length > 0\">\n        <div class=\"hierarchy-bar-overflow-container\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                          [ngTemplateOutletContext]=\"{ $implicit: _parents }\">\n            </ng-container>\n        </div>\n\n        <button [attr.aria-label]=\"hierarchyBar.showSiblingsAriaLabel\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            class=\"hierarchy-bar-node-arrow\"\n            placement=\"bottom\"\n            [uxPopover]=\"siblingsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            type=\"button\">\n\n            <ux-icon name=\"next\" class=\"hierarchy-bar-node-arrow-icon\"></ux-icon>\n        </button>\n    </div>\n\n\n    <ux-hierarchy-bar-node\n        *ngIf=\"_last !== _first\"\n        [popoverTemplate]=\"content\"\n        [node]=\"_last\"\n        (selected)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the siblings popover list -->\n<ng-template #siblingsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"(_siblings | async)?.children\"\n        [loading]=\"(_siblings | async)?.loading\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the parents popover list -->\n<ng-template #parentsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"_parents\"\n        [separator]=\"true\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    <button uxFocusIndicator\n            uxFocusIndicatorOrigin\n            class=\"overflow-button\"\n            aria-label=\"Show parents\"\n            [uxPopover]=\"parentsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            placement=\"bottom\"\n            type=\"button\">\n            <ux-icon name=\"more\"></ux-icon>\n    </button>\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -22628,11 +23424,10 @@
             ];
         };
         HierarchyBarCollapsedComponent.propDecorators = {
-            nodeContainer: [{ type: i0.ViewChild, args: ['nodes',] }]
+            nodeContainer: [{ type: i0.ViewChild, args: ['nodes', { static: true },] }]
         };
         return HierarchyBarCollapsedComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22643,12 +23438,12 @@
             /**
              * Emit when the node is selected
              */
-            this.select = new i0.EventEmitter();
+            this.selected = new i0.EventEmitter();
         }
         HierarchyBarNodeComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar-node',
-                        template: "<div class=\"hierarchy-bar-node\" [class.hierarchy-bar-node-child-indicator]=\"node.children\">\n\n    <button type=\"button\"\n            uxFocusIndicator\n            class=\"hierarchy-bar-node-content\"\n            [attr.aria-label]=\"node.title\"\n            (click)=\"select.emit(node)\">\n\n        <!-- Show a custom icon if specified -->\n        <div class=\"hierarchy-bar-node-icon\" *ngIf=\"hierarchyBar.icon\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.icon\" [ngTemplateOutletContext]=\"{ node: node, $implicit: node }\"></ng-container>\n        </div>\n\n        <!-- Show an icon if specifed -->\n        <img class=\"hierarchy-bar-node-icon\" *ngIf=\"node.icon && !hierarchyBar.icon\" [src]=\"node.icon\" alt=\"Hierarchy Bar Icon\">\n\n        <!-- Show the name of the current node -->\n        <span class=\"hierarchy-bar-node-title\">{{ node.title }}</span>\n\n    </button>\n\n    <!-- Show a dropdown arrow if there are children -->\n    <button type=\"button\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            *ngIf=\"node.children\"\n            #popover=\"ux-popover\"\n            aria-label=\"Show children\"\n            role=\"button\"\n            class=\"hierarchy-bar-node-arrow hpe-icon hpe-next\"\n            [uxPopover]=\"popoverTemplate\"\n            [popoverContext]=\"{ node: node, popover: popover }\"\n            placement=\"bottom\"\n            popoverClass=\"hierarchy-bar-popover\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            tabindex=\"0\">\n    </button>\n\n</div>",
+                        template: "<div class=\"hierarchy-bar-node\" [class.hierarchy-bar-node-child-indicator]=\"node.children\">\n\n    <button type=\"button\"\n            uxFocusIndicator\n            class=\"hierarchy-bar-node-content\"\n            [attr.aria-label]=\"node.title\"\n            (click)=\"selected.emit(node)\">\n\n        <!-- Show a custom icon if specified -->\n        <div class=\"hierarchy-bar-node-icon\" *ngIf=\"hierarchyBar.icon\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.icon\" [ngTemplateOutletContext]=\"{ node: node, $implicit: node }\"></ng-container>\n        </div>\n\n        <!-- Show an icon if specifed -->\n        <img class=\"hierarchy-bar-node-icon\" *ngIf=\"node.icon && !hierarchyBar.icon\" [src]=\"node.icon\" alt=\"Hierarchy Bar Icon\">\n\n        <!-- Show the name of the current node -->\n        <span class=\"hierarchy-bar-node-title\">{{ node.title }}</span>\n\n    </button>\n\n    <!-- Show a dropdown arrow if there are children -->\n    <button type=\"button\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            *ngIf=\"node.children\"\n            #popover=\"ux-popover\"\n            aria-label=\"Show children\"\n            role=\"button\"\n            class=\"hierarchy-bar-node-arrow\"\n            [uxPopover]=\"popoverTemplate\"\n            [popoverContext]=\"{ node: node, popover: popover }\"\n            placement=\"bottom\"\n            popoverClass=\"hierarchy-bar-popover\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            tabindex=\"0\">\n        <ux-icon name=\"next\" class=\"hierarchy-bar-node-arrow-icon\"></ux-icon>\n    </button>\n\n</div>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -22661,11 +23456,10 @@
         HierarchyBarNodeComponent.propDecorators = {
             node: [{ type: i0.Input }],
             popoverTemplate: [{ type: i0.Input }],
-            select: [{ type: i0.Output }]
+            selected: [{ type: i0.Output }]
         };
         return HierarchyBarNodeComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22680,7 +23474,7 @@
              * the origin before we emit the select event, otherwise
              * the item may not get a focus ring when the keyboard is used.
              */
-            this.select = new i0.EventEmitter(true);
+            this.selected = new i0.EventEmitter(true);
             this._focusOrigin = new FocusIndicatorOrigin(focusOriginService, elementRef, renderer);
         }
         /**
@@ -22699,7 +23493,7 @@
          * @return {?}
          */
             function () {
-                this.select.emit(this.node);
+                this.selected.emit(this.node);
             };
         HierarchyBarPopoverItemComponent.decorators = [
             { type: i0.Component, args: [{
@@ -22719,12 +23513,11 @@
         };
         HierarchyBarPopoverItemComponent.propDecorators = {
             node: [{ type: i0.Input }],
-            select: [{ type: i0.Output }],
+            selected: [{ type: i0.Output }],
             onSelect: [{ type: i0.HostListener, args: ['click',] }, { type: i0.HostListener, args: ['keydown.enter',] }]
         };
         return HierarchyBarPopoverItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22743,12 +23536,12 @@
             /**
              * Emit a select event when an item ahs been clicked or enter key pressed
              */
-            this.select = new i0.EventEmitter();
+            this.selected = new i0.EventEmitter();
         }
         HierarchyBarPopoverComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar-popover',
-                        template: "<!-- Loading Indicator -->\n<ul class=\"hierarchy-bar-node-list\" *ngIf=\"loading\">\n\n    <li class=\"hierarchy-bar-loading-indicator\">\n        <ng-container [ngTemplateOutlet]=\"hierarchyBar.loadingIndicator || defaultLoadingIndicator\"></ng-container>\n    </li>\n</ul>\n\n<!-- List of children -->\n<div class=\"hierarchy-bar-node-list\"\n    [class.hierarchy-bar-node-list-separator]=\"separator\"\n    *ngIf=\"!loading\"\n    uxTabbableList\n    [returnFocus]=\"true\">\n\n    <ux-hierarchy-bar-popover-item *ngFor=\"let node of nodes; let first = first\"\n        uxFocusIndicator\n        [node]=\"node\"\n        [focusIf]=\"first\"\n        uxTabbableListItem\n        (select)=\"select.emit($event)\">\n    </ux-hierarchy-bar-popover-item>\n\n</div>\n\n<!-- Loading Indicator Template -->\n<ng-template #defaultLoadingIndicator>\n    <div class=\"hierarchy-bar-loading-icon\" alt=\"Hierarchy Bar Loading Indicator\">\n        <div class=\"spinner spinner-accent spinner-bounce-middle\"></div>\n    </div>\n\n    <!-- Show the name of the current node -->\n    <span class=\"hierarchy-bar-loading-title\">Loading...</span>\n</ng-template>",
+                        template: "<!-- Loading Indicator -->\n<ul class=\"hierarchy-bar-node-list\" *ngIf=\"loading\">\n\n    <li class=\"hierarchy-bar-loading-indicator\">\n        <ng-container [ngTemplateOutlet]=\"hierarchyBar.loadingIndicator || defaultLoadingIndicator\"></ng-container>\n    </li>\n</ul>\n\n<!-- List of children -->\n<div class=\"hierarchy-bar-node-list\"\n    [class.hierarchy-bar-node-list-separator]=\"separator\"\n    *ngIf=\"!loading\"\n    uxTabbableList\n    [returnFocus]=\"true\">\n\n    <ux-hierarchy-bar-popover-item *ngFor=\"let node of nodes; let first = first\"\n        uxFocusIndicator\n        [node]=\"node\"\n        [focusIf]=\"first\"\n        uxTabbableListItem\n        (selected)=\"selected.emit($event)\">\n    </ux-hierarchy-bar-popover-item>\n\n</div>\n\n<!-- Loading Indicator Template -->\n<ng-template #defaultLoadingIndicator>\n    <div class=\"hierarchy-bar-loading-icon\" alt=\"Hierarchy Bar Loading Indicator\">\n        <div class=\"spinner spinner-accent spinner-bounce-middle\"></div>\n    </div>\n\n    <!-- Show the name of the current node -->\n    <span class=\"hierarchy-bar-loading-title\">Loading...</span>\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -22762,11 +23555,10 @@
             nodes: [{ type: i0.Input }],
             loading: [{ type: i0.Input }],
             separator: [{ type: i0.Input }],
-            select: [{ type: i0.Output }]
+            selected: [{ type: i0.Output }]
         };
         return HierarchyBarPopoverComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22847,7 +23639,7 @@
         HierarchyBarStandardComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar-standard',
-                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodelist class=\"hierarchy-bar-nodes\" (uxResize)=\"scrollIntoView()\">\n\n    <div *ngIf=\"isOverflowing$ | async\"\n         #popover=\"ux-popover\"\n         class=\"hierarchy-bar-overflow-indicator\"\n         [style.left.px]=\"nodelist.scrollLeft\"\n         [uxPopover]=\"overflow\"\n         [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n         [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n         [popoverContext]=\"{ popover: popover }\"\n         placement=\"bottom\"\n         popoverClass=\"hierarchy-bar-popover\">\n        <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                      [ngTemplateOutletContext]=\"{ $implicit: overflow$ | async }\">\n        </ng-container>\n    </div>\n\n    <ux-hierarchy-bar-node\n        *ngFor=\"let node of hierarchyBar.nodes$ | async\"\n        [node]=\"node\"\n        [popoverTemplate]=\"content\"\n        (select)=\"hierarchyBar.selectNode(node)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (select)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the overflow popover list -->\n<ng-template #overflow let-popover=\"popover\">\n\n    <div uxTabbableList [returnFocus]=\"true\">\n\n        <ux-hierarchy-bar-popover-item\n            *ngFor=\"let child of overflow$ | async; let first = first\"\n            uxFocusIndicator\n            [node]=\"child\"\n            [focusIf]=\"first\"\n            uxTabbableListItem\n            (select)=\"hierarchyBar.selectNode(child); popover.hide()\">\n        </ux-hierarchy-bar-popover-item>\n    </div>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    . . .\n</ng-template>",
+                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodelist class=\"hierarchy-bar-nodes\" (uxResize)=\"scrollIntoView()\">\n\n    <div *ngIf=\"isOverflowing$ | async\"\n         #popover=\"ux-popover\"\n         class=\"hierarchy-bar-overflow-indicator\"\n         [style.left.px]=\"nodelist.scrollLeft\"\n         [uxPopover]=\"overflow\"\n         [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n         [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n         [popoverContext]=\"{ popover: popover }\"\n         placement=\"bottom\"\n         popoverClass=\"hierarchy-bar-popover\">\n        <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                      [ngTemplateOutletContext]=\"{ $implicit: overflow$ | async }\">\n        </ng-container>\n    </div>\n\n    <ux-hierarchy-bar-node\n        *ngFor=\"let node of hierarchyBar.nodes$ | async\"\n        [node]=\"node\"\n        [popoverTemplate]=\"content\"\n        (selected)=\"hierarchyBar.selectNode(node)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the overflow popover list -->\n<ng-template #overflow let-popover=\"popover\">\n\n    <div uxTabbableList [returnFocus]=\"true\">\n\n        <ux-hierarchy-bar-popover-item\n            *ngFor=\"let child of overflow$ | async; let first = first\"\n            uxFocusIndicator\n            [node]=\"child\"\n            [focusIf]=\"first\"\n            uxTabbableListItem\n            (selected)=\"hierarchyBar.selectNode(child); popover.hide()\">\n        </ux-hierarchy-bar-popover-item>\n    </div>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    . . .\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -22858,12 +23650,11 @@
             ];
         };
         HierarchyBarStandardComponent.propDecorators = {
-            nodelist: [{ type: i0.ViewChild, args: ['nodelist',] }],
+            nodelist: [{ type: i0.ViewChild, args: ['nodelist', { static: true },] }],
             nodes: [{ type: i0.ViewChildren, args: [HierarchyBarNodeComponent, { read: i0.ElementRef },] }]
         };
         return HierarchyBarStandardComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -22874,11 +23665,12 @@
         HierarchyBarModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
+                            AccessibilityModule,
                             common.CommonModule,
-                            ResizeModule,
                             FocusIfModule,
+                            IconModule,
                             PopoverModule,
-                            AccessibilityModule
+                            ResizeModule,
                         ],
                         exports: [
                             HierarchyBarComponent,
@@ -22899,745 +23691,10 @@
         ];
         return HierarchyBarModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var ICON_OPTIONS_TOKEN = new i0.InjectionToken('ICON_OPTIONS_TOKEN');
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    /**
-     * Store a list of all the common icons in both iconsets.
-     * Duplicating this results in a bloated bundle
-     */
-    /** @type {?} */
-    var commonIcons = [
-        '3d',
-        'achievement',
-        'action',
-        'actions',
-        'active',
-        'add',
-        'advanced-search',
-        'aggregate',
-        'alarm',
-        'alert-filled',
-        'alert',
-        'analytics',
-        'announcement',
-        'app',
-        'archive',
-        'article',
-        'ascend',
-        'assistant',
-        'attachment',
-        'bar-chart',
-        'blog',
-        'book',
-        'bookmark-filled',
-        'bookmark',
-        'bundle',
-        'calculator',
-        'calendar',
-        'camera-filled',
-        'camera',
-        'capacity',
-        'caret-down-filled',
-        'caret-down',
-        'caret-next-filled',
-        'caret-next',
-        'caret-previous-filled',
-        'caret-previous',
-        'caret-up-filled',
-        'caret-up',
-        'catalog',
-        'chapter-add',
-        'chapter-next-filled',
-        'chapter-next',
-        'chapter-previous-filled',
-        'chapter-previous',
-        'chart-organization',
-        'chart-partition',
-        'chart-sankey',
-        'chat-attachment',
-        'chat',
-        'checkbox-selected',
-        'checkbox',
-        'checkmark',
-        'chevron-down',
-        'chevron-left-double',
-        'chevron-left',
-        'chevron-right-double',
-        'chevron-right',
-        'chevron-up',
-        'circular-view',
-        'clipboard',
-        'clone',
-        'close',
-        'cloud-computer',
-        'cloud-download',
-        'cloud-software',
-        'cloud-upload',
-        'cloud',
-        'cluster',
-        'code',
-        'command-line',
-        'compare',
-        'compass',
-        'compliance',
-        'computer-personal',
-        'configuration-filled',
-        'configuration',
-        'connect',
-        'contact-card',
-        'contact-us-filled',
-        'contact-us',
-        'contract',
-        'copy',
-        'cube-filled',
-        'cube',
-        'cubes',
-        'cursor-filled',
-        'cursor',
-        'cut',
-        'cycle',
-        'dashboard',
-        'database',
-        'defect',
-        'deliver',
-        'deployment',
-        'descend',
-        'desktop',
-        'detach',
-        'directions',
-        'dislike-filled',
-        'dislike',
-        'divide-four',
-        'divide-right',
-        'divide-three',
-        'divide',
-        'document-cloud',
-        'document-compress',
-        'document-config',
-        'document-csv',
-        'document-data',
-        'document-download',
-        'document-excel',
-        'document-executable',
-        'document-image',
-        'document-locked',
-        'document-missing',
-        'document-notes',
-        'document-outlook',
-        'document-pdf',
-        'document-performance',
-        'document-powerpoint',
-        'document-rtf',
-        'document-sound',
-        'document-test',
-        'document-text',
-        'document-threat',
-        'document-time',
-        'document-transfer',
-        'document-txt',
-        'document-update',
-        'document-upload',
-        'document-user',
-        'document-verified',
-        'document-video',
-        'document-word',
-        'document',
-        'domain',
-        'down',
-        'download',
-        'drag',
-        'drive-cage',
-        'duplicate',
-        'edit-filled',
-        'edit',
-        'eject-filled',
-        'eject',
-        'expand',
-        'fan',
-        'fast-forward-filled',
-        'fast-forward',
-        'favorite-filled',
-        'favorite',
-        'filter-filled',
-        'filter',
-        'first-aid',
-        'flag-filled',
-        'flag',
-        'folder-cycle',
-        'folder-open',
-        'folder',
-        'gallery-filled',
-        'gallery',
-        'globe',
-        'grid',
-        'group',
-        'grow',
-        'halt',
-        'help-circle',
-        'help',
-        'history',
-        'home-filled',
-        'home',
-        'host-maintenance',
-        'host',
-        'image-filled',
-        'image',
-        'impact',
-        'in-progress',
-        'inactive',
-        'inbox',
-        'indicator-filled',
-        'indicator',
-        'information-filled',
-        'information',
-        'inherit-filled',
-        'inherit',
-        'install',
-        'integration',
-        'iteration-filled',
-        'iteration',
-        'java-filled',
-        'java',
-        'language',
-        'launch',
-        'license-filled',
-        'license',
-        'like-filled',
-        'like',
-        'line-chart',
-        'link-bottom',
-        'link-down',
-        'link-next',
-        'link-previous',
-        'link-top',
-        'link-up',
-        'link',
-        'list',
-        'location-filled',
-        'location-pin-filled',
-        'location-pin',
-        'location',
-        'lock',
-        'login',
-        'logout',
-        'mail-attachment',
-        'mail-filled',
-        'mail',
-        'manual',
-        'map-location',
-        'map',
-        'menu',
-        'microphone-filled',
-        'microphone',
-        'monitor',
-        'more',
-        'multiple',
-        'navigate',
-        'new-window',
-        'new',
-        'next',
-        'notes',
-        'notification-filled',
-        'notification',
-        'optimization',
-        'organization',
-        'overview',
-        'pan',
-        'pause-filled',
-        'pause',
-        'payment-google-wallet',
-        'payment-mastercard',
-        'payment-paypal',
-        'payment-square',
-        'payment-visa',
-        'pin-filled',
-        'pin',
-        'plan',
-        'platform-apple',
-        'platform-chrome',
-        'platform-dropbox',
-        'platform-edge',
-        'platform-firefox',
-        'platform-internet-explorer',
-        'platform-skype',
-        'platform-windows',
-        'play-filled',
-        'play',
-        'power',
-        'previous',
-        'print',
-        'quick-view',
-        'radial-selected',
-        'radial',
-        'refresh',
-        'resources',
-        'rewind-filled',
-        'rewind',
-        'risk',
-        'rss',
-        'satellite',
-        'schedule-clone',
-        'schedule-new',
-        'schedule-play',
-        'schedule',
-        'scorecard',
-        'search',
-        'secure',
-        'select-left',
-        'select',
-        'server-cluster',
-        'server',
-        'servers',
-        'service-business',
-        'service-start',
-        'share',
-        'shield-configure',
-        'shield-filled',
-        'shield',
-        'shift',
-        'shop-basket',
-        'shop-cart',
-        'soa',
-        'social-email',
-        'social-facebook',
-        'social-github',
-        'social-instagram',
-        'social-linkedin',
-        'social-medium',
-        'social-pinterest',
-        'social-reddit',
-        'social-slack',
-        'social-tumblr',
-        'social-twitter',
-        'social-vimeo',
-        'social-youtube',
-        'sort',
-        'stakeholder',
-        'star-filled',
-        'star-half',
-        'star',
-        'status-approved-filled',
-        'status-error-filled',
-        'status-information-filled',
-        'status-warning-filled',
-        'steps-filled',
-        'steps',
-        'storage',
-        'street-view-filled',
-        'street-view',
-        'subtitles',
-        'subtract',
-        'support',
-        'sync',
-        'system',
-        'tab-next',
-        'tab-previous',
-        'tab-up',
-        'table-add',
-        'table',
-        'tag-filled',
-        'tag',
-        'target',
-        'task',
-        'template',
-        'test-desktop',
-        'test',
-        'text-wrap',
-        'threats',
-        'ticket',
-        'tools',
-        'tooltip',
-        'transaction-filled',
-        'transaction',
-        'trash-filled',
-        'trash',
-        'tree',
-        'trigger',
-        'trophy-filled',
-        'trophy',
-        'troubleshooting',
-        'unlock',
-        'up',
-        'update',
-        'upgrade-filled',
-        'upgrade',
-        'upload',
-        'user-add-filled',
-        'user-add',
-        'user-admin',
-        'user-expert',
-        'user-female-filled',
-        'user-female',
-        'user-filled',
-        'user-manager',
-        'user-new',
-        'user-police',
-        'user-settings',
-        'user-worker',
-        'user',
-        'validation-filled',
-        'validation',
-        'video-filled',
-        'video',
-        'view-filled',
-        'view',
-        'virtual-machine',
-        'vm-maintenance',
-        'volume-filled',
-        'volume-low-filled',
-        'volume-low',
-        'volume-mute-filled',
-        'volume-mute',
-        'volume',
-        'vulnerability',
-        'waypoint-filled',
-        'waypoint',
-        'workshop',
-        'zoom-in',
-        'zoom-out'
-    ];
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    /**
-     * We generate the iconset definition as hardcoding it increases bundle size by ~40kb per iconset
-     * @type {?}
-     */
-    var uxIconset = __spread(commonIcons.map(function (icon) {
-        return { name: icon, iconset: 'ux-icon', icon: "ux-icon-" + icon };
-    }));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    var IconService = /** @class */ (function () {
-        /** Inject a parent service if one exists */
-        function IconService(_iconService, options) {
-            this._iconService = _iconService;
-            /**
-             * Emit whenever the iconset changes
-             */
-            this.iconsChanged$ = new rxjs.Subject();
-            /**
-             * Store a list of all icon
-             */
-            this._icons = __spread(uxIconset);
-            // if the iconset was defined at the root or child module level apply this configuration
-            if (options && options.icons) {
-                this.setIcons(options.icons);
-            }
-        }
-        /** Define multiple icon definitions. This will override icon definitions if a name and size collision occurs */
-        /**
-         * Define multiple icon definitions. This will override icon definitions if a name and size collision occurs
-         * @param {?} icons
-         * @return {?}
-         */
-        IconService.prototype.setIcons = /**
-         * Define multiple icon definitions. This will override icon definitions if a name and size collision occurs
-         * @param {?} icons
-         * @return {?}
-         */
-            function (icons) {
-                var _this = this;
-                icons.forEach(function (icon) { return _this.setIcon(icon); });
-            };
-        /** Provide an icon definition which will override if necessary */
-        /**
-         * Provide an icon definition which will override if necessary
-         * @param {?} __0
-         * @return {?}
-         */
-        IconService.prototype.setIcon = /**
-         * Provide an icon definition which will override if necessary
-         * @param {?} __0
-         * @return {?}
-         */
-            function (_a) {
-                var _this = this;
-                var name = _a.name, icon = _a.icon, iconset = _a.iconset, size = _a.size;
-                // if there are multiple sizes specified add them all as individual records
-                if (Array.isArray(size)) {
-                    return size.forEach(function (variant) { return _this.setIcon({ name: name, icon: icon, iconset: iconset, size: variant }); });
-                }
-                // remove any existing definition with the same parameters
-                this._icons = this._icons.filter(function (definition) { return !(definition.name === name && definition.size === size); });
-                // insert the new definition
-                this._icons = __spread(this._icons, [{ name: name, icon: icon, iconset: iconset, size: size }]);
-                // emit the icon change
-                this.iconsChanged$.next({ name: name, size: size });
-            };
-        /** Find an icon based on the given name and size if provided */
-        /**
-         * Find an icon based on the given name and size if provided
-         * @param {?} name
-         * @param {?=} size
-         * @return {?}
-         */
-        IconService.prototype.getIcon = /**
-         * Find an icon based on the given name and size if provided
-         * @param {?} name
-         * @param {?=} size
-         * @return {?}
-         */
-            function (name, size) {
-                // if no name was specified then do nothing (this can occur if the name input on the component is not initially defined)
-                if (!name) {
-                    return;
-                }
-                // if there is a size specified then check for an exact match
-                if (size) {
-                    // get an icon definition that matches both name and size
-                    /** @type {?} */
-                    var sizedIcon = this._icons.find(function (definition) { return definition.name === name && definition.size === size; });
-                    // if there is a match then return otherwise fallthrough to the default
-                    if (sizedIcon) {
-                        return sizedIcon;
-                    }
-                }
-                // find a general match with no size constraint
-                /** @type {?} */
-                var icon = this._icons.find(function (definition) { return definition.name === name && definition.size === undefined; });
-                // if no match is found and there is a parent service then we should check it
-                if (!icon && this._iconService) {
-                    return this._iconService.getIcon(name, size);
-                }
-                else if (!icon) {
-                    console.warn("Icon '" + name + "' was not found.");
-                }
-                return icon;
-            };
-        IconService.decorators = [
-            { type: i0.Injectable }
-        ];
-        /** @nocollapse */
-        IconService.ctorParameters = function () {
-            return [
-                { type: IconService, decorators: [{ type: i0.Optional }, { type: i0.SkipSelf }] },
-                { type: undefined, decorators: [{ type: i0.Optional }, { type: i0.Inject, args: [ICON_OPTIONS_TOKEN,] }] }
-            ];
-        };
-        return IconService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    var IconComponent = /** @class */ (function () {
-        function IconComponent(_elementRef, _renderer, _iconService) {
-            this._elementRef = _elementRef;
-            this._renderer = _renderer;
-            this._iconService = _iconService;
-            /**
-             * Define if the icon should be horizontally flipped
-             */
-            this.flipHorizontal = false;
-            /**
-             * Define if the icon should be horizontally flipped
-             */
-            this.flipVertical = false;
-            /**
-             * Automatically unsubscribe from observables
-             */
-            this._onDestroy = new rxjs.Subject();
-        }
-        /** When inputs change ensure we have the best icon definition */
-        /**
-         * When inputs change ensure we have the best icon definition
-         * @param {?} changes
-         * @return {?}
-         */
-        IconComponent.prototype.ngOnChanges = /**
-         * When inputs change ensure we have the best icon definition
-         * @param {?} changes
-         * @return {?}
-         */
-            function (changes) {
-                // if the name or size changes then update the icon
-                if (changes.name && changes.name.currentValue !== changes.name.previousValue ||
-                    changes.size && changes.size.currentValue !== changes.size.previousValue) {
-                    this.updateIcon();
-                }
-            };
-        /** Watch for changes to the iconset */
-        /**
-         * Watch for changes to the iconset
-         * @return {?}
-         */
-        IconComponent.prototype.ngAfterViewInit = /**
-         * Watch for changes to the iconset
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // watch for changes to the iconset to check if we need to update.
-                this._iconService.iconsChanged$.pipe(operators.filter(function (event) { return _this._icon && event.name === _this._icon.name; }), operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.updateIcon(); });
-            };
-        /** Cleanup on component destroy */
-        /**
-         * Cleanup on component destroy
-         * @return {?}
-         */
-        IconComponent.prototype.ngOnDestroy = /**
-         * Cleanup on component destroy
-         * @return {?}
-         */
-            function () {
-                this._onDestroy.next();
-                this._onDestroy.complete();
-            };
-        /** get the icon definition based on the name and size specified */
-        /**
-         * get the icon definition based on the name and size specified
-         * @return {?}
-         */
-        IconComponent.prototype.updateIcon = /**
-         * get the icon definition based on the name and size specified
-         * @return {?}
-         */
-            function () {
-                // remove the current icon set and icon classes of the old icon.
-                // note we are using the renderer and not HostBindings as a HostBinding
-                // on the `class` property will override any user added classes which is
-                // not desirable.
-                if (this._icon) {
-                    this._renderer.removeClass(this._elementRef.nativeElement, this._icon.iconset);
-                    this._renderer.removeClass(this._elementRef.nativeElement, this._icon.icon);
-                }
-                // update the stored icon definition with the best match based on name and size
-                this._icon = this._iconService.getIcon(this.name, this.size);
-                // add the new icon classes, again using the renderer to avoid overriding user classes
-                if (this._icon) {
-                    this._renderer.addClass(this._elementRef.nativeElement, this._icon.iconset);
-                    this._renderer.addClass(this._elementRef.nativeElement, this._icon.icon);
-                }
-                else {
-                    console.warn("The icon " + this.name + " could not be found. Ensure you are using the correct iconset.");
-                }
-            };
-        IconComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ux-icon',
-                        template: '',
-                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
-                        host: {
-                            '[style.font-size]': 'size',
-                            '[class.ux-flip-horizontal]': 'flipHorizontal',
-                            '[class.ux-flip-vertical]': 'flipVertical',
-                            '[class.ux-rotate-90]': 'rotate == 90',
-                            '[class.ux-rotate-180]': 'rotate == 180',
-                            '[class.ux-rotate-270]': 'rotate == 270',
-                        }
-                    }] }
-        ];
-        /** @nocollapse */
-        IconComponent.ctorParameters = function () {
-            return [
-                { type: i0.ElementRef },
-                { type: i0.Renderer2 },
-                { type: IconService }
-            ];
-        };
-        IconComponent.propDecorators = {
-            name: [{ type: i0.Input }],
-            size: [{ type: i0.Input }],
-            rotate: [{ type: i0.Input }],
-            flipHorizontal: [{ type: i0.Input }],
-            flipVertical: [{ type: i0.Input }]
-        };
-        return IconComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    var IconModule = /** @class */ (function () {
-        function IconModule() {
-        }
-        /** Allow configuration at AppModule level */
-        /**
-         * Allow configuration at AppModule level
-         * @param {?=} options
-         * @return {?}
-         */
-        IconModule.forRoot = /**
-         * Allow configuration at AppModule level
-         * @param {?=} options
-         * @return {?}
-         */
-            function (options) {
-                return {
-                    ngModule: IconModule,
-                    providers: [
-                        { provide: ICON_OPTIONS_TOKEN, useValue: options }
-                    ]
-                };
-            };
-        /** Allow configuration at a child module level */
-        /**
-         * Allow configuration at a child module level
-         * @param {?=} options
-         * @return {?}
-         */
-        IconModule.forChild = /**
-         * Allow configuration at a child module level
-         * @param {?=} options
-         * @return {?}
-         */
-            function (options) {
-                // the `forChild` does the same as `forRoot` however this having
-                // `forChild` follows the correct conventions as we should never
-                // import `forRoot` in a child module
-                return IconModule.forRoot(options);
-            };
-        IconModule.decorators = [
-            { type: i0.NgModule, args: [{
-                        declarations: [
-                            IconComponent
-                        ],
-                        exports: [
-                            IconComponent
-                        ],
-                        providers: [
-                            IconService
-                        ]
-                    },] }
-        ];
-        return IconModule;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    /**
-     * We generate the iconset definition as hardcoding it increases bundle size by ~40kb per iconset
-     * @type {?}
-     */
-    var hpeIconset = __spread(commonIcons.map(function (icon) {
-        return { name: icon, iconset: 'hpe-icon', icon: "hpe-" + icon };
-    }));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -23650,24 +23707,21 @@
     };
     /** @type {?} */
     var sidePanelStateAnimation = animations.trigger('panelState', [
-        animations.state(SidePanelAnimationState.Closed, animations.style({
-            visibility: 'hidden'
-        })),
-        animations.state(SidePanelAnimationState.Open + ", " + SidePanelAnimationState.OpenImmediate, animations.style({
-            visibility: 'visible',
-            transform: 'none'
-        })),
-        animations.transition(SidePanelAnimationState.Closed + " <=> " + SidePanelAnimationState.Open, animations.animate('0.2s cubic-bezier(0.49, 1, 0.38, 0.98)')),
-        animations.transition(SidePanelAnimationState.Closed + " <=> " + SidePanelAnimationState.OpenImmediate, animations.animate('0s'))
+        animations.state(SidePanelAnimationState.Closed, animations.style({ visibility: 'hidden' })),
+        animations.state(SidePanelAnimationState.Open + ", " + SidePanelAnimationState.OpenImmediate, animations.style({ visibility: 'visible', transform: 'none' })),
+        animations.transition("void <=> " + SidePanelAnimationState.Open, animations.animate('0.2s cubic-bezier(0.49, 1, 0.38, 0.98)')),
+        animations.transition("void <=> " + SidePanelAnimationState.OpenImmediate, animations.animate('0s'))
     ]);
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var SidePanelService = /** @class */ (function () {
         function SidePanelService() {
-            this.open$ = new rxjs.BehaviorSubject(false);
+            /**
+             * Emit the open state when it changes
+             */
+            this.open$ = new rxjs.Subject();
         }
         /**
          * @return {?}
@@ -23692,15 +23746,15 @@
         ];
         return SidePanelService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var SidePanelComponent = /** @class */ (function () {
-        function SidePanelComponent(service, _elementRef) {
+        function SidePanelComponent(service, _elementRef, _focusOrigin) {
             this.service = service;
             this._elementRef = _elementRef;
+            this._focusOrigin = _focusOrigin;
             this.inline = false;
             this.attachTo = 'window';
             this.width = '50%';
@@ -23710,13 +23764,18 @@
             this.closeOnExternalClick = false;
             this.focusOnShow = false;
             this.openChange = new i0.EventEmitter();
+            this.animationPanelState = SidePanelAnimationState.Closed;
+            /**
+             * Store the current open state
+             */
+            this._isOpen = false;
             this._onDestroy = new rxjs.Subject();
         }
         Object.defineProperty(SidePanelComponent.prototype, "open", {
             get: /**
              * @return {?}
              */ function () {
-                return this.service.open$.value;
+                return this._isOpen;
             },
             set: /**
              * @param {?} value
@@ -23795,13 +23854,15 @@
          */
             function () {
                 var _this = this;
-                this.service.open$.pipe(operators.takeUntil(this._onDestroy)).subscribe(function (isOpen) {
+                this.service.open$.pipe(operators.distinctUntilChanged(), operators.takeUntil(this._onDestroy)).subscribe(function (isOpen) {
                     _this.animationPanelState = isOpen
                         ? _this.animate
                             ? SidePanelAnimationState.Open
                             : SidePanelAnimationState.OpenImmediate
                         : SidePanelAnimationState.Closed;
+                    // only if the open state changed should we emit the latest value
                     _this.openChange.emit(isOpen);
+                    _this._isOpen = isOpen;
                 });
             };
         /**
@@ -23833,21 +23894,30 @@
                 this.service.close();
             };
         /**
-         * @param {?} event
          * @return {?}
          */
-        SidePanelComponent.prototype.clickHandler = /**
-         * @param {?} event
+        SidePanelComponent.prototype._onDocumentEscape = /**
          * @return {?}
          */
-            function (event) {
+            function () {
+                if (this.open) {
+                    this._focusOrigin.setOrigin('keyboard');
+                    this.closePanel();
+                }
+            };
+        /**
+         * @param {?} target
+         * @return {?}
+         */
+        SidePanelComponent.prototype._onDocumentClick = /**
+         * @param {?} target
+         * @return {?}
+         */
+            function (target) {
                 if (!this.open || !this.closeOnExternalClick) {
                     return;
                 }
-                /** @type {?} */
-                var target = ( /** @type {?} */(event.target));
-                if (!this._elementRef.nativeElement.contains(target) ||
-                    (target && target.classList.contains('modal-backdrop'))) {
+                if (!this._elementRef.nativeElement.contains(target) || (target && target.classList.contains('modal-backdrop'))) {
                     this.closePanel();
                 }
             };
@@ -23855,9 +23925,10 @@
             { type: i0.Component, args: [{
                         selector: 'ux-side-panel',
                         exportAs: 'ux-side-panel',
-                        template: "<div *ngIf=\"modal && open\" class=\"modal-backdrop\"\n    [style.position]=\"position\"\n    [style.top]=\"cssTop\"></div>\n\n<div class=\"ux-side-panel-host\"\n    [class.modal-panel]=\"modal\"\n    [style.position]=\"position\"\n    [style.width]=\"hostWidth\"\n    [style.top]=\"cssTop\"\n    [tabindex]=\"open ? 0 : -1\"\n    [@panelState]=\"animationPanelState\"\n    [focusIf]=\"open && focusOnShow\"\n    [focusIfScroll]=\"false\"\n    [cdkTrapFocus]=\"open && modal\">\n    <ng-content></ng-content>\n</div>\n",
+                        template: "<div *ngIf=\"modal && open\" class=\"modal-backdrop\"\n    [style.position]=\"position\"\n    [style.top]=\"cssTop\"></div>\n\n<div class=\"ux-side-panel-host\"\n    [class.modal-panel]=\"modal\"\n    [style.position]=\"position\"\n    [style.width]=\"hostWidth\"\n    [style.top]=\"cssTop\"\n    [tabindex]=\"open ? 0 : -1\"\n    [@panelState]=\"animationPanelState\"\n    [focusIf]=\"open && focusOnShow\"\n    [focusIfScroll]=\"false\"\n    [cdkTrapFocus]=\"open && modal\"\n    *ngIf=\"open\">\n    <ng-content></ng-content>\n</div>\n",
                         providers: [SidePanelService],
                         animations: [sidePanelStateAnimation],
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         host: {
                             class: 'ux-side-panel'
                         }
@@ -23867,7 +23938,8 @@
         SidePanelComponent.ctorParameters = function () {
             return [
                 { type: SidePanelService },
-                { type: i0.ElementRef }
+                { type: i0.ElementRef },
+                { type: FocusIndicatorOriginService }
             ];
         };
         SidePanelComponent.propDecorators = {
@@ -23882,12 +23954,11 @@
             focusOnShow: [{ type: i0.Input }],
             openChange: [{ type: i0.Output }],
             componentWidth: [{ type: i0.HostBinding, args: ['style.width',] }],
-            closePanel: [{ type: i0.HostListener, args: ['document:keyup.escape',] }],
-            clickHandler: [{ type: i0.HostListener, args: ['document:click', ['$event'],] }]
+            _onDocumentEscape: [{ type: i0.HostListener, args: ['document:keyup.escape',] }],
+            _onDocumentClick: [{ type: i0.HostListener, args: ['document:click', ['$event.target'],] }]
         };
         return SidePanelComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -23914,8 +23985,8 @@
     }());
     var ItemDisplayPanelComponent = /** @class */ (function (_super) {
         __extends(ItemDisplayPanelComponent, _super);
-        function ItemDisplayPanelComponent(service, elementRef) {
-            var _this = _super.call(this, service, elementRef) || this;
+        function ItemDisplayPanelComponent(service, elementRef, focusOrigin) {
+            var _this = _super.call(this, service, elementRef, focusOrigin) || this;
             _this.boxShadow = true;
             _this.closeVisible = true;
             _this.shadow = false;
@@ -24004,7 +24075,7 @@
         ItemDisplayPanelComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-item-display-panel',
-                        template: "<div class=\"ux-side-panel-host ux-item-display-panel\" #panel\n    [class.box-shadow]=\"boxShadow\"\n    [style.position]=\"position\"\n    [style.width]=\"hostWidth\"\n    [style.top]=\"cssTop\"\n    [@panelState]=\"animationPanelState\"\n    [tabindex]=\"open ? 0 : -1\"\n    [focusIf]=\"open && focusOnShow\">\n\n    <div class=\"ux-side-panel-header\" [class.item-display-panel-shadow]=\"shadow\">\n        <h3>{{ header }}</h3>\n        <button *ngIf=\"closeVisible\" aria-label=\"Close\" i18n-aria-label type=\"button\" class=\"btn btn-lg btn-link btn-icon button-secondary\" (click)=\"visible = false\">\n            <i class=\"hpe-icon hpe-close\"></i>\n        </button>\n    </div>\n\n    <div class=\"ux-side-panel-content\">\n        <ng-content select=\"[uxItemDisplayPanelContent]\"></ng-content>\n    </div>\n\n    <div class=\"ux-side-panel-footer\" *ngIf=\"footer\">\n        <ng-content select=\"[uxItemDisplayPanelFooter]\"></ng-content>\n    </div>\n\n</div>\n",
+                        template: "<div class=\"ux-side-panel-host ux-item-display-panel\" #panel\n    [class.box-shadow]=\"boxShadow\"\n    [style.position]=\"position\"\n    [style.width]=\"hostWidth\"\n    [style.top]=\"cssTop\"\n    [@panelState]=\"animationPanelState\"\n    [tabindex]=\"open ? 0 : -1\"\n    [focusIf]=\"open && focusOnShow\"\n    *ngIf=\"open\">\n\n    <div class=\"ux-side-panel-header\" [class.item-display-panel-shadow]=\"shadow\">\n        <h3>{{ header }}</h3>\n\n        <button *ngIf=\"closeVisible\"\n                uxFocusIndicator\n                aria-label=\"Close\"\n                i18n-aria-label\n                type=\"button\"\n                class=\"btn btn-lg btn-link btn-icon button-secondary\"\n                (click)=\"visible = false\">\n\n            <ux-icon name=\"close\"></ux-icon>\n        </button>\n    </div>\n\n    <div class=\"ux-side-panel-content\">\n        <ng-content select=\"[uxItemDisplayPanelContent]\"></ng-content>\n    </div>\n\n    <div class=\"ux-side-panel-footer\" *ngIf=\"footer\">\n        <ng-content select=\"[uxItemDisplayPanelFooter]\"></ng-content>\n    </div>\n\n</div>\n",
                         providers: [SidePanelService],
                         animations: [sidePanelStateAnimation],
                         host: {
@@ -24016,7 +24087,8 @@
         ItemDisplayPanelComponent.ctorParameters = function () {
             return [
                 { type: SidePanelService },
-                { type: i0.ElementRef }
+                { type: i0.ElementRef },
+                { type: FocusIndicatorOriginService }
             ];
         };
         ItemDisplayPanelComponent.propDecorators = {
@@ -24026,14 +24098,13 @@
             preventClose: [{ type: i0.Input }],
             shadow: [{ type: i0.Input }],
             visibleChange: [{ type: i0.Output }],
-            footer: [{ type: i0.ContentChild, args: [ItemDisplayPanelFooterDirective,] }],
-            panel: [{ type: i0.ViewChild, args: ['panel',] }],
+            footer: [{ type: i0.ContentChild, args: [ItemDisplayPanelFooterDirective, { static: false },] }],
+            panel: [{ type: i0.ViewChild, args: ['panel', { static: true },] }],
             title: [{ type: i0.Input }],
             visible: [{ type: i0.Input }]
         };
         return ItemDisplayPanelComponent;
     }(SidePanelComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -24050,8 +24121,10 @@
         ItemDisplayPanelModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
+                            AccessibilityModule,
                             common.CommonModule,
-                            FocusIfModule
+                            FocusIfModule,
+                            IconModule
                         ],
                         exports: DECLARATIONS$3,
                         declarations: DECLARATIONS$3
@@ -24059,18 +24132,31 @@
         ];
         return ItemDisplayPanelModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var MarqueeWizardStepIconDirective = /** @class */ (function () {
+        function MarqueeWizardStepIconDirective() {
+        }
+        MarqueeWizardStepIconDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[uxMarqueeWizardStepIcon]',
+                    },] }
+        ];
+        return MarqueeWizardStepIconDirective;
+    }());
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var WizardStepComponent = /** @class */ (function () {
-        function WizardStepComponent() {
+        function WizardStepComponent(_changeDetector) {
+            this._changeDetector = _changeDetector;
             /**
              * Allows you to define whether or not a step is valid. The user will not be able to proceed to the next step if this property has a value of false.
              */
@@ -24122,6 +24208,8 @@
                 if (value === true) {
                     this.visited = true;
                 }
+                // mark for change detection
+                this._changeDetector.markForCheck();
             },
             enumerable: true,
             configurable: true
@@ -24130,12 +24218,19 @@
             { type: i0.Component, args: [{
                         selector: 'ux-wizard-step',
                         template: "<ng-container *ngIf=\"active\">\n    <ng-content></ng-content>\n</ng-container>",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         host: {
                             'role': 'tabpanel',
                             '[attr.aria-labelledby]': 'id + "-label"'
                         }
                     }] }
         ];
+        /** @nocollapse */
+        WizardStepComponent.ctorParameters = function () {
+            return [
+                { type: i0.ChangeDetectorRef }
+            ];
+        };
         WizardStepComponent.propDecorators = {
             header: [{ type: i0.Input }],
             valid: [{ type: i0.Input }],
@@ -24146,7 +24241,6 @@
         };
         return WizardStepComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -24602,7 +24696,6 @@
         }
         return StepChangingEvent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -24628,12 +24721,10 @@
         ];
         return WizardModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -24653,21 +24744,47 @@
         ];
         return MarqueeWizardService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var MarqueeWizardStepComponent = /** @class */ (function (_super) {
         __extends(MarqueeWizardStepComponent, _super);
-        function MarqueeWizardStepComponent(_marqueeWizardService) {
-            var _this = _super.call(this) || this;
+        function MarqueeWizardStepComponent(changeDetector, _marqueeWizardService) {
+            var _this = _super.call(this, changeDetector) || this;
             _this._marqueeWizardService = _marqueeWizardService;
+            /**
+             * Determine the completed state of this step
+             */
             _this.completed = false;
+            /**
+             * Emit when the completed step changes
+             */
             _this.completedChange = new i0.EventEmitter();
+            /**
+             * Store the validity of the current step
+             */
             _this._valid = true;
             return _this;
         }
+        Object.defineProperty(MarqueeWizardStepComponent.prototype, "icon", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._icon;
+            },
+            /** @deprecated Define the icon to display - use `uxMarqueeWizardStepIcon directive instead */
+            set: /**
+             * @deprecated Define the icon to display - use `uxMarqueeWizardStepIcon directive instead
+             * @param {?} icon
+             * @return {?}
+             */ function (icon) {
+                this._icon = icon;
+                this._iconType = getIconType(icon);
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(MarqueeWizardStepComponent.prototype, "valid", {
             get: /**
              * @return {?}
@@ -24686,6 +24803,17 @@
             enumerable: true,
             configurable: true
         });
+        /**
+         * @return {?}
+         */
+        MarqueeWizardStepComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                if (this.icon) {
+                    console.warn("Marquee wizard step [icon] property has been deprecated. Instead use the '*uxMarqueeWizardStepIcon' directive.");
+                }
+            };
         /**
          * Update the completed state and emit the latest value
          * @param completed whether or not the step is completed
@@ -24707,23 +24835,25 @@
         MarqueeWizardStepComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-marquee-wizard-step',
-                        template: "<ng-container *ngIf=\"active\">\n    <ng-content></ng-content>\n</ng-container>"
+                        template: "<ng-container *ngIf=\"active\">\n    <ng-content></ng-content>\n</ng-container>",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
         /** @nocollapse */
         MarqueeWizardStepComponent.ctorParameters = function () {
             return [
+                { type: i0.ChangeDetectorRef },
                 { type: MarqueeWizardService }
             ];
         };
         MarqueeWizardStepComponent.propDecorators = {
             icon: [{ type: i0.Input }],
             completed: [{ type: i0.Input }],
-            completedChange: [{ type: i0.Output }]
+            completedChange: [{ type: i0.Output }],
+            _iconTemplate: [{ type: i0.ContentChild, args: [MarqueeWizardStepIconDirective, { read: i0.TemplateRef, static: false },] }]
         };
         return MarqueeWizardStepComponent;
     }(WizardStepComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -24841,7 +24971,7 @@
         MarqueeWizardComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-marquee-wizard',
-                        template: "<div class=\"marquee-wizard-side-panel\">\n\n    <div class=\"marquee-wizard-description-container\" *ngIf=\"description\">\n        <!-- If a template was provided display it -->\n        <ng-container *ngIf=\"isTemplate\" [ngTemplateOutlet]=\"description\"></ng-container>\n\n        <!-- Otherwise wimply display the string -->\n        <ng-container *ngIf=\"!isTemplate\">\n            <p>{{ description }}</p>\n        </ng-container>\n    </div>\n\n    <ul class=\"marquee-wizard-steps\"\n        uxTabbableList\n        direction=\"vertical\"\n        role=\"tablist\"\n        aria-orientation=\"vertical\">\n\n        <li *ngFor=\"let step of steps; let index = index\"\n            role=\"tab\"\n            uxTabbableListItem\n            [disabled]=\"!step.visited\"\n            class=\"marquee-wizard-step\"\n            [class.active]=\"step.active\"\n            [class.visited]=\"step.visited\"\n            [class.invalid]=\"!step.valid\"\n            [attr.aria-posinset]=\"index + 1\"\n            [attr.aria-setsize]=\"steps.length\"\n            [attr.aria-selected]=\"step.active\"\n            [attr.aria-controls]=\"step.id\"\n            [id]=\"step.id + '-label'\"\n            (click)=\"gotoStep(step)\"\n            (keydown.enter)=\"gotoStep(step)\">\n\n            <ng-container [ngTemplateOutlet]=\"stepTemplate || defaultStepTemplate\" [ngTemplateOutletContext]=\"{ $implicit: step }\"></ng-container>\n        </li>\n\n    </ul>\n</div>\n\n<div class=\"marquee-wizard-content-panel\">\n    <div class=\"marquee-wizard-content\">\n        <ng-content></ng-content>\n    </div>\n\n    <div class=\"modal-footer\">\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-secondary\"\n                *ngIf=\"previousVisible\"\n                [uxTooltip]=\"previousTooltip\"\n                [attr.aria-label]=\"previousAriaLabel\"\n                container=\"body\"\n                [disabled]=\"previousDisabled || step === 0\"\n                (click)=\"previous(); tip.hide()\">\n                {{ previousText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-primary\"\n                *ngIf=\"nextVisible && !isLastStep()\"\n                [uxTooltip]=\"nextTooltip\"\n                [attr.aria-label]=\"nextAriaLabel\"\n                container=\"body\"\n                [disabled]=\"nextDisabled\"\n                (click)=\"next(); tip.hide()\">\n                {{ nextText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-primary\"\n                *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n                [uxTooltip]=\"finishTooltip\"\n                [attr.aria-label]=\"finishAriaLabel\"\n                container=\"body\"\n                [disabled]=\"finishDisabled\"\n                (click)=\"finish(); tip.hide()\">\n                {{ finishText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-secondary\"\n                *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n                [uxTooltip]=\"cancelTooltip\"\n                [attr.aria-label]=\"cancelAriaLabel\"\n                container=\"body\"\n                [disabled]=\"cancelDisabled\"\n                (click)=\"cancel(); tip.hide()\">\n                {{ cancelText }}\n        </button>\n    </div>\n</div>\n\n<ng-template #defaultStepTemplate let-step>\n    <i class=\"marquee-wizard-step-icon\" [ngClass]=\"step.icon\"></i>\n    <span class=\"marquee-wizard-step-title\">{{ step.header }}</span>\n    <span class=\"marquee-wizard-step-status hpe-icon hpe-checkmark\" *ngIf=\"step.completed\"></span>\n</ng-template>",
+                        template: "<div class=\"marquee-wizard-side-panel\">\n\n    <div class=\"marquee-wizard-description-container\" *ngIf=\"description\">\n        <!-- If a template was provided display it -->\n        <ng-container *ngIf=\"isTemplate\" [ngTemplateOutlet]=\"description\"></ng-container>\n\n        <!-- Otherwise wimply display the string -->\n        <ng-container *ngIf=\"!isTemplate\">\n            <p>{{ description }}</p>\n        </ng-container>\n    </div>\n\n    <ul class=\"marquee-wizard-steps\"\n        uxTabbableList\n        direction=\"vertical\"\n        role=\"tablist\"\n        aria-orientation=\"vertical\">\n\n        <li *ngFor=\"let step of steps; let index = index\"\n            role=\"tab\"\n            uxTabbableListItem\n            [disabled]=\"!step.visited\"\n            class=\"marquee-wizard-step\"\n            [class.active]=\"step.active\"\n            [class.visited]=\"step.visited\"\n            [class.invalid]=\"!step.valid\"\n            [attr.aria-posinset]=\"index + 1\"\n            [attr.aria-setsize]=\"steps.length\"\n            [attr.aria-selected]=\"step.active\"\n            [attr.aria-controls]=\"step.id\"\n            [id]=\"step.id + '-label'\"\n            (click)=\"gotoStep(step)\"\n            (keydown.enter)=\"gotoStep(step)\">\n\n            <ng-container [ngTemplateOutlet]=\"stepTemplate || defaultStepTemplate\" [ngTemplateOutletContext]=\"{ $implicit: step }\"></ng-container>\n        </li>\n\n    </ul>\n</div>\n\n<div class=\"marquee-wizard-content-panel\">\n    <div class=\"marquee-wizard-content\">\n        <ng-content></ng-content>\n    </div>\n\n    <div class=\"modal-footer\">\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-secondary\"\n                *ngIf=\"previousVisible\"\n                [uxTooltip]=\"previousTooltip\"\n                [attr.aria-label]=\"previousAriaLabel\"\n                container=\"body\"\n                [disabled]=\"previousDisabled || step === 0\"\n                (click)=\"previous(); tip.hide()\">\n                {{ previousText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-primary\"\n                *ngIf=\"nextVisible && !isLastStep()\"\n                [uxTooltip]=\"nextTooltip\"\n                [attr.aria-label]=\"nextAriaLabel\"\n                container=\"body\"\n                [disabled]=\"nextDisabled\"\n                (click)=\"next(); tip.hide()\">\n                {{ nextText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-primary\"\n                *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n                [uxTooltip]=\"finishTooltip\"\n                [attr.aria-label]=\"finishAriaLabel\"\n                container=\"body\"\n                [disabled]=\"finishDisabled\"\n                (click)=\"finish(); tip.hide()\">\n                {{ finishText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-secondary\"\n                *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n                [uxTooltip]=\"cancelTooltip\"\n                [attr.aria-label]=\"cancelAriaLabel\"\n                container=\"body\"\n                [disabled]=\"cancelDisabled\"\n                (click)=\"cancel(); tip.hide()\">\n                {{ cancelText }}\n        </button>\n    </div>\n</div>\n\n<ng-template #defaultStepTemplate let-step>\n\n    <!-- Show an icon based on a string (deprecated) -->\n    <ng-container *ngIf=\"step._icon\">\n        <i *ngIf=\"step._iconType !== 'component'\" class=\"marquee-wizard-step-icon\" [ngClass]=\"[step._iconType, step._icon]\"></i>\n        <ux-icon *ngIf=\"step._iconType === 'component'\" class=\"marquee-wizard-step-icon\" [name]=\"step._icon\"></ux-icon>\n    </ng-container>\n\n    <!-- Insert the icon -->\n    <div *ngIf=\"step._iconTemplate\" class=\"marquee-wizard-step-icon\">\n        <ng-container [ngTemplateOutlet]=\"step._iconTemplate\"></ng-container>\n    </div>\n\n    <span class=\"marquee-wizard-step-title\">{{ step.header }}</span>\n    <ux-icon *ngIf=\"step.completed\" class=\"marquee-wizard-step-status\" name=\"checkmark\"></ux-icon>\n</ng-template>",
                         providers: [MarqueeWizardService]
                     }] }
         ];
@@ -24858,7 +24988,6 @@
         };
         return MarqueeWizardComponent;
     }(WizardComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -24869,29 +24998,30 @@
         MarqueeWizardModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
+                            AccessibilityModule,
                             common.CommonModule,
-                            WizardModule,
+                            IconModule,
                             TooltipModule,
-                            AccessibilityModule
+                            WizardModule,
                         ],
                         exports: [
                             MarqueeWizardComponent,
-                            MarqueeWizardStepComponent
+                            MarqueeWizardStepComponent,
+                            MarqueeWizardStepIconDirective
                         ],
                         declarations: [
                             MarqueeWizardComponent,
-                            MarqueeWizardStepComponent
+                            MarqueeWizardStepComponent,
+                            MarqueeWizardStepIconDirective
                         ]
                     },] }
         ];
         return MarqueeWizardModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -25059,7 +25189,6 @@
         ];
         return FrameExtractionService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -25074,12 +25203,10 @@
         ];
         return FrameExtractionModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -25728,7 +25855,6 @@
         };
         return MediaPlayerService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -25750,7 +25876,6 @@
         };
         return MediaPlayerBaseExtensionDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -26712,9 +26837,9 @@
             value: [{ type: i0.Input }],
             options: [{ type: i0.Input }],
             valueChange: [{ type: i0.Output }],
-            lowerTooltip: [{ type: i0.ViewChild, args: ['lowerTooltip',] }],
-            upperTooltip: [{ type: i0.ViewChild, args: ['upperTooltip',] }],
-            track: [{ type: i0.ViewChild, args: ['track',] }]
+            lowerTooltip: [{ type: i0.ViewChild, args: ['lowerTooltip', { static: true },] }],
+            upperTooltip: [{ type: i0.ViewChild, args: ['upperTooltip', { static: true },] }],
+            track: [{ type: i0.ViewChild, args: ['track', { static: true },] }]
         };
         return SliderComponent;
     }());
@@ -26790,7 +26915,6 @@
     };
     SliderThumb[SliderThumb.Lower] = 'Lower';
     SliderThumb[SliderThumb.Upper] = 'Upper';
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -26816,12 +26940,10 @@
         ];
         return SliderModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -26985,7 +27107,7 @@
         MediaPlayerControlsExtensionComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-media-player-controls',
-                        template: "<div class=\"volume-container\">\n\n    <div class=\"volume-slider-container\"\n        #volumeContainer\n        [class.active]=\"volumeActive || volumeFocus\"\n        (mouseenter)=\"mouseEnterVolume.next()\"\n        (mouseleave)=\"mouseLeaveVolume.next()\"\n        (uxFocusWithin)=\"volumeFocus = true\"\n        (uxBlurWithin)=\"volumeFocus = false\">\n\n        <button #volumeIcon\n                uxFocusIndicator\n                type=\"button\"\n                class=\"volume-slider-icon\"\n                attr.aria-label=\"{{ volume === 0 ? 'Unmute' : 'Mute' }}\"\n                i18n-aria-label\n                [uxTooltip]=\"muteTooltip\"\n                [showTriggers]=\"['mouseenter']\"\n                [hideTriggers]=\"['mouseleave']\"\n                (click)=\"toggleMute()\"\n                (mouseup)=\"volumeIcon.blur()\">\n\n            <span class=\"hpe-icon\"\n                  [class.hpe-volume-mute]=\"volume === 0\"\n                  [class.hpe-volume-low]=\"volume > 0 && volume <= 70\"\n                  [class.hpe-volume]=\"volume > 70\">\n            </span>\n        </button>\n\n        <div class=\"volume-slider-node\">\n            <ux-slider [(value)]=\"volume\" [options]=\"options\"></ux-slider>\n        </div>\n    </div>\n</div>\n\n<button #startButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToStart()\"\n    (mouseup)=\"startButton.blur()\"\n    aria-label=\"Go to start\"\n    i18n-aria-label>\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"0\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"51.5,64 51.5,0 7.4,32 \" />\n    </svg>\n</button>\n\n<button #playButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    attr.aria-label=\"{{ (mediaPlayerService.playing | async) ? 'Pause' : 'Play' }}\"\n    i18n-aria-label\n    (click)=\"mediaPlayerService.togglePlay()\"\n    (mouseup)=\"playButton.blur()\">\n\n    <svg *ngIf=\"!(mediaPlayerService.playing | async)\" viewBox=\"0 0 45 64\" width=\"20\" height=\"29\" focusable=\"false\">\n        <polygon points=\"0.4,0 0.4,64 44.6,32\" />\n    </svg>\n    <svg *ngIf=\"mediaPlayerService.playing | async\" viewBox=\"0 0 43 56.9\" width=\"20\" height=\"29\" focusable=\"false\">\n        <rect y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n        <rect x=\"27.3\" y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n    </svg>\n</button>\n\n<button #endButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToEnd()\"\n    (mouseup)=\"endButton.blur()\"\n    aria-label=\"Go to end\"\n    i18n-aria-label>\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"44.1\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"0,64 0,0 44.1,32\" />\n    </svg>\n</button>\n\n<div class=\"actions-list\">\n\n    <ng-content></ng-content>\n\n    <div class=\"action-button-container\" *ngIf=\"mediaPlayerService.textTracks.length > 0 && mediaPlayerService.type === 'video'\">\n        <button #subtitlesButton\n            uxFocusIndicator\n            type=\"button\"\n            class=\"action-button\"\n            (keydown)=\"returnFocus = true\"\n            (click)=\"subtitlesOpen = !subtitlesOpen\"\n            (mouseup)=\"subtitlesButton.blur(); returnFocus = false\"\n            i18n-aria-label\n            attr.aria-label=\"Select subtitles, {{ getSubtitleTrack() }} currently selected.\"\n            [attr.aria-expanded]=\"subtitlesOpen\"\n            [attr.aria-describedby]=\"subtitlesId\"\n            aria-haspopup=\"true\">\n            <span class=\"hpe-icon hpe-subtitles\"></span>\n        </button>\n\n        <div #subtitles\n            [style.top.px]=\"-subtitles.offsetHeight\"\n            class=\"popover top media-player-subtitles-popover show\"\n            [id]=\"subtitlesId\"\n            (keydown.escape)=\"subtitlesOpen = false\"\n            (uxClickOutside)=\"subtitlesOpen = false\"\n            *ngIf=\"subtitlesOpen\">\n            <div class=\"arrow\"></div>\n            <h3 class=\"popover-title\" i18n>Subtitles</h3>\n            <div class=\"popover-content\">\n                <ul class=\"subtitles-list\" uxTabbableList [focusOnShow]=\"returnFocus\" [returnFocus]=\"returnFocus\">\n                    <li uxTabbableListItem\n                        tabindex=\"0\"\n                        class=\"subtitles-list-item\"\n                        [class.active]=\"!isSubtitleActive()\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false\"\n                        (keydown.enter)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false; returnFocus = true\">\n\n                        <i class=\"hpe-icon hpe-checkmark m-r-xs\"></i>\n                        <span i18n>Subtitles Off</span>\n                    </li>\n                    <li uxTabbableListItem\n                        class=\"subtitles-list-item\"\n                        *ngFor=\"let track of mediaPlayerService.textTracks\"\n                        [class.active]=\"track.mode === 'showing'\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"setSubtitleTrack(track); subtitlesOpen = false\"\n                        (keydown.enter)=\"setSubtitleTrack(track); subtitlesOpen = false; returnFocus = true\">\n                        <i class=\"hpe-icon hpe-checkmark m-r-xs\"></i>\n                        <span>{{ track.label }}</span>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"action-button-container\">\n        <button #fullscreenButton\n            uxFocusIndicator\n            *ngIf=\"mediaPlayerService.type !== 'audio'\"\n            type=\"button\"\n            class=\"action-button\"\n            attr.aria-label=\"{{ mediaPlayerService.fullscreen ? 'Exit full screen' : 'Full screen' }}\"\n            i18n-aria-label\n            (click)=\"mediaPlayerService.toggleFullscreen()\"\n            (mouseup)=\"fullscreenButton.blur()\">\n\n            <span class=\"hpe-icon\"\n                  [class.hpe-expand]=\"!mediaPlayerService.fullscreen\"\n                  [class.hpe-contract]=\"mediaPlayerService.fullscreen\">\n            </span>\n        </button>\n    </div>\n</div>\n\n\n\n<ng-template #muteTooltip>\n    <span aria-hidden=\"true\">{{ volume === 0 ? 'Unmute' : 'Mute' }}</span>\n</ng-template>",
+                        template: "<div class=\"volume-container\">\n\n    <div class=\"volume-slider-container\"\n        #volumeContainer\n        [class.active]=\"volumeActive || volumeFocus\"\n        (mouseenter)=\"mouseEnterVolume.next()\"\n        (mouseleave)=\"mouseLeaveVolume.next()\"\n        (uxFocusWithin)=\"volumeFocus = true\"\n        (uxBlurWithin)=\"volumeFocus = false\">\n\n        <button #volumeIcon\n                uxFocusIndicator\n                type=\"button\"\n                class=\"volume-slider-icon\"\n                attr.aria-label=\"{{ volume === 0 ? 'Unmute' : 'Mute' }}\"\n                i18n-aria-label\n                [uxTooltip]=\"muteTooltip\"\n                [showTriggers]=\"['mouseenter']\"\n                [hideTriggers]=\"['mouseleave']\"\n                (click)=\"toggleMute()\"\n                (mouseup)=\"volumeIcon.blur()\">\n\n            <ux-icon *ngIf=\"volume === 0\" name=\"volume-mute\"></ux-icon>\n            <ux-icon *ngIf=\"volume > 0 && volume <= 70\" name=\"volume-low\"></ux-icon>\n            <ux-icon *ngIf=\"volume > 70\" name=\"volume\"></ux-icon>\n        </button>\n\n        <div class=\"volume-slider-node\">\n            <ux-slider [(value)]=\"volume\" [options]=\"options\"></ux-slider>\n        </div>\n    </div>\n</div>\n\n<button #startButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToStart()\"\n    (mouseup)=\"startButton.blur()\"\n    aria-label=\"Go to start\"\n    i18n-aria-label>\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"0\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"51.5,64 51.5,0 7.4,32 \" />\n    </svg>\n</button>\n\n<button #playButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    attr.aria-label=\"{{ (mediaPlayerService.playing | async) ? 'Pause' : 'Play' }}\"\n    i18n-aria-label\n    (click)=\"mediaPlayerService.togglePlay()\"\n    (mouseup)=\"playButton.blur()\">\n\n    <svg *ngIf=\"!(mediaPlayerService.playing | async)\" viewBox=\"0 0 45 64\" width=\"20\" height=\"29\" focusable=\"false\">\n        <polygon points=\"0.4,0 0.4,64 44.6,32\" />\n    </svg>\n    <svg *ngIf=\"mediaPlayerService.playing | async\" viewBox=\"0 0 43 56.9\" width=\"20\" height=\"29\" focusable=\"false\">\n        <rect y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n        <rect x=\"27.3\" y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n    </svg>\n</button>\n\n<button #endButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToEnd()\"\n    (mouseup)=\"endButton.blur()\"\n    aria-label=\"Go to end\"\n    i18n-aria-label>\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"44.1\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"0,64 0,0 44.1,32\" />\n    </svg>\n</button>\n\n<div class=\"actions-list\">\n\n    <ng-content></ng-content>\n\n    <div class=\"action-button-container\" *ngIf=\"mediaPlayerService.textTracks.length > 0 && mediaPlayerService.type === 'video'\">\n        <button #subtitlesButton\n            uxFocusIndicator\n            type=\"button\"\n            class=\"action-button\"\n            (keydown)=\"returnFocus = true\"\n            (click)=\"subtitlesOpen = !subtitlesOpen\"\n            (mouseup)=\"subtitlesButton.blur(); returnFocus = false\"\n            i18n-aria-label\n            attr.aria-label=\"Select subtitles, {{ getSubtitleTrack() }} currently selected.\"\n            [attr.aria-expanded]=\"subtitlesOpen\"\n            [attr.aria-describedby]=\"subtitlesId\"\n            aria-haspopup=\"true\">\n\n            <ux-icon name=\"subtitles\"></ux-icon>\n        </button>\n\n        <div #subtitles\n            [style.top.px]=\"-subtitles.offsetHeight\"\n            class=\"popover top media-player-subtitles-popover show\"\n            [id]=\"subtitlesId\"\n            (keydown.escape)=\"subtitlesOpen = false\"\n            (uxClickOutside)=\"subtitlesOpen = false\"\n            *ngIf=\"subtitlesOpen\">\n            <div class=\"arrow\"></div>\n            <h3 class=\"popover-title\" i18n>Subtitles</h3>\n            <div class=\"popover-content\">\n                <ul class=\"subtitles-list\" uxTabbableList [focusOnShow]=\"returnFocus\" [returnFocus]=\"returnFocus\">\n                    <li uxTabbableListItem\n                        tabindex=\"0\"\n                        class=\"subtitles-list-item\"\n                        [class.active]=\"!isSubtitleActive()\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false\"\n                        (keydown.enter)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false; returnFocus = true\">\n\n                        <ux-icon name=\"checkmark\" class=\"subtitles-list-item-checkmark\"></ux-icon>\n                        <span i18n>Subtitles Off</span>\n                    </li>\n                    <li uxTabbableListItem\n                        class=\"subtitles-list-item\"\n                        *ngFor=\"let track of mediaPlayerService.textTracks\"\n                        [class.active]=\"track.mode === 'showing'\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"setSubtitleTrack(track); subtitlesOpen = false\"\n                        (keydown.enter)=\"setSubtitleTrack(track); subtitlesOpen = false; returnFocus = true\">\n\n                        <ux-icon name=\"checkmark\" class=\"subtitles-list-item-checkmark\"></ux-icon>\n                        <span>{{ track.label }}</span>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"action-button-container\">\n        <button #fullscreenButton\n            uxFocusIndicator\n            *ngIf=\"mediaPlayerService.type !== 'audio'\"\n            type=\"button\"\n            class=\"action-button\"\n            attr.aria-label=\"{{ mediaPlayerService.fullscreen ? 'Exit full screen' : 'Full screen' }}\"\n            i18n-aria-label\n            (click)=\"mediaPlayerService.toggleFullscreen()\"\n            (mouseup)=\"fullscreenButton.blur()\">\n\n            <ux-icon [name]=\"mediaPlayerService.fullscreen ? 'contract' : 'expand'\"></ux-icon>\n        </button>\n    </div>\n</div>\n\n\n\n<ng-template #muteTooltip>\n    <span aria-hidden=\"true\">{{ volume === 0 ? 'Unmute' : 'Mute' }}</span>\n</ng-template>",
                         host: {
                             '[class.quiet]': 'mediaPlayerService.quietMode || mediaPlayerService.fullscreen'
                         }
@@ -26993,7 +27115,6 @@
         ];
         return MediaPlayerControlsExtensionComponent;
     }(MediaPlayerBaseExtensionDirective));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27008,7 +27129,6 @@
         ];
         return MediaPlayerCustomControlDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27136,12 +27256,11 @@
                     }] }
         ];
         MediaPlayerTimelineExtensionComponent.propDecorators = {
-            thumb: [{ type: i0.ViewChild, args: ['progressThumb',] }],
-            timelineRef: [{ type: i0.ViewChild, args: ['timeline',] }]
+            thumb: [{ type: i0.ViewChild, args: ['progressThumb', { static: true },] }],
+            timelineRef: [{ type: i0.ViewChild, args: ['timeline', { static: true },] }]
         };
         return MediaPlayerTimelineExtensionComponent;
     }(MediaPlayerBaseExtensionDirective));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27359,7 +27478,6 @@
         };
         return AudioService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27375,12 +27493,10 @@
         ];
         return AudioServiceModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27518,7 +27634,7 @@
             ];
         };
         MediaPlayerComponent.propDecorators = {
-            _playerRef: [{ type: i0.ViewChild, args: ['player',] }],
+            _playerRef: [{ type: i0.ViewChild, args: ['player', { static: false },] }],
             crossorigin: [{ type: i0.Input }],
             source: [{ type: i0.Input }],
             type: [{ type: i0.Input }],
@@ -27526,7 +27642,6 @@
         };
         return MediaPlayerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27580,7 +27695,6 @@
         ];
         return DurationPipe;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27596,12 +27710,10 @@
         ];
         return DurationPipeModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27638,7 +27750,6 @@
         ];
         return FileSizePipe;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27654,12 +27765,10 @@
         ];
         return FileSizePipeModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27678,16 +27787,17 @@
         MediaPlayerModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
-                            common.CommonModule,
-                            FrameExtractionModule,
-                            TooltipModule,
+                            a11y.A11yModule,
+                            AccessibilityModule,
                             AudioServiceModule,
+                            ClickOutsideModule,
+                            common.CommonModule,
                             DurationPipeModule,
                             FileSizePipeModule,
+                            FrameExtractionModule,
+                            IconModule,
                             SliderModule,
-                            AccessibilityModule,
-                            a11y.A11yModule,
-                            ClickOutsideModule
+                            TooltipModule,
                         ],
                         exports: DECLARATIONS$5,
                         declarations: DECLARATIONS$5
@@ -27695,12 +27805,10 @@
         ];
         return MediaPlayerModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27882,14 +27990,12 @@
         };
         return NavigationItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     /** @type {?} */
     var NAVIGATION_MODULE_OPTIONS = new i0.InjectionToken('NAVIGATION_MODULE_OPTIONS');
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -28015,7 +28121,6 @@
         ];
         return NavigationService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -28231,7 +28336,6 @@
         };
         return NavigationLinkDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -28308,10 +28412,24 @@
             function (items) {
                 return items && items.some(function (item) { return item.children && item.children.length > 0; });
             };
+        /** Determine the type of icon to display. We support `hpe-icon`, `ux-icon` or `component` */
+        /**
+         * Determine the type of icon to display. We support `hpe-icon`, `ux-icon` or `component`
+         * @param {?} item
+         * @return {?}
+         */
+        NavigationComponent.prototype._getIconType = /**
+         * Determine the type of icon to display. We support `hpe-icon`, `ux-icon` or `component`
+         * @param {?} item
+         * @return {?}
+         */
+            function (item) {
+                return getIconType(item.icon);
+            };
         NavigationComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-navigation',
-                        template: "<nav class=\"ux-side-nav\" [class.tree]=\"tree\" role=\"navigation\">\n\n    <ol *ngIf=\"items\" role=\"tree\" class=\"nav\" uxTabbableList [hierarchy]=\"true\">\n\n        <ng-container *ngFor=\"let item of items; let rank = index\"\n            [ngTemplateOutlet]=\"navigationNode\"\n            [ngTemplateOutletContext]=\"{ item: item, level: 1, rank: rank, indent: _needsIndent(items) }\">\n        </ng-container>\n\n        <ng-template #navigationNode let-item=\"item\" let-parent=\"parent\" let-level=\"level\" let-rank=\"rank\" let-indent=\"indent\">\n\n            <li [attr.role]=\"(item.children && item.children.length > 0) ? 'treeitem' : 'none'\"\n                [attr.aria-expanded]=\"item.expanded\"\n                [class.selected]=\"item.expanded\"\n                [class.active]=\"navigationLink.isActive\">\n\n                <a uxNavigationLink\n                    #navigationLink=\"uxNavigationLink\"\n                    #tli=\"ux-tabbable-list-item\"\n                    [navigationItem]=\"item\"\n                    [expanded]=\"item.expanded\"\n                    [canExpand]=\"level < _depthLimit\"\n                    [indent]=\"indent\"\n                    uxTabbableListItem\n                    [parent]=\"parent\"\n                    [rank]=\"rank\"\n                    [(expanded)]=\"item.expanded\">\n\n                    <span *ngIf=\"!navigationItemTemplate && item.children && item.children.length > 0 && level < _depthLimit\"\n                          aria-hidden=\"true\"\n                          class=\"nav-expander\"\n                          (click)=\"item.expanded = !item.expanded; $event.stopPropagation(); $event.preventDefault()\">\n                    </span>\n                    <span *ngIf=\"!navigationItemTemplate && item.icon && !tree\" class=\"nav-icon hpe-icon\" [ngClass]=\"item.icon\"></span>\n                    <img *ngIf=\"!navigationItemTemplate && item.iconUrl && !tree\" class=\"nav-icon\" [src]=\"item.iconUrl\" alt=\"item.iconLabel\">\n                    <span *ngIf=\"!navigationItemTemplate\" class=\"nav-title\">{{ item.title }}</span>\n\n                    <ng-container\n                        [ngTemplateOutlet]=\"navigationItemTemplate\"\n                        [ngTemplateOutletContext]=\"{ item: item, level: level }\">\n                    </ng-container>\n\n                </a>\n\n                <ol *ngIf=\"item.children && item.expanded && level < _depthLimit\"\n                    role=\"group\"\n                    class=\"nav\"\n                    [ngClass]=\"_hierarchyClasses[level]\">\n\n                    <ng-container *ngFor=\"let child of item.children; let rank = index\"\n                        [ngTemplateOutlet]=\"navigationNode\"\n                        [ngTemplateOutletContext]=\"{ item: child, parent: tli, level: level + 1, rank: rank, indent: navigationLink.indentChildren }\">\n                    </ng-container>\n\n                </ol>\n\n            </li>\n\n        </ng-template>\n\n    </ol>\n\n    <!-- Backward compatibility with the original ux-navigation -->\n    <ol *ngIf=\"!items\" role=\"tree\" class=\"nav\">\n        <ng-content></ng-content>\n    </ol>\n\n</nav>\n",
+                        template: "<nav class=\"ux-side-nav\" [class.tree]=\"tree\" role=\"navigation\">\n\n    <ol *ngIf=\"items\" role=\"tree\" class=\"nav\" uxTabbableList [hierarchy]=\"true\">\n\n        <ng-container *ngFor=\"let item of items; let rank = index\"\n            [ngTemplateOutlet]=\"navigationNode\"\n            [ngTemplateOutletContext]=\"{ item: item, level: 1, rank: rank, indent: _needsIndent(items) }\">\n        </ng-container>\n\n        <ng-template #navigationNode let-item=\"item\" let-parent=\"parent\" let-level=\"level\" let-rank=\"rank\" let-indent=\"indent\">\n\n            <li [attr.role]=\"(item.children && item.children.length > 0) ? 'treeitem' : 'none'\"\n                [attr.aria-expanded]=\"item.expanded\"\n                [class.selected]=\"item.expanded\"\n                [class.active]=\"navigationLink.isActive\">\n\n                <a uxNavigationLink\n                    #navigationLink=\"uxNavigationLink\"\n                    #tli=\"ux-tabbable-list-item\"\n                    [navigationItem]=\"item\"\n                    [expanded]=\"item.expanded\"\n                    [canExpand]=\"level < _depthLimit\"\n                    [indent]=\"indent\"\n                    uxTabbableListItem\n                    [parent]=\"parent\"\n                    [rank]=\"rank\"\n                    [(expanded)]=\"item.expanded\">\n\n                    <span *ngIf=\"!navigationItemTemplate && item.children && item.children.length > 0 && level < _depthLimit\"\n                          aria-hidden=\"true\"\n                          class=\"nav-expander\"\n                          (click)=\"item.expanded = !item.expanded; $event.stopPropagation(); $event.preventDefault()\">\n                    </span>\n\n                    <!-- Support HPE Icons, UX Icons and Icon Component -->\n                    <ng-container *ngIf=\"!navigationItemTemplate && item.icon && !tree\">\n\n                        <span *ngIf=\"_getIconType(item) !== 'component'\"\n                              class=\"nav-icon\"\n                              [ngClass]=\"[_getIconType(item), item.icon]\">\n                        </span>\n\n                        <ux-icon *ngIf=\"_getIconType(item) === 'component'\"\n                                 class=\"nav-icon\"\n                                 [name]=\"item.icon\">\n                        </ux-icon>\n\n                    </ng-container>\n\n                    <img *ngIf=\"!navigationItemTemplate && item.iconUrl && !tree\" class=\"nav-icon\" [src]=\"item.iconUrl\" alt=\"item.iconLabel\">\n                    <span *ngIf=\"!navigationItemTemplate\" class=\"nav-title\">{{ item.title }}</span>\n\n                    <ng-container\n                        [ngTemplateOutlet]=\"navigationItemTemplate\"\n                        [ngTemplateOutletContext]=\"{ item: item, level: level }\">\n                    </ng-container>\n\n                </a>\n\n                <ol *ngIf=\"item.children && item.expanded && level < _depthLimit\"\n                    role=\"group\"\n                    class=\"nav\"\n                    [ngClass]=\"_hierarchyClasses[level]\">\n\n                    <ng-container *ngFor=\"let child of item.children; let rank = index\"\n                        [ngTemplateOutlet]=\"navigationNode\"\n                        [ngTemplateOutletContext]=\"{ item: child, parent: tli, level: level + 1, rank: rank, indent: navigationLink.indentChildren }\">\n                    </ng-container>\n\n                </ol>\n\n            </li>\n\n        </ng-template>\n\n    </ol>\n\n    <!-- Backward compatibility with the original ux-navigation -->\n    <ol *ngIf=\"!items\" role=\"tree\" class=\"nav\">\n        <ng-content></ng-content>\n    </ol>\n\n</nav>\n",
                         providers: [NavigationService],
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
@@ -28326,11 +28444,10 @@
             items: [{ type: i0.Input }],
             tree: [{ type: i0.Input }],
             autoCollapse: [{ type: i0.Input }],
-            navigationItemTemplate: [{ type: i0.ContentChild, args: ['uxNavigationItem',] }]
+            navigationItemTemplate: [{ type: i0.ContentChild, args: ['uxNavigationItem', { static: false },] }]
         };
         return NavigationComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -28363,6 +28480,7 @@
                         imports: [
                             AccessibilityModule,
                             common.CommonModule,
+                            IconModule,
                             router.RouterModule
                         ],
                         exports: [
@@ -28378,7 +28496,6 @@
         ];
         return NavigationModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -28881,12 +28998,11 @@
             tooltipPlacement: [{ type: i0.Input }],
             animationDuration: [{ type: i0.Input }],
             itemClick: [{ type: i0.Output }],
-            _chartElement: [{ type: i0.ViewChild, args: ['chart',] }],
-            _customTooltip: [{ type: i0.ContentChild, args: ['tooltip',] }]
+            _chartElement: [{ type: i0.ViewChild, args: ['chart', { static: true },] }],
+            _customTooltip: [{ type: i0.ContentChild, args: ['tooltip', { static: false },] }]
         };
         return NestedDonutChartComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -28912,12 +29028,10 @@
         ];
         return NestedDonutChartModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -29075,7 +29189,6 @@
         /** @nocollapse */ NotificationService.ngInjectableDef = i0.defineInjectable({ factory: function NotificationService_Factory() { return new NotificationService(i0.inject(ColorService)); }, token: NotificationService, providedIn: "root" });
         return NotificationService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -29230,7 +29343,6 @@
         };
         return NotificationListComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -29254,12 +29366,10 @@
         ];
         return NotificationModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -30577,7 +30687,7 @@
         OrganizationChartComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-organization-chart',
-                        template: "<!-- Add a button above the root node to load additional parent items -->\n<button #revealElement\n    uxFocusIndicatorOrigin\n    class=\"ux-organization-chart-reveal\"\n    tabindex=\"-1\"\n    [attr.aria-label]=\"revealAriaLabel\"\n    [hidden]=\"!showReveal\"\n    (click)=\"reveal.emit(); _focusRootNode()\"\n    (keydown.ArrowDown)=\"_focusRootNode(); $event.preventDefault()\">\n\n    <!-- Display Reveal Template -->\n    <ng-container [ngTemplateOutlet]=\"revealTemplate || defaultRevealTemplate\"></ng-container>\n</button>\n\n<!-- Show the links connecting each node -->\n<svg #links class=\"ux-organization-chart-links\"></svg>\n\n<!-- Show the nodes containing information about each item -->\n<div #nodes class=\"ux-organization-chart-nodes\"></div>\n\n<!-- Provide a default reveal template -->\n<ng-template #defaultRevealTemplate>\n    <i class=\"hpe-icon hpe-tab-up\"></i>\n</ng-template>",
+                        template: "<!-- Add a button above the root node to load additional parent items -->\n<button #revealElement\n    uxFocusIndicatorOrigin\n    class=\"ux-organization-chart-reveal\"\n    tabindex=\"-1\"\n    [attr.aria-label]=\"revealAriaLabel\"\n    [hidden]=\"!showReveal\"\n    (click)=\"reveal.emit(); _focusRootNode()\"\n    (keydown.ArrowDown)=\"_focusRootNode(); $event.preventDefault()\">\n\n    <!-- Display Reveal Template -->\n    <ng-container [ngTemplateOutlet]=\"revealTemplate || defaultRevealTemplate\"></ng-container>\n</button>\n\n<!-- Show the links connecting each node -->\n<svg #links class=\"ux-organization-chart-links\"></svg>\n\n<!-- Show the nodes containing information about each item -->\n<div #nodes class=\"ux-organization-chart-nodes\"></div>\n\n<!-- Provide a default reveal template -->\n<ng-template #defaultRevealTemplate>\n    <ux-icon name=\"tab-up\"></ux-icon>\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -30608,11 +30718,11 @@
             selectedChange: [{ type: i0.Output }],
             reveal: [{ type: i0.Output }],
             transitionEnd: [{ type: i0.Output }],
-            revealTemplate: [{ type: i0.ContentChild, args: ['revealTemplate',] }],
-            nodeTemplate: [{ type: i0.ContentChild, args: ['nodeTemplate',] }],
-            revealElement: [{ type: i0.ViewChild, args: ['revealElement',] }],
-            linksContainer: [{ type: i0.ViewChild, args: ['links',] }],
-            nodesContainer: [{ type: i0.ViewChild, args: ['nodes',] }]
+            revealTemplate: [{ type: i0.ContentChild, args: ['revealTemplate', { static: false },] }],
+            nodeTemplate: [{ type: i0.ContentChild, args: ['nodeTemplate', { static: false },] }],
+            revealElement: [{ type: i0.ViewChild, args: ['revealElement', { static: true },] }],
+            linksContainer: [{ type: i0.ViewChild, args: ['links', { static: true },] }],
+            nodesContainer: [{ type: i0.ViewChild, args: ['nodes', { static: true },] }]
         };
         return OrganizationChartComponent;
     }());
@@ -30625,7 +30735,6 @@
     OrganizationChartAxis[OrganizationChartAxis.Horizontal] = 'Horizontal';
     OrganizationChartAxis[OrganizationChartAxis.Vertical] = 'Vertical';
     OrganizationChartAxis[OrganizationChartAxis.Both] = 'Both';
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -30639,9 +30748,10 @@
                             OrganizationChartComponent
                         ],
                         imports: [
+                            AccessibilityModule,
                             common.CommonModule,
+                            IconModule,
                             ResizeModule,
-                            AccessibilityModule
                         ],
                         exports: [
                             OrganizationChartComponent
@@ -30650,190 +30760,97 @@
         ];
         return OrganizationChartModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var TabHeadingDirective = /** @class */ (function () {
+        function TabHeadingDirective() {
+        }
+        TabHeadingDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[uxTabHeading]'
+                    },] }
+        ];
+        return TabHeadingDirective;
+    }());
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var TabsetService = /** @class */ (function () {
         function TabsetService() {
-            this.tabs$ = new rxjs.BehaviorSubject([]);
-            this.active$ = new rxjs.BehaviorSubject(null);
-            this.focused$ = new rxjs.BehaviorSubject(false);
-            this.highlighted$ = new rxjs.BehaviorSubject(null);
+            /**
+             * Store the list of tabs
+             */
+            this.tabs = [];
+            /**
+             * Store the manual state
+             */
+            this.manual = false;
         }
+        /** Update the array of tabs - required to preserve order */
         /**
-         * @param {?} tab
+         * Update the array of tabs - required to preserve order
+         * @param {?} tabs
          * @return {?}
          */
-        TabsetService.prototype.add = /**
-         * @param {?} tab
+        TabsetService.prototype.update = /**
+         * Update the array of tabs - required to preserve order
+         * @param {?} tabs
          * @return {?}
          */
-            function (tab) {
-                this.tabs$.next(__spread(this.tabs$.value, [tab]));
+            function (tabs) {
+                this.tabs = __spread(tabs);
             };
+        /** Programmatically select a tab */
         /**
-         * @param {?} tab
-         * @return {?}
-         */
-        TabsetService.prototype.remove = /**
-         * @param {?} tab
-         * @return {?}
-         */
-            function (tab) {
-                // remove the tab
-                this.tabs$.next(this.tabs$.value.filter(function (_tab) { return _tab !== tab; }));
-            };
-        /**
+         * Programmatically select a tab
          * @param {?} tab
          * @return {?}
          */
         TabsetService.prototype.select = /**
+         * Programmatically select a tab
          * @param {?} tab
          * @return {?}
          */
             function (tab) {
                 if (!tab.disabled) {
-                    this.active$.next(tab);
-                    this.highlighted$.next(tab);
+                    // update the active state of each tab accordingly
+                    this.tabs.forEach(function (_tab) { return _tab === tab ? _tab.selectTab() : _tab.deselectTab(); });
                 }
             };
+        /** Determine if there is a selected tab */
         /**
-         * @param {?} index
+         * Determine if there is a selected tab
          * @return {?}
          */
-        TabsetService.prototype.selectAtIndex = /**
-         * @param {?} index
-         * @return {?}
-         */
-            function (index) {
-                // if there are no tabs then do nothing
-                if (this.tabs$.value.length === 0) {
-                    return;
-                }
-                // check if the index is within the bounds
-                if (index < 0) {
-                    return this.selectAtIndex(this.tabs$.value.length - 1);
-                }
-                else if (index >= this.tabs$.value.length) {
-                    return this.selectAtIndex(0);
-                }
-                /** @type {?} */
-                var target = this.tabs$.value[index];
-                if (target) {
-                    this.select(target);
-                }
-            };
-        /**
-         * @return {?}
-         */
-        TabsetService.prototype.selectNextTab = /**
+        TabsetService.prototype.isTabActive = /**
+         * Determine if there is a selected tab
          * @return {?}
          */
             function () {
-                var e_1, _a;
-                // find the currently selected index
-                /** @type {?} */
-                var index = this.tabs$.value.indexOf(this.active$.value);
-                // check the tabs after the active one to see if there are any selectable tabs
-                /** @type {?} */
-                var tabs = this.tabs$.value.slice(index + 1);
-                try {
-                    // check if any of the tabs are not disabled
-                    for (var tabs_1 = __values(tabs), tabs_1_1 = tabs_1.next(); !tabs_1_1.done; tabs_1_1 = tabs_1.next()) {
-                        var tab = tabs_1_1.value;
-                        if (!tab.disabled) {
-                            return this.select(tab);
-                        }
-                    }
-                }
-                catch (e_1_1) {
-                    e_1 = { error: e_1_1 };
-                }
-                finally {
-                    try {
-                        if (tabs_1_1 && !tabs_1_1.done && (_a = tabs_1.return))
-                            _a.call(tabs_1);
-                    }
-                    finally {
-                        if (e_1)
-                            throw e_1.error;
-                    }
-                }
-                // if we reach here then no tab could be selected - select the first tab
-                this.selectFirstTab();
+                return !!this.tabs.find(function (tab) { return tab.active; });
             };
+        /** Select the first non-disabled tab */
         /**
-         * @return {?}
-         */
-        TabsetService.prototype.selectPreviousTab = /**
-         * @return {?}
-         */
-            function () {
-                var e_2, _a;
-                // find the currently selected index
-                /** @type {?} */
-                var index = this.tabs$.value.indexOf(this.active$.value);
-                // check the tabs before the active one to see if there are any selectable tabs
-                /** @type {?} */
-                var tabs = this.tabs$.value.slice(0, index);
-                try {
-                    // check if any of the tabs are not disabled
-                    for (var _b = __values(tabs.reverse()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                        var tab = _c.value;
-                        if (!tab.disabled) {
-                            return this.select(tab);
-                        }
-                    }
-                }
-                catch (e_2_1) {
-                    e_2 = { error: e_2_1 };
-                }
-                finally {
-                    try {
-                        if (_c && !_c.done && (_a = _b.return))
-                            _a.call(_b);
-                    }
-                    finally {
-                        if (e_2)
-                            throw e_2.error;
-                    }
-                }
-                // if we reach here then no previous tab could be selected - select the last tab
-                this.selectLastTab();
-            };
-        /**
+         * Select the first non-disabled tab
          * @return {?}
          */
         TabsetService.prototype.selectFirstTab = /**
+         * Select the first non-disabled tab
          * @return {?}
          */
             function () {
                 // find the index of the first non-disabled tab
                 /** @type {?} */
-                var tabIndex = this.tabs$.value.findIndex(function (tab) { return !tab.disabled; });
-                if (tabIndex !== -1) {
-                    this.selectAtIndex(tabIndex);
-                }
-            };
-        /**
-         * @return {?}
-         */
-        TabsetService.prototype.selectLastTab = /**
-         * @return {?}
-         */
-            function () {
-                // find the index of the first non-disabled tab
-                /** @type {?} */
-                var tabIndex = this.tabs$.value.slice().reverse().findIndex(function (tab) { return !tab.disabled; });
-                if (tabIndex !== -1) {
-                    this.selectAtIndex((this.tabs$.value.length - 1) - tabIndex);
+                var tab = this.tabs.find(function (_tab) { return !_tab.disabled; });
+                if (tab) {
+                    this.select(tab);
                 }
             };
         TabsetService.decorators = [
@@ -30841,53 +30858,6 @@
         ];
         return TabsetService;
     }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    var TabFocusDirective = /** @class */ (function () {
-        function TabFocusDirective(_tabset, _elementRef) {
-            this._tabset = _tabset;
-            this._elementRef = _elementRef;
-        }
-        /**
-         * @return {?}
-         */
-        TabFocusDirective.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                this._subscription = this._tabset.highlighted$.pipe(operators.filter(function () { return _this._tabset.focused$.value === true; }), operators.filter(function () { return _this._tabset.highlighted$.value === _this.uxTabFocus; })).subscribe(function () { return _this._elementRef.nativeElement.focus(); });
-            };
-        /**
-         * @return {?}
-         */
-        TabFocusDirective.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._subscription.unsubscribe();
-            };
-        TabFocusDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[uxTabFocus]'
-                    },] }
-        ];
-        /** @nocollapse */
-        TabFocusDirective.ctorParameters = function () {
-            return [
-                { type: TabsetService },
-                { type: i0.ElementRef }
-            ];
-        };
-        TabFocusDirective.propDecorators = {
-            uxTabFocus: [{ type: i0.Input }]
-        };
-        return TabFocusDirective;
-    }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -30895,29 +30865,64 @@
     /** @type {?} */
     var uniqueTabId = 0;
     var TabComponent = /** @class */ (function () {
-        function TabComponent(_tabset) {
-            var _this = this;
+        function TabComponent(_tabset, _changeDetector) {
             this._tabset = _tabset;
+            this._changeDetector = _changeDetector;
+            /**
+             * Define the tab unique id
+             */
             this.id = "ux-tab-" + ++uniqueTabId;
+            /**
+             * Define the active state of this tab
+             */
+            this.active = false;
+            /**
+             * Define if this tab is disabled
+             */
             this.disabled = false;
+            /**
+             * @deprecated Emit when this tab is selected - use activated output instead
+             */
+            // tslint:disable-next-line
             this.select = new i0.EventEmitter();
+            /**
+             * Emit when this tab is selected
+             */
+            this.activated = new i0.EventEmitter();
+            /**
+             * @deprecated Emit when this tab is deselected - - use deactivated output instead
+             */
             this.deselect = new i0.EventEmitter();
-            this.active$ = this._tabset.active$.pipe(operators.map(function (active) { return active === _this; }), tick());
+            /**
+             * Emit when this tab is deselected
+             */
+            this.deactivated = new i0.EventEmitter();
+            /**
+             * Unsubscribe from all subscriptions when component is destroyed
+             */
             this._onDestroy = new rxjs.Subject();
-            this.active$.pipe(operators.takeUntil(this._onDestroy)).subscribe(function (active) { return active ? _this.select.emit() : _this.deselect.emit(); });
         }
-        Object.defineProperty(TabComponent.prototype, "active", {
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
-                if (value) {
-                    this._tabset.select(this);
+        /**
+         * @return {?}
+         */
+        TabComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                // warn anyone using the select output that it is deprecated
+                if (this.select.observers.length > 0) {
+                    console.warn('Tab Component - (select) output is deprecated use activated instead');
                 }
-            },
-            enumerable: true,
-            configurable: true
-        });
+                // warn anyone using the deselect output that it is deprecated
+                if (this.deselect.observers.length > 0) {
+                    console.warn('Tab Component - (deselect) output is deprecated use deactivated instead');
+                }
+                // for backwards compatibility emit deprecated select event
+                this.activated.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.select.emit(); });
+                // for backwards compatibility emit deprecated deselect event
+                this.deactivated.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.deselect.emit(); });
+            };
         /**
          * @return {?}
          */
@@ -30928,65 +30933,101 @@
                 this._onDestroy.next();
                 this._onDestroy.complete();
             };
+        /**
+         * @return {?}
+         */
+        TabComponent.prototype.selectTab = /**
+         * @return {?}
+         */
+            function () {
+                // if this tab is currently active do nothing
+                if (this.active && !this._tabset.manual) {
+                    return;
+                }
+                if (!this._tabset.manual) {
+                    this.active = true;
+                }
+                this.activated.emit();
+                this._changeDetector.detectChanges();
+            };
+        /**
+         * @return {?}
+         */
+        TabComponent.prototype.deselectTab = /**
+         * @return {?}
+         */
+            function () {
+                // if this tab is not currently active do nothing
+                if (!this.active && !this._tabset.manual) {
+                    return;
+                }
+                if (!this._tabset.manual) {
+                    this.active = false;
+                }
+                this.deactivated.emit();
+                this._changeDetector.detectChanges();
+            };
         TabComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-tab',
-                        template: "<div role=\"tabpanel\"\n     class=\"tab-pane\"\n     [class.active]=\"active$ | async\"\n     [id]=\"id + '-panel'\"\n     [attr.aria-labelledby]=\"id\"\n     [attr.aria-hidden]=\"!(active$ | async)\">\n  <ng-content></ng-content>\n</div>",
+                        template: "<div role=\"tabpanel\"\n     class=\"tab-pane\"\n     [style.display]=\"active ? 'block' : 'none'\"\n     [id]=\"id + '-panel'\"\n     [attr.aria-labelledby]=\"id\"\n     [attr.aria-hidden]=\"!active\">\n  <ng-content></ng-content>\n</div>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
         /** @nocollapse */
         TabComponent.ctorParameters = function () {
             return [
-                { type: TabsetService }
+                { type: TabsetService },
+                { type: i0.ChangeDetectorRef }
             ];
         };
         TabComponent.propDecorators = {
             id: [{ type: i0.Input }],
+            active: [{ type: i0.Input }],
             disabled: [{ type: i0.Input }],
             heading: [{ type: i0.Input }],
             customClass: [{ type: i0.Input }],
             select: [{ type: i0.Output }],
+            activated: [{ type: i0.Output }],
             deselect: [{ type: i0.Output }],
-            active: [{ type: i0.Input }]
+            deactivated: [{ type: i0.Output }],
+            headingRef: [{ type: i0.ContentChild, args: [TabHeadingDirective, { read: i0.TemplateRef, static: false },] }]
         };
         return TabComponent;
     }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    var TabHeadingDirective = /** @class */ (function () {
-        function TabHeadingDirective(templateRef, tab) {
-            tab.headingRef = templateRef;
-        }
-        TabHeadingDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[uxTabHeading]'
-                    },] }
-        ];
-        /** @nocollapse */
-        TabHeadingDirective.ctorParameters = function () {
-            return [
-                { type: i0.TemplateRef },
-                { type: TabComponent }
-            ];
-        };
-        return TabHeadingDirective;
-    }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var TabsetComponent = /** @class */ (function () {
-        function TabsetComponent(tabset) {
-            this.tabset = tabset;
+        function TabsetComponent(_tabset, _changeDetector) {
+            this._tabset = _tabset;
+            this._changeDetector = _changeDetector;
+            /**
+             * Determine if the appearance of the tabset
+             */
             this.minimal = true;
+            /**
+             * Determine if the tabset should appear stacked
+             */
             this.stacked = 'none';
-            this._onDestroy = new rxjs.Subject();
+            /**
+             * Remove subscriptions on destroy
+             */
+            this._onDestroy$ = new rxjs.Subject();
         }
+        Object.defineProperty(TabsetComponent.prototype, "manual", {
+            /** Determine if we want to manually update the active state */
+            set: /**
+             * Determine if we want to manually update the active state
+             * @param {?} manual
+             * @return {?}
+             */ function (manual) {
+                this._tabset.manual = manual;
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -30994,23 +31035,22 @@
          * @return {?}
          */
             function () {
-                // Make sure a tab is selected
-                if (!this.tabset.active$.value) {
-                    this.tabset.selectFirstTab();
-                }
-            };
-        /**
-         * @return {?}
-         */
-        TabsetComponent.prototype.ngAfterContentInit = /**
-         * @return {?}
-         */
-            function () {
                 var _this = this;
-                this.tabs.changes
-                    .pipe(operators.takeUntil(this._onDestroy))
-                    .subscribe(function (tabs) { return _this.tabset.tabs$.next(tabs.toArray()); });
-                this.tabset.tabs$.next(this.tabs.toArray());
+                // provide the service with the initial array of items
+                this._tabset.update(this._tabs.toArray());
+                // Make sure a tab is selected
+                if (!this._tabset.isTabActive()) {
+                    this._tabset.selectFirstTab();
+                }
+                // run change detection once we have setup the tabs
+                this._changeDetector.detectChanges();
+                // watch for any future changes
+                this._tabs.changes.pipe(operators.takeUntil(this._onDestroy$)).subscribe(function (tabs) {
+                    // update the internal list of tabs
+                    _this._tabset.update(tabs);
+                    // run change detection
+                    _this._changeDetector.detectChanges();
+                });
             };
         /**
          * @return {?}
@@ -31019,75 +31059,13 @@
          * @return {?}
          */
             function () {
-                this._onDestroy.next();
-                this._onDestroy.complete();
-            };
-        /**
-         * Allow manual tab selected
-         */
-        /**
-         * Allow manual tab selected
-         * @param {?} tab
-         * @return {?}
-         */
-        TabsetComponent.prototype.select = /**
-         * Allow manual tab selected
-         * @param {?} tab
-         * @return {?}
-         */
-            function (tab) {
-                this.tabset.select(tab);
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        TabsetComponent.prototype.selectPreviousTab = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                // determine which arrow key is pressed
-                /** @type {?} */
-                var arrowLeft = event.key === 'ArrowLeft' || event.keyCode === 37;
-                /** @type {?} */
-                var arrowUp = event.key === 'ArrowUp' || event.keyCode === 38;
-                // only perform action if the arrow key matches the orientation
-                if (arrowLeft && this.stacked !== 'none' || arrowUp && this.stacked === 'none') {
-                    return;
-                }
-                // perform selection
-                this.tabset.selectPreviousTab();
-                // prevent the browser from scrolling when arrow keys are pressed
-                event.preventDefault();
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        TabsetComponent.prototype.selectNextTab = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                // determine which arrow key is pressed
-                /** @type {?} */
-                var arrowRight = event.key === 'ArrowRight' || event.keyCode === 39;
-                /** @type {?} */
-                var arrowDown = event.key === 'ArrowDown' || event.keyCode === 40;
-                // only perform action if the arrow key matches the orientation
-                if (arrowRight && this.stacked !== 'none' || arrowDown && this.stacked === 'none') {
-                    return;
-                }
-                // perform selection
-                this.tabset.selectNextTab();
-                // prevent the browser from scrolling when arrow keys are pressed
-                event.preventDefault();
+                this._onDestroy$.next();
+                this._onDestroy$.complete();
             };
         TabsetComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-tabset',
-                        template: "<!-- Nav tabs -->\n<ul role=\"tablist\"\n    class=\"nav nav-tabs\"\n    [class.minimal-tab]=\"minimal\"\n    [attr.aria-label]=\"ariaLabel\"\n    [attr.aria-orientation]=\"stacked === 'none' ? 'horizontal' : 'vertical'\">\n\n\t<li role=\"presentation\"\n        class=\"nav-item\"\n        *ngFor=\"let tab of tabset.tabs$ | async; let index = index\"\n        [class.active]=\"tab.active$ | async\"\n        [class.disabled]=\"tab.disabled\"\n        [ngClass]=\"tab.customClass\">\n\n        <a class=\"nav-link\"\n            [id]=\"tab.id\"\n            role=\"tab\"\n            [uxTabFocus]=\"tab\"\n            [tabindex]=\"(tab.active$ | async) ? 0 : -1\"\n            uxFocusIndicator\n            (mousedown)=\"tabset.select(tab)\"\n            (focus)=\"tabset.focused$.next(true)\"\n            (blur)=\"tabset.focused$.next(false)\"\n            (mousedown)=\"tabset.focused$.next(true)\"\n            (keydown.ArrowUp)=\"selectPreviousTab($event)\"\n            (keydown.ArrowLeft)=\"selectPreviousTab($event)\"\n            (keydown.ArrowRight)=\"selectNextTab($event)\"\n            (keydown.ArrowDown)=\"selectNextTab($event)\"\n            (keydown.Home)=\"tabset.selectFirstTab(); $event.preventDefault()\"\n            (keydown.End)=\"tabset.selectLastTab(); $event.preventDefault()\"\n            [attr.aria-controls]=\"tab.id\"\n            [attr.aria-selected]=\"tab.active$ | async\"\n            [attr.aria-disabled]=\"tab.disabled\">\n\n            <span *ngIf=\"!tab.headingRef\">{{ tab.heading }}</span>\n\n            <ng-container *ngIf=\"tab.headingRef\" [ngTemplateOutlet]=\"tab.headingRef\"></ng-container>\n        </a>\n\n\t</li>\n\n</ul>\n\n<!-- Tab panes -->\n<div class=\"tab-content\">\n\t<ng-content></ng-content>\n</div>",
+                        template: "<!-- Nav tabs -->\n<ul role=\"tablist\"\n    uxTabbableList\n    [direction]=\"stacked === 'none' ? 'horizontal' : 'vertical'\"\n    [allowBoundaryKeys]=\"true\"\n    class=\"nav nav-tabs\"\n    [class.minimal-tab]=\"minimal\"\n    [attr.aria-label]=\"ariaLabel\"\n    [attr.aria-orientation]=\"stacked === 'none' ? 'horizontal' : 'vertical'\">\n\n\t<li role=\"presentation\"\n        class=\"nav-item\"\n        *ngFor=\"let tab of _tabset.tabs; let index = index\"\n        [class.active]=\"tab.active\"\n        [class.disabled]=\"tab.disabled\"\n        [ngClass]=\"tab.customClass\">\n\n        <a class=\"nav-link\"\n            [id]=\"tab.id\"\n            role=\"tab\"\n            uxTabbableListItem\n            uxFocusIndicator\n            (mousedown)=\"_tabset.select(tab)\"\n            (activated)=\"_tabset.select(tab)\"\n            [attr.aria-controls]=\"tab.id\"\n            [attr.aria-selected]=\"tab.active\"\n            [attr.aria-disabled]=\"tab.disabled\">\n\n            <span *ngIf=\"!tab.headingRef\">{{ tab.heading }}</span>\n\n            <ng-container *ngIf=\"tab.headingRef\" [ngTemplateOutlet]=\"tab.headingRef\"></ng-container>\n        </a>\n\n\t</li>\n\n</ul>\n\n<!-- Tab panes -->\n<div class=\"tab-content\">\n\t<ng-content></ng-content>\n</div>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         providers: [TabsetService],
                         host: {
@@ -31099,18 +31077,19 @@
         /** @nocollapse */
         TabsetComponent.ctorParameters = function () {
             return [
-                { type: TabsetService }
+                { type: TabsetService },
+                { type: i0.ChangeDetectorRef }
             ];
         };
         TabsetComponent.propDecorators = {
             minimal: [{ type: i0.Input }],
             stacked: [{ type: i0.Input }],
+            manual: [{ type: i0.Input }],
             ariaLabel: [{ type: i0.Input, args: ['aria-label',] }],
-            tabs: [{ type: i0.ContentChildren, args: [TabComponent,] }]
+            _tabs: [{ type: i0.ContentChildren, args: [TabComponent,] }]
         };
         return TabsetComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31124,18 +31103,24 @@
                             AccessibilityModule,
                             common.CommonModule
                         ],
-                        exports: [TabsetComponent, TabComponent, TabHeadingDirective],
-                        declarations: [TabsetComponent, TabComponent, TabHeadingDirective, TabFocusDirective],
+                        exports: [
+                            TabsetComponent,
+                            TabComponent,
+                            TabHeadingDirective
+                        ],
+                        declarations: [
+                            TabsetComponent,
+                            TabComponent,
+                            TabHeadingDirective
+                        ],
                     },] }
         ];
         return TabsetModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31150,7 +31135,6 @@
         ];
         return PageHeaderCustomMenuDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31191,10 +31175,22 @@
                         break;
                 }
             };
+        /**
+         * @param {?} identifier
+         * @return {?}
+         */
+        PageHeaderIconMenuComponent.prototype._getIconType = /**
+         * @param {?} identifier
+         * @return {?}
+         */
+            function (identifier) {
+                return identifier ? getIconType(identifier) : '';
+            };
         PageHeaderIconMenuComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-page-header-icon-menu',
-                        template: "<div class=\"page-header-icon-menu\">\n    <button\n        type=\"button\"\n        class=\"page-header-icon-menu-button\"\n        [attr.aria-label]=\"menu.label\"\n        [uxMenuTriggerFor]=\"iconMenu\"\n        (click)=\"select(menu)\">\n\n        <i class=\"hpe-icon\" [ngClass]=\"menu.icon\"></i>\n        <span class=\"label label-primary\" *ngIf=\"menu?.badge\" aria-hidden=\"true\">{{ menu.badge }}</span>\n    </button>\n\n    <ux-menu #iconMenu alignment=\"end\" menuClass=\"ux-page-header-icon-menu\">\n        <ng-container *ngFor=\"let dropdown of menu?.dropdown\">\n\n            <div class=\"dropdown-header\" *ngIf=\"dropdown.header\">\n                <span class=\"font-bold\">{{ dropdown.title }}</span>\n            </div>\n\n            <button\n                type=\"button\"\n                *ngIf=\"!dropdown.header\"\n                uxMenuItem\n                (click)=\"select(dropdown)\"\n                (keydown)=\"keydownHandler(dropdown, $event)\">\n\n\n                <span class=\"dropdown-item-title\">\n                    <i class=\"hpe-icon hpe-fw\" [ngClass]=\"dropdown.icon\"></i>\n                    {{ dropdown.title }}\n                </span>\n                <span *ngIf=\"dropdown.subtitle\" class=\"dropdown-item-subtitle\">{{ dropdown.subtitle }}</span>\n\n            </button>\n\n            <ux-menu-divider *ngIf=\"dropdown.divider\"></ux-menu-divider>\n\n        </ng-container>\n    </ux-menu>\n</div>"
+                        template: "<div class=\"page-header-icon-menu\">\n    <button\n        type=\"button\"\n        class=\"page-header-icon-menu-button\"\n        [attr.aria-label]=\"menu.label\"\n        [uxMenuTriggerFor]=\"iconMenu\"\n        (click)=\"select(menu)\">\n\n        <!-- Support all icon types -->\n        <i *ngIf=\"_getIconType(menu.icon) !== 'component'\"\n           [ngClass]=\"[_getIconType(menu.icon), menu.icon]\">\n        </i>\n\n        <ux-icon *ngIf=\"_getIconType(menu.icon) === 'component'\"\n                 [name]=\"menu.icon\">\n        </ux-icon>\n\n        <span class=\"label label-primary\" *ngIf=\"menu?.badge\" aria-hidden=\"true\">{{ menu.badge }}</span>\n    </button>\n\n    <ux-menu #iconMenu alignment=\"end\" menuClass=\"ux-page-header-icon-menu\">\n        <ng-container *ngFor=\"let dropdown of menu?.dropdown\">\n\n            <div class=\"dropdown-header\" *ngIf=\"dropdown.header\">\n                <span class=\"font-bold\">{{ dropdown.title }}</span>\n            </div>\n\n            <button\n                type=\"button\"\n                *ngIf=\"!dropdown.header\"\n                uxMenuItem\n                (click)=\"select(dropdown)\"\n                (keydown)=\"keydownHandler(dropdown, $event)\">\n\n\n                <span class=\"dropdown-item-title\">\n                    <!-- Support all icon types -->\n                    <i *ngIf=\"_getIconType(dropdown.icon) !== 'component'\"\n                       class=\"hpe-fw\"\n                       [ngClass]=\"[_getIconType(dropdown.icon) || 'ux-icon', dropdown.icon || '']\">\n                    </i>\n\n                    <ux-icon *ngIf=\"_getIconType(dropdown.icon) === 'component'\"\n                             class=\"m-r-xs\"\n                             [name]=\"dropdown.icon\">\n                    </ux-icon>\n\n                    {{ dropdown.title }}\n                </span>\n                <span *ngIf=\"dropdown.subtitle\" class=\"dropdown-item-subtitle\">{{ dropdown.subtitle }}</span>\n\n            </button>\n\n            <ux-menu-divider *ngIf=\"dropdown.divider\"></ux-menu-divider>\n\n        </ng-container>\n    </ux-menu>\n</div>",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
         PageHeaderIconMenuComponent.propDecorators = {
@@ -31202,7 +31198,6 @@
         };
         return PageHeaderIconMenuComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31220,9 +31215,7 @@
             this.selected$
                 .pipe(operators.takeUntil(this._onDestroy), operators.map(function (selected) { return _this.getRoot(selected); }))
                 .subscribe(function (root) { return _this.selectedRoot$.next(root); });
-            this._router.events
-                .pipe(operators.takeUntil(this._onDestroy), operators.filter(function (e) { return e instanceof router.NavigationEnd; }))
-                .subscribe(this.updateItemsWithActiveRoute.bind(this));
+            this._router.events.pipe(operators.filter(function (event) { return event instanceof router.NavigationEnd || event instanceof router.NavigationCancel || event instanceof router.NavigationError; }), operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.updateItemsWithActiveRoute(); });
         }
         /**
          * @return {?}
@@ -31512,7 +31505,6 @@
         }
         return PageHeaderActiveNavigationItem;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31561,7 +31553,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-page-header-horizontal-navigation-dropdown-item',
                         exportAs: 'ux-page-header-horizontal-navigation-dropdown-item',
-                        template: "<div *ngIf=\"item.children && item.children.length > 0\">\n\n    <button\n        type=\"button\"\n        uxMenuItem\n        [disabled]=\"item.disabled\"\n        [class.selected]=\"item.selected\"\n        [attr.aria-selected]=\"item.selected\"\n        [uxMenuTriggerFor]=\"menu\">\n\n        <span class=\"dropdown-item-title\">{{ item.title }}</span>\n        <span class=\"dropdown-item-icon hpe-icon hpe-next\"></span>\n    </button>\n\n    <ux-menu #menu placement=\"right\" menuClass=\"horizontal-navigation-dropdown-submenu\">\n        <button\n            type=\"button\"\n            *ngFor=\"let subItem of item.children\"\n            uxMenuItem\n            [disabled]=\"subItem.disabled\"\n            [class.selected]=\"subItem.selected\"\n            [attr.aria-selected]=\"subItem.selected\"\n            (click)=\"select(subItem)\"\n            (keydown)=\"keydownHandler($event, subItem)\">\n\n            <span class=\"dropdown-item-title\">{{ subItem.title }}</span>\n        </button>\n    </ux-menu>\n\n</div>\n\n<div *ngIf=\"!item.children || item.children.length === 0\">\n\n    <button\n        type=\"button\"\n        uxMenuItem\n        [disabled]=\"item.disabled\"\n        [class.selected]=\"item.selected\"\n        [attr.aria-selected]=\"item.selected\"\n        (click)=\"select(item)\"\n        (keydown)=\"keydownHandler($event, item)\">\n\n        <span class=\"dropdown-item-title\">{{ item.title }}</span>\n    </button>\n\n</div>"
+                        template: "<div *ngIf=\"item.children && item.children.length > 0\">\n\n    <button\n        type=\"button\"\n        uxMenuItem\n        [disabled]=\"item.disabled\"\n        [class.selected]=\"item.selected\"\n        [attr.aria-selected]=\"item.selected\"\n        [uxMenuTriggerFor]=\"menu\">\n\n        <span class=\"dropdown-item-title\">{{ item.title }}</span>\n        <ux-icon class=\"dropdown-item-icon\" name=\"next\"></ux-icon>\n    </button>\n\n    <ux-menu #menu placement=\"right\" menuClass=\"horizontal-navigation-dropdown-submenu\">\n        <button\n            type=\"button\"\n            *ngFor=\"let subItem of item.children\"\n            uxMenuItem\n            [disabled]=\"subItem.disabled\"\n            [class.selected]=\"subItem.selected\"\n            [attr.aria-selected]=\"subItem.selected\"\n            (click)=\"select(subItem)\"\n            (keydown)=\"keydownHandler($event, subItem)\">\n\n            <span class=\"dropdown-item-title\">{{ subItem.title }}</span>\n        </button>\n    </ux-menu>\n\n</div>\n\n<div *ngIf=\"!item.children || item.children.length === 0\">\n\n    <button\n        type=\"button\"\n        uxMenuItem\n        [disabled]=\"item.disabled\"\n        [class.selected]=\"item.selected\"\n        [attr.aria-selected]=\"item.selected\"\n        (click)=\"select(item)\"\n        (keydown)=\"keydownHandler($event, item)\">\n\n        <span class=\"dropdown-item-title\">{{ item.title }}</span>\n    </button>\n\n</div>"
                     }] }
         ];
         /** @nocollapse */
@@ -31575,7 +31567,6 @@
         };
         return PageHeaderNavigationDropdownItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31690,7 +31681,6 @@
         ];
         return PageHeaderNavigationService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31713,6 +31703,24 @@
              */
             this._onDestroy = new rxjs.Subject();
         }
+        Object.defineProperty(PageHeaderNavigationItemComponent.prototype, "item", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._item;
+            },
+            /** Access the data for this dropdown item */
+            set: /**
+             * Access the data for this dropdown item
+             * @param {?} item
+             * @return {?}
+             */ function (item) {
+                this._item = item;
+                this._iconType = getIconType(item.icon);
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -31721,7 +31729,7 @@
          */
             function () {
                 var _this = this;
-                this._pageHeaderService.selected$.pipe(operators.takeUntil(this._onDestroy)).subscribe(function (selectedItem) {
+                this._pageHeaderService.selected$.pipe(tick(), operators.takeUntil(this._onDestroy)).subscribe(function (selectedItem) {
                     // Update selected state for this item
                     _this._pageHeaderService.updateItem(_this.item, selectedItem);
                     if (selectedItem && _this.isOpen) {
@@ -31778,7 +31786,7 @@
         PageHeaderNavigationItemComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-page-header-horizontal-navigation-item',
-                        template: "<div *ngIf=\"item.children && item.children.length > 0 && !(secondary$ | async)\">\n\n    <button #navigationBtn\n        type=\"button\"\n        [tabindex]=\"_tabindex | async\"\n        [uxMenuTriggerFor]=\"menu\"\n        [disabled]=\"item.disabled\"\n        role=\"menuitem\"\n        class=\"horizontal-navigation-button\"\n        [class.disabled]=\"item.disabled\"\n        [class.selected]=\"item.selected\"\n        [class.open]=\"isOpen\"\n        [attr.aria-selected]=\"item.selected\">\n\n        <span class=\"hpe-icon navigation-item-icon\" *ngIf=\"item.icon\" [ngClass]=\"item?.icon\"></span>\n        <span class=\"navigation-item-label\">{{ item?.title }}</span>\n        <span class=\"hpe-icon hpe-down\"></span>\n\n    </button>\n\n    <ux-menu\n        #menu\n        menuClass=\"horizontal-navigation-dropdown-menu\"\n        (opened)=\"isOpen = true\"\n        (closed)=\"isOpen = false\">\n\n        <ux-page-header-horizontal-navigation-dropdown-item\n            *ngFor=\"let item of item?.children\"\n            [item]=\"item\">\n        </ux-page-header-horizontal-navigation-dropdown-item>\n    </ux-menu>\n\n</div>\n\n<button *ngIf=\"!item.children || item.children.length === 0 || (secondary$ | async)\"\n    uxFocusIndicator\n    #navigationBtn\n    type=\"button\"\n    [tabindex]=\"_tabindex | async\"\n    role=\"menuitem\"\n    class=\"horizontal-navigation-button\"\n    [class.disabled]=\"item.disabled\"\n    [class.selected]=\"item.selected\"\n    [attr.aria-selected]=\"item.selected\"\n    (click)=\"select()\"\n    [disabled]=\"item.disabled\">\n\n    <span class=\"hpe-icon navigation-item-icon\" *ngIf=\"item.icon\" [ngClass]=\"item?.icon\"></span>\n    <span class=\"navigation-item-label\">{{ item?.title }}</span>\n\n</button>"
+                        template: "<div *ngIf=\"_item.children && _item.children.length > 0 && !(secondary$ | async)\">\n\n    <button #navigationBtn\n        type=\"button\"\n        [tabindex]=\"_tabindex | async\"\n        [uxMenuTriggerFor]=\"menu\"\n        [disabled]=\"_item.disabled\"\n        role=\"menuitem\"\n        class=\"horizontal-navigation-button\"\n        [class.disabled]=\"_item.disabled\"\n        [class.selected]=\"_item.selected\"\n        [class.open]=\"isOpen\"\n        [attr.aria-selected]=\"_item.selected\">\n\n        <!-- Support all icon types -->\n        <ng-container *ngIf=\"_item.icon\">\n            <i *ngIf=\"_iconType !== 'component'\"\n                class=\"navigation-item-icon\"\n                [ngClass]=\"[_iconType, _item.icon]\">\n            </i>\n\n            <ux-icon *ngIf=\"_iconType === 'component'\"\n                     class=\"navigation-item-icon\"\n                     [name]=\"_item.icon\">\n            </ux-icon>\n\n        </ng-container>\n\n        <span class=\"navigation-item-label\">{{ _item?.title }}</span>\n        <ux-icon class=\"navigation-item-dropdown-icon\" name=\"down\"></ux-icon>\n\n    </button>\n\n    <ux-menu\n        #menu\n        menuClass=\"horizontal-navigation-dropdown-menu\"\n        (opened)=\"isOpen = true\"\n        (closed)=\"isOpen = false\">\n\n        <ux-page-header-horizontal-navigation-dropdown-item\n            *ngFor=\"let item of _item?.children\"\n            [item]=\"item\">\n        </ux-page-header-horizontal-navigation-dropdown-item>\n    </ux-menu>\n\n</div>\n\n<button *ngIf=\"!_item.children || _item.children.length === 0 || (secondary$ | async)\"\n    uxFocusIndicator\n    #navigationBtn\n    type=\"button\"\n    [tabindex]=\"_tabindex | async\"\n    role=\"menuitem\"\n    class=\"horizontal-navigation-button\"\n    [class.disabled]=\"_item.disabled\"\n    [class.selected]=\"_item.selected\"\n    [attr.aria-selected]=\"_item.selected\"\n    (click)=\"select()\"\n    [disabled]=\"_item.disabled\">\n\n    <!-- Support all icon types -->\n    <ng-container *ngIf=\"_item.icon\">\n        <i *ngIf=\"_iconType !== 'component'\"\n            class=\"navigation-item-icon\"\n            [ngClass]=\"[_iconType, _item.icon]\">\n        </i>\n\n        <ux-icon *ngIf=\"_iconType === 'component'\"\n                 class=\"navigation-item-icon\"\n                 [name]=\"_item.icon\">\n        </ux-icon>\n\n    </ng-container>\n\n    <span class=\"navigation-item-label\">{{ _item?.title }}</span>\n\n</button>"
                     }] }
         ];
         /** @nocollapse */
@@ -31791,12 +31799,11 @@
         };
         PageHeaderNavigationItemComponent.propDecorators = {
             item: [{ type: i0.Input }],
-            navigationBtn: [{ type: i0.ViewChild, args: ['navigationBtn',] }],
+            navigationBtn: [{ type: i0.ViewChild, args: ['navigationBtn', { static: false },] }],
             onKeydown: [{ type: i0.HostListener, args: ['keydown', ['$event'],] }]
         };
         return PageHeaderNavigationItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31845,7 +31852,6 @@
         };
         return PageHeaderNavigationSecondaryItemDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31931,7 +31937,6 @@
         };
         return PageHeaderNavigationComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -31966,6 +31971,10 @@
              * Emit whenever the back button is clicked
              */
             this.backClick = new i0.EventEmitter();
+            /**
+             * Emit whenever the product logo in the left corner is clicked.
+             */
+            this.logoClick = new i0.EventEmitter();
             /**
              * The currently selected page header item
              */
@@ -32112,15 +32121,15 @@
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        PageHeaderComponent.prototype.goBack = /**
-         * @return {?}
-         */
-            function () {
-                this.backClick.emit();
-            };
+        Object.defineProperty(PageHeaderComponent.prototype, "_hasLogoClick", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this.logoClick.observers.length > 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @param {?} item
          * @return {?}
@@ -32136,7 +32145,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-page-header',
                         exportAs: 'ux-page-header',
-                        template: "<div class=\"ux-page-header\" [class.page-header-condensed]=\"condensed\" role=\"banner\">\n\n    <div *ngIf=\"!condensed\" class=\"page-header-content\">\n\n        <!-- Logo/product acronym -->\n        <div class=\"page-header-logo-container\" role=\"presentation\" [style.backgroundColor]=\"logoBackground\" [style.color]=\"logoForeground\">\n            <img *ngIf=\"logo\" [attr.src]=\"logo\" [alt]=\"header\" class=\"page-header-logo\">\n            <h1 *ngIf=\"header && !logo\" class=\"page-header-acronym\">{{header}}</h1>\n        </div>\n\n        <!-- Sub-title -->\n        <div *ngIf=\"subheader || subheaderTemplate || titleTemplate\" class=\"page-header-subtitle-container\">\n            <span *ngIf=\"subheader\" class=\"page-header-subtitle\">{{subheader}}</span>\n            <ng-container [ngTemplateOutlet]=\"subheaderTemplate || titleTemplate\"></ng-container>\n        </div>\n\n        <div class=\"page-header-state-container\" role=\"navigation\">\n\n            <!-- Back button -->\n            <button *ngIf=\"backVisible === true\" uxFocusIndicator type=\"button\" class=\"page-header-back-button\" (click)=\"goBack()\" aria-label=\"Go Back\">\n                <span class=\"hpe-icon hpe-previous text-primary\"></span>\n            </button>\n\n            <!-- Breadcrumbs and header -->\n            <div class=\"page-header-title-container\">\n\n                <ux-breadcrumbs *ngIf=\"crumbs && crumbs.length > 0\"\n                    [class.ux-breadcrumbs-small]=\"crumbsStyle === 'small'\"\n                    [crumbs]=\"crumbs\"></ux-breadcrumbs>\n\n                <h1 class=\"page-header-title\">{{header}}</h1>\n\n            </div>\n\n        </div>\n\n        <!-- Primary navigation -->\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <!-- Icon menus -->\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n    </div>\n\n    <!-- Display This Section Optimized for Condensed Mode -->\n    <div class=\"page-header-condensed-content\" *ngIf=\"condensed\">\n\n        <div class=\"page-header-breadcrumbs\" role=\"navigation\">\n            <ux-breadcrumbs [crumbs]=\"crumbs\"></ux-breadcrumbs>\n        </div>\n\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n\n            <!-- The Top Navigation Options -->\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n\n    </div>\n\n</div>\n\n<div *ngIf=\"secondaryNavigation && ((selectedRoot$ | async) !== (selected$ | async))\"\n    class=\"page-header-secondary\" [ngClass]=\"secondaryNavigationAlignment\" role=\"navigation\">\n\n    <ux-tabset *ngIf=\"(selectedRoot$ | async)?.children; let children\">\n        <ux-tab *ngFor=\"let child of children\"\n            [heading]=\"child.title\"\n            [active]=\"child === (selected$ | async)\"\n            (select)=\"select(child)\"\n            [uxPageHeaderNavigationSecondaryItem]=\"child\"\n            [disabled]=\"child.disabled\">\n        </ux-tab>\n    </ux-tabset>\n\n</div>\n",
+                        template: "<div class=\"ux-page-header\" [class.page-header-condensed]=\"condensed\" role=\"banner\">\n\n    <div *ngIf=\"!condensed\" class=\"page-header-content\">\n\n        <!-- Logo/product acronym -->\n        <div uxFocusIndicator (keydown.enter)=\"logoClick.emit($event)\" [attr.tabindex]=\"_hasLogoClick ? 0 : -1\" [class.clickable]=\"_hasLogoClick\" class=\"page-header-logo-container\" role=\"presentation\" [style.backgroundColor]=\"logoBackground\" [style.color]=\"logoForeground\" (click)=\"logoClick.emit($event)\">\n            <img *ngIf=\"logo\" [attr.src]=\"logo\" [alt]=\"header\" class=\"page-header-logo\">\n            <h1 *ngIf=\"header && !logo\" class=\"page-header-acronym\">{{header}}</h1>\n        </div>\n\n        <!-- Sub-title -->\n        <div *ngIf=\"subheader || subheaderTemplate || titleTemplate\" class=\"page-header-subtitle-container\">\n            <span *ngIf=\"subheader\" class=\"page-header-subtitle\">{{subheader}}</span>\n            <ng-container [ngTemplateOutlet]=\"subheaderTemplate || titleTemplate\"></ng-container>\n        </div>\n\n        <div class=\"page-header-state-container\" role=\"navigation\">\n\n            <!-- Back button -->\n            <button *ngIf=\"backVisible === true\" uxFocusIndicator type=\"button\" class=\"page-header-back-button\" (click)=\"backClick.emit($event)\" aria-label=\"Go Back\">\n                <ux-icon name=\"previous\" class=\"text-primary\"></ux-icon>\n            </button>\n\n            <!-- Breadcrumbs and header -->\n            <div class=\"page-header-title-container\">\n\n                <ux-breadcrumbs *ngIf=\"crumbs && crumbs.length > 0\"\n                    [class.ux-breadcrumbs-small]=\"crumbsStyle === 'small'\"\n                    [crumbs]=\"crumbs\"></ux-breadcrumbs>\n\n                <h1 class=\"page-header-title\">{{header}}</h1>\n\n            </div>\n\n        </div>\n\n        <!-- Primary navigation -->\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <!-- Icon menus -->\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n    </div>\n\n    <!-- Display This Section Optimized for Condensed Mode -->\n    <div class=\"page-header-condensed-content\" *ngIf=\"condensed\">\n\n        <div class=\"page-header-breadcrumbs\" role=\"navigation\">\n            <ux-breadcrumbs [crumbs]=\"crumbs\"></ux-breadcrumbs>\n        </div>\n\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n\n            <!-- The Top Navigation Options -->\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n\n    </div>\n\n</div>\n\n<div *ngIf=\"secondaryNavigation && ((selectedRoot$ | async) !== (selected$ | async))\"\n    class=\"page-header-secondary\" [ngClass]=\"secondaryNavigationAlignment\" role=\"navigation\">\n\n    <ux-tabset *ngIf=\"(selectedRoot$ | async)?.children; let children\" [manual]=\"true\">\n        <ux-tab *ngFor=\"let child of children\"\n            [heading]=\"child.title\"\n            [active]=\"child === (selected$ | async)\"\n            (select)=\"select(child)\"\n            [uxPageHeaderNavigationSecondaryItem]=\"child\"\n            [disabled]=\"child.disabled\">\n        </ux-tab>\n    </ux-tabset>\n\n</div>\n",
                         providers: [PageHeaderService]
                     }] }
         ];
@@ -32167,13 +32176,13 @@
             familyBackground: [{ type: i0.Input }],
             familyForeground: [{ type: i0.Input }],
             backClick: [{ type: i0.Output }],
-            titleTemplate: [{ type: i0.ContentChild, args: ['title',] }],
-            subheaderTemplate: [{ type: i0.ContentChild, args: ['subheader',] }],
+            logoClick: [{ type: i0.Output }],
+            titleTemplate: [{ type: i0.ContentChild, args: ['title', { static: false },] }],
+            subheaderTemplate: [{ type: i0.ContentChild, args: ['subheader', { static: false },] }],
             customMenus: [{ type: i0.ContentChildren, args: [PageHeaderCustomMenuDirective, { read: i0.TemplateRef },] }]
         };
         return PageHeaderComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -32189,10 +32198,11 @@
                             BreadcrumbsModule,
                             ColorServiceModule,
                             common.CommonModule,
+                            IconModule,
+                            MenuModule,
                             ResizeModule,
                             router.RouterModule,
                             TabsetModule,
-                            MenuModule
                         ],
                         exports: [
                             PageHeaderComponent,
@@ -32211,12 +32221,10 @@
         ];
         return PageHeaderModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -32473,7 +32481,7 @@
         PaginationComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-pagination',
-                        template: "<nav role=\"navigation\" [attr.aria-label]=\"ariaLabel\">\n  <ul #container class=\"pagination\"\n    [ngClass]=\"classes\"\n    direction=\"horizontal\"\n    (blur)=\"isKeyboardEvent = false\"\n    (keydown.ArrowLeft)=\"select(page - 1); isKeyboardEvent = true\"\n    (keydown.ArrowRight)=\"select(page + 1); isKeyboardEvent = true\"\n    (keydown.Home)=\"select(1); isKeyboardEvent = true; $event.preventDefault()\"\n    (keydown.End)=\"select(pageCount); isKeyboardEvent = true; $event.preventDefault()\">\n\n    <li class=\"pagination-prev page-item\"\n        *ngIf=\"directionButtons\"\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        [checkChildren]=\"true\"\n        [class.disabled]=\"page === 1 || disabled\">\n\n      <a class=\"page-link\"\n         [tabindex]=\"page === 1 || disabled ? -1 : 0\"\n         [attr.aria-label]=\"previousAriaLabel\"\n         [ngClass]=\"pageBtnClass\"\n         (click)=\"select(page - 1)\"\n         (keydown.enter)=\"select(page - 1)\">\n        <ng-container [ngTemplateOutlet]=\"previousBtnTemplate || defaultPreviousBtnTemplate\"></ng-container>\n      </a>\n    </li>\n\n    <ng-container *ngFor=\"let pg of pages; trackBy: trackByFn\">\n      <li *ngIf=\"pg.visible\"\n          uxFocusIndicator\n          [programmaticFocusIndicator]=\"true\"\n          [checkChildren]=\"true\"\n          [class.disabled]=\"disabled\"\n          [class.active]=\"page === pg.index\"\n          class=\"pagination-page page-item\">\n\n        <a class=\"page-link\"\n           tabindex=\"0\"\n           [ngClass]=\"pageBtnClass\"\n           [focusIf]=\"isKeyboardEvent && page === pg.index\"\n           [attr.aria-current]=\"page === pg.index\"\n           [attr.aria-setsize]=\"pageCount\"\n           [attr.aria-posinset]=\"pg.index\"\n           (click)=\"select(pg.index)\"\n           (keydown.enter)=\"select(pg.index)\">\n            {{ pg.index }}\n        </a>\n      </li>\n    </ng-container>\n\n    <li class=\"pagination-next page-item\"\n        *ngIf=\"directionButtons\"\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        [checkChildren]=\"true\"\n        [class.disabled]=\"page === pageCount || disabled\">\n\n      <a class=\"page-link\"\n         [tabindex]=\"page === pageCount || disabled ? -1 : 0\"\n         [attr.aria-label]=\"nextAriaLabel\"\n         [ngClass]=\"pageBtnClass\"\n         (click)=\"select(page + 1)\"\n         (keydown.enter)=\"select(page + 1)\">\n\n        <ng-container [ngTemplateOutlet]=\"nextBtnTemplate || defaultNextBtnTemplate\"></ng-container>\n      </a>\n    </li>\n  </ul>\n</nav>\n\n<ng-template #defaultPreviousBtnTemplate>\n  <span class=\"hpe-icon hpe-previous\"></span>\n</ng-template>\n\n<ng-template #defaultNextBtnTemplate>\n  <span class=\"hpe-icon hpe-next\"></span>\n</ng-template>\n",
+                        template: "<nav role=\"navigation\" [attr.aria-label]=\"ariaLabel\">\n  <ul #container class=\"pagination\"\n    [ngClass]=\"classes\"\n    direction=\"horizontal\"\n    (blur)=\"isKeyboardEvent = false\"\n    (keydown.ArrowLeft)=\"select(page - 1); isKeyboardEvent = true\"\n    (keydown.ArrowRight)=\"select(page + 1); isKeyboardEvent = true\"\n    (keydown.Home)=\"select(1); isKeyboardEvent = true; $event.preventDefault()\"\n    (keydown.End)=\"select(pageCount); isKeyboardEvent = true; $event.preventDefault()\">\n\n    <li class=\"pagination-prev page-item\"\n        *ngIf=\"directionButtons\"\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        [checkChildren]=\"true\"\n        [class.disabled]=\"page === 1 || disabled\">\n\n      <a class=\"page-link\"\n         [tabindex]=\"page === 1 || disabled ? -1 : 0\"\n         [attr.aria-label]=\"previousAriaLabel\"\n         [ngClass]=\"pageBtnClass\"\n         (click)=\"select(page - 1)\"\n         (keydown.enter)=\"select(page - 1)\">\n        <ng-container [ngTemplateOutlet]=\"previousBtnTemplate || defaultPreviousBtnTemplate\"></ng-container>\n      </a>\n    </li>\n\n    <ng-container *ngFor=\"let pg of pages; trackBy: trackByFn\">\n      <li *ngIf=\"pg.visible\"\n          uxFocusIndicator\n          [programmaticFocusIndicator]=\"true\"\n          [checkChildren]=\"true\"\n          [class.disabled]=\"disabled\"\n          [class.active]=\"page === pg.index\"\n          class=\"pagination-page page-item\">\n\n        <a class=\"page-link\"\n           tabindex=\"0\"\n           [ngClass]=\"pageBtnClass\"\n           [focusIf]=\"isKeyboardEvent && page === pg.index\"\n           [attr.aria-current]=\"page === pg.index\"\n           [attr.aria-setsize]=\"pageCount\"\n           [attr.aria-posinset]=\"pg.index\"\n           (click)=\"select(pg.index)\"\n           (keydown.enter)=\"select(pg.index)\">\n            {{ pg.index }}\n        </a>\n      </li>\n    </ng-container>\n\n    <li class=\"pagination-next page-item\"\n        *ngIf=\"directionButtons\"\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        [checkChildren]=\"true\"\n        [class.disabled]=\"page === pageCount || disabled\">\n\n      <a class=\"page-link\"\n         [tabindex]=\"page === pageCount || disabled ? -1 : 0\"\n         [attr.aria-label]=\"nextAriaLabel\"\n         [ngClass]=\"pageBtnClass\"\n         (click)=\"select(page + 1)\"\n         (keydown.enter)=\"select(page + 1)\">\n\n        <ng-container [ngTemplateOutlet]=\"nextBtnTemplate || defaultNextBtnTemplate\"></ng-container>\n      </a>\n    </li>\n  </ul>\n</nav>\n\n<ng-template #defaultPreviousBtnTemplate>\n    <ux-icon class=\"pagination-prev-icon-default\" name=\"previous\"></ux-icon>\n</ng-template>\n\n<ng-template #defaultNextBtnTemplate>\n    <ux-icon class=\"pagination-next-icon-default\" name=\"next\"></ux-icon>\n</ng-template>\n",
                         providers: [PAGINATION_CONTROL_VALUE_ACCESSOR]
                     }] }
         ];
@@ -32496,7 +32504,6 @@
         };
         return PaginationComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -32507,10 +32514,11 @@
         PaginationModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
-                            common.CommonModule,
                             a11y.A11yModule,
                             AccessibilityModule,
-                            FocusIfModule
+                            common.CommonModule,
+                            FocusIfModule,
+                            IconModule,
                         ],
                         declarations: [
                             PaginationComponent
@@ -32522,12 +32530,10 @@
         ];
         return PaginationModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -32618,7 +32624,6 @@
         };
         return PartitionMapSegmentEventsDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -33771,11 +33776,10 @@
             selected: [{ type: i0.Input }],
             segmentAnnouncement: [{ type: i0.Input }],
             selectedChange: [{ type: i0.Output }],
-            segmentTemplate: [{ type: i0.ContentChild, args: ['partitionMapSegment',] }]
+            segmentTemplate: [{ type: i0.ContentChild, args: ['partitionMapSegment', { static: false },] }]
         };
         return PartitionMapComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -33804,12 +33808,10 @@
         ];
         return PartitionMapModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -33853,7 +33855,6 @@
         };
         return ProgressBarComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -33872,12 +33873,156 @@
         ];
         return ProgressBarModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var RADIO_GROUP_CONTROL_VALUE_ACCESSOR = {
+        provide: forms.NG_VALUE_ACCESSOR,
+        useExisting: i0.forwardRef(function () { return RadioButtonGroupDirective; }),
+        multi: true
+    };
+    var RadioButtonGroupDirective = /** @class */ (function () {
+        function RadioButtonGroupDirective() {
+            this.valueChange = new i0.EventEmitter();
+            this._onDestroy = new rxjs.Subject();
+            this.onTouched = function () { };
+            this.onChange = function () { };
+            this._value = null;
+        }
+        Object.defineProperty(RadioButtonGroupDirective.prototype, "value", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._value;
+            },
+            set: /**
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                this._value = value;
+                this.updateSelectedRadioButton();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.ngAfterContentInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                this.updateSelectedRadioButton();
+                // update the selected items any time new ones are added
+                this._radioButtons.changes.pipe(operators.takeUntil(this._onDestroy))
+                    .subscribe(function () { return _this.updateSelectedRadioButton(); });
+            };
+        /**
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._onDestroy.next();
+            };
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.registerOnChange = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.onChange = fn;
+            };
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.registerOnTouched = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.onTouched = fn;
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.writeValue = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.value = value;
+            };
+        /**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.setDisabledState = /**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+            function (isDisabled) {
+                if (this._radioButtons) {
+                    this._radioButtons.forEach(function (radio) { return radio.setDisabledState(isDisabled); });
+                }
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.emitChange = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.valueChange.next(value);
+                this.onChange(value);
+                this.onTouched();
+            };
+        /**
+         * @return {?}
+         */
+        RadioButtonGroupDirective.prototype.updateSelectedRadioButton = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                // update the selected value in all radio buttons
+                if (this._radioButtons) {
+                    this._radioButtons.forEach(function (radio) { return radio.writeValue(_this._value); });
+                }
+            };
+        RadioButtonGroupDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: 'ux-radio-button-group, [uxRadioButtonGroup]',
+                        providers: [
+                            RADIO_GROUP_CONTROL_VALUE_ACCESSOR
+                        ],
+                        host: {
+                            'role': 'radiogroup'
+                        }
+                    },] }
+        ];
+        RadioButtonGroupDirective.propDecorators = {
+            value: [{ type: i0.Input }],
+            valueChange: [{ type: i0.Output }],
+            _radioButtons: [{ type: i0.ContentChildren, args: [i0.forwardRef(function () { return RadioButtonComponent; }), { descendants: true },] }]
+        };
+        return RadioButtonGroupDirective;
+    }());
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -33891,7 +34036,9 @@
     /** @type {?} */
     var uniqueRadioId = 0;
     var RadioButtonComponent = /** @class */ (function () {
-        function RadioButtonComponent() {
+        function RadioButtonComponent(_changeDetector, _group) {
+            this._changeDetector = _changeDetector;
+            this._group = _group;
             this._radioButtonId = "ux-radio-button-" + ++uniqueRadioId;
             /**
              * Specify a unique Id for this component
@@ -33977,6 +34124,11 @@
                 }
                 // toggle the checked state
                 this.value = this.option;
+                // if there is a group set the selected value
+                if (this._group) {
+                    this._group.value = this.option;
+                    this._group.emitChange(this.option);
+                }
                 // call callback
                 this.onChangeCallback(this.value);
             };
@@ -33995,6 +34147,7 @@
             function (value) {
                 if (value !== this._value) {
                     this._value = value;
+                    this._changeDetector.detectChanges();
                 }
             };
         /**
@@ -34033,10 +34186,17 @@
         RadioButtonComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-radio-button',
-                        template: "<label [attr.for]=\"inputId\" class=\"ux-radio-button\"\n       [class.ux-radio-button-checked]=\"value === option\"\n       [class.ux-radio-button-simplified]=\"simplified\"\n       [class.ux-radio-button-disabled]=\"disabled\"\n       [class.ux-radio-button-focused]=\"focused\">\n\n    <div class=\"ux-radio-button-container\">\n        <input class=\"ux-radio-button-input\"\n            uxFocusIndicator\n            type=\"radio\"\n            [id]=\"inputId\"\n            [checked]=\"value === option\"\n            [disabled]=\"disabled\"\n            [tabindex]=\"tabindex || value === option ? 0 : -1\"\n            [attr.name]=\"name\"\n            [required]=\"required\"\n            [attr.aria-label]=\"ariaLabel\"\n            [attr.aria-labelledby]=\"ariaLabelledby\"\n            [attr.aria-describedby]=\"ariaDescribedby\"\n            [attr.aria-checked]=\"value === option\"\n            (indicator)=\"focused = $event\"\n            (change)=\"toggle()\"\n            (click)=\"$event.stopPropagation()\">\n    </div>\n\n    <span class=\"ux-radio-button-label\">\n        <ng-content></ng-content>\n    </span>\n\n</label>",
+                        template: "<label [attr.for]=\"inputId\" class=\"ux-radio-button\"\n       [class.ux-radio-button-checked]=\"value === option\"\n       [class.ux-radio-button-simplified]=\"simplified\"\n       [class.ux-radio-button-disabled]=\"disabled\"\n       [class.ux-radio-button-focused]=\"focused\">\n\n    <div class=\"ux-radio-button-container\">\n\n        <input class=\"ux-radio-button-input\"\n            uxFocusIndicator\n            type=\"radio\"\n            [id]=\"inputId\"\n            [checked]=\"value === option\"\n            [disabled]=\"disabled\"\n            [tabindex]=\"tabindex || value === option ? 0 : -1\"\n            [attr.name]=\"name\"\n            [required]=\"required\"\n            [attr.aria-label]=\"ariaLabel\"\n            [attr.aria-labelledby]=\"ariaLabelledby\"\n            [attr.aria-describedby]=\"ariaDescribedby\"\n            [attr.aria-checked]=\"value === option\"\n            (indicator)=\"focused = $event\"\n            (change)=\"toggle()\"\n            (click)=\"$event.stopPropagation()\">\n    </div>\n\n    <span class=\"ux-radio-button-label\">\n        <ng-content></ng-content>\n    </span>\n\n</label>",
                         providers: [RADIOBUTTON_VALUE_ACCESSOR]
                     }] }
         ];
+        /** @nocollapse */
+        RadioButtonComponent.ctorParameters = function () {
+            return [
+                { type: i0.ChangeDetectorRef },
+                { type: RadioButtonGroupDirective, decorators: [{ type: i0.Optional }] }
+            ];
+        };
         RadioButtonComponent.propDecorators = {
             id: [{ type: i0.Input }],
             name: [{ type: i0.Input }],
@@ -34054,7 +34214,6 @@
         };
         return RadioButtonComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -34069,21 +34228,21 @@
                             forms.FormsModule
                         ],
                         exports: [
-                            RadioButtonComponent
+                            RadioButtonComponent,
+                            RadioButtonGroupDirective
                         ],
                         declarations: [
-                            RadioButtonComponent
+                            RadioButtonComponent,
+                            RadioButtonGroupDirective
                         ]
                     },] }
         ];
         return RadioButtonModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -34446,13 +34605,13 @@
          */
             function (nodeLinks, column) {
                 var _this = this;
+                var e_2, _a;
                 if (nodeLinks === void 0) {
                     nodeLinks = this._nodeLinks.filter(function (node) { return node.inputs.length === 0; });
                 }
                 if (column === void 0) {
                     column = 0;
                 }
-                var e_2, _a;
                 try {
                     for (var nodeLinks_1 = __values(nodeLinks), nodeLinks_1_1 = nodeLinks_1.next(); !nodeLinks_1_1.done; nodeLinks_1_1 = nodeLinks_1.next()) {
                         var nodeLink = nodeLinks_1_1.value;
@@ -34744,7 +34903,6 @@
             };
         return SankeyChart;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -34961,7 +35119,6 @@
         ];
         return SankeyFocusManager;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -35047,7 +35204,6 @@
         };
         return SankeyNodeDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -35657,13 +35813,12 @@
             linkTooltip: [{ type: i0.Input }],
             falloffTooltip: [{ type: i0.Input }],
             color: [{ type: i0.Input }],
-            nodeTemplate: [{ type: i0.ContentChild, args: ['sankeyNodeTemplate',] }],
-            linkContainer: [{ type: i0.ViewChild, args: ['linkContainer',] }],
-            nodeContainer: [{ type: i0.ViewChild, args: ['nodeContainer',] }]
+            nodeTemplate: [{ type: i0.ContentChild, args: ['sankeyNodeTemplate', { static: false },] }],
+            linkContainer: [{ type: i0.ViewChild, args: ['linkContainer', { static: true },] }],
+            nodeContainer: [{ type: i0.ViewChild, args: ['nodeContainer', { static: true },] }]
         };
         return SankeyChartComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -35691,7 +35846,6 @@
         ];
         return SankeyChartModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -35741,7 +35895,6 @@
         ];
         return SearchBuilderFocusService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -35909,7 +36062,6 @@
         ];
         return SearchBuilderService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -35992,7 +36144,6 @@
         };
         return SearchBuilderGroupService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -36086,7 +36237,7 @@
         SearchBuilderGroupComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-search-builder-group',
-                        template: "<h4 class=\"search-group-title\">{{ header }}</h4>\n\n<div class=\"search-group-content\">\n\n  <div class=\"search-group-operator search-group-operator-{{ operator }}\"\n    [class.hidden-operator]=\"searchBuilderGroupService.getQuery().length < 2\">{{ operator }}</div>\n\n  <div class=\"search-group-items\">\n\n    <div *ngFor=\"let field of searchBuilderGroupService.getQuery(); let i = index\"\n      class=\"search-group-item-container\"\n      [class.search-group-item-focus]=\"focusIndex === i\"\n      (uxFocusWithin)=\"setFocus(i)\"\n      (uxBlurWithin)=\"clearFocus()\">\n\n      <div class=\"search-group-item\">\n        <ng-container *uxSearchBuilderOutlet=\"field.type; context: field; groupId: id; index: i\"></ng-container>\n      </div>\n\n      <button type=\"button\"\n        uxFocusIndicator\n        aria-label=\"Remove field\"\n        class=\"search-group-item-remove\"\n        (click)=\"removeFieldAtIndex(i, field)\">\n\n        <span class=\"hpe-icon hpe-close\"></span>\n\n      </button>\n\n    </div>\n\n    <!-- Placeholder Item -->\n    <ng-container *ngIf=\"showPlaceholder\">\n\n      <!-- The Default Placeholder -->\n      <div class=\"search-group-item-container placeholder-item\" *ngIf=\"!placeholder\">\n\n        <div class=\"search-group-item\">\n          <label class=\"form-label\">New field</label>\n          <div class=\"form-control\"></div>\n        </div>\n\n      </div>\n\n      <!-- Allow a custom placeholder -->\n      <ng-container *ngTemplateOutlet=\"placeholder\"></ng-container>\n\n    </ng-container>\n\n  </div>\n\n  <button type=\"button\" uxFocusIndicator class=\"search-builder-group-add-field\" (click)=\"addField($event)\">\n    <span class=\"search-builder-group-add-field-icon hpe-icon hpe-add\" aria-hidden=\"true\"></span>\n    <span class=\"search-builder-group-add-field-label\">{{ addText }}</span>\n  </button>\n\n</div>\n\n<hr class=\"search-builder-group-divider\">\n",
+                        template: "<h4 class=\"search-group-title\">{{ header }}</h4>\n\n<div class=\"search-group-content\">\n\n  <div class=\"search-group-operator search-group-operator-{{ operator }}\"\n    [class.hidden-operator]=\"searchBuilderGroupService.getQuery().length < 2\">{{ operator }}</div>\n\n  <div class=\"search-group-items\">\n\n    <div *ngFor=\"let field of searchBuilderGroupService.getQuery(); let i = index\"\n      class=\"search-group-item-container\"\n      [class.search-group-item-focus]=\"focusIndex === i\"\n      (uxFocusWithin)=\"setFocus(i)\"\n      (uxBlurWithin)=\"clearFocus()\">\n\n      <div class=\"search-group-item\">\n        <ng-container *uxSearchBuilderOutlet=\"field.type; context: field; groupId: id; index: i\"></ng-container>\n      </div>\n\n      <button type=\"button\"\n        uxFocusIndicator\n        aria-label=\"Remove field\"\n        class=\"search-group-item-remove\"\n        (click)=\"removeFieldAtIndex(i, field)\">\n\n        <ux-icon name=\"close\"></ux-icon>\n\n      </button>\n\n    </div>\n\n    <!-- Placeholder Item -->\n    <ng-container *ngIf=\"showPlaceholder\">\n\n      <!-- The Default Placeholder -->\n      <div class=\"search-group-item-container placeholder-item\" *ngIf=\"!placeholder\">\n\n        <div class=\"search-group-item\">\n          <label class=\"form-label\">New field</label>\n          <div class=\"form-control\"></div>\n        </div>\n\n      </div>\n\n      <!-- Allow a custom placeholder -->\n      <ng-container *ngTemplateOutlet=\"placeholder\"></ng-container>\n\n    </ng-container>\n\n  </div>\n\n  <button type=\"button\" uxFocusIndicator class=\"search-builder-group-add-field\" (click)=\"addField($event)\">\n        <ux-icon class=\"search-builder-group-add-field-icon\" name=\"add\"></ux-icon>\n        <span class=\"search-builder-group-add-field-label\">{{ addText }}</span>\n  </button>\n\n</div>\n\n<hr class=\"search-builder-group-divider\">\n",
                         providers: [SearchBuilderGroupService]
                     }] }
         ];
@@ -36109,7 +36260,6 @@
         };
         return SearchBuilderGroupComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -36182,7 +36332,6 @@
         };
         return SearchBuilderOutletDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -36262,7 +36411,6 @@
         };
         return SearchBuilderComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -36326,6 +36474,14 @@
              * If `true` the input field will be readonly and selection can only occur by using the dropdown.
              */
             this.readonlyInput = false;
+            /**
+             * Determine if we should show the clear all button
+             */
+            this.clearButton = false;
+            /**
+             * Determine an aria label for the clear button
+             */
+            this.clearButtonAriaLabel = 'Reset selection';
             /**
              * Emits when `value` changes.
              */
@@ -36638,6 +36794,21 @@
         /**
          * @return {?}
          */
+        SelectComponent.prototype.clear = /**
+         * @return {?}
+         */
+            function () {
+                if (this.disabled) {
+                    return;
+                }
+                // clear the value and input text
+                this.value = null;
+                this.input = null;
+                this.selectInputText();
+            };
+        /**
+         * @return {?}
+         */
         SelectComponent.prototype.selectInputText = /**
          * @return {?}
          */
@@ -36649,7 +36820,7 @@
         SelectComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-select, ux-combobox, ux-dropdown',
-                        template: "<ux-tag-input *ngIf=\"multiple\"\r\n    #tagInput=\"ux-tag-input\"\r\n    [id]=\"id + '-input'\"\r\n    [(tags)]=\"value\"\r\n    [(input)]=\"input\"\r\n    [ariaLabel]=\"ariaLabel\"\r\n    [autocomplete]=\"autocomplete\"\r\n    [addOnPaste]=\"false\"\r\n    [disabled]=\"disabled\"\r\n    [display]=\"display\"\r\n    [freeInput]=\"false\"\r\n    [placeholder]=\"placeholder\"\r\n    [showTypeaheadOnClick]=\"true\"\r\n    [readonlyInput]=\"readonlyInput\"\r\n    [icon]=\"icon\">\r\n\r\n    <ux-typeahead #multipleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [disabledOptions]=\"value\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"true\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\">\r\n    </ux-typeahead>\r\n\r\n</ux-tag-input>\r\n\r\n<div *ngIf=\"!multiple\"\r\n    class=\"inner-addon right-addon\"\r\n    [class.disabled]=\"disabled\"\r\n    role=\"combobox\"\r\n    [attr.aria-expanded]=\"dropdownOpen\"\r\n    aria-haspopup=\"listbox\">\r\n\r\n    <i *ngIf=\"!icon\"\r\n       class=\"hpe-icon select-arrow\"\r\n       [class.hpe-down]=\"dropDirection === 'down'\"\r\n       [class.hpe-up]=\"dropDirection === 'up'\"\r\n       (click)=\"toggle(); $event.stopPropagation()\">\r\n    </i>\r\n\r\n    <ng-container *ngIf=\"icon\" [ngTemplateOutlet]=\"icon\"></ng-container>\r\n\r\n    <input #singleInput type=\"text\"\r\n        [attr.id]=\"id + '-input'\"\r\n        class=\"form-control\"\r\n        [attr.aria-activedescendant]=\"highlightedElement?.id\"\r\n        aria-autocomplete=\"list\"\r\n        [attr.aria-controls]=\"singleTypeahead.id\"\r\n        [attr.aria-label]=\"ariaLabel\"\r\n        aria-multiline=\"false\"\r\n        [autocomplete]=\"autocomplete\"\r\n        [(ngModel)]=\"input\"\r\n        [placeholder]=\"placeholder\"\r\n        [disabled]=\"disabled\"\r\n        (click)=\"toggle()\"\r\n        (focus)=\"onFocus()\"\r\n        (blur)=\"inputBlurHandler()\"\r\n        (keydown)=\"inputKeyHandler($event)\"\r\n        [readonly]=\"readonlyInput\">\r\n\r\n    <ux-typeahead #singleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [active]=\"value\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"false\"\r\n        [openOnFilterChange]=\"false\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\"\r\n        (optionSelected)=\"singleOptionSelected($event)\"\r\n        (highlightedElementChange)=\"highlightedElement = $event\">\r\n    </ux-typeahead>\r\n\r\n</div>\r\n",
+                        template: "<ux-tag-input *ngIf=\"multiple\"\r\n    #tagInput=\"ux-tag-input\"\r\n    [id]=\"id + '-input'\"\r\n    [(tags)]=\"value\"\r\n    [(input)]=\"input\"\r\n    [ariaLabel]=\"ariaLabel\"\r\n    [autocomplete]=\"autocomplete\"\r\n    [addOnPaste]=\"false\"\r\n    [disabled]=\"disabled\"\r\n    [display]=\"display\"\r\n    [freeInput]=\"false\"\r\n    [placeholder]=\"placeholder\"\r\n    [showTypeaheadOnClick]=\"true\"\r\n    [readonlyInput]=\"readonlyInput\"\r\n    [icon]=\"icon\"\r\n    [clearButton]=\"clearButton\"\r\n    [clearButtonAriaLabel]=\"clearButtonAriaLabel\">\r\n\r\n    <ux-typeahead #multipleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [disabledOptions]=\"value\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"true\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\">\r\n    </ux-typeahead>\r\n\r\n</ux-tag-input>\r\n\r\n<div *ngIf=\"!multiple\"\r\n    class=\"ux-select-container\"\r\n    [class.disabled]=\"disabled\"\r\n    role=\"combobox\"\r\n    [attr.aria-expanded]=\"dropdownOpen\"\r\n    aria-haspopup=\"listbox\">\r\n\r\n    <ng-container *ngIf=\"icon\" [ngTemplateOutlet]=\"icon\"></ng-container>\r\n\r\n    <input #singleInput type=\"text\"\r\n        [attr.id]=\"id + '-input'\"\r\n        class=\"form-control\"\r\n        [attr.aria-activedescendant]=\"highlightedElement?.id\"\r\n        aria-autocomplete=\"list\"\r\n        [attr.aria-controls]=\"singleTypeahead.id\"\r\n        [attr.aria-label]=\"ariaLabel\"\r\n        aria-multiline=\"false\"\r\n        [autocomplete]=\"autocomplete\"\r\n        [(ngModel)]=\"input\"\r\n        [placeholder]=\"placeholder\"\r\n        [disabled]=\"disabled\"\r\n        (click)=\"toggle()\"\r\n        (focus)=\"onFocus()\"\r\n        (blur)=\"inputBlurHandler()\"\r\n        (keydown)=\"inputKeyHandler($event)\"\r\n        [readonly]=\"readonlyInput\">\r\n\r\n    <div class=\"ux-select-icons\">\r\n        <i *ngIf=\"clearButton && allowNull && value\"\r\n           uxFocusIndicator\r\n           [attr.tabindex]=\"disabled ? -1 : 0\"\r\n           [attr.aria-label]=\"clearButtonAriaLabel\"\r\n           class=\"ux-select-icon ux-icon ux-icon-close ux-select-clear-icon\"\r\n           (click)=\"clear(); $event.stopPropagation()\"\r\n           (keydown.enter)=\"clear(); $event.stopPropagation()\">\r\n        </i>\r\n        <i *ngIf=\"!icon\"\r\n           class=\"ux-select-icon ux-icon ux-select-chevron-icon\"\r\n           [class.ux-icon-up]=\"dropDirection === 'up'\"\r\n           [class.ux-icon-down]=\"dropDirection === 'down'\"\r\n           (click)=\"toggle(); $event.stopPropagation()\">\r\n        </i>\r\n    </div>\r\n\r\n    <ux-typeahead #singleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [active]=\"value\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"false\"\r\n        [openOnFilterChange]=\"false\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\"\r\n        (optionSelected)=\"singleOptionSelected($event)\"\r\n        (highlightedElementChange)=\"highlightedElement = $event\">\r\n    </ux-typeahead>\r\n\r\n</div>\r\n",
                         providers: [SELECT_VALUE_ACCESSOR],
                         host: {
                             '[class.ux-select-custom-icon]': '!!icon',
@@ -36686,19 +36857,20 @@
             loadingTemplate: [{ type: i0.Input }],
             noOptionsTemplate: [{ type: i0.Input }],
             readonlyInput: [{ type: i0.Input }],
+            clearButton: [{ type: i0.Input }],
+            clearButtonAriaLabel: [{ type: i0.Input }],
             optionTemplate: [{ type: i0.Input }],
             valueChange: [{ type: i0.Output }],
             inputChange: [{ type: i0.Output }],
             dropdownOpenChange: [{ type: i0.Output }],
-            icon: [{ type: i0.ContentChild, args: ['icon',] }],
-            singleInput: [{ type: i0.ViewChild, args: ['singleInput',] }],
-            tagInput: [{ type: i0.ViewChild, args: ['tagInput',] }],
-            multipleTypeahead: [{ type: i0.ViewChild, args: ['multipleTypeahead',] }],
-            singleTypeahead: [{ type: i0.ViewChild, args: ['singleTypeahead',] }]
+            icon: [{ type: i0.ContentChild, args: ['icon', { static: false },] }],
+            singleInput: [{ type: i0.ViewChild, args: ['singleInput', { static: false },] }],
+            tagInput: [{ type: i0.ViewChild, args: ['tagInput', { static: false },] }],
+            multipleTypeahead: [{ type: i0.ViewChild, args: ['multipleTypeahead', { static: false },] }],
+            singleTypeahead: [{ type: i0.ViewChild, args: ['singleTypeahead', { static: false },] }]
         };
         return SelectComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -36728,7 +36900,6 @@
             };
         return TagInputEvent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -36831,6 +37002,14 @@
              */
             this.trackAriaDescendant = true;
             /**
+             * Determine if we should show the clear all button
+             */
+            this.clearButton = false;
+            /**
+             * Determine an aria label for the clear button
+             */
+            this.clearButtonAriaLabel = 'Reset selection';
+            /**
              * Emits when tags is changed.
              */
             this.tagsChange = new i0.EventEmitter();
@@ -36916,6 +37095,15 @@
              */ function (value) {
                 this._input = value;
                 this.inputChange.emit(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(TagInputComponent.prototype, "_showClearButton", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this.clearButton && this.tags && this.tags.length > 0;
             },
             enumerable: true,
             configurable: true
@@ -37053,6 +37241,8 @@
                     this.valid = false;
                 }
                 this.validationErrors['tagRangeError'] = tagRangeError;
+                // forward any error to the form control
+                return tagRangeError;
             };
         /**
          * @param {?} event
@@ -37222,6 +37412,8 @@
                     return;
                 }
                 this.selectInput();
+                // mark form control as touched
+                this._onTouchedHandler();
             };
         /**
          * @param {?} event
@@ -37593,6 +37785,20 @@
                 this.typeahead && this.typeahead.open ? this.typeahead.open = false : this.inputClickHandler();
             };
         /**
+         * @return {?}
+         */
+        TagInputComponent.prototype.clear = /**
+         * @return {?}
+         */
+            function () {
+                if (this.disabled) {
+                    return;
+                }
+                this.tags = [];
+                this.input = '';
+                this.focus();
+            };
+        /**
          * @param {?} typeahead
          * @return {?}
          */
@@ -37784,7 +37990,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-tag-input',
                         exportAs: 'ux-tag-input',
-                        template: "<ol [attr.role]=\"typeahead ? 'combobox' : 'none'\"\n    [attr.aria-haspopup]=\"typeahead ? 'listbox' : null\"\n    (click)=\"toggle()\">\n\n    <li *ngFor=\"let tag of tags; let i = index\" class=\"ux-tag\"\n        [class.disabled]=\"disabled\"\n        [ngClass]=\"tagClass(tag, i, isSelected(i))\"\n        [attr.tabindex]=\"disabled ? null : 0\"\n        [focusIf]=\"isSelected(i)\"\n        (click)=\"tagClickHandler($event, tag, i); $event.stopPropagation()\"\n        (focus)=\"selectTagAt(i)\">\n\n        <ng-container [ngTemplateOutlet]=\"tagTemplate || defaultTagTemplate\"\n            [ngTemplateOutletContext]=\"{tag: tag, index: i, disabled: disabled, api: tagApi}\">\n        </ng-container>\n\n    </li>\n    <li *ngIf=\"isInputVisible()\" class=\"ux-tag-input\" role=\"none\">\n        <input #tagInput type=\"text\" [attr.id]=\"id\" class=\"ux-tag-input\"\n            [(ngModel)]=\"input\"\n            [autocomplete]=\"autocomplete\"\n            [class.invalid]=\"!inputValid\"\n            [attr.aria-activedescendant]=\"highlightedElement?.id\"\n            [attr.aria-autocomplete]=\"typeahead ? 'list' : 'none'\"\n            [attr.aria-controls]=\"typeahead?.id\"\n            [attr.aria-label]=\"ariaLabel\"\n            aria-multiline=\"false\"\n            [placeholder]=\"disabled ? '' : (placeholder || '')\"\n            [disabled]=\"disabled\"\n            [focusIf]=\"isSelected(tags.length)\"\n            (click)=\"toggle(); $event.stopPropagation()\"\n            (focus)=\"inputFocusHandler()\"\n            (paste)=\"inputPasteHandler($event)\"\n            [readonly]=\"readonlyInput\">\n    </li>\n</ol>\n\n<!-- Insert the custom icon if provided -->\n<ng-container *ngIf=\"icon\" [ngTemplateOutlet]=\"icon\"></ng-container>\n\n<ng-content #typeahead></ng-content>\n\n<ng-template #defaultTagTemplate let-tag=\"tag\" let-index=\"index\" let-disabled=\"disabled\" let-api=\"api\">\n    <span class=\"ux-tag-text\">{{api.getTagDisplay(tag)}}</span>\n    <button *ngIf=\"api.canRemoveTagAt(index)\"\n        uxFocusIndicator\n        type=\"button\"\n        class=\"ux-tag-remove\"\n        aria-label=\"Remove Item\"\n        [disabled]=\"disabled\"\n        (click)=\"api.removeTagAt(index); $event.stopPropagation();\">\n        <span class=\"hpe-icon hpe-close\"></span>\n    </button>\n</ng-template>",
+                        template: "<ol [attr.role]=\"typeahead ? 'combobox' : 'none'\"\n    [attr.aria-haspopup]=\"typeahead ? 'listbox' : null\"\n    [class.ux-tag-input-clear-inset]=\"_showClearButton\"\n    [class.ux-tag-input-icon-inset]=\"icon\"\n    (click)=\"toggle()\">\n\n    <li *ngFor=\"let tag of tags; let i = index\" class=\"ux-tag\"\n        [class.disabled]=\"disabled\"\n        [ngClass]=\"tagClass(tag, i, isSelected(i))\"\n        [attr.tabindex]=\"disabled ? null : 0\"\n        [focusIf]=\"isSelected(i)\"\n        (click)=\"tagClickHandler($event, tag, i); $event.stopPropagation()\"\n        (focus)=\"selectTagAt(i)\">\n\n        <ng-container [ngTemplateOutlet]=\"tagTemplate || defaultTagTemplate\"\n            [ngTemplateOutletContext]=\"{tag: tag, index: i, disabled: disabled, api: tagApi}\">\n        </ng-container>\n\n    </li>\n    <li *ngIf=\"isInputVisible()\" class=\"ux-tag-input\" role=\"none\">\n        <input #tagInput type=\"text\" [attr.id]=\"id\" class=\"ux-tag-input\"\n            [(ngModel)]=\"input\"\n            [autocomplete]=\"autocomplete\"\n            [class.invalid]=\"!inputValid\"\n            [attr.aria-activedescendant]=\"highlightedElement?.id\"\n            [attr.aria-autocomplete]=\"typeahead ? 'list' : 'none'\"\n            [attr.aria-controls]=\"typeahead?.id\"\n            [attr.aria-label]=\"ariaLabel\"\n            aria-multiline=\"false\"\n            [placeholder]=\"disabled ? '' : (placeholder || '')\"\n            [disabled]=\"disabled\"\n            [focusIf]=\"isSelected(tags.length)\"\n            (click)=\"toggle(); $event.stopPropagation()\"\n            (focus)=\"inputFocusHandler()\"\n            (paste)=\"inputPasteHandler($event)\"\n            [readonly]=\"readonlyInput\">\n    </li>\n</ol>\n\n<!-- Insert the custom icon if provided -->\n<div class=\"ux-tag-icons\" *ngIf=\"icon || _showClearButton\">\n\n    <!-- Clear All Button -->\n    <i uxFocusIndicator\n        class=\"ux-tag-icon ux-icon ux-icon-close ux-select-clear-icon\"\n        [attr.tabindex]=\"disabled ? -1 : 0\"\n        [attr.aria-label]=\"clearButtonAriaLabel\"\n        *ngIf=\"_showClearButton\"\n        (click)=\"clear(); $event.stopPropagation()\"\n        (keydown.enter)=\"clear(); $event.stopPropagation()\">\n    </i>\n\n    <!-- Custom Icon -->\n    <ng-container *ngIf=\"icon\" [ngTemplateOutlet]=\"icon\"></ng-container>\n</div>\n\n<ng-content #typeahead></ng-content>\n\n<ng-template #defaultTagTemplate let-tag=\"tag\" let-index=\"index\" let-disabled=\"disabled\" let-api=\"api\">\n    <span class=\"ux-tag-text\">{{ api.getTagDisplay(tag) }}</span>\n    <button *ngIf=\"api.canRemoveTagAt(index)\"\n        uxFocusIndicator\n        type=\"button\"\n        class=\"ux-tag-remove\"\n        aria-label=\"Remove Item\"\n        [disabled]=\"disabled\"\n        (click)=\"api.removeTagAt(index); $event.stopPropagation();\">\n        <ux-icon name=\"close\"></ux-icon>\n    </button>\n</ng-template>",
                         providers: [TAGINPUT_VALUE_ACCESSOR, TAGINPUT_VALIDATOR],
                         host: {
                             '[class.disabled]': 'disabled',
@@ -37825,6 +38031,8 @@
             createTagHandler: [{ type: i0.Input, args: ['createTag',] }],
             trackAriaDescendant: [{ type: i0.Input }],
             icon: [{ type: i0.Input }],
+            clearButton: [{ type: i0.Input }],
+            clearButtonAriaLabel: [{ type: i0.Input }],
             tagsChange: [{ type: i0.Output }],
             inputChange: [{ type: i0.Output }],
             tagAdding: [{ type: i0.Output }],
@@ -37834,14 +38042,13 @@
             tagRemoved: [{ type: i0.Output }],
             tagClick: [{ type: i0.Output }],
             typeaheadQuery: [{ type: i0.ContentChildren, args: [TypeaheadComponent,] }],
-            tagInput: [{ type: i0.ViewChild, args: ['tagInput',] }],
+            tagInput: [{ type: i0.ViewChild, args: ['tagInput', { static: false },] }],
             keyHandler: [{ type: i0.HostListener, args: ['keydown', ['$event'],] }],
             focusOutHandler: [{ type: i0.HostListener, args: ['focusout',] }],
             onClick: [{ type: i0.HostListener, args: ['click',] }]
         };
         return TagInputComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -37856,21 +38063,23 @@
                             common.CommonModule,
                             forms.FormsModule,
                             FocusIfModule,
+                            IconModule,
                             TypeaheadModule
                         ],
-                        exports: [TagInputComponent],
-                        declarations: [TagInputComponent],
-                        providers: [],
+                        exports: [
+                            TagInputComponent
+                        ],
+                        declarations: [
+                            TagInputComponent
+                        ]
                     },] }
         ];
         return TagInputModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -37881,6 +38090,7 @@
         SelectModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
+                            AccessibilityModule,
                             common.CommonModule,
                             forms.FormsModule,
                             InfiniteScrollModule,
@@ -37894,12 +38104,10 @@
         ];
         return SelectModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38004,7 +38212,6 @@
         };
         return BaseSearchComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38157,12 +38364,11 @@
         SearchDateRangeComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-search-date-range',
-                        template: "<label class=\"form-label\" *ngIf=\"label\">{{ label }}</label>\n\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <div class=\"form-inline\" [class.has-error]=\"!valid\">\n\n            <div class=\"form-group p-r-md\">\n                <label class=\"form-label m-r-xs\">{{ fromLabel }}</label>\n\n                <div class=\"input-group date m-nil\">\n                    <span class=\"input-group-addon p-r-xs\" tabindex=\"1\" (click)=\"fromPopover.show()\">\n                        <i class=\"hpe-icon hpe-calendar\" aria-hidden=\"true\"></i>\n                    </span>\n                    <input type=\"text\" #fromPopover=\"ux-popover\" [ngModel]=\"from | date:'dd MMMM yyyy'\"\n                        [uxPopover]=\"fromPopoverTemplate\" placement=\"bottom\" popoverClass=\"date-time-picker-popover\"\n                        class=\"form-control\" aria-label=\"Selected date\" [placeholder]=\"fromPlaceholder\" [focusIf]=\"focus\">\n                </div>\n            </div>\n\n            <div class=\"form-group p-r-xs\">\n                <label class=\"form-label m-r-xs\">{{ toLabel }}</label>\n\n                <div class=\"input-group date m-nil\">\n                    <span class=\"input-group-addon\" tabindex=\"1\" (click)=\"toPopover.show()\">\n                        <i class=\"hpe-icon hpe-calendar\" aria-hidden=\"true\"></i>\n                    </span>\n                    <input type=\"text\" #toPopover=\"ux-popover\" [ngModel]=\"to | date:'dd MMMM yyyy'\"\n                        [uxPopover]=\"toPopoverTemplate\" placement=\"bottom\" popoverClass=\"date-time-picker-popover\"\n                        class=\"form-control\" aria-label=\"Selected date\" [placeholder]=\"toPlaceholder\">\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>\n\n<ng-template #fromPopoverTemplate>\n    <ux-date-time-picker [(date)]=\"from\" [showTime]=\"false\"></ux-date-time-picker>\n</ng-template>\n\n<ng-template #toPopoverTemplate>\n    <ux-date-time-picker [(date)]=\"to\" [showTime]=\"false\"></ux-date-time-picker>\n</ng-template>"
+                        template: "<label class=\"form-label\" *ngIf=\"label\">{{ label }}</label>\n\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <div class=\"form-inline\" [class.has-error]=\"!valid\">\n\n            <div class=\"form-group p-r-md\">\n                <label class=\"form-label m-r-xs\">{{ fromLabel }}</label>\n\n                <div class=\"input-group date m-nil\">\n                    <span class=\"input-group-addon p-r-xs\" tabindex=\"1\" (click)=\"fromPopover.show()\">\n                        <ux-icon name=\"calendar\"></ux-icon>\n                    </span>\n                    <input type=\"text\" #fromPopover=\"ux-popover\" [ngModel]=\"from | date:'dd MMMM yyyy'\"\n                        [uxPopover]=\"fromPopoverTemplate\" placement=\"bottom\" popoverClass=\"date-time-picker-popover\"\n                        class=\"form-control\" aria-label=\"Selected date\" [placeholder]=\"fromPlaceholder\" [focusIf]=\"focus\">\n                </div>\n            </div>\n\n            <div class=\"form-group p-r-xs\">\n                <label class=\"form-label m-r-xs\">{{ toLabel }}</label>\n\n                <div class=\"input-group date m-nil\">\n                    <span class=\"input-group-addon\" tabindex=\"1\" (click)=\"toPopover.show()\">\n                        <ux-icon name=\"calendar\"></ux-icon>\n                    </span>\n                    <input type=\"text\" #toPopover=\"ux-popover\" [ngModel]=\"to | date:'dd MMMM yyyy'\"\n                        [uxPopover]=\"toPopoverTemplate\" placement=\"bottom\" popoverClass=\"date-time-picker-popover\"\n                        class=\"form-control\" aria-label=\"Selected date\" [placeholder]=\"toPlaceholder\">\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>\n\n<ng-template #fromPopoverTemplate>\n    <ux-date-time-picker [(date)]=\"from\" [showTime]=\"false\"></ux-date-time-picker>\n</ng-template>\n\n<ng-template #toPopoverTemplate>\n    <ux-date-time-picker [(date)]=\"to\" [showTime]=\"false\"></ux-date-time-picker>\n</ng-template>"
                     }] }
         ];
         return SearchDateRangeComponent;
     }(BaseSearchComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38207,12 +38413,11 @@
         SearchDateComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-search-date',
-                        template: "<label class=\"form-label\" *ngIf=\"label\">{{ label }}</label>\n\n<div class=\"input-group date m-nil\">\n    <span class=\"input-group-addon\" tabindex=\"1\" (click)=\"popover.show()\">\n        <i class=\"hpe-icon hpe-calendar\" aria-hidden=\"true\"></i>\n    </span>\n    <input type=\"text\"\n        class=\"form-control\"\n        aria-label=\"Selected date\"\n        [placeholder]=\"placeholder\"\n        #popover=\"ux-popover\"\n        [ngModel]=\"value | date:'dd MMMM yyyy'\"\n        [uxPopover]=\"popoverTemplate\"\n        placement=\"bottom\"\n        popoverClass=\"date-time-picker-popover\"\n        [focusIf]=\"focus\">\n</div>\n\n<ng-template #popoverTemplate>\n    <ux-date-time-picker [(date)]=\"value\" [showTime]=\"false\"></ux-date-time-picker>\n</ng-template>"
+                        template: "<label class=\"form-label\" *ngIf=\"label\">{{ label }}</label>\n\n<div class=\"input-group date m-nil\">\n    <span class=\"input-group-addon\" tabindex=\"1\" (click)=\"popover.show()\">\n        <ux-icon name=\"calendar\"></ux-icon>\n    </span>\n    <input type=\"text\"\n        class=\"form-control\"\n        aria-label=\"Selected date\"\n        [placeholder]=\"placeholder\"\n        #popover=\"ux-popover\"\n        [ngModel]=\"value | date:'dd MMMM yyyy'\"\n        [uxPopover]=\"popoverTemplate\"\n        placement=\"bottom\"\n        popoverClass=\"date-time-picker-popover\"\n        [focusIf]=\"focus\">\n</div>\n\n<ng-template #popoverTemplate>\n    <ux-date-time-picker [(date)]=\"value\" [showTime]=\"false\"></ux-date-time-picker>\n</ng-template>"
                     }] }
         ];
         return SearchDateComponent;
     }(BaseSearchComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38317,7 +38522,6 @@
         ];
         return SearchSelectComponent;
     }(BaseSearchComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38355,7 +38559,6 @@
         ];
         return SearchTextComponent;
     }(BaseSearchComponent));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38371,6 +38574,7 @@
                             DateTimePickerModule,
                             FocusIfModule,
                             forms.FormsModule,
+                            IconModule,
                             PopoverModule,
                             SelectModule,
                         ],
@@ -38402,7 +38606,6 @@
         ];
         return SearchBuilderModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38474,11 +38677,11 @@
          * @return {?}
          */
             function () {
+                var _a;
                 var data = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     data[_i] = arguments[_i];
                 }
-                var _a;
                 (_a = this.selectionService).select.apply(_a, __spread(data));
             };
         /**
@@ -38495,11 +38698,11 @@
          * @return {?}
          */
             function () {
+                var _a;
                 var data = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     data[_i] = arguments[_i];
                 }
-                var _a;
                 (_a = this.selectionService).selectOnly.apply(_a, __spread(data));
             };
         /**
@@ -38516,11 +38719,11 @@
          * @return {?}
          */
             function () {
+                var _a;
                 var data = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     data[_i] = arguments[_i];
                 }
-                var _a;
                 (_a = this.selectionService).toggle.apply(_a, __spread(data));
             };
         /**
@@ -38537,11 +38740,11 @@
          * @return {?}
          */
             function () {
+                var _a;
                 var data = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     data[_i] = arguments[_i];
                 }
-                var _a;
                 (_a = this.selectionService).deselect.apply(_a, __spread(data));
             };
         /**
@@ -38582,7 +38785,6 @@
             function () { };
         return SelectionStrategy;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38903,7 +39105,6 @@
             };
         return RowSelectionStrategy;
     }(SelectionStrategy));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -38975,7 +39176,6 @@
             };
         return RowAltSelectionStrategy;
     }(RowSelectionStrategy));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -39060,7 +39260,6 @@
             };
         return SimpleSelectionStrategy;
     }(SelectionStrategy));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -39521,7 +39720,6 @@
         ];
         return SelectionService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -39634,7 +39832,6 @@
         };
         return SelectListItemComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -39891,7 +40088,6 @@
         };
         return SelectionItemDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40121,7 +40317,6 @@
         };
         return SelectionDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40140,12 +40335,10 @@
         ];
         return SelectionModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40284,7 +40477,6 @@
             };
         return MultipleSelectListStrategy;
     }(SelectionStrategy));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40351,7 +40543,6 @@
             };
         return SingleSelectListStrategy;
     }(SelectionStrategy));
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40464,7 +40655,6 @@
         };
         return SelectListComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40489,27 +40679,213 @@
         ];
         return SelectListModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /**
+     * @template T
+     */
+    var InputDropdownComponent = /** @class */ (function () {
+        function InputDropdownComponent() {
+            /**
+             * Define the placeholder for the filter input
+             */
+            this.placeholder = 'Type to filter...';
+            /**
+             * Aria label of the filter field. If not specified, the placeholder will be used.
+             */
+            this.ariaLabel = '';
+            /**
+             * Emit when the selected item is changed
+             */
+            this.selectedChange = new i0.EventEmitter();
+            /**
+             * Emit when the filter text is changed
+             */
+            this.filterChange = new i0.EventEmitter();
+            this.filterText = '';
+            this.onChange = function () { };
+            this.onTouched = function () { };
+            this._onDestroy$ = new rxjs.Subject();
+        }
+        Object.defineProperty(InputDropdownComponent.prototype, "maxHeight", {
+            /** Define the max height of the dropdown */
+            set: /**
+             * Define the max height of the dropdown
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                this._maxHeightString = coercion.coerceCssPixelValue(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} changes
+         * @return {?}
+         */
+        InputDropdownComponent.prototype.ngOnChanges = /**
+         * @param {?} changes
+         * @return {?}
+         */
+            function (changes) {
+                if (changes.selected) {
+                    if (this.menuTrigger) {
+                        this.menuTrigger.closeMenu();
+                    }
+                    this.onChange(changes.selected.currentValue);
+                    this.onTouched();
+                }
+            };
+        /**
+         * @return {?}
+         */
+        InputDropdownComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._onDestroy$.next();
+                this._onDestroy$.complete();
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        InputDropdownComponent.prototype.resetFilter = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                this.filterText = '';
+                this.filterChange.emit(this.filterText);
+                this.filterInputElement.nativeElement.focus();
+                event.stopPropagation();
+            };
+        /**
+         * @param {?} onChange
+         * @return {?}
+         */
+        InputDropdownComponent.prototype.registerOnChange = /**
+         * @param {?} onChange
+         * @return {?}
+         */
+            function (onChange) {
+                this.onChange = onChange;
+            };
+        /**
+         * @param {?} onTouched
+         * @return {?}
+         */
+        InputDropdownComponent.prototype.registerOnTouched = /**
+         * @param {?} onTouched
+         * @return {?}
+         */
+            function (onTouched) {
+                this.onTouched = onTouched;
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        InputDropdownComponent.prototype.writeValue = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.selected = value;
+                this.selectedChange.emit(value);
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        InputDropdownComponent.prototype.resetValue = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                this.writeValue(undefined);
+                event.stopPropagation();
+            };
+        InputDropdownComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ux-input-dropdown',
+                        template: "<div class=\"ux-select-container\">\n    <button #button type=\"button\" class=\"form-control\"\n            [uxMenuTriggerFor]=\"menu\">\n        <ng-template #defaultDisplayContent>{{selected ? (selected | json) : '-'}}</ng-template>\n        <ng-container [ngTemplateOutlet]=\"displayContentRef || defaultDisplayContent\"></ng-container>\n    </button>\n    <div class=\"ux-select-icons\">\n        <ux-icon name=\"close\"\n                 uxFocusIndicator\n                 class=\"ux-select-icon ux-select-clear-icon\"\n                 *ngIf=\"allowNull && selected\"\n                 (click)=\"resetValue($event)\"\n                 (keydown.enter)=\"resetValue($event)\"\n                 tabindex=\"0\">\n        </ux-icon>\n        <ux-icon name=\"chevron-down\"\n                 class=\"ux-select-icon ux-select-chevron-icon\"\n                 (click)=\"menuTrigger.toggleMenu(); $event.stopPropagation()\">\n        </ux-icon>\n    </div>\n</div>\n\n<ux-menu #menu menuClass=\"select-menu\"\n         (opened)=\"filterInputElement.nativeElement.focus()\">\n\n    <div [style.max-height]=\"_maxHeightString\"\n         [style.width.px]=\"button.offsetWidth\">\n\n        <div *ngIf=\"!hideFilter\"\n             class=\"filter-container\">\n\n            <input #filterInput\n                    type=\"text\"\n                    [placeholder]=\"placeholder\"\n                    class=\"form-control\"\n                    [(ngModel)]=\"filterText\"\n                    (input)=\"filterChange.emit(filterText)\"\n                    (click)=\"$event.stopPropagation()\"\n                    [attr.aria-label]=\"ariaLabel || placeholder\"/>\n\n            <button type=\"button\"\n                    class=\"btn btn-flat filter-button\"\n                    (click)=\"resetFilter($event)\"\n                    [tabindex]=\"filterText.length > 0 ? 0 : -1\">\n                <ux-icon [name]=\"filterText.length === 0 ? 'search' : 'close'\"></ux-icon>\n            </button>\n        </div>\n\n        <ng-content></ng-content>\n\n    </div>\n</ux-menu>",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
+                        providers: [
+                            {
+                                provide: forms.NG_VALUE_ACCESSOR,
+                                multi: true,
+                                useExisting: i0.forwardRef(function () { return InputDropdownComponent; })
+                            }
+                        ]
+                    }] }
+        ];
+        InputDropdownComponent.propDecorators = {
+            selected: [{ type: i0.Input }],
+            hideFilter: [{ type: i0.Input }],
+            maxHeight: [{ type: i0.Input }],
+            allowNull: [{ type: i0.Input }],
+            placeholder: [{ type: i0.Input }],
+            ariaLabel: [{ type: i0.Input, args: ['aria-label',] }],
+            selectedChange: [{ type: i0.Output }],
+            filterChange: [{ type: i0.Output }],
+            displayContentRef: [{ type: i0.ContentChild, args: ['displayContent', { static: false },] }],
+            menuTrigger: [{ type: i0.ViewChild, args: [MenuTriggerDirective, { static: false },] }],
+            filterInputElement: [{ type: i0.ViewChild, args: ['filterInput', { static: false },] }]
+        };
+        return InputDropdownComponent;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var InputDropdownModule = /** @class */ (function () {
+        function InputDropdownModule() {
+        }
+        InputDropdownModule.decorators = [
+            { type: i0.NgModule, args: [{
+                        imports: [common.CommonModule, forms.FormsModule, IconModule, MenuModule, AccessibilityModule],
+                        declarations: [
+                            InputDropdownComponent
+                        ],
+                        exports: [
+                            InputDropdownComponent
+                        ]
+                    },] }
+        ];
+        return InputDropdownModule;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     var SidePanelCloseDirective = /** @class */ (function () {
-        function SidePanelCloseDirective(_service) {
+        function SidePanelCloseDirective(_service, _focusOrigin) {
             this._service = _service;
+            this._focusOrigin = _focusOrigin;
         }
         /**
+         * @param {?} event
          * @return {?}
          */
-        SidePanelCloseDirective.prototype.clickHandler = /**
+        SidePanelCloseDirective.prototype.onClick = /**
+         * @param {?} event
          * @return {?}
          */
-            function () {
+            function (event) {
+                // determine the correct origin for the trigger event
+                this._focusOrigin.setOrigin(isKeyboardTrigger(event) ? 'keyboard' : 'mouse');
+                // close the side panel menu
                 this._service.close();
             };
         SidePanelCloseDirective.decorators = [
@@ -40520,15 +40896,15 @@
         /** @nocollapse */
         SidePanelCloseDirective.ctorParameters = function () {
             return [
-                { type: SidePanelService }
+                { type: SidePanelService },
+                { type: FocusIndicatorOriginService }
             ];
         };
         SidePanelCloseDirective.propDecorators = {
-            clickHandler: [{ type: i0.HostListener, args: ['click',] }]
+            onClick: [{ type: i0.HostListener, args: ['click', ['$event'],] }]
         };
         return SidePanelCloseDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40544,6 +40920,7 @@
         SidePanelModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
+                            AccessibilityModule,
                             common.CommonModule,
                             a11y.A11yModule,
                             FocusIfModule
@@ -40554,12 +40931,10 @@
         ];
         return SidePanelModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40712,7 +41087,6 @@
         };
         return SparkComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -40733,12 +41107,10 @@
         ];
         return SparkModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -41048,7 +41420,7 @@
         ColumnPickerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-column-picker',
-                        template: "<div class=\"column-picker-column\">\n\n    <div class=\"column-picker-stats\">\n\n        <ng-container *ngIf=\"!deselectedTitleTemplate\">\n            {{ _deselectedSelection.length }} of {{ deselected.length }} selected\n        </ng-container>\n\n        <ng-container\n            *ngIf=\"deselectedTitleTemplate\"\n            [ngTemplateOutlet]=\"deselectedTitleTemplate\">\n        </ng-container>\n    </div>\n\n    <div class=\"column-picker-list\" [(uxSelection)]=\"_deselectedSelection\">\n\n        <div *ngFor=\"let column of deselected\"\n             class=\"column-picker-list-item\"\n             [uxSelectionItem]=\"column\">\n\n            <ng-container *ngIf=\"!deselectedTemplate\">{{ column }}</ng-container>\n\n            <ng-container\n                *ngIf=\"deselectedTemplate\"\n                [ngTemplateOutlet]=\"deselectedTemplate\"\n                [ngTemplateOutletContext]=\"{ $implicit: column }\">\n            </ng-container>\n        </div>\n    </div>\n</div>\n\n<div class=\"column-picker-actions-column\">\n    <!-- Show the default action buttons -->\n    <ng-container *ngIf=\"!actionsTemplate\">\n        <button class=\"btn button-primary btn-block\" [disabled]=\"_deselectedSelection.length === 0\" (click)=\"addColumns()\">\n            <i class=\"hpe-icon hpe-chevron-right\"></i>\n        </button>\n\n        <button class=\"btn button-primary btn-block m-b-md\" [disabled]=\"_selectedSelection.length === 0\" (click)=\"removeColumns()\">\n            <i class=\"hpe-icon hpe-chevron-left\"></i>\n        </button>\n\n        <button class=\"btn button-secondary btn-block\" [disabled]=\"deselected.length === 0\" (click)=\"addAllColumns()\">\n            <i class=\"hpe-icon hpe-chevron-right-double\"></i>\n        </button>\n\n        <button class=\"btn button-secondary btn-block\" [disabled]=\"selected.length === 0\" (click)=\"removeAllColumns()\">\n            <i class=\"hpe-icon hpe-chevron-left-double\"></i>\n        </button>\n    </ng-container>\n\n    <!-- Allow custom actions template -->\n    <ng-container\n        *ngIf=\"actionsTemplate\"\n        [ngTemplateOutlet]=\"actionsTemplate\"\n        [ngTemplateOutletContext]=\"_getActionContext()\">\n    </ng-container>\n\n</div>\n\n<div class=\"column-picker-column\">\n    <div class=\"column-picker-stats\">\n\n        <ng-container *ngIf=\"!selectedTitleTemplate\">\n            {{ selected.length + locked.length }} columns added\n        </ng-container>\n\n        <ng-container\n            *ngIf=\"selectedTitleTemplate\"\n            [ngTemplateOutlet]=\"selectedTitleTemplate\">\n        </ng-container>\n    </div>\n\n    <div class=\"column-picker-list\">\n\n        <div *ngFor=\"let column of locked\"\n             class=\"column-picker-list-item column-picker-list-item-locked\">\n\n             <ng-container *ngIf=\"!lockedTemplate\">\n                {{ column }} <i class=\"hpe-icon hpe-lock\"></i>\n            </ng-container>\n\n             <ng-container\n                *ngIf=\"lockedTemplate\"\n                [ngTemplateOutlet]=\"lockedTemplate\"\n                [ngTemplateOutletContext]=\"{ $implicit: column }\">\n            </ng-container>\n        </div>\n\n        <div [(uxSelection)]=\"_selectedSelection\" uxReorderable [reorderableModel]=\"selected\" (reorderableModelChange)=\"onReorderChange($event)\" (reorderStart)=\"storeSelection()\"\n            (reorderEnd)=\"restoreSelection()\" (reorderEnd)=\"onReorder()\">\n\n            <div *ngFor=\"let column of selected; trackBy: selectedTrackBy; let index = index\"\n                 #selectedColumn\n                 uxFocusIndicator\n                 [programmaticFocusIndicator]=\"true\"\n                 class=\"column-picker-list-item column-picker-list-item-selected\"\n                 [uxSelectionItem]=\"column\"\n                 [uxReorderableModel]=\"column\"\n                 [attr.aria-label]=\"getSelectedAriaLabel(column)\"\n                 (keydown.alt.arrowup)=\"move(column, -1)\"\n                 (keydown.alt.arrowdown)=\"move(column, 1)\">\n\n                 <ng-container *ngIf=\"!selectedTemplate\">\n                    <i uxReorderableHandle class=\"hpe-icon hpe-drag\"></i>\n                    {{ column }}\n                 </ng-container>\n\n                 <ng-container\n                    *ngIf=\"selectedTemplate\"\n                    [ngTemplateOutlet]=\"selectedTemplate\"\n                    [ngTemplateOutletContext]=\"{ $implicit: column }\">\n                </ng-container>\n            </div>\n        </div>\n\n    </div>\n</div>",
+                        template: "<div class=\"column-picker-column\">\n\n    <div class=\"column-picker-stats\">\n\n        <ng-container *ngIf=\"!deselectedTitleTemplate\">\n            {{ _deselectedSelection.length }} of {{ deselected.length }} selected\n        </ng-container>\n\n        <ng-container\n            *ngIf=\"deselectedTitleTemplate\"\n            [ngTemplateOutlet]=\"deselectedTitleTemplate\">\n        </ng-container>\n    </div>\n\n    <div class=\"column-picker-list\" [(uxSelection)]=\"_deselectedSelection\">\n\n        <div *ngFor=\"let column of deselected\"\n             class=\"column-picker-list-item\"\n             [uxSelectionItem]=\"column\">\n\n            <ng-container *ngIf=\"!deselectedTemplate\">{{ column }}</ng-container>\n\n            <ng-container\n                *ngIf=\"deselectedTemplate\"\n                [ngTemplateOutlet]=\"deselectedTemplate\"\n                [ngTemplateOutletContext]=\"{ $implicit: column }\">\n            </ng-container>\n        </div>\n    </div>\n</div>\n\n<div class=\"column-picker-actions-column\">\n    <!-- Show the default action buttons -->\n    <ng-container *ngIf=\"!actionsTemplate\">\n        <button class=\"btn button-primary btn-block\" [disabled]=\"_deselectedSelection.length === 0\" (click)=\"addColumns()\">\n            <ux-icon name=\"chevron-right\"></ux-icon>\n        </button>\n\n        <button class=\"btn button-primary btn-block m-b-md\" [disabled]=\"_selectedSelection.length === 0\" (click)=\"removeColumns()\">\n            <ux-icon name=\"chevron-left\"></ux-icon>\n        </button>\n\n        <button class=\"btn button-secondary btn-block\" [disabled]=\"deselected.length === 0\" (click)=\"addAllColumns()\">\n            <ux-icon name=\"chevron-right-double\"></ux-icon>\n        </button>\n\n        <button class=\"btn button-secondary btn-block\" [disabled]=\"selected.length === 0\" (click)=\"removeAllColumns()\">\n            <ux-icon name=\"chevron-left-double\"></ux-icon>\n        </button>\n    </ng-container>\n\n    <!-- Allow custom actions template -->\n    <ng-container\n        *ngIf=\"actionsTemplate\"\n        [ngTemplateOutlet]=\"actionsTemplate\"\n        [ngTemplateOutletContext]=\"_getActionContext()\">\n    </ng-container>\n\n</div>\n\n<div class=\"column-picker-column\">\n    <div class=\"column-picker-stats\">\n\n        <ng-container *ngIf=\"!selectedTitleTemplate\">\n            {{ selected.length + locked.length }} columns added\n        </ng-container>\n\n        <ng-container\n            *ngIf=\"selectedTitleTemplate\"\n            [ngTemplateOutlet]=\"selectedTitleTemplate\">\n        </ng-container>\n    </div>\n\n    <div class=\"column-picker-list\">\n\n        <div *ngFor=\"let column of locked\"\n             class=\"column-picker-list-item column-picker-list-item-locked\">\n\n             <ng-container *ngIf=\"!lockedTemplate\">\n                {{ column }} <ux-icon name=\"lock\"></ux-icon>\n            </ng-container>\n\n             <ng-container\n                *ngIf=\"lockedTemplate\"\n                [ngTemplateOutlet]=\"lockedTemplate\"\n                [ngTemplateOutletContext]=\"{ $implicit: column }\">\n            </ng-container>\n        </div>\n\n        <div [(uxSelection)]=\"_selectedSelection\" uxReorderable [reorderableModel]=\"selected\" (reorderableModelChange)=\"onReorderChange($event)\" (reorderStart)=\"storeSelection()\"\n            (reorderEnd)=\"restoreSelection()\" (reorderEnd)=\"onReorder()\">\n\n            <div *ngFor=\"let column of selected; trackBy: selectedTrackBy; let index = index\"\n                 #selectedColumn\n                 uxFocusIndicator\n                 [programmaticFocusIndicator]=\"true\"\n                 class=\"column-picker-list-item column-picker-list-item-selected\"\n                 [uxSelectionItem]=\"column\"\n                 [uxReorderableModel]=\"column\"\n                 [attr.aria-label]=\"getSelectedAriaLabel(column)\"\n                 (keydown.alt.arrowup)=\"move(column, -1)\"\n                 (keydown.alt.arrowdown)=\"move(column, 1)\">\n\n                 <ng-container *ngIf=\"!selectedTemplate\">\n                    <ux-icon uxReorderableHandle name=\"drag\" class=\"drag-handle-icon\"></ux-icon>\n                    {{ column }}\n                 </ng-container>\n\n                 <ng-container\n                    *ngIf=\"selectedTemplate\"\n                    [ngTemplateOutlet]=\"selectedTemplate\"\n                    [ngTemplateOutletContext]=\"{ $implicit: column }\">\n                </ng-container>\n            </div>\n        </div>\n\n    </div>\n</div>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -41077,7 +41449,6 @@
         };
         return ColumnPickerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -41474,7 +41845,6 @@
     };
     ColumnUnit[ColumnUnit.Pixel] = 'Pixel';
     ColumnUnit[ColumnUnit.Percentage] = 'Percentage';
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -41575,7 +41945,6 @@
         };
         return ResizableTableCellDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -41854,7 +42223,6 @@
         };
         return ResizableTableColumnComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42029,12 +42397,10 @@
         };
         return ResizableTableDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42049,6 +42415,7 @@
                             AccessibilityModule,
                             common.CommonModule,
                             DragModule,
+                            IconModule,
                             ResizeModule,
                             ReorderableModule,
                             SelectionModule
@@ -42069,12 +42436,37 @@
         ];
         return TableModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var uniqueId$a = 0;
+    var TimelineEventComponent = /** @class */ (function () {
+        function TimelineEventComponent() {
+            /**
+             * Define the id for the event
+             */
+            this.id = "ux-timeline-event-" + uniqueId$a++;
+        }
+        TimelineEventComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ux-timeline-event',
+                        template: "<div class=\"timeline-badge\" [ngClass]=\"badgeColor\" [attr.aria-describedby]=\"id\">\r\n    <span>{{ badgeTitle }}</span>\r\n</div>\r\n\r\n<div class=\"timeline-panel\" [id]=\"id\">\r\n    <ng-content></ng-content>\r\n</div>\r\n",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush
+                    }] }
+        ];
+        TimelineEventComponent.propDecorators = {
+            id: [{ type: i0.Input }],
+            badgeColor: [{ type: i0.Input }],
+            badgeTitle: [{ type: i0.Input }]
+        };
+        return TimelineEventComponent;
+    }());
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42085,36 +42477,12 @@
         TimelineComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-timeline',
-                        template: "<div class=\"timeline\">\r\n    <ng-content></ng-content>\r\n</div>\r\n"
+                        template: "<div class=\"timeline\">\r\n    <div class=\"timeline-connector\"></div>\r\n    <ux-icon class=\"timeline-arrow\" name=\"chevron-down\"></ux-icon>\r\n    <ng-content></ng-content>\r\n</div>\r\n",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
         return TimelineComponent;
     }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var uniqueId$a = 0;
-    var TimelineEventComponent = /** @class */ (function () {
-        function TimelineEventComponent() {
-            this.id = "ux-timeline-event-" + uniqueId$a++;
-        }
-        TimelineEventComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ux-timeline-event',
-                        template: "<div class=\"timeline-badge\" [ngClass]=\"badgeColor\" [attr.aria-describedby]=\"id\">\r\n    <span>{{ badgeTitle }}</span>\r\n</div>\r\n\r\n<div class=\"timeline-panel\" [id]=\"id\">\r\n    <ng-content></ng-content>\r\n</div>\r\n"
-                    }] }
-        ];
-        TimelineEventComponent.propDecorators = {
-            id: [{ type: i0.Input }],
-            badgeColor: [{ type: i0.Input }],
-            badgeTitle: [{ type: i0.Input }]
-        };
-        return TimelineEventComponent;
-    }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42125,7 +42493,8 @@
         TimelineModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
-                            common.CommonModule
+                            common.CommonModule,
+                            IconModule
                         ],
                         exports: [
                             TimelineComponent,
@@ -42139,12 +42508,10 @@
         ];
         return TimelineModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42299,7 +42666,6 @@
         };
         return ToggleSwitchComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42323,12 +42689,10 @@
         ];
         return ToggleSwitchModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42378,7 +42742,6 @@
         };
         return ToolbarSearchButtonDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42399,7 +42762,7 @@
             /**
              * Emit whenever the enter key is pressed
              */
-            this.submit = new i0.EventEmitter();
+            this.submitted = new i0.EventEmitter();
             /**
              * For use with the Forms and ReactiveForms
              */
@@ -42463,7 +42826,7 @@
          * @return {?}
          */
             function () {
-                this.submit.emit(this.text);
+                this.submitted.emit(this.text);
             };
         /**
          * @return {?}
@@ -42561,14 +42924,13 @@
         };
         ToolbarSearchFieldDirective.propDecorators = {
             cancel: [{ type: i0.Output }],
-            submit: [{ type: i0.Output }],
+            submitted: [{ type: i0.Output }],
             onEnter: [{ type: i0.HostListener, args: ['keydown.enter',] }],
             onEscape: [{ type: i0.HostListener, args: ['keydown.escape',] }],
             onInput: [{ type: i0.HostListener, args: ['input',] }]
         };
         return ToolbarSearchFieldDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42688,8 +43050,8 @@
          */
             function () {
                 var _this = this;
-                // Subscribe to the submit event on the input field, triggering the search event
-                this.field.submit.pipe(operators.takeUntil(this._onDestroy)).subscribe(function (text) { return _this.search.emit(text); });
+                // Subscribe to the submitted event on the input field, triggering the search event
+                this.field.submitted.pipe(operators.takeUntil(this._onDestroy)).subscribe(function (text) { return _this.search.emit(text); });
                 // Subscribe to cancel events coming from the input field
                 this.field.cancel.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.expanded = false; });
                 // Subscribe to the button click event
@@ -42826,14 +43188,13 @@
             background: [{ type: i0.Input }],
             expandedChange: [{ type: i0.Output }],
             search: [{ type: i0.Output }],
-            field: [{ type: i0.ContentChild, args: [ToolbarSearchFieldDirective,] }],
-            button: [{ type: i0.ContentChild, args: [ToolbarSearchButtonDirective,] }],
+            field: [{ type: i0.ContentChild, args: [ToolbarSearchFieldDirective, { static: true },] }],
+            button: [{ type: i0.ContentChild, args: [ToolbarSearchButtonDirective, { static: false },] }],
             animationStart: [{ type: i0.HostListener, args: ['@expanded.start', ['$event'],] }],
             animationDone: [{ type: i0.HostListener, args: ['@expanded.done', ['$event'],] }]
         };
         return ToolbarSearchComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42859,12 +43220,10 @@
         ];
         return ToolbarSearchModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42892,7 +43251,6 @@
         ];
         return VirtualForService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43244,7 +43602,6 @@
         };
         return VirtualForDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43483,13 +43840,12 @@
         };
         VirtualForContainerComponent.propDecorators = {
             itemSize: [{ type: i0.Input }],
-            virtualFor: [{ type: i0.ContentChild, args: [VirtualForDirective,] }],
+            virtualFor: [{ type: i0.ContentChild, args: [VirtualForDirective, { static: false },] }],
             updateContainer: [{ type: i0.HostListener, args: ['scroll',] }],
             onKeydown: [{ type: i0.HostListener, args: ['keydown', ['$event', '$event.keyCode'],] }]
         };
         return VirtualForContainerComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43504,7 +43860,6 @@
         ];
         return VirtualScrollCellDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43519,7 +43874,6 @@
         ];
         return VirtualScrollLoadButtonDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43534,7 +43888,6 @@
         ];
         return VirtualScrollLoadingDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43746,14 +44099,13 @@
             cellHeight: [{ type: i0.Input }],
             loadOnScroll: [{ type: i0.Input }],
             loading: [{ type: i0.Output }],
-            cellTemplate: [{ type: i0.ContentChild, args: [VirtualScrollCellDirective, { read: i0.TemplateRef },] }],
-            loadingIndicatorTemplate: [{ type: i0.ContentChild, args: [VirtualScrollLoadingDirective, { read: i0.TemplateRef },] }],
-            loadButtonTemplate: [{ type: i0.ContentChild, args: [VirtualScrollLoadButtonDirective, { read: i0.TemplateRef },] }],
+            cellTemplate: [{ type: i0.ContentChild, args: [VirtualScrollCellDirective, { read: i0.TemplateRef, static: false },] }],
+            loadingIndicatorTemplate: [{ type: i0.ContentChild, args: [VirtualScrollLoadingDirective, { read: i0.TemplateRef, static: false },] }],
+            loadButtonTemplate: [{ type: i0.ContentChild, args: [VirtualScrollLoadButtonDirective, { read: i0.TemplateRef, static: false },] }],
             renderCells: [{ type: i0.HostListener, args: ['scroll',] }]
         };
         return VirtualScrollComponent;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43783,12 +44135,10 @@
         ];
         return VirtualScrollModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43853,7 +44203,6 @@
         };
         return AutoGrowDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -43869,12 +44218,10 @@
         ];
         return AutoGrowModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44030,7 +44377,6 @@
         };
         return FixedHeaderTableDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44053,12 +44399,10 @@
         ];
         return FixedHeaderTableModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44178,7 +44522,6 @@
         };
         return FloatLabelDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44196,12 +44539,10 @@
         ];
         return FloatLabelModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44249,7 +44590,6 @@
         ];
         return HelpCenterService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44292,7 +44632,6 @@
         };
         return HelpCenterItemDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44310,12 +44649,10 @@
         ];
         return HelpCenterModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44405,7 +44742,6 @@
         ];
         return HoverActionService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44487,7 +44823,6 @@
         };
         return HoverActionContainerDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44571,7 +44906,6 @@
         };
         return HoverActionDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44595,12 +44929,10 @@
         ];
         return HoverActionModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44666,7 +44998,6 @@
         };
         return LayoutSwitcherItemDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44774,7 +45105,6 @@
         };
         return LayoutSwitcherDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44799,12 +45129,10 @@
         ];
         return LayoutSwitcherModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44853,7 +45181,6 @@
         ];
         return MenuNavigationService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -44917,7 +45244,6 @@
         };
         return MenuNavigationItemDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45041,7 +45367,6 @@
         };
         return MenuNavigationToggleDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45308,7 +45633,6 @@
         };
         return MenuNavigationDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45333,12 +45657,10 @@
         ];
         return MenuNavigationModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45460,7 +45782,6 @@
         };
         return OverflowDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45476,12 +45797,10 @@
         ];
         return ObserversModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45495,7 +45814,6 @@
         }
         return TreeGridState;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45722,7 +46040,6 @@
         };
         return TreeGridService;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45846,7 +46163,6 @@
         };
         return TreeGridRowDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45883,7 +46199,6 @@
         };
         return TreeGridIndentDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45957,7 +46272,6 @@
         };
         return TreeGridDirective;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -45981,12 +46295,10 @@
         ];
         return TreeGridModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -46018,7 +46330,6 @@
         ];
         return StringFilterPipe;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -46034,23 +46345,21 @@
         ];
         return StringFilterModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-    var ɵ0 = function () { };
+    var ɵ0$3 = function () { };
     /** @type {?} */
     var timelineDefaultOptions = {
         timeline: {
             backgroundColor: '#f1f2f3',
             selectionColor: 'rgba(198, 23, 157, 0.15)',
-            onChange: ɵ0,
+            onChange: ɵ0$3,
             keyboard: {
                 step: 2592000000 // 30 days
             },
@@ -47121,12 +47430,10 @@
         Upper: 'upper',
         Range: 'range',
     };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -47212,7 +47519,6 @@
             };
         return CookieAdapter;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -47287,7 +47593,6 @@
             };
         return LocalStorageAdapter;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -47362,7 +47667,6 @@
             };
         return SessionStorageAdapter;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -47495,7 +47799,6 @@
     PersistentDataStorageType[PersistentDataStorageType.LocalStorage] = 'LocalStorage';
     PersistentDataStorageType[PersistentDataStorageType.Cookie] = 'Cookie';
     PersistentDataStorageType[PersistentDataStorageType.SessionStorage] = 'SessionStorage';
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -47510,7 +47813,6 @@
         ];
         return PersistentDataModule;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -47525,24 +47827,24 @@
         }
         return StorageAdapter;
     }());
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-
     exports.Color = Color;
+    exports.getIconType = getIconType;
+    exports.IconType = IconType;
     exports.tick = tick;
+    exports.isKeyboardTrigger = isKeyboardTrigger;
+    exports.isMouseTrigger = isMouseTrigger;
     exports.AccordionPanelHeadingDirective = AccordionPanelHeadingDirective;
     exports.AccordionPanelComponent = AccordionPanelComponent;
     exports.AccordionComponent = AccordionComponent;
@@ -47659,6 +47961,7 @@
     exports.ItemDisplayPanelContentDirective = ItemDisplayPanelContentDirective;
     exports.ItemDisplayPanelFooterDirective = ItemDisplayPanelFooterDirective;
     exports.ItemDisplayPanelComponent = ItemDisplayPanelComponent;
+    exports.MarqueeWizardStepIconDirective = MarqueeWizardStepIconDirective;
     exports.MarqueeWizardStepComponent = MarqueeWizardStepComponent;
     exports.MarqueeWizardComponent = MarqueeWizardComponent;
     exports.MarqueeWizardModule = MarqueeWizardModule;
@@ -47710,6 +48013,8 @@
     exports.RadioButtonModule = RadioButtonModule;
     exports.RADIOBUTTON_VALUE_ACCESSOR = RADIOBUTTON_VALUE_ACCESSOR;
     exports.RadioButtonComponent = RadioButtonComponent;
+    exports.RADIO_GROUP_CONTROL_VALUE_ACCESSOR = RADIO_GROUP_CONTROL_VALUE_ACCESSOR;
+    exports.RadioButtonGroupDirective = RadioButtonGroupDirective;
     exports.SankeyChart = SankeyChart;
     exports.SankeyNodeDirective = SankeyNodeDirective;
     exports.SankeyChartComponent = SankeyChartComponent;
@@ -47729,6 +48034,8 @@
     exports.SelectListItemComponent = SelectListItemComponent;
     exports.SelectListComponent = SelectListComponent;
     exports.SelectListModule = SelectListModule;
+    exports.InputDropdownComponent = InputDropdownComponent;
+    exports.InputDropdownModule = InputDropdownModule;
     exports.SELECT_VALUE_ACCESSOR = SELECT_VALUE_ACCESSOR;
     exports.SelectComponent = SelectComponent;
     exports.SelectModule = SelectModule;
@@ -47755,12 +48062,11 @@
     exports.ResizableTableColumnComponent = ResizableTableColumnComponent;
     exports.ResizableTableDirective = ResizableTableDirective;
     exports.TableModule = TableModule;
-    exports.TabsetModule = TabsetModule;
-    exports.TabsetComponent = TabsetComponent;
-    exports.TabsetService = TabsetService;
-    exports.TabComponent = TabComponent;
     exports.TabHeadingDirective = TabHeadingDirective;
-    exports.TabFocusDirective = TabFocusDirective;
+    exports.TabComponent = TabComponent;
+    exports.TabsetComponent = TabsetComponent;
+    exports.TabsetModule = TabsetModule;
+    exports.TabsetService = TabsetService;
     exports.TagInputEvent = TagInputEvent;
     exports.TagInputComponent = TagInputComponent;
     exports.TagInputModule = TagInputModule;
@@ -47944,9 +48250,6 @@
     exports.ɵbq = TreeGridService;
     exports.ɵa = KEPPEL_COLOR_SET;
     exports.ɵb = MICRO_FOCUS_COLOR_SET;
-
     Object.defineProperty(exports, '__esModule', { value: true });
-
 })));
-
 //# sourceMappingURL=ux-aspects-ux-aspects.umd.js.map
