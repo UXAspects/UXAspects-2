@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('angular-split'), require('resize-observer-polyfill'), require('dragula/dist/dragula'), require('@angular/cdk/observers'), require('@angular/cdk/overlay'), require('@angular/common/http'), require('d3-ease'), require('@angular/cdk/portal'), require('d3-interpolate'), require('d3-shape'), require('d3-zoom'), require('@angular/router'), require('d3-hierarchy'), require('d3-scale'), require('d3-selection'), require('d3-transition'), require('d3-array'), require('@angular/cdk/platform'), require('@angular/cdk/coercion'), require('@angular/cdk/a11y'), require('@angular/animations'), require('@angular/forms'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/cdk/keycodes'), require('@angular/core')) :
-        typeof define === 'function' && define.amd ? define('@ux-aspects/ux-aspects', ['exports', 'angular-split', 'resize-observer-polyfill', 'dragula/dist/dragula', '@angular/cdk/observers', '@angular/cdk/overlay', '@angular/common/http', 'd3-ease', '@angular/cdk/portal', 'd3-interpolate', 'd3-shape', 'd3-zoom', '@angular/router', 'd3-hierarchy', 'd3-scale', 'd3-selection', 'd3-transition', 'd3-array', '@angular/cdk/platform', '@angular/cdk/coercion', '@angular/cdk/a11y', '@angular/animations', '@angular/forms', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/cdk/keycodes', '@angular/core'], factory) :
-            (factory((global['ux-aspects'] = global['ux-aspects'] || {}, global['ux-aspects']['ux-aspects'] = {}), global.angularSplit, global.ResizeObserver, global.dragulaNamespace, global.ng.cdk.observers, global.ng.cdk.overlay, global.ng.common.http, global.d3Ease, global.ng.cdk.portal, global.d3Interpolate, global.d3Shape, global.d3Zoom, global.ng.router, global.d3Hierarchy, global.d3Scale, global.d3Selection, global.d3Transition, global.d3Array, global.ng.cdk.platform, global.ng.cdk.coercion, global.ng.cdk.a11y, global.ng.animations, global.ng.forms, global.ng.common, global.rxjs, global.rxjs.operators, global.ng.cdk.keycodes, global.ng.core));
-}(this, (function (exports, angularSplit, ResizeObserver, dragulaNamespace, observers, overlay, http, d3Ease, portal, d3Interpolate, d3Shape, d3Zoom, router, d3Hierarchy, d3Scale, d3Selection, d3Transition, d3Array, platform, coercion, a11y, animations, forms, common, rxjs, operators, keycodes, i0) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('resize-observer-polyfill'), require('dragula/dist/dragula'), require('@angular/cdk/observers'), require('@angular/cdk/overlay'), require('angular-split'), require('@angular/common/http'), require('d3-ease'), require('@angular/cdk/portal'), require('d3-interpolate'), require('d3-shape'), require('d3-zoom'), require('@angular/router'), require('d3-hierarchy'), require('d3-scale'), require('d3-selection'), require('d3-transition'), require('d3-array'), require('@angular/cdk/platform'), require('@angular/cdk/coercion'), require('@angular/cdk/a11y'), require('@angular/animations'), require('@angular/forms'), require('@angular/common'), require('@angular/cdk/text-field'), require('rxjs'), require('rxjs/operators'), require('@angular/cdk/keycodes'), require('@angular/core')) :
+        typeof define === 'function' && define.amd ? define('@ux-aspects/ux-aspects', ['exports', 'resize-observer-polyfill', 'dragula/dist/dragula', '@angular/cdk/observers', '@angular/cdk/overlay', 'angular-split', '@angular/common/http', 'd3-ease', '@angular/cdk/portal', 'd3-interpolate', 'd3-shape', 'd3-zoom', '@angular/router', 'd3-hierarchy', 'd3-scale', 'd3-selection', 'd3-transition', 'd3-array', '@angular/cdk/platform', '@angular/cdk/coercion', '@angular/cdk/a11y', '@angular/animations', '@angular/forms', '@angular/common', '@angular/cdk/text-field', 'rxjs', 'rxjs/operators', '@angular/cdk/keycodes', '@angular/core'], factory) :
+            (factory((global['ux-aspects'] = global['ux-aspects'] || {}, global['ux-aspects']['ux-aspects'] = {}), global.ResizeObserver, global.dragulaNamespace, global.ng.cdk.observers, global.ng.cdk.overlay, global.angularSplit, global.ng.common.http, global.d3Ease, global.ng.cdk.portal, global.d3Interpolate, global.d3Shape, global.d3Zoom, global.ng.router, global.d3Hierarchy, global.d3Scale, global.d3Selection, global.d3Transition, global.d3Array, global.ng.cdk.platform, global.ng.cdk.coercion, global.ng.cdk.a11y, global.ng.animations, global.ng.forms, global.ng.common, global.ng.cdk['text-field'], global.rxjs, global.rxjs.operators, global.ng.cdk.keycodes, global.ng.core));
+}(this, (function (exports, ResizeObserver, dragulaNamespace, observers, overlay, angularSplit, http, d3Ease, portal, d3Interpolate, d3Shape, d3Zoom, router, d3Hierarchy, d3Scale, d3Selection, d3Transition, d3Array, platform, coercion, a11y, animations, forms, common, textField, rxjs, operators, keycodes, i0) {
     'use strict';
     ResizeObserver = ResizeObserver && ResizeObserver.hasOwnProperty('default') ? ResizeObserver['default'] : ResizeObserver;
     var dragulaNamespace__default = 'default' in dragulaNamespace ? dragulaNamespace['default'] : dragulaNamespace;
@@ -4226,6 +4226,8 @@
         'halt',
         'help-circle',
         'help',
+        'highlighting-remove',
+        'highlighting',
         'history',
         'home-filled',
         'home',
@@ -5949,7 +5951,9 @@
         multi: true
     };
     var NumberPickerComponent = /** @class */ (function () {
-        function NumberPickerComponent() {
+        function NumberPickerComponent(_changeDetector, _formGroup) {
+            this._changeDetector = _changeDetector;
+            this._formGroup = _formGroup;
             this._min = -Infinity;
             this._max = Infinity;
             this._step = 1;
@@ -5972,6 +5976,10 @@
              * If two way binding is used this value will be updated any time the number picker value changes.
              */
             this.valueChange = new i0.EventEmitter();
+            /**
+             * Store the current valid state
+             */
+            this._valid = true;
         }
         Object.defineProperty(NumberPickerComponent.prototype, "value", {
             /** Sets the value displayed in the number picker component. */
@@ -5988,6 +5996,7 @@
                 this._value = value;
                 this.valueChange.emit(value);
                 this._propagateChange(value);
+                this._valid = this.isValid();
             },
             enumerable: true,
             configurable: true
@@ -6143,6 +6152,8 @@
             function (value) {
                 if (value !== undefined) {
                     this._value = value;
+                    this._valid = this.isValid();
+                    this._changeDetector.detectChanges();
                 }
             };
         /**
@@ -6182,10 +6193,17 @@
                         template: "<input type=\"number\"\n    [id]=\"inputId\"\n    role=\"spinbutton\"\n    class=\"form-control number-picker-input\"\n    [(ngModel)]=\"value\"\n    [min]=\"min\"\n    [max]=\"max\"\n    (keydown.ArrowDown)=\"decrement($event)\"\n    (keydown.ArrowUp)=\"increment($event)\"\n    (wheel)=\"onScroll($event)\"\n    step=\"any\"\n    [disabled]=\"disabled\"\n    [attr.aria-valuemin]=\"min\"\n    [attr.aria-valuenow]=\"value\"\n    [attr.aria-valuemax]=\"max\"\n    [attr.aria-labelledby]=\"labelledBy\">\n\n<div class=\"number-picker-controls\">\n\n    <div class=\"number-picker-control number-picker-control-up\"\n         (click)=\"increment($event)\"\n         [class.disabled]=\"disabled || value >= max\">\n\n        <ux-icon name=\"up\"></ux-icon>\n    </div>\n\n    <div class=\"number-picker-control number-picker-control-down\"\n         (click)=\"decrement($event)\"\n         [class.disabled]=\"disabled || value <= min\">\n\n         <ux-icon name=\"down\"></ux-icon>\n    </div>\n\n</div>",
                         providers: [NUMBER_PICKER_VALUE_ACCESSOR],
                         host: {
-                            '[class.has-error]': '!isValid()'
+                            '[class.ux-number-picker-invalid]': '!_valid && !disabled && !_formGroup'
                         }
                     }] }
         ];
+        /** @nocollapse */
+        NumberPickerComponent.ctorParameters = function () {
+            return [
+                { type: i0.ChangeDetectorRef },
+                { type: forms.FormGroupDirective, decorators: [{ type: i0.Optional }] }
+            ];
+        };
         NumberPickerComponent.propDecorators = {
             id: [{ type: i0.Input }],
             valid: [{ type: i0.Input }],
@@ -12279,7 +12297,7 @@
         DateRangePickerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-date-range-picker',
-                        template: "<div class=\"range-header\">\n\n  <div class=\"header-section\">\n    <div *ngIf=\"!rangeService.start\" class=\"select-header\">{{ selectStartTitle }}</div>\n    <div *ngIf=\"rangeService.start\" class=\"date-header\">{{ rangeService.start | date: 'd MMMM y' }}</div>\n    <div [style.visibility]=\"rangeService.start && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n        {{ rangeService.start | date: showMeridian ? 'shortTime' : 'HH:mm' }}\n    </div>\n  </div>\n\n  <div class=\"header-separator\">\n    <ux-icon name=\"link-next\"></ux-icon>\n    <p class=\"duration\" [style.visibility]=\"_duration !== null && _duration !== undefined ? 'visible' : 'hidden'\">\n        {{ durationTitle(_duration || 0) }}\n    </p>\n  </div>\n\n  <div class=\"header-section\">\n    <div *ngIf=\"!rangeService.end\" class=\"select-header\">{{ selectEndTitle }}</div>\n    <div *ngIf=\"rangeService.end\" class=\"date-header\">{{ rangeService.end | date: 'd MMMM y' }}</div>\n    <div [style.visibility]=\"rangeService.end && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n        {{ rangeService.end | date: showMeridian ? 'shortTime' : 'HH:mm' }}\n    </div>\n  </div>\n\n</div>\n\n<div class=\"content\">\n  <ux-date-time-picker\n    uxDateRangePicker\n    picker=\"start\"\n    class=\"start-date-picker\"\n    [date]=\"rangeService.start\"\n    (dateChange)=\"startChange$.next($event)\"\n    [min]=\"min\"\n    [max]=\"max\"\n    [weekdays]=\"weekdays\"\n    [startOfWeek]=\"startOfWeek\"\n    [showTime]=\"showTime\"\n    [showTimezone]=\"showTimezone\"\n    [showSeconds]=\"showSeconds\"\n    [showMeridian]=\"showMeridian\"\n    [showSpinners]=\"showSpinners\"\n    [months]=\"months\"\n    [monthsShort]=\"monthsShort\"\n    [meridians]=\"meridians\"\n    [nowBtnText]=\"nowBtnText\"\n    [showNowBtn]=\"showNowBtn\"\n    [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n    [timezones]=\"timezones\"\n    [(timezone)]=\"startTimezone\"\n    (timezoneChange)=\"startTimezoneChange.emit($event)\">\n  </ux-date-time-picker>\n\n  <ux-date-time-picker\n    uxDateRangePicker\n    picker=\"end\"\n    class=\"end-date-picker\"\n    [date]=\"rangeService.end\"\n    (dateChange)=\"endChange$.next($event)\"\n    [min]=\"min\"\n    [max]=\"max\"\n    [weekdays]=\"weekdays\"\n    [startOfWeek]=\"startOfWeek\"\n    [showTime]=\"showTime\"\n    [showTimezone]=\"showTimezone\"\n    [showSeconds]=\"showSeconds\"\n    [showMeridian]=\"showMeridian\"\n    [showSpinners]=\"showSpinners\"\n    [months]=\"months\"\n    [monthsShort]=\"monthsShort\"\n    [meridians]=\"meridians\"\n    [nowBtnText]=\"nowBtnText\"\n    [showNowBtn]=\"showNowBtn\"\n    [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n    [timezones]=\"timezones\"\n    [(timezone)]=\"endTimezone\"\n    (timezoneChange)=\"endTimezoneChange.emit($event)\">\n  </ux-date-time-picker>\n</div>\n",
+                        template: "<div class=\"range-header\">\n\n    <div class=\"header-section\">\n        <div *ngIf=\"!rangeService.start\" class=\"select-header\">{{ selectStartTitle }}</div>\n        <div *ngIf=\"rangeService.start\" class=\"date-header\">\n            {{ rangeService.start | formatDate: dateFormat || 'd MMMM y' }}\n        </div>\n        <div [style.visibility]=\"rangeService.start && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n            {{ rangeService.start | formatDate: timeFormat || (showMeridian ? 'shortTime' : 'HH:mm') }}\n        </div>\n    </div>\n\n    <div class=\"header-separator\">\n        <ux-icon name=\"link-next\"></ux-icon>\n        <p class=\"duration\"\n           [style.visibility]=\"_duration !== null && _duration !== undefined ? 'visible' : 'hidden'\">\n            {{ durationTitle(_duration || 0) }}\n        </p>\n    </div>\n\n    <div class=\"header-section\">\n        <div *ngIf=\"!rangeService.end\" class=\"select-header\">{{ selectEndTitle }}</div>\n        <div *ngIf=\"rangeService.end\" class=\"date-header\">\n            {{ rangeService.end | formatDate: dateFormat || 'd MMMM y'}}\n        </div>\n        <div [style.visibility]=\"rangeService.end && showTime ? 'visible' : 'hidden'\" class=\"time-header\">\n            {{ rangeService.end | formatDate: timeFormat || (showMeridian ? 'shortTime' : 'HH:mm') }}\n        </div>\n    </div>\n\n</div>\n\n<div class=\"content\">\n    <ux-date-time-picker\n        uxDateRangePicker\n        picker=\"start\"\n        class=\"start-date-picker\"\n        [date]=\"rangeService.start\"\n        (dateChange)=\"startChange$.next($event)\"\n        [min]=\"min\"\n        [max]=\"max\"\n        [weekdays]=\"weekdays\"\n        [startOfWeek]=\"startOfWeek\"\n        [showTime]=\"showTime\"\n        [showTimezone]=\"showTimezone\"\n        [showSeconds]=\"showSeconds\"\n        [showMeridian]=\"showMeridian\"\n        [showSpinners]=\"showSpinners\"\n        [months]=\"months\"\n        [monthsShort]=\"monthsShort\"\n        [meridians]=\"meridians\"\n        [nowBtnText]=\"nowBtnText\"\n        [showNowBtn]=\"showNowBtn\"\n        [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n        [timezones]=\"timezones\"\n        [(timezone)]=\"startTimezone\"\n        (timezoneChange)=\"startTimezoneChange.emit($event)\">\n    </ux-date-time-picker>\n\n    <ux-date-time-picker\n        uxDateRangePicker\n        picker=\"end\"\n        class=\"end-date-picker\"\n        [date]=\"rangeService.end\"\n        (dateChange)=\"endChange$.next($event)\"\n        [min]=\"min\"\n        [max]=\"max\"\n        [weekdays]=\"weekdays\"\n        [startOfWeek]=\"startOfWeek\"\n        [showTime]=\"showTime\"\n        [showTimezone]=\"showTimezone\"\n        [showSeconds]=\"showSeconds\"\n        [showMeridian]=\"showMeridian\"\n        [showSpinners]=\"showSpinners\"\n        [months]=\"months\"\n        [monthsShort]=\"monthsShort\"\n        [meridians]=\"meridians\"\n        [nowBtnText]=\"nowBtnText\"\n        [showNowBtn]=\"showNowBtn\"\n        [nowBtnAriaLabel]=\"nowBtnAriaLabel\"\n        [timezones]=\"timezones\"\n        [(timezone)]=\"endTimezone\"\n        (timezoneChange)=\"endTimezoneChange.emit($event)\">\n    </ux-date-time-picker>\n</div>\n",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         providers: [DateRangeService]
                     }] }
@@ -12293,6 +12311,8 @@
         DateRangePickerComponent.propDecorators = {
             start: [{ type: i0.Input }],
             end: [{ type: i0.Input }],
+            dateFormat: [{ type: i0.Input }],
+            timeFormat: [{ type: i0.Input }],
             min: [{ type: i0.Input }],
             max: [{ type: i0.Input }],
             showTimezone: [{ type: i0.Input }],
@@ -13212,11 +13232,14 @@
             this.readOnly = true;
             this.scrolling = true;
             this.arrowkeys = true;
+            this.maxLength = Infinity;
             this.valueChange = new i0.EventEmitter();
             this.increment = new i0.EventEmitter();
             this.decrement = new i0.EventEmitter();
             this.onTouchedCallback = function () { };
             this.onChangeCallback = function () { };
+            this._regexKeypress = RegExp(/^[0-9.,-]+$/);
+            this._regexPaste = RegExp(/^\-?\d+(\.\d+)?$/);
         }
         Object.defineProperty(SpinButtonComponent.prototype, "value", {
             get: /**
@@ -13321,10 +13344,88 @@
             function (isDisabled) {
                 this.disabled = isDisabled;
             };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        SpinButtonComponent.prototype.onKeypress = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                // we only need to perform checks if the type is number
+                if (this.type !== 'number') {
+                    return;
+                }
+                if (!this._regexKeypress.test(event.key)) {
+                    return false;
+                }
+                return true;
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        SpinButtonComponent.prototype.onPaste = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                // we only need to perform checks if the type is number
+                if (this.type !== 'number') {
+                    return;
+                }
+                // get the value being pasted
+                /** @type {?} */
+                var value = event.clipboardData.getData('text');
+                // check if it contains the character
+                if (!this._regexPaste.test(value)) {
+                    // inset the numeric value only if there is one
+                    /** @type {?} */
+                    var numericValue = parseFloat(value);
+                    if (!isNaN(numericValue)) {
+                        this.value = numericValue;
+                    }
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            };
+        /**
+         * @param {?} input
+         * @param {?} value
+         * @return {?}
+         */
+        SpinButtonComponent.prototype.onValueChange = /**
+         * @param {?} input
+         * @param {?} value
+         * @return {?}
+         */
+            function (input, value) {
+                // ensure the value is not longer than the maxLength (verify value is a string in case it is
+                // null or undefined, before trying to check the length.
+                if (typeof value === 'string' && value.length > this.maxLength) {
+                    // if the type specified is a number then it may begin with a 0
+                    // e.g. "02", in which case if we add a second digit we should drop
+                    // the leading "0" and allow the non-zero number to be added
+                    if (this.type === 'number') {
+                        value = parseFloat(value).toString();
+                    }
+                    // remove any characters over the max length
+                    value = value.substring(0, this.maxLength);
+                    // We must manually update the input value in this case rather than relying
+                    // on Angular, as if value was previously "11" and we add an additional digit
+                    // e.g. "112", after performing the substring, the outputted value would again
+                    // be "11" which Angular would not recognize as having changed so it will not
+                    // update the value displayed in the input.
+                    input.value = value;
+                }
+                // emit the value after all length checks
+                this.valueChange.emit(value);
+            };
         SpinButtonComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-spin-button',
-                        template: "<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"incrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerIncrement()\">\n\n    <ux-icon name=\"up\" class=\"spin-button-up-icon\"></ux-icon>\n</button>\n\n<input [type]=\"type\"\n       role=\"spinbutton\"\n       [min]=\"min\"\n       [max]=\"max\"\n       [tabindex]=\"0\"\n       class=\"form-control\"\n       [placeholder]=\"placeholder\"\n       [readOnly]=\"readOnly\"\n       [disabled]=\"disabled\"\n       [attr.aria-label]=\"inputAriaLabel\"\n       [attr.aria-disabled]=\"disabled\"\n       [attr.aria-valuemin]=\"min\"\n       [attr.aria-valuenow]=\"value\"\n       [attr.aria-valuemax]=\"max\"\n       [attr.aria-readonly]=\"readOnly\"\n       [ngModel]=\"value\"\n       (ngModelChange)=\"valueChange.emit($event)\"\n       (wheel)=\"scroll($event)\"\n       (keydown.arrowup)=\"arrowkeys ? triggerIncrement() : null; $event.preventDefault()\"\n       (keydown.arrowdown)=\"arrowkeys ? triggerDecrement() : null; $event.preventDefault()\">\n\n<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"decrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerDecrement()\">\n\n    <ux-icon name=\"down\" class=\"spin-button-down-icon\"></ux-icon>\n</button>",
+                        template: "<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"incrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerIncrement()\">\n\n    <ux-icon name=\"up\" class=\"spin-button-up-icon\"></ux-icon>\n</button>\n\n<input #input\n       type=\"text\"\n       role=\"spinbutton\"\n       [min]=\"min\"\n       [max]=\"max\"\n       [tabindex]=\"0\"\n       class=\"form-control\"\n       [placeholder]=\"placeholder\"\n       [readOnly]=\"readOnly\"\n       [disabled]=\"disabled\"\n       [attr.aria-label]=\"inputAriaLabel\"\n       [attr.aria-disabled]=\"disabled\"\n       [attr.aria-valuemin]=\"min\"\n       [attr.aria-valuenow]=\"value\"\n       [attr.aria-valuemax]=\"max\"\n       [attr.aria-readonly]=\"readOnly\"\n       [ngModel]=\"value\"\n       (ngModelChange)=\"onValueChange(input, $event)\"\n       (wheel)=\"scroll($event)\"\n       (keypress)=\"onKeypress($event)\"\n       (paste)=\"onPaste($event)\"\n       (keydown.arrowup)=\"arrowkeys ? triggerIncrement() : null; $event.preventDefault()\"\n       (keydown.arrowdown)=\"arrowkeys ? triggerDecrement() : null; $event.preventDefault()\">\n\n<button type=\"button\"\n        uxFocusIndicator\n        class=\"spin-button\"\n        *ngIf=\"spinners\"\n        tabindex=\"-1\"\n        [disabled]=\"disabled\"\n        [attr.aria-label]=\"decrementAriaLabel\"\n        [attr.aria-disabled]=\"disabled\"\n        (click)=\"triggerDecrement()\">\n\n    <ux-icon name=\"down\" class=\"spin-button-down-icon\"></ux-icon>\n</button>\n",
                         encapsulation: i0.ViewEncapsulation.None,
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         providers: [SPIN_BUTTON_VALUE_ACCESSOR]
@@ -13341,6 +13442,7 @@
             readOnly: [{ type: i0.Input }],
             scrolling: [{ type: i0.Input }],
             arrowkeys: [{ type: i0.Input }],
+            maxLength: [{ type: i0.Input }],
             incrementAriaLabel: [{ type: i0.Input }],
             inputAriaLabel: [{ type: i0.Input }],
             decrementAriaLabel: [{ type: i0.Input }],
@@ -13756,12 +13858,6 @@
                 // convert the string to a number
                 /** @type {?} */
                 var hour = parseInt(value);
-                /** @type {?} */
-                var currentHour = this.value.getHours();
-                // if the value hasn't changed, do nothing
-                if (hour === currentHour) {
-                    return;
-                }
                 // ensure the hours is valid
                 if (!isNaN(hour)) {
                     if (hour < 0) {
@@ -13770,6 +13866,12 @@
                     if (hour > (this.showMeridian ? 12 : 23)) {
                         hour = this.showMeridian ? 12 : 23;
                     }
+                }
+                /** @type {?} */
+                var currentHour = this.value.getHours();
+                // if the value hasn't changed, do nothing
+                if (hour === currentHour) {
+                    return;
                 }
                 hour = isNaN(hour) ? currentHour : hour;
                 if (this.showMeridian) {
@@ -13875,7 +13977,7 @@
         TimePickerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-time-picker',
-                        template: "<div class=\"time-picker\" aria-label=\"Time picker\">\n\n    <div class=\"time-picker-column\" [class.has-error]=\"!_valid\" *ngIf=\"showHours\">\n\n        <ux-spin-button\n            type=\"text\"\n            class=\"time-spinner\"\n            placeholder=\"HH\"\n            [min]=\"0\"\n            [max]=\"showMeridian ? 12 : 23\"\n            [value]=\"value | date: showMeridian ? 'h' : 'HH'\"\n            (valueChange)=\"hourChange($event)\"\n            [spinners]=\"showSpinners\"\n            [disabled]=\"disabled\"\n            [readOnly]=\"readOnly\"\n            inputAriaLabel=\"hour\"\n            incrementAriaLabel=\"Increment the hour\"\n            decrementAriaLabel=\"Decrement the hour\"\n            (increment)=\"incrementHour()\"\n            (decrement)=\"decrementHour()\">\n        </ux-spin-button>\n\n    </div>\n\n    <div class=\"time-picker-separator\" *ngIf=\"showMinutes\">:</div>\n\n    <div class=\"time-picker-column\" [class.has-error]=\"!_valid\" *ngIf=\"showMinutes\">\n\n        <ux-spin-button\n            type=\"text\"\n            class=\"time-spinner\"\n            placeholder=\"MM\"\n            [min]=\"0\"\n            [max]=\"59\"\n            [value]=\"value | date: 'mm'\"\n            (valueChange)=\"minuteChange($event)\"\n            [spinners]=\"showSpinners\"\n            [disabled]=\"disabled\"\n            [readOnly]=\"readOnly\"\n            inputAriaLabel=\"minute\"\n            incrementAriaLabel=\"Increment the minute\"\n            decrementAriaLabel=\"Decrement the minute\"\n            (increment)=\"incrementMinute()\"\n            (decrement)=\"decrementMinute()\">\n        </ux-spin-button>\n\n    </div>\n\n    <div class=\"time-picker-separator\" *ngIf=\"showSeconds\">:</div>\n\n    <div class=\"time-picker-column\" [class.has-error]=\"!_valid\" *ngIf=\"showSeconds\">\n\n        <ux-spin-button\n            type=\"text\"\n            class=\"time-spinner\"\n            placeholder=\"SS\"\n            [min]=\"0\"\n            [max]=\"59\"\n            [value]=\"value | date: 'ss'\"\n            (valueChange)=\"secondChange($event)\"\n            [spinners]=\"showSpinners\"\n            [disabled]=\"disabled\"\n            [readOnly]=\"readOnly\"\n            inputAriaLabel=\"seconds\"\n            incrementAriaLabel=\"Increment the second\"\n            decrementAriaLabel=\"Decrement the second\"\n            (increment)=\"incrementSecond()\"\n            (decrement)=\"decrementSecond()\">\n        </ux-spin-button>\n\n    </div>\n</div>\n\n<div class=\"time-picker-meridian\" *ngIf=\"showMeridian\">\n\n    <div class=\"btn-group\" role=\"radiogroup\">\n\n        <button type=\"button\"\n                class=\"btn button-toggle-accent\"\n                *ngFor=\"let meridian of meridians\"\n                role=\"radio\"\n                tabindex=\"0\"\n                [disabled]=\"disabled\"\n                (click)=\"selectMeridian(meridian)\"\n                [class.active]=\"meridian === _meridian\"\n                [attr.aria-label]=\"meridian\"\n                [attr.aria-checked]=\"meridian === _meridian\"\n                [attr.aria-disabled]=\"disabled\">\n                {{ meridian }}\n        </button>\n\n    </div>\n</div>",
+                        template: "<div class=\"time-picker\" aria-label=\"Time picker\">\n\n    <div class=\"time-picker-column\" [class.has-error]=\"!_valid\" *ngIf=\"showHours\">\n\n        <ux-spin-button\n            type=\"number\"\n            class=\"time-spinner\"\n            placeholder=\"HH\"\n            [maxLength]=\"2\"\n            [min]=\"0\"\n            [max]=\"showMeridian ? 12 : 23\"\n            [value]=\"value | date: showMeridian ? 'h' : 'HH'\"\n            (valueChange)=\"hourChange($event)\"\n            [spinners]=\"showSpinners\"\n            [disabled]=\"disabled\"\n            [readOnly]=\"readOnly\"\n            inputAriaLabel=\"hour\"\n            incrementAriaLabel=\"Increment the hour\"\n            decrementAriaLabel=\"Decrement the hour\"\n            (increment)=\"incrementHour()\"\n            (decrement)=\"decrementHour()\">\n        </ux-spin-button>\n\n    </div>\n\n    <div class=\"time-picker-separator\" *ngIf=\"showMinutes\">:</div>\n\n    <div class=\"time-picker-column\" [class.has-error]=\"!_valid\" *ngIf=\"showMinutes\">\n\n        <ux-spin-button\n            type=\"number\"\n            class=\"time-spinner\"\n            placeholder=\"MM\"\n            [maxLength]=\"2\"\n            [min]=\"0\"\n            [max]=\"59\"\n            [value]=\"value | date: 'mm'\"\n            (valueChange)=\"minuteChange($event)\"\n            [spinners]=\"showSpinners\"\n            [disabled]=\"disabled\"\n            [readOnly]=\"readOnly\"\n            inputAriaLabel=\"minute\"\n            incrementAriaLabel=\"Increment the minute\"\n            decrementAriaLabel=\"Decrement the minute\"\n            (increment)=\"incrementMinute()\"\n            (decrement)=\"decrementMinute()\">\n        </ux-spin-button>\n\n    </div>\n\n    <div class=\"time-picker-separator\" *ngIf=\"showSeconds\">:</div>\n\n    <div class=\"time-picker-column\" [class.has-error]=\"!_valid\" *ngIf=\"showSeconds\">\n\n        <ux-spin-button\n            type=\"number\"\n            class=\"time-spinner\"\n            placeholder=\"SS\"\n            [maxLength]=\"2\"\n            [min]=\"0\"\n            [max]=\"59\"\n            [value]=\"value | date: 'ss'\"\n            (valueChange)=\"secondChange($event)\"\n            [spinners]=\"showSpinners\"\n            [disabled]=\"disabled\"\n            [readOnly]=\"readOnly\"\n            inputAriaLabel=\"seconds\"\n            incrementAriaLabel=\"Increment the second\"\n            decrementAriaLabel=\"Decrement the second\"\n            (increment)=\"incrementSecond()\"\n            (decrement)=\"decrementSecond()\">\n        </ux-spin-button>\n\n    </div>\n</div>\n\n<div class=\"time-picker-meridian\" *ngIf=\"showMeridian\">\n\n    <div class=\"btn-group\" role=\"radiogroup\">\n\n        <button type=\"button\"\n                class=\"btn button-toggle-accent\"\n                *ngFor=\"let meridian of meridians\"\n                role=\"radio\"\n                tabindex=\"0\"\n                [disabled]=\"disabled\"\n                (click)=\"selectMeridian(meridian)\"\n                [class.active]=\"meridian === _meridian\"\n                [attr.aria-label]=\"meridian\"\n                [attr.aria-checked]=\"meridian === _meridian\"\n                [attr.aria-disabled]=\"disabled\">\n                {{ meridian }}\n        </button>\n\n    </div>\n</div>",
                         encapsulation: i0.ViewEncapsulation.None,
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         providers: [TIME_PICKER_VALUE_ACCESSOR],
@@ -16190,6 +16292,56 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
+    var DateFormatterPipe = /** @class */ (function () {
+        function DateFormatterPipe() {
+        }
+        /**
+         * @param {?} value
+         * @param {?} formatter
+         * @return {?}
+         */
+        DateFormatterPipe.prototype.transform = /**
+         * @param {?} value
+         * @param {?} formatter
+         * @return {?}
+         */
+            function (value, formatter) {
+                // we may not initially have  a value
+                if (!value) {
+                    return '';
+                }
+                return typeof formatter === 'function' ? formatter(value) : common.formatDate(value, formatter, navigator.language);
+            };
+        DateFormatterPipe.decorators = [
+            { type: i0.Pipe, args: [{
+                        name: 'formatDate'
+                    },] }
+        ];
+        return DateFormatterPipe;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var DateFormatterPipeModule = /** @class */ (function () {
+        function DateFormatterPipeModule() {
+        }
+        DateFormatterPipeModule.decorators = [
+            { type: i0.NgModule, args: [{
+                        exports: [DateFormatterPipe],
+                        declarations: [DateFormatterPipe]
+                    },] }
+        ];
+        return DateFormatterPipeModule;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
     var DateRangePickerModule = /** @class */ (function () {
         function DateRangePickerModule() {
         }
@@ -16198,11 +16350,12 @@
                         imports: [
                             common.CommonModule,
                             DateTimePickerModule,
-                            IconModule
+                            IconModule,
+                            DateFormatterPipeModule
                         ],
                         declarations: [
                             DateRangePickerComponent,
-                            DateRangePickerDirective
+                            DateRangePickerDirective,
                         ],
                         exports: [
                             DateRangePickerComponent
@@ -17560,7 +17713,7 @@
          */
             function (option) {
                 var _this = this;
-                if (this.disabledOptions) {
+                if (this.disabledOptions && Array.isArray(this.disabledOptions)) {
                     /** @type {?} */
                     var result = this.disabledOptions.find(function (selectedOption) {
                         return _this.getKey(selectedOption) === option.key;
@@ -20789,6 +20942,11 @@
             function (menuOpen) {
                 // store the open state
                 this.isMenuOpen = menuOpen;
+                // if we are closing the menu reset some values
+                if (!menuOpen) {
+                    this._isHovering$.next(false);
+                    this._isFocused$.next(false);
+                }
                 // check for changes - required to show the menu as we are using `*ngIf`
                 this._changeDetector.detectChanges();
                 // emit the closing event
@@ -22814,6 +22972,10 @@
              */
             this.mode = 'standard';
             /**
+             * hierarchy bar as being readonly - default false
+             */
+            this.readonly = false;
+            /**
              * Emit when the selected node changes
              */
             this.selectedChange = new i0.EventEmitter();
@@ -22934,7 +23096,7 @@
         HierarchyBarComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar',
-                        template: "<!-- Hierarchy Bar - Standard Layout -->\n<ux-hierarchy-bar-standard *ngIf=\"mode === 'standard'\">\n\n    <!-- Forward the content to the correct layout -->\n    <ng-container ngProjectAs=\"left-addons\" [ngTemplateOutlet]=\"leftAddons\"></ng-container>\n    <ng-container ngProjectAs=\"trailing-addons\" [ngTemplateOutlet]=\"trailingAddons\"></ng-container>\n    <ng-container ngProjectAs=\"right-addons\" [ngTemplateOutlet]=\"rightAddons\"></ng-container>\n\n</ux-hierarchy-bar-standard>\n\n<!-- Hierarchy Bar - Collapsed Layout -->\n<ux-hierarchy-bar-collapsed *ngIf=\"mode === 'collapsed'\">\n\n    <!-- Forward the content to the correct layout -->\n    <ng-container ngProjectAs=\"left-addons\" [ngTemplateOutlet]=\"leftAddons\"></ng-container>\n    <ng-container ngProjectAs=\"trailing-addons\" [ngTemplateOutlet]=\"trailingAddons\"></ng-container>\n    <ng-container ngProjectAs=\"right-addons\" [ngTemplateOutlet]=\"rightAddons\"></ng-container>\n\n</ux-hierarchy-bar-collapsed>\n\n<!-- We can only have one ng-content so this allows us to use it more than once -->\n<ng-template #leftAddons>\n    <ng-content select=\"[uxHierarchyBarLeftAddon]\"></ng-content>\n</ng-template>\n\n<ng-template #trailingAddons>\n    <ng-content select=\"[uxHierarchyBarTrailingAddon]\"></ng-content>\n</ng-template>\n\n<ng-template #rightAddons>\n    <ng-content select=\"[uxHierarchyBarRightAddon]\"></ng-content>\n</ng-template>",
+                        template: "<!-- Hierarchy Bar - Standard Layout -->\n<ux-hierarchy-bar-standard [readonly]=\"readonly\" [mode]=\"mode\" *ngIf=\"mode !== 'collapsed'\">\n\n    <!-- Forward the content to the correct layout -->\n    <ng-container ngProjectAs=\"left-addons\" [ngTemplateOutlet]=\"leftAddons\"></ng-container>\n    <ng-container ngProjectAs=\"trailing-addons\" [ngTemplateOutlet]=\"trailingAddons\"></ng-container>\n    <ng-container ngProjectAs=\"right-addons\" [ngTemplateOutlet]=\"rightAddons\"></ng-container>\n\n</ux-hierarchy-bar-standard>\n\n<!-- Hierarchy Bar - Collapsed Layout -->\n<ux-hierarchy-bar-collapsed [readonly]=\"readonly\" *ngIf=\"mode === 'collapsed'\">\n\n    <!-- Forward the content to the correct layout -->\n    <ng-container ngProjectAs=\"left-addons\" [ngTemplateOutlet]=\"leftAddons\"></ng-container>\n    <ng-container ngProjectAs=\"trailing-addons\" [ngTemplateOutlet]=\"trailingAddons\"></ng-container>\n    <ng-container ngProjectAs=\"right-addons\" [ngTemplateOutlet]=\"rightAddons\"></ng-container>\n\n</ux-hierarchy-bar-collapsed>\n\n<!-- We can only have one ng-content so this allows us to use it more than once -->\n<ng-template #leftAddons>\n    <ng-content select=\"[uxHierarchyBarLeftAddon]\"></ng-content>\n</ng-template>\n\n<ng-template #trailingAddons>\n    <ng-content select=\"[uxHierarchyBarTrailingAddon]\"></ng-content>\n</ng-template>\n\n<ng-template #rightAddons>\n    <ng-content select=\"[uxHierarchyBarRightAddon]\"></ng-content>\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         viewProviders: [HierarchyBarService]
                     }] }
@@ -22947,6 +23109,7 @@
         };
         HierarchyBarComponent.propDecorators = {
             mode: [{ type: i0.Input }],
+            readonly: [{ type: i0.Input }],
             root: [{ type: i0.Input }],
             selected: [{ type: i0.Input }],
             loadingIndicator: [{ type: i0.Input }],
@@ -23410,7 +23573,7 @@
         HierarchyBarCollapsedComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar-collapsed',
-                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodes class=\"hierarchy-bar-nodes\">\n\n    <ux-hierarchy-bar-node\n        [popoverTemplate]=\"content\"\n        [node]=\"_first\"\n        (selected)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <div class=\"hierarchy-bar-overflow\" *ngIf=\"_parents.length > 0\">\n        <div class=\"hierarchy-bar-overflow-container\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                          [ngTemplateOutletContext]=\"{ $implicit: _parents }\">\n            </ng-container>\n        </div>\n\n        <button [attr.aria-label]=\"hierarchyBar.showSiblingsAriaLabel\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            class=\"hierarchy-bar-node-arrow\"\n            placement=\"bottom\"\n            [uxPopover]=\"siblingsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            type=\"button\">\n\n            <ux-icon name=\"next\" class=\"hierarchy-bar-node-arrow-icon\"></ux-icon>\n        </button>\n    </div>\n\n\n    <ux-hierarchy-bar-node\n        *ngIf=\"_last !== _first\"\n        [popoverTemplate]=\"content\"\n        [node]=\"_last\"\n        (selected)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the siblings popover list -->\n<ng-template #siblingsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"(_siblings | async)?.children\"\n        [loading]=\"(_siblings | async)?.loading\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the parents popover list -->\n<ng-template #parentsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"_parents\"\n        [separator]=\"true\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    <button uxFocusIndicator\n            uxFocusIndicatorOrigin\n            class=\"overflow-button\"\n            aria-label=\"Show parents\"\n            [uxPopover]=\"parentsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            placement=\"bottom\"\n            type=\"button\">\n            <ux-icon name=\"more\"></ux-icon>\n    </button>\n</ng-template>",
+                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodes class=\"hierarchy-bar-nodes\">\n\n    <ux-hierarchy-bar-node\n        [readonly]=\"readonly\"\n        [popoverTemplate]=\"content\"\n        [node]=\"_first\"\n        (selected)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <div class=\"hierarchy-bar-overflow\" *ngIf=\"_parents.length > 0\">\n        <div class=\"hierarchy-bar-overflow-container\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                          [ngTemplateOutletContext]=\"{ $implicit: _parents }\">\n            </ng-container>\n        </div>\n\n        <button [attr.aria-label]=\"hierarchyBar.showSiblingsAriaLabel\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            class=\"hierarchy-bar-node-arrow\"\n            placement=\"bottom\"\n            [uxPopover]=\"siblingsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            [disabled]=\"readonly\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            type=\"button\">\n\n            <ux-icon name=\"next\" class=\"hierarchy-bar-node-arrow-icon\"></ux-icon>\n        </button>\n    </div>\n\n\n    <ux-hierarchy-bar-node\n        *ngIf=\"_last !== _first\"\n        [readonly]=\"readonly\"\n        [popoverTemplate]=\"content\"\n        [node]=\"_last\"\n        (selected)=\"hierarchyBar.selectNode($event)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the siblings popover list -->\n<ng-template #siblingsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"(_siblings | async)?.children\"\n        [loading]=\"(_siblings | async)?.loading\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the parents popover list -->\n<ng-template #parentsTemplate let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [nodes]=\"_parents\"\n        [separator]=\"true\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    <button uxFocusIndicator\n            uxFocusIndicatorOrigin\n            [disabled]=\"readonly\"\n            class=\"overflow-button\"\n            aria-label=\"Show parents\"\n            [uxPopover]=\"parentsTemplate\"\n            popoverClass=\"hierarchy-bar-popover\"\n            role=\"button\"\n            tabindex=\"0\"\n            #popover=\"ux-popover\"\n            [popoverContext]=\"{ popover: popover }\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            placement=\"bottom\"\n            type=\"button\">\n            <ux-icon name=\"more\"></ux-icon>\n    </button>\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -23424,6 +23587,7 @@
             ];
         };
         HierarchyBarCollapsedComponent.propDecorators = {
+            readonly: [{ type: i0.Input }],
             nodeContainer: [{ type: i0.ViewChild, args: ['nodes', { static: true },] }]
         };
         return HierarchyBarCollapsedComponent;
@@ -23443,7 +23607,7 @@
         HierarchyBarNodeComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar-node',
-                        template: "<div class=\"hierarchy-bar-node\" [class.hierarchy-bar-node-child-indicator]=\"node.children\">\n\n    <button type=\"button\"\n            uxFocusIndicator\n            class=\"hierarchy-bar-node-content\"\n            [attr.aria-label]=\"node.title\"\n            (click)=\"selected.emit(node)\">\n\n        <!-- Show a custom icon if specified -->\n        <div class=\"hierarchy-bar-node-icon\" *ngIf=\"hierarchyBar.icon\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.icon\" [ngTemplateOutletContext]=\"{ node: node, $implicit: node }\"></ng-container>\n        </div>\n\n        <!-- Show an icon if specifed -->\n        <img class=\"hierarchy-bar-node-icon\" *ngIf=\"node.icon && !hierarchyBar.icon\" [src]=\"node.icon\" alt=\"Hierarchy Bar Icon\">\n\n        <!-- Show the name of the current node -->\n        <span class=\"hierarchy-bar-node-title\">{{ node.title }}</span>\n\n    </button>\n\n    <!-- Show a dropdown arrow if there are children -->\n    <button type=\"button\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            *ngIf=\"node.children\"\n            #popover=\"ux-popover\"\n            aria-label=\"Show children\"\n            role=\"button\"\n            class=\"hierarchy-bar-node-arrow\"\n            [uxPopover]=\"popoverTemplate\"\n            [popoverContext]=\"{ node: node, popover: popover }\"\n            placement=\"bottom\"\n            popoverClass=\"hierarchy-bar-popover\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            tabindex=\"0\">\n        <ux-icon name=\"next\" class=\"hierarchy-bar-node-arrow-icon\"></ux-icon>\n    </button>\n\n</div>",
+                        template: "<div class=\"hierarchy-bar-node\"\n     [class.hierarchy-bar-node-readonly]=\"readonly\"\n     [class.hierarchy-bar-node-child-indicator]=\"node.children\">\n\n    <ng-container\n        *ngIf=\"mode === 'dropdown'; then dropdownMode; else standardClickMode\">\n    </ng-container>\n\n</div>\n\n<ng-template #standardClickMode>\n    <button type=\"button\"\n            uxFocusIndicator\n            class=\"hierarchy-bar-node-content\"\n            [disabled]=\"readonly\"\n            [attr.aria-label]=\"node.title\"\n            (click)=\"selected.emit(node)\">\n\n        <!-- Show a custom icon if specified -->\n        <div class=\"hierarchy-bar-node-icon\" *ngIf=\"hierarchyBar.icon\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.icon\" [ngTemplateOutletContext]=\"{ node: node, $implicit: node }\"></ng-container>\n        </div>\n\n        <!-- Show an icon if specified -->\n        <img class=\"hierarchy-bar-node-icon\" *ngIf=\"node.icon && !hierarchyBar.icon\" [src]=\"node.icon\" alt=\"Hierarchy Bar Icon\">\n\n        <!-- Show the name of the current node -->\n        <span class=\"hierarchy-bar-node-title\">{{ node.title }}</span>\n\n    </button>\n\n    <!-- Show a dropdown arrow if there are children -->\n    <button type=\"button\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            *ngIf=\"node.children\"\n            #popover=\"ux-popover\"\n            aria-label=\"Show children\"\n            role=\"button\"\n            class=\"hierarchy-bar-node-arrow\"\n            [disabled]=\"readonly\"\n            [uxPopover]=\"popoverTemplate\"\n            [popoverContext]=\"{ node: node, popover: popover }\"\n            placement=\"bottom\"\n            popoverClass=\"hierarchy-bar-popover\"\n            [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n            [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n            tabindex=\"0\">\n        <ux-icon name=\"next\"\n                 class=\"hierarchy-bar-node-arrow-icon\">\n        </ux-icon>\n    </button>\n</ng-template>\n\n<ng-template #dropdownMode>\n    <button type=\"button\"\n            uxFocusIndicator\n            uxFocusIndicatorOrigin\n            #popover=\"ux-popover\"\n            aria-label=\"Show children\"\n            class=\"hierarchy-bar-node-content\"\n            [disabled]=\"readonly\"\n            [uxPopover]=\"popoverTemplate\"\n            [popoverContext]=\"{ node: node, popover: popover }\"\n            placement=\"bottom\"\n            popoverClass=\"hierarchy-bar-popover\"\n            [showTriggers]=\"node.children ? hierarchyBar.popoverShowTriggers : []\"\n            [hideTriggers]=\"node.children ? hierarchyBar.popoverHideTriggers : []\"\n            tabindex=\"0\"\n            [attr.aria-label]=\"node.title\">\n\n        <!-- Show a custom icon if specified -->\n        <div class=\"hierarchy-bar-node-icon\" *ngIf=\"hierarchyBar.icon\">\n            <ng-container [ngTemplateOutlet]=\"hierarchyBar.icon\" [ngTemplateOutletContext]=\"{ node: node, $implicit: node }\"></ng-container>\n        </div>\n\n        <!-- Show an icon if specified -->\n        <img class=\"hierarchy-bar-node-icon\" *ngIf=\"node.icon && !hierarchyBar.icon\" [src]=\"node.icon\" alt=\"Hierarchy Bar Icon\">\n\n        <!-- Show the name of the current node -->\n        <span class=\"hierarchy-bar-node-title\">{{ node.title }}</span>\n\n        <!-- Show a dropdown arrow if there are children -->\n        <div [class.readonly-arrow]=\"readonly\" class=\"hierarchy-bar-node-arrow-icon-dropdown\">\n            <ux-icon *ngIf=\"node.children\" name=\"next\"\n                     class=\"hierarchy-bar-node-arrow-icon\">\n            </ux-icon>\n        </div>\n\n    </button>\n\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -23456,6 +23620,8 @@
         HierarchyBarNodeComponent.propDecorators = {
             node: [{ type: i0.Input }],
             popoverTemplate: [{ type: i0.Input }],
+            mode: [{ type: i0.Input }],
+            readonly: [{ type: i0.Input }],
             selected: [{ type: i0.Output }]
         };
         return HierarchyBarNodeComponent;
@@ -23639,7 +23805,7 @@
         HierarchyBarStandardComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-hierarchy-bar-standard',
-                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodelist class=\"hierarchy-bar-nodes\" (uxResize)=\"scrollIntoView()\">\n\n    <div *ngIf=\"isOverflowing$ | async\"\n         #popover=\"ux-popover\"\n         class=\"hierarchy-bar-overflow-indicator\"\n         [style.left.px]=\"nodelist.scrollLeft\"\n         [uxPopover]=\"overflow\"\n         [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n         [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n         [popoverContext]=\"{ popover: popover }\"\n         placement=\"bottom\"\n         popoverClass=\"hierarchy-bar-popover\">\n        <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                      [ngTemplateOutletContext]=\"{ $implicit: overflow$ | async }\">\n        </ng-container>\n    </div>\n\n    <ux-hierarchy-bar-node\n        *ngFor=\"let node of hierarchyBar.nodes$ | async\"\n        [node]=\"node\"\n        [popoverTemplate]=\"content\"\n        (selected)=\"hierarchyBar.selectNode(node)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the overflow popover list -->\n<ng-template #overflow let-popover=\"popover\">\n\n    <div uxTabbableList [returnFocus]=\"true\">\n\n        <ux-hierarchy-bar-popover-item\n            *ngFor=\"let child of overflow$ | async; let first = first\"\n            uxFocusIndicator\n            [node]=\"child\"\n            [focusIf]=\"first\"\n            uxTabbableListItem\n            (selected)=\"hierarchyBar.selectNode(child); popover.hide()\">\n        </ux-hierarchy-bar-popover-item>\n    </div>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    . . .\n</ng-template>",
+                        template: "<!-- Allow content to be placed on the left of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"left-addons\"></ng-content>\n</div>\n\n<div #nodelist class=\"hierarchy-bar-nodes\" (uxResize)=\"scrollIntoView()\">\n\n    <div *ngIf=\"isOverflowing$ | async\"\n         #popover=\"ux-popover\"\n         class=\"hierarchy-bar-overflow-indicator\"\n         [style.left.px]=\"nodelist.scrollLeft\"\n         [uxPopover]=\"overflow\"\n         [showTriggers]=\"hierarchyBar.popoverShowTriggers\"\n         [hideTriggers]=\"hierarchyBar.popoverHideTriggers\"\n         [popoverContext]=\"{ popover: popover }\"\n         placement=\"bottom\"\n         popoverClass=\"hierarchy-bar-popover\">\n        <ng-container [ngTemplateOutlet]=\"hierarchyBar.overflowTemplate || defaultOverflowTemplate\"\n                      [ngTemplateOutletContext]=\"{ $implicit: overflow$ | async }\">\n        </ng-container>\n    </div>\n\n    <ux-hierarchy-bar-node\n        [mode]=\"mode\"\n        [readonly]=\"readonly\"\n        *ngFor=\"let node of hierarchyBar.nodes$ | async\"\n        [node]=\"node\"\n        [popoverTemplate]=\"content\"\n        (selected)=\"hierarchyBar.selectNode(node)\">\n    </ux-hierarchy-bar-node>\n\n    <!-- Allow content to be placed after the last node -->\n    <div class=\"hierarchy-bar-addons\">\n        <ng-content select=\"trailing-addons\"></ng-content>\n    </div>\n\n</div>\n\n<!-- Allow content to be placed on the right of the items -->\n<div class=\"hierarchy-bar-addons\">\n    <ng-content select=\"right-addons\"></ng-content>\n</div>\n\n<!-- Template for the popover list -->\n<ng-template #content let-node=\"node\" let-popover=\"popover\">\n    <ux-hierarchy-bar-popover\n        [loading]=\"(hierarchyBar.getChildren(node) | async)?.loading\"\n        [nodes]=\"(hierarchyBar.getChildren(node) | async)?.children\"\n        (selected)=\"hierarchyBar.selectNode($event); popover.hide()\">\n    </ux-hierarchy-bar-popover>\n</ng-template>\n\n<!-- Template for the overflow popover list -->\n<ng-template #overflow let-popover=\"popover\">\n\n    <div uxTabbableList [returnFocus]=\"true\">\n\n        <ux-hierarchy-bar-popover-item\n            *ngFor=\"let child of overflow$ | async; let first = first\"\n            uxFocusIndicator\n            [node]=\"child\"\n            [focusIf]=\"first\"\n            uxTabbableListItem\n            (selected)=\"hierarchyBar.selectNode(child); popover.hide()\">\n        </ux-hierarchy-bar-popover-item>\n    </div>\n</ng-template>\n\n<!-- Default Overflow Template -->\n<ng-template #defaultOverflowTemplate>\n    . . .\n</ng-template>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -23650,6 +23816,8 @@
             ];
         };
         HierarchyBarStandardComponent.propDecorators = {
+            mode: [{ type: i0.Input }],
+            readonly: [{ type: i0.Input }],
             nodelist: [{ type: i0.ViewChild, args: ['nodelist', { static: true },] }],
             nodes: [{ type: i0.ViewChildren, args: [HierarchyBarNodeComponent, { read: i0.ElementRef },] }]
         };
@@ -23721,7 +23889,7 @@
             /**
              * Emit the open state when it changes
              */
-            this.open$ = new rxjs.Subject();
+            this.open$ = new rxjs.BehaviorSubject(false);
         }
         /**
          * @return {?}
@@ -23765,17 +23933,13 @@
             this.focusOnShow = false;
             this.openChange = new i0.EventEmitter();
             this.animationPanelState = SidePanelAnimationState.Closed;
-            /**
-             * Store the current open state
-             */
-            this._isOpen = false;
             this._onDestroy = new rxjs.Subject();
         }
         Object.defineProperty(SidePanelComponent.prototype, "open", {
             get: /**
              * @return {?}
              */ function () {
-                return this._isOpen;
+                return this.service.open$.value;
             },
             set: /**
              * @param {?} value
@@ -23854,15 +24018,14 @@
          */
             function () {
                 var _this = this;
+                this.service.open$.pipe(operators.skip(1), operators.distinctUntilChanged(), operators.takeUntil(this._onDestroy))
+                    .subscribe(function (isOpen) { return _this.openChange.emit(isOpen); });
                 this.service.open$.pipe(operators.distinctUntilChanged(), operators.takeUntil(this._onDestroy)).subscribe(function (isOpen) {
                     _this.animationPanelState = isOpen
                         ? _this.animate
                             ? SidePanelAnimationState.Open
                             : SidePanelAnimationState.OpenImmediate
                         : SidePanelAnimationState.Closed;
-                    // only if the open state changed should we emit the latest value
-                    _this.openChange.emit(isOpen);
-                    _this._isOpen = isOpen;
                 });
             };
         /**
@@ -24646,7 +24809,7 @@
         WizardComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-wizard',
-                        template: "<div class=\"wizard-body\">\n\n    <div class=\"wizard-steps\"\n        uxTabbableList\n        [direction]=\"orientation\"\n        role=\"tablist\"\n        [attr.aria-orientation]=\"orientation\">\n\n        <div *ngFor=\"let stp of steps; let index = index\"\n            role=\"tab\"\n            uxFocusIndicator\n            uxTabbableListItem\n            [programmaticFocusIndicator]=\"true\"\n            [disabled]=\"index !== 0 && !stp.visited\"\n            class=\"wizard-step\"\n            [class.active]=\"stp.active\"\n            [class.visited]=\"stp.visited\"\n            [class.invalid]=\"stp.active && !stp.valid && invalidIndicator\"\n            [attr.aria-posinset]=\"index + 1\"\n            [attr.aria-setsize]=\"steps.length\"\n            [attr.aria-selected]=\"stp.active\"\n            [attr.aria-controls]=\"stp.id\"\n            [id]=\"stp.id + '-label'\"\n            (click)=\"gotoStep(stp)\"\n            (keydown.enter)=\"gotoStep(stp)\">\n            {{ stp.header }}\n        </div>\n\n    </div>\n\n    <div class=\"wizard-content\">\n        <ng-content></ng-content>\n    </div>\n\n</div>\n\n<div class=\"wizard-footer\">\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"previousVisible\"\n            [uxTooltip]=\"previousTooltip\"\n            [disabled]=\"previousDisabled || step === 0\"\n            [attr.aria-label]=\"previousAriaLabel\"\n            (click)=\"previous(); tip.hide()\">\n        {{ previousText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"nextVisible && !isLastStep()\"\n            [uxTooltip]=\"nextTooltip\"\n            [disabled]=\"nextDisabled\"\n            [attr.aria-label]=\"nextAriaLabel\"\n            (click)=\"next(); tip.hide()\">\n        {{ nextText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n            [uxTooltip]=\"finishTooltip\"\n            [disabled]=\"finishDisabled\"\n            [attr.aria-label]=\"finishAriaLabel\"\n            (click)=\"finish(); tip.hide()\">\n        {{ finishText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n            [uxTooltip]=\"cancelTooltip\"\n            [disabled]=\"cancelDisabled\"\n            [attr.aria-label]=\"cancelAriaLabel\"\n            (click)=\"cancel(); tip.hide()\">\n        {{ cancelText }}\n    </button>\n</div>\n",
+                        template: "<div class=\"wizard-body\">\n\n    <div class=\"wizard-steps\"\n        uxTabbableList\n        [direction]=\"orientation\"\n        role=\"tablist\"\n        [attr.aria-orientation]=\"orientation\">\n\n        <div *ngFor=\"let stp of steps; let index = index\"\n            role=\"tab\"\n            class=\"wizard-step\"\n            [class.active]=\"stp.active\"\n            [class.visited]=\"stp.visited\"\n            [class.invalid]=\"stp.active && !stp.valid && invalidIndicator\"\n            [attr.aria-posinset]=\"index + 1\"\n            [attr.aria-setsize]=\"steps.length\"\n            [attr.aria-selected]=\"stp.active\"\n            [attr.aria-controls]=\"stp.id\"\n            [id]=\"stp.id + '-label'\"\n            uxFocusIndicator\n            uxTabbableListItem\n            [programmaticFocusIndicator]=\"true\"\n            [disabled]=\"index !== 0 && !stp.visited\"\n            (click)=\"gotoStep(stp)\"\n            (keydown.enter)=\"gotoStep(stp)\">\n            <span class=\"wizard-step-text\">{{ stp.header }}</span>\n            <ux-icon *ngIf=\"stp.visited && !stp.active\" class=\"wizard-step-icon\" name=\"checkmark\"></ux-icon>\n        </div>\n\n    </div>\n\n    <div class=\"wizard-content\">\n        <ng-content></ng-content>\n    </div>\n\n</div>\n\n<div class=\"wizard-footer\">\n\n    <ng-container *ngIf=\"footerTemplate\"\n                  [ngTemplateOutlet]=\"footerTemplate\"\n                  [ngTemplateOutletContext]=\"{ step: step }\">\n    </ng-container>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"previousVisible\"\n            [uxTooltip]=\"previousTooltip\"\n            [disabled]=\"previousDisabled || step === 0\"\n            [attr.aria-label]=\"previousAriaLabel\"\n            (click)=\"previous(); tip.hide()\">\n        {{ previousText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"nextVisible && !isLastStep()\"\n            [uxTooltip]=\"nextTooltip\"\n            [disabled]=\"nextDisabled\"\n            [attr.aria-label]=\"nextAriaLabel\"\n            (click)=\"next(); tip.hide()\">\n        {{ nextText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n            [uxTooltip]=\"finishTooltip\"\n            [disabled]=\"finishDisabled\"\n            [attr.aria-label]=\"finishAriaLabel\"\n            (click)=\"finish(); tip.hide()\">\n        {{ finishText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n            [uxTooltip]=\"cancelTooltip\"\n            [disabled]=\"cancelDisabled\"\n            [attr.aria-label]=\"cancelAriaLabel\"\n            (click)=\"cancel(); tip.hide()\">\n        {{ cancelText }}\n    </button>\n\n</div>\n",
                         host: {
                             '[class]': 'orientation'
                         }
@@ -24685,6 +24848,7 @@
             stepChange: [{ type: i0.Output }],
             stepError: [{ type: i0.Output }],
             steps: [{ type: i0.ContentChildren, args: [WizardStepComponent,] }],
+            footerTemplate: [{ type: i0.ContentChild, args: ['footerTemplate', { static: false },] }],
             step: [{ type: i0.Input }]
         };
         return WizardComponent;
@@ -24711,9 +24875,10 @@
         WizardModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
+                            AccessibilityModule,
                             common.CommonModule,
+                            IconModule,
                             TooltipModule,
-                            AccessibilityModule
                         ],
                         exports: DECLARATIONS$4,
                         declarations: DECLARATIONS$4
@@ -24860,12 +25025,44 @@
      */
     var MarqueeWizardComponent = /** @class */ (function (_super) {
         __extends(MarqueeWizardComponent, _super);
-        function MarqueeWizardComponent(marqueeWizardService) {
+        function MarqueeWizardComponent(marqueeWizardService, _resizeService, _elementRef) {
             var _this = _super.call(this) || this;
+            _this._resizeService = _resizeService;
+            _this._elementRef = _elementRef;
+            /**
+             * Initial set to default width to match 240px on left but can be changed with a perecentage value
+             */
+            _this.sidePanelWidth = 25;
+            /**
+             * Width of the splitter - default is 10
+             */
+            _this.gutterSize = 10;
+            /**
+             * If set to true the resizable splitter will be enabled and set to the default width *
+             */
+            _this.resizable = false;
+            /**
+             * Emit the current width of the splitter
+             */
+            _this.sidePanelWidthChange = new i0.EventEmitter();
             /**
              * Access each step content component
              */
             _this.steps = new i0.QueryList();
+            /**
+             * If the wizard is in a modal it may initially have a size of 0 until the modal displays
+             * in which case if we are using the splitter it will not render correctly. We use this
+             * variable to only initialise the splitter when the content has a width.
+             */
+            _this._isInitialised = false;
+            /**
+             * Unsubscribe from all subscriptions when component is destroyed
+             */
+            _this._onDestroyed = new rxjs.Subject();
+            // watch for changes to the size
+            _resizeService.addResizeListener(_elementRef.nativeElement)
+                .pipe(operators.takeUntil(_this._onDestroyed))
+                .subscribe(_this.onResize.bind(_this));
             marqueeWizardService.valid$.pipe(operators.filter(function (event) { return !event.valid; }))
                 .subscribe(_this.validChange.bind(_this));
             return _this;
@@ -24879,6 +25076,18 @@
             enumerable: true,
             configurable: true
         });
+        /**
+         * @return {?}
+         */
+        MarqueeWizardComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                _super.prototype.ngOnDestroy.call(this);
+                this._onDestroyed.next();
+                this._onDestroyed.complete();
+                this._resizeService.removeResizeListener(this._elementRef.nativeElement);
+            };
         /**
          * If the current step is valid, mark it as
          * complete and go to the next step
@@ -24968,22 +25177,58 @@
                     }
                 });
             };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        MarqueeWizardComponent.prototype.onResize = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                if (event.width !== 0 && event.height !== 0) {
+                    this._isInitialised = true;
+                }
+            };
+        /** Whenever the drag event ends, update the internal value and emit the new size */
+        /**
+         * Whenever the drag event ends, update the internal value and emit the new size
+         * @param {?} __0
+         * @return {?}
+         */
+        MarqueeWizardComponent.prototype.onDragEnd = /**
+         * Whenever the drag event ends, update the internal value and emit the new size
+         * @param {?} __0
+         * @return {?}
+         */
+            function (_a) {
+                var sizes = _a.sizes;
+                // we need to only get the size of the first panel which will be the side panel
+                this.sidePanelWidth = sizes[0];
+                this.sidePanelWidthChange.emit(this.sidePanelWidth);
+            };
         MarqueeWizardComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-marquee-wizard',
-                        template: "<div class=\"marquee-wizard-side-panel\">\n\n    <div class=\"marquee-wizard-description-container\" *ngIf=\"description\">\n        <!-- If a template was provided display it -->\n        <ng-container *ngIf=\"isTemplate\" [ngTemplateOutlet]=\"description\"></ng-container>\n\n        <!-- Otherwise wimply display the string -->\n        <ng-container *ngIf=\"!isTemplate\">\n            <p>{{ description }}</p>\n        </ng-container>\n    </div>\n\n    <ul class=\"marquee-wizard-steps\"\n        uxTabbableList\n        direction=\"vertical\"\n        role=\"tablist\"\n        aria-orientation=\"vertical\">\n\n        <li *ngFor=\"let step of steps; let index = index\"\n            role=\"tab\"\n            uxTabbableListItem\n            [disabled]=\"!step.visited\"\n            class=\"marquee-wizard-step\"\n            [class.active]=\"step.active\"\n            [class.visited]=\"step.visited\"\n            [class.invalid]=\"!step.valid\"\n            [attr.aria-posinset]=\"index + 1\"\n            [attr.aria-setsize]=\"steps.length\"\n            [attr.aria-selected]=\"step.active\"\n            [attr.aria-controls]=\"step.id\"\n            [id]=\"step.id + '-label'\"\n            (click)=\"gotoStep(step)\"\n            (keydown.enter)=\"gotoStep(step)\">\n\n            <ng-container [ngTemplateOutlet]=\"stepTemplate || defaultStepTemplate\" [ngTemplateOutletContext]=\"{ $implicit: step }\"></ng-container>\n        </li>\n\n    </ul>\n</div>\n\n<div class=\"marquee-wizard-content-panel\">\n    <div class=\"marquee-wizard-content\">\n        <ng-content></ng-content>\n    </div>\n\n    <div class=\"modal-footer\">\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-secondary\"\n                *ngIf=\"previousVisible\"\n                [uxTooltip]=\"previousTooltip\"\n                [attr.aria-label]=\"previousAriaLabel\"\n                container=\"body\"\n                [disabled]=\"previousDisabled || step === 0\"\n                (click)=\"previous(); tip.hide()\">\n                {{ previousText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-primary\"\n                *ngIf=\"nextVisible && !isLastStep()\"\n                [uxTooltip]=\"nextTooltip\"\n                [attr.aria-label]=\"nextAriaLabel\"\n                container=\"body\"\n                [disabled]=\"nextDisabled\"\n                (click)=\"next(); tip.hide()\">\n                {{ nextText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-primary\"\n                *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n                [uxTooltip]=\"finishTooltip\"\n                [attr.aria-label]=\"finishAriaLabel\"\n                container=\"body\"\n                [disabled]=\"finishDisabled\"\n                (click)=\"finish(); tip.hide()\">\n                {{ finishText }}\n        </button>\n\n        <button #tip=\"ux-tooltip\"\n                type=\"button\"\n                class=\"btn button-secondary\"\n                *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n                [uxTooltip]=\"cancelTooltip\"\n                [attr.aria-label]=\"cancelAriaLabel\"\n                container=\"body\"\n                [disabled]=\"cancelDisabled\"\n                (click)=\"cancel(); tip.hide()\">\n                {{ cancelText }}\n        </button>\n    </div>\n</div>\n\n<ng-template #defaultStepTemplate let-step>\n\n    <!-- Show an icon based on a string (deprecated) -->\n    <ng-container *ngIf=\"step._icon\">\n        <i *ngIf=\"step._iconType !== 'component'\" class=\"marquee-wizard-step-icon\" [ngClass]=\"[step._iconType, step._icon]\"></i>\n        <ux-icon *ngIf=\"step._iconType === 'component'\" class=\"marquee-wizard-step-icon\" [name]=\"step._icon\"></ux-icon>\n    </ng-container>\n\n    <!-- Insert the icon -->\n    <div *ngIf=\"step._iconTemplate\" class=\"marquee-wizard-step-icon\">\n        <ng-container [ngTemplateOutlet]=\"step._iconTemplate\"></ng-container>\n    </div>\n\n    <span class=\"marquee-wizard-step-title\">{{ step.header }}</span>\n    <ux-icon *ngIf=\"step.completed\" class=\"marquee-wizard-step-status\" name=\"checkmark\"></ux-icon>\n</ng-template>",
+                        template: "<ng-container *ngIf=\"resizable && _isInitialised\">\n    <split direction=\"horizontal\"\n           [gutterSize]=\"gutterSize\"\n           (dragEnd)=\"onDragEnd($event)\">\n        <split-area [size]=\"sidePanelWidth\">\n            <ng-container [ngTemplateOutlet]=\"sidePanel\"></ng-container>\n        </split-area>\n        <split-area [size]=\"100 - sidePanelWidth\">\n            <ng-container [ngTemplateOutlet]=\"mainContentPanel\"></ng-container>\n        </split-area>\n    </split>\n</ng-container>\n\n<ng-container *ngIf=\"!resizable\">\n    <ng-container [ngTemplateOutlet]=\"sidePanel\"></ng-container>\n    <ng-container [ngTemplateOutlet]=\"mainContentPanel\"></ng-container>\n</ng-container>\n\n<ng-template #sidePanel>\n    <div class=\"marquee-wizard-side-panel\" [class.marquee-wizard-side-panel-resize]=\"resizable\">\n\n        <div class=\"marquee-wizard-description-container\" *ngIf=\"description\">\n            <!-- If a template was provided display it -->\n            <ng-container *ngIf=\"isTemplate\" [ngTemplateOutlet]=\"description\"></ng-container>\n\n            <!-- Otherwise wimply display the string -->\n            <ng-container *ngIf=\"!isTemplate\">\n                <p>{{ description }}</p>\n            </ng-container>\n        </div>\n\n        <ul class=\"marquee-wizard-steps\"\n            uxTabbableList\n            direction=\"vertical\"\n            role=\"tablist\"\n            aria-orientation=\"vertical\">\n\n            <li *ngFor=\"let step of steps; let index = index\"\n                role=\"tab\"\n                uxTabbableListItem\n                [disabled]=\"!step.visited\"\n                class=\"marquee-wizard-step\"\n                [class.active]=\"step.active\"\n                [class.visited]=\"step.visited\"\n                [class.invalid]=\"!step.valid\"\n                [attr.aria-posinset]=\"index + 1\"\n                [attr.aria-setsize]=\"steps.length\"\n                [attr.aria-selected]=\"step.active\"\n                [attr.aria-controls]=\"step.id\"\n                [id]=\"step.id + '-label'\"\n                (click)=\"gotoStep(step)\"\n                (keydown.enter)=\"gotoStep(step)\">\n\n                <ng-container [ngTemplateOutlet]=\"stepTemplate || defaultStepTemplate\" [ngTemplateOutletContext]=\"{ $implicit: step }\"></ng-container>\n            </li>\n\n        </ul>\n    </div>\n</ng-template>\n\n\n<ng-template #mainContentPanel>\n    <div class=\"marquee-wizard-content-panel\" [class.marquee-wizard-content-panel-resize]=\"resizable\">\n        <div class=\"marquee-wizard-content\">\n            <ng-content></ng-content>\n        </div>\n\n        <div class=\"modal-footer\">\n\n            <ng-container *ngIf=\"footerTemplate\"\n                          [ngTemplateOutlet]=\"footerTemplate\"\n                          [ngTemplateOutletContext]=\"{ step: step }\">\n            </ng-container>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-secondary\"\n                    *ngIf=\"previousVisible\"\n                    [uxTooltip]=\"previousTooltip\"\n                    [attr.aria-label]=\"previousAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"previousDisabled || step === 0\"\n                    (click)=\"previous(); tip.hide()\">\n                {{ previousText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-primary\"\n                    *ngIf=\"nextVisible && !isLastStep()\"\n                    [uxTooltip]=\"nextTooltip\"\n                    [attr.aria-label]=\"nextAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"nextDisabled\"\n                    (click)=\"next(); tip.hide()\">\n                {{ nextText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-primary\"\n                    *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n                    [uxTooltip]=\"finishTooltip\"\n                    [attr.aria-label]=\"finishAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"finishDisabled\"\n                    (click)=\"finish(); tip.hide()\">\n                {{ finishText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-secondary\"\n                    *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n                    [uxTooltip]=\"cancelTooltip\"\n                    [attr.aria-label]=\"cancelAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"cancelDisabled\"\n                    (click)=\"cancel(); tip.hide()\">\n                {{ cancelText }}\n            </button>\n\n        </div>\n    </div>\n</ng-template>\n\n<ng-template #defaultStepTemplate let-step>\n\n    <!-- Show an icon based on a string (deprecated) -->\n    <ng-container *ngIf=\"step._icon\">\n        <i *ngIf=\"step._iconType !== 'component'\" class=\"marquee-wizard-step-icon\" [ngClass]=\"[step._iconType, step._icon]\"></i>\n        <ux-icon *ngIf=\"step._iconType === 'component'\" class=\"marquee-wizard-step-icon\" [name]=\"step._icon\"></ux-icon>\n    </ng-container>\n\n    <!-- Insert the icon -->\n    <div *ngIf=\"step._iconTemplate\" class=\"marquee-wizard-step-icon\">\n        <ng-container [ngTemplateOutlet]=\"step._iconTemplate\"></ng-container>\n    </div>\n\n    <span class=\"marquee-wizard-step-title\">{{ step.header }}</span>\n    <ux-icon *ngIf=\"step.completed\" class=\"marquee-wizard-step-status\" name=\"checkmark\"></ux-icon>\n</ng-template>",
                         providers: [MarqueeWizardService]
                     }] }
         ];
         /** @nocollapse */
         MarqueeWizardComponent.ctorParameters = function () {
             return [
-                { type: MarqueeWizardService }
+                { type: MarqueeWizardService },
+                { type: ResizeService },
+                { type: i0.ElementRef }
             ];
         };
         MarqueeWizardComponent.propDecorators = {
             description: [{ type: i0.Input }],
             stepTemplate: [{ type: i0.Input }],
+            sidePanelWidth: [{ type: i0.Input }],
+            gutterSize: [{ type: i0.Input }],
+            resizable: [{ type: i0.Input }],
+            sidePanelWidthChange: [{ type: i0.Output }],
             steps: [{ type: i0.ContentChildren, args: [MarqueeWizardStepComponent,] }]
         };
         return MarqueeWizardComponent;
@@ -25003,6 +25248,8 @@
                             IconModule,
                             TooltipModule,
                             WizardModule,
+                            angularSplit.AngularSplitModule,
+                            ResizeModule
                         ],
                         exports: [
                             MarqueeWizardComponent,
@@ -25984,14 +26231,28 @@
                             formatter: function (value) { return value; }
                         }
                     },
-                    colors: {
-                        lower: colorService.getColor('grey6').toHex(),
-                        range: colorService.getColor('accent').setAlpha(0.75).toRgba(),
-                        higher: colorService.getColor('grey6').toHex()
-                    }
+                    colors: {}
                 }
             };
         }
+        Object.defineProperty(SliderComponent.prototype, "options", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._options;
+            },
+            /** A wide range of options can used to customize the appearance and behavior of the component. */
+            set: /**
+             * A wide range of options can used to customize the appearance and behavior of the component.
+             * @param {?} options
+             * @return {?}
+             */ function (options) {
+                this._options = options;
+                this.updateOptions();
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -25999,7 +26260,6 @@
          * @return {?}
          */
             function () {
-                this.updateOptions();
                 this.updateValues();
                 this.setThumbState(SliderThumb.Lower, false, false);
                 this.setThumbState(SliderThumb.Upper, false, false);
@@ -26282,8 +26542,8 @@
                 // get the element widths
                 /** @type {?} */
                 var thumbWidth;
-                if (this.options.handles.style === SliderStyle.Button) {
-                    thumbWidth = this.options.track.height === SliderSize.Narrow ? 16 : 24;
+                if (this._options.handles.style === SliderStyle.Button) {
+                    thumbWidth = this._options.track.height === SliderSize.Narrow ? 16 : 24;
                 }
                 else {
                     thumbWidth = 2;
@@ -26295,7 +26555,7 @@
                 var tooltipPosition = Math.ceil((tooltipWidth - thumbWidth) / 2);
                 // update tooltip position
                 tooltip.position = -tooltipPosition;
-                if (this.options.type === SliderType.Range && this.options.handles.callout.trigger === SliderCalloutTrigger.Dynamic) {
+                if (this._options.type === SliderType.Range && this._options.handles.callout.trigger === SliderCalloutTrigger.Dynamic) {
                     this.preventTooltipOverlap(tooltip);
                 }
             };
@@ -26377,7 +26637,7 @@
                 var fraction = (position / trackBounds.width);
                 // convert to value within the range
                 /** @type {?} */
-                var value = ((this.options.track.max - this.options.track.min) * fraction) + this.options.track.min;
+                var value = ((this._options.track.max - this._options.track.min) * fraction) + this._options.track.min;
                 // ensure value is valid
                 value = this.validateValue(thumb, value);
                 // snap to a tick if required
@@ -26443,13 +26703,13 @@
                 }
                 // get the track limit
                 /** @type {?} */
-                var lowerLimit = this.options.track.min;
+                var lowerLimit = this._options.track.min;
                 /** @type {?} */
-                var upperLimit = this.options.track.max;
-                if (this.options.type === SliderType.Range && thumb === SliderThumb.Lower) {
+                var upperLimit = this._options.track.max;
+                if (this._options.type === SliderType.Range && thumb === SliderThumb.Lower) {
                     upperLimit = this.thumbs.upper.value;
                 }
-                if (this.options.type === SliderType.Range && thumb === SliderThumb.Upper) {
+                if (this._options.type === SliderType.Range && thumb === SliderThumb.Upper) {
                     lowerLimit = this.thumbs.lower.value;
                 }
                 // Find the closest tick to the current position
@@ -26479,7 +26739,7 @@
          */
             function (value, thumb) {
                 /** @type {?} */
-                var tickDistances = this.getTickDistances(value, thumb, this.options.track.ticks.snap);
+                var tickDistances = this.getTickDistances(value, thumb, this._options.track.ticks.snap);
                 // if there are no ticks return the current value
                 if (tickDistances.length === 0) {
                     return value;
@@ -26499,15 +26759,15 @@
          */
             function (thumb, value) {
                 // if slider is not a range value is always valid providing it is within the chart min and max values
-                if (this.options.type === SliderType.Value) {
-                    return Math.max(Math.min(value, this.options.track.max), this.options.track.min);
+                if (this._options.type === SliderType.Value) {
+                    return Math.max(Math.min(value, this._options.track.max), this._options.track.min);
                 }
                 // check if value is with chart ranges
-                if (value > this.options.track.max) {
-                    return thumb === SliderThumb.Lower ? Math.min(this.options.track.max, this.thumbs.upper.value) : this.options.track.max;
+                if (value > this._options.track.max) {
+                    return thumb === SliderThumb.Lower ? Math.min(this._options.track.max, this.thumbs.upper.value) : this._options.track.max;
                 }
-                if (value < this.options.track.min) {
-                    return thumb === SliderThumb.Upper ? Math.max(this.options.track.min, this.thumbs.lower.value) : this.options.track.min;
+                if (value < this._options.track.min) {
+                    return thumb === SliderThumb.Upper ? Math.max(this._options.track.min, this.thumbs.lower.value) : this._options.track.min;
                 }
                 // otherwise we need to check to make sure lower thumb cannot go above higher and vice versa
                 if (thumb === SliderThumb.Lower) {
@@ -26531,7 +26791,7 @@
          */
             function () {
                 // add in the default options that user hasn't specified
-                this.options = this.deepMerge(this.options || {}, this.defaultOptions);
+                this._options = this.deepMerge(this._options || {}, this.defaultOptions);
                 this.updateTrackColors();
                 this.updateTicks();
                 this.updateValues();
@@ -26555,16 +26815,16 @@
                 upperValue = this.validateValue(SliderThumb.Upper, Number(upperValue.toFixed(4)));
                 // calculate the positions as percentages
                 /** @type {?} */
-                var lowerPosition = (((lowerValue - this.options.track.min) / (this.options.track.max - this.options.track.min)) * 100);
+                var lowerPosition = (((lowerValue - this._options.track.min) / (this._options.track.max - this._options.track.min)) * 100);
                 /** @type {?} */
-                var upperPosition = (((upperValue - this.options.track.min) / (this.options.track.max - this.options.track.min)) * 100);
+                var upperPosition = (((upperValue - this._options.track.min) / (this._options.track.max - this._options.track.min)) * 100);
                 // update thumb positions
                 this.thumbs.lower.position = lowerPosition;
                 this.thumbs.upper.position = upperPosition;
                 // calculate the track sizes
                 this.tracks.lower.size = lowerPosition;
                 this.tracks.middle.size = upperPosition - lowerPosition;
-                this.tracks.upper.size = this.options.type === SliderType.Value ? 100 - lowerPosition : 100 - upperPosition;
+                this.tracks.upper.size = this._options.type === SliderType.Value ? 100 - lowerPosition : 100 - upperPosition;
                 // update the value input
                 this.setValue(lowerValue, upperValue);
             };
@@ -26583,7 +26843,7 @@
                 this.thumbs.upper.value = high;
                 /** @type {?} */
                 var previousValue = this.clone(this._value);
-                this.value = this.options.type === SliderType.Value ? low : { low: low, high: high };
+                this.value = this._options.type === SliderType.Value ? low : { low: low, high: high };
                 // call the event emitter if changes occured
                 if (this.detectValueChange(this.value, previousValue)) {
                     this.valueChange.emit(this.clone(this.value));
@@ -26619,9 +26879,9 @@
             function () {
                 // get tick options
                 /** @type {?} */
-                var majorOptions = this.options.track.ticks.major;
+                var majorOptions = this._options.track.ticks.major;
                 /** @type {?} */
-                var minorOptions = this.options.track.ticks.minor;
+                var minorOptions = this._options.track.ticks.minor;
                 // check if we should show ticks
                 if (majorOptions.show === false && minorOptions.show === false) {
                     this.ticks = [];
@@ -26642,11 +26902,25 @@
          */
             function () {
                 // get colors for each part of the track
-                var _a = this.options.track.colors, lower = _a.lower, range = _a.range, higher = _a.higher;
+                var _a = this._options.track.colors, lower = _a.lower, range = _a.range, higher = _a.higher;
                 // update the controller value
-                this.tracks.lower.color = typeof lower === 'string' ? lower : "linear-gradient(to right, " + lower.join(', ') + ")";
-                this.tracks.middle.color = typeof range === 'string' ? range : "linear-gradient(to right, " + range.join(', ') + ")";
-                this.tracks.upper.color = typeof higher === 'string' ? higher : "linear-gradient(to right, " + higher.join(', ') + ")";
+                this.tracks.lower.color = this.getTrackColorStyle(lower);
+                this.tracks.middle.color = this.getTrackColorStyle(range);
+                this.tracks.upper.color = this.getTrackColorStyle(higher);
+            };
+        /** Map the color value to the correct CSS color value */
+        /**
+         * Map the color value to the correct CSS color value
+         * @param {?} color
+         * @return {?}
+         */
+        SliderComponent.prototype.getTrackColorStyle = /**
+         * Map the color value to the correct CSS color value
+         * @param {?} color
+         * @return {?}
+         */
+            function (color) {
+                return Array.isArray(color) ? "linear-gradient(to right, " + color.join(', ') + ")" : color;
             };
         /**
          * @param {?} steps
@@ -26664,7 +26938,7 @@
                 /** @type {?} */
                 var output = [];
                 // otherwise calculate the steps
-                for (var idx = this.options.track.min; idx <= this.options.track.max; idx += steps) {
+                for (var idx = this._options.track.min; idx <= this._options.track.max; idx += steps) {
                     output.push(idx);
                 }
                 return output;
@@ -26685,9 +26959,9 @@
                 var steps = this.getSteps(options.steps);
                 // get some chart options
                 /** @type {?} */
-                var min = this.options.track.min;
+                var min = this._options.track.min;
                 /** @type {?} */
-                var max = this.options.track.max;
+                var max = this._options.track.max;
                 // convert each step to a slider tick and remove invalid ticks
                 return steps.map(function (step) {
                     return {
@@ -26822,7 +27096,7 @@
         SliderComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-slider',
-                        template: "<div class=\"track\"\n     #track\n     [class.narrow]=\"options.track.height === sliderSize.Narrow\"\n     [class.wide]=\"options.track.height === sliderSize.Wide\"\n     [class.range]=\"options.type === sliderType.Range\">\n\n    <!-- Section Beneath Lower Thumb -->\n    <div class=\"track-section track-lower\" [style.flex-grow]=\"tracks.lower.size\" [style.background]=\"tracks.lower.color\"></div>\n\n    <!-- Lower Thumb Button / Line -->\n    <div class=\"thumb lower\"\n        uxDrag\n        uxFocusIndicator\n        role=\"slider\"\n        tabindex=\"0\"\n        #lowerthumb\n        [attr.aria-label]=\"options.type === sliderType.Range ? options.handles.aria.lowerThumb : options.handles.aria.thumb\"\n        [attr.aria-valuemin]=\"options?.track?.min\"\n        [attr.aria-valuemax]=\"options.type === sliderType.Range ? getThumbValue(sliderThumb.Upper) : options?.track?.max\"\n        [attr.aria-valuenow]=\"getThumbValue(sliderThumb.Lower)\"\n        [attr.aria-valuetext]=\"getAriaValueText(sliderThumb.Lower)\"\n        [style.left.%]=\"thumbs.lower.position\"\n        [class.active]=\"thumbs.lower.drag\"\n        [style.z-index]=\"thumbs.lower.order\"\n        [class.button]=\"options.handles.style === sliderStyle.Button\"\n        [class.line]=\"options.handles.style === sliderStyle.Line\"\n        [class.narrow]=\"options.track.height === sliderSize.Narrow\"\n        [class.wide]=\"options.track.height === sliderSize.Wide\"\n        (onDragStart)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.DragStart); lowerthumb.focus()\"\n        (onDrag)=\"updateThumbPosition($event, sliderThumb.Lower)\"\n        (onDragEnd)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.DragEnd)\"\n        (mouseenter)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseOver)\"\n        (mouseleave)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseLeave)\"\n        (focus)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseOver)\"\n        (blur)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseLeave)\"\n        (keydown.ArrowLeft)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowRight)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.ArrowUp)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowDown)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.PageDown)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.Major, false); $event.preventDefault()\"\n        (keydown.PageUp)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.Major, true); $event.preventDefault()\"\n        (keydown.Home)=\"snapToEnd(sliderThumb.Lower, false); $event.preventDefault()\"\n        (keydown.End)=\"snapToEnd(sliderThumb.Lower, true); $event.preventDefault()\">\n\n        <!-- Lower Thumb Callout -->\n        <div class=\"tooltip top tooltip-lower\" #lowerTooltip\n            [class.tooltip-dynamic]=\"options.handles.callout.trigger === sliderCalloutTrigger.Dynamic && thumbs.lower.drag === false\"\n            [style.opacity]=\"tooltips.lower.visible ? 1 : 0\"\n            [style.left.px]=\"tooltips.lower.position\">\n\n            <div class=\"tooltip-arrow\" [style.border-top-color]=\"options.handles.callout.background\"></div>\n\n            <div class=\"tooltip-inner\"\n                [style.background-color]=\"options.handles.callout.background\"\n                [style.color]=\"options.handles.callout.color\">\n                {{ tooltips.lower.label }}\n            </div>\n        </div>\n\n    </div>\n\n    <!-- Section of Track Between Lower and Upper Thumbs -->\n    <div class=\"track-section track-range\" *ngIf=\"options.type === sliderType.Range\" [style.flex-grow]=\"tracks.middle.size\" [style.background]=\"tracks.middle.color\">\n    </div>\n\n    <!-- Upper Thumb Button / Line -->\n    <div class=\"thumb upper\"\n        uxDrag\n        uxFocusIndicator\n        role=\"slider\"\n        tabindex=\"0\"\n        #upperthumb\n        [attr.aria-label]=\"options.handles.aria.upperThumb\"\n        [attr.aria-valuemin]=\"getThumbValue(sliderThumb.Lower) || options?.track?.min\"\n        [attr.aria-valuemax]=\"options?.track?.max\"\n        [attr.aria-valuenow]=\"getThumbValue(sliderThumb.Upper)\"\n        [attr.aria-valuetext]=\"getAriaValueText(sliderThumb.Upper)\"\n        [hidden]=\"options.type !== sliderType.Range\"\n        [class.active]=\"thumbs.upper.drag\"\n        [style.left.%]=\"thumbs.upper.position\"\n        [style.z-index]=\"thumbs.upper.order\"\n        [class.button]=\"options.handles.style === sliderStyle.Button\"\n        [class.line]=\"options.handles.style === sliderStyle.Line\"\n        [class.narrow]=\"options.track.height === sliderSize.Narrow\"\n        [class.wide]=\"options.track.height === sliderSize.Wide\"\n        (onDragStart)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.DragStart); upperthumb.focus()\"\n        (onDrag)=\"updateThumbPosition($event, sliderThumb.Upper)\"\n        (onDragEnd)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.DragEnd)\"\n        (mouseenter)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseOver)\"\n        (mouseleave)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseLeave)\"\n        (focus)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseOver)\"\n        (blur)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseLeave)\"\n        (keydown.ArrowLeft)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowRight)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.ArrowUp)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowDown)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.PageDown)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.Major, false); $event.preventDefault()\"\n        (keydown.PageUp)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.Major, true); $event.preventDefault()\"\n        (keydown.Home)=\"snapToEnd(sliderThumb.Upper, false); $event.preventDefault()\"\n        (keydown.End)=\"snapToEnd(sliderThumb.Upper, true); $event.preventDefault()\">\n\n        <!-- Upper Thumb Callout -->\n        <div class=\"tooltip top tooltip-upper\" #upperTooltip\n            [class.tooltip-dynamic]=\"options.handles.callout.trigger === sliderCalloutTrigger.Dynamic && thumbs.upper.drag === false\"\n            [style.opacity]=\"tooltips.upper.visible ? 1 : 0\"\n            [style.left.px]=\"tooltips.upper.position\">\n\n            <div class=\"tooltip-arrow\" [style.border-top-color]=\"options.handles.callout.background\"></div>\n\n            <div class=\"tooltip-inner\"\n                *ngIf=\"options.type === sliderType.Range\"\n                [style.background-color]=\"options.handles.callout.background\"\n                [style.color]=\"options.handles.callout.color\">\n                {{ tooltips.upper.label }}\n            </div>\n        </div>\n    </div>\n\n    <!-- Section of Track Abover Upper Thumb -->\n    <div class=\"track-section track-higher\" [style.flex-grow]=\"tracks.upper.size\" [style.background]=\"tracks.upper.color\"></div>\n\n</div>\n\n<!-- Chart Ticks and Tick Labels -->\n<div class=\"tick-container\"\n    role=\"presentation\"\n    *ngIf=\"(options.track.ticks.major.show || options.track.ticks.minor.show) && options.handles.callout.trigger !== sliderCalloutTrigger.Dynamic\"\n    [class.show-labels]=\"options.track.ticks.major.labels || options.track.ticks.minor.labels\">\n\n    <div class=\"tick\"\n        *ngFor=\"let tick of ticks\"\n        [class.major]=\"tick.type === sliderTickType.Major\"\n        [class.minor]=\"tick.type === sliderTickType.Minor\"\n        [style.left.%]=\"tick.position\"\n        [hidden]=\"!tick.showTicks\">\n\n        <div class=\"tick-indicator\"></div>\n        <div class=\"tick-label\" aria-hidden=\"true\" [hidden]=\"!tick.showLabels\">{{ tick.label }}</div>\n    </div>\n</div>",
+                        template: "<div class=\"track\"\n     #track\n     [class.narrow]=\"_options.track.height === sliderSize.Narrow\"\n     [class.wide]=\"_options.track.height === sliderSize.Wide\"\n     [class.range]=\"_options.type === sliderType.Range\">\n\n    <!-- Section Beneath Lower Thumb -->\n    <div class=\"track-section track-lower\" [style.flex-grow]=\"tracks.lower.size\" [style.background]=\"tracks.lower.color\"></div>\n\n    <!-- Lower Thumb Button / Line -->\n    <div class=\"thumb lower\"\n        uxDrag\n        uxFocusIndicator\n        role=\"slider\"\n        tabindex=\"0\"\n        #lowerthumb\n        [attr.aria-label]=\"_options.type === sliderType.Range ? _options.handles.aria.lowerThumb :\n        _options.handles.aria.thumb\"\n        [attr.aria-valuemin]=\"_options?.track?.min\"\n        [attr.aria-valuemax]=\"_options.type === sliderType.Range ? getThumbValue(sliderThumb.Upper) :\n        _options?.track?.max\"\n        [attr.aria-valuenow]=\"getThumbValue(sliderThumb.Lower)\"\n        [attr.aria-valuetext]=\"getAriaValueText(sliderThumb.Lower)\"\n        [style.left.%]=\"thumbs.lower.position\"\n        [class.active]=\"thumbs.lower.drag\"\n        [style.z-index]=\"thumbs.lower.order\"\n        [class.button]=\"_options.handles.style === sliderStyle.Button\"\n        [class.line]=\"_options.handles.style === sliderStyle.Line\"\n        [class.narrow]=\"_options.track.height === sliderSize.Narrow\"\n        [class.wide]=\"_options.track.height === sliderSize.Wide\"\n        (onDragStart)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.DragStart); lowerthumb.focus()\"\n        (onDrag)=\"updateThumbPosition($event, sliderThumb.Lower)\"\n        (onDragEnd)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.DragEnd)\"\n        (mouseenter)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseOver)\"\n        (mouseleave)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseLeave)\"\n        (focus)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseOver)\"\n        (blur)=\"thumbEvent(sliderThumb.Lower, sliderThumbEvent.MouseLeave)\"\n        (keydown.ArrowLeft)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowRight)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.ArrowUp)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowDown)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.PageDown)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.Major, false); $event.preventDefault()\"\n        (keydown.PageUp)=\"snapToNearestTick(sliderThumb.Lower, sliderSnap.Major, true); $event.preventDefault()\"\n        (keydown.Home)=\"snapToEnd(sliderThumb.Lower, false); $event.preventDefault()\"\n        (keydown.End)=\"snapToEnd(sliderThumb.Lower, true); $event.preventDefault()\">\n\n        <!-- Lower Thumb Callout -->\n        <div class=\"tooltip top tooltip-lower\" #lowerTooltip\n            [class.tooltip-dynamic]=\"_options.handles.callout.trigger === sliderCalloutTrigger.Dynamic &&\n             thumbs.lower.drag === false\"\n            [style.opacity]=\"tooltips.lower.visible ? 1 : 0\"\n            [style.left.px]=\"tooltips.lower.position\">\n\n            <div class=\"tooltip-arrow\" [style.border-top-color]=\"_options.handles.callout.background\"></div>\n\n            <div class=\"tooltip-inner\"\n                [style.background-color]=\"_options.handles.callout.background\"\n                [style.color]=\"_options.handles.callout.color\">\n                {{ tooltips.lower.label }}\n            </div>\n        </div>\n\n    </div>\n\n    <!-- Section of Track Between Lower and Upper Thumbs -->\n    <div class=\"track-section track-range\" *ngIf=\"_options.type === sliderType.Range\"\n         [style.flex-grow]=\"tracks.middle.size\" [style.background]=\"tracks.middle.color\">\n    </div>\n\n    <!-- Upper Thumb Button / Line -->\n    <div class=\"thumb upper\"\n        uxDrag\n        uxFocusIndicator\n        role=\"slider\"\n        tabindex=\"0\"\n        #upperthumb\n        [attr.aria-label]=\"_options.handles.aria.upperThumb\"\n        [attr.aria-valuemin]=\"getThumbValue(sliderThumb.Lower) || _options?.track?.min\"\n        [attr.aria-valuemax]=\"_options?.track?.max\"\n        [attr.aria-valuenow]=\"getThumbValue(sliderThumb.Upper)\"\n        [attr.aria-valuetext]=\"getAriaValueText(sliderThumb.Upper)\"\n        [hidden]=\"_options.type !== sliderType.Range\"\n        [class.active]=\"thumbs.upper.drag\"\n        [style.left.%]=\"thumbs.upper.position\"\n        [style.z-index]=\"thumbs.upper.order\"\n        [class.button]=\"_options.handles.style === sliderStyle.Button\"\n        [class.line]=\"_options.handles.style === sliderStyle.Line\"\n        [class.narrow]=\"_options.track.height === sliderSize.Narrow\"\n        [class.wide]=\"_options.track.height === sliderSize.Wide\"\n        (onDragStart)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.DragStart); upperthumb.focus()\"\n        (onDrag)=\"updateThumbPosition($event, sliderThumb.Upper)\"\n        (onDragEnd)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.DragEnd)\"\n        (mouseenter)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseOver)\"\n        (mouseleave)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseLeave)\"\n        (focus)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseOver)\"\n        (blur)=\"thumbEvent(sliderThumb.Upper, sliderThumbEvent.MouseLeave)\"\n        (keydown.ArrowLeft)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowRight)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.ArrowUp)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, false); $event.preventDefault()\"\n        (keydown.ArrowDown)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.All, true); $event.preventDefault()\"\n        (keydown.PageDown)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.Major, false); $event.preventDefault()\"\n        (keydown.PageUp)=\"snapToNearestTick(sliderThumb.Upper, sliderSnap.Major, true); $event.preventDefault()\"\n        (keydown.Home)=\"snapToEnd(sliderThumb.Upper, false); $event.preventDefault()\"\n        (keydown.End)=\"snapToEnd(sliderThumb.Upper, true); $event.preventDefault()\">\n\n        <!-- Upper Thumb Callout -->\n        <div class=\"tooltip top tooltip-upper\" #upperTooltip\n            [class.tooltip-dynamic]=\"_options.handles.callout.trigger === sliderCalloutTrigger.Dynamic &&\n             thumbs.upper.drag === false\"\n            [style.opacity]=\"tooltips.upper.visible ? 1 : 0\"\n            [style.left.px]=\"tooltips.upper.position\">\n\n            <div class=\"tooltip-arrow\" [style.border-top-color]=\"_options.handles.callout.background\"></div>\n\n            <div class=\"tooltip-inner\"\n                *ngIf=\"_options.type === sliderType.Range\"\n                [style.background-color]=\"_options.handles.callout.background\"\n                [style.color]=\"_options.handles.callout.color\">\n                {{ tooltips.upper.label }}\n            </div>\n        </div>\n    </div>\n\n    <!-- Section of Track Abover Upper Thumb -->\n    <div class=\"track-section track-higher\" [style.flex-grow]=\"tracks.upper.size\" [style.background]=\"tracks.upper.color\"></div>\n\n</div>\n\n<!-- Chart Ticks and Tick Labels -->\n<div class=\"tick-container\"\n    role=\"presentation\"\n    *ngIf=\"(_options.track.ticks.major.show || _options.track.ticks.minor.show) &&\n    _options.handles.callout.trigger !== sliderCalloutTrigger.Dynamic\"\n    [class.show-labels]=\"_options.track.ticks.major.labels || _options.track.ticks.minor.labels\">\n\n    <div class=\"tick\"\n        *ngFor=\"let tick of ticks\"\n        [class.major]=\"tick.type === sliderTickType.Major\"\n        [class.minor]=\"tick.type === sliderTickType.Minor\"\n        [style.left.%]=\"tick.position\"\n        [hidden]=\"!tick.showTicks\">\n\n        <div class=\"tick-indicator\"></div>\n        <div class=\"tick-label\" aria-hidden=\"true\" [hidden]=\"!tick.showLabels\">{{ tick.label }}</div>\n    </div>\n</div>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush
                     }] }
         ];
@@ -32145,7 +32419,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-page-header',
                         exportAs: 'ux-page-header',
-                        template: "<div class=\"ux-page-header\" [class.page-header-condensed]=\"condensed\" role=\"banner\">\n\n    <div *ngIf=\"!condensed\" class=\"page-header-content\">\n\n        <!-- Logo/product acronym -->\n        <div uxFocusIndicator (keydown.enter)=\"logoClick.emit($event)\" [attr.tabindex]=\"_hasLogoClick ? 0 : -1\" [class.clickable]=\"_hasLogoClick\" class=\"page-header-logo-container\" role=\"presentation\" [style.backgroundColor]=\"logoBackground\" [style.color]=\"logoForeground\" (click)=\"logoClick.emit($event)\">\n            <img *ngIf=\"logo\" [attr.src]=\"logo\" [alt]=\"header\" class=\"page-header-logo\">\n            <h1 *ngIf=\"header && !logo\" class=\"page-header-acronym\">{{header}}</h1>\n        </div>\n\n        <!-- Sub-title -->\n        <div *ngIf=\"subheader || subheaderTemplate || titleTemplate\" class=\"page-header-subtitle-container\">\n            <span *ngIf=\"subheader\" class=\"page-header-subtitle\">{{subheader}}</span>\n            <ng-container [ngTemplateOutlet]=\"subheaderTemplate || titleTemplate\"></ng-container>\n        </div>\n\n        <div class=\"page-header-state-container\" role=\"navigation\">\n\n            <!-- Back button -->\n            <button *ngIf=\"backVisible === true\" uxFocusIndicator type=\"button\" class=\"page-header-back-button\" (click)=\"backClick.emit($event)\" aria-label=\"Go Back\">\n                <ux-icon name=\"previous\" class=\"text-primary\"></ux-icon>\n            </button>\n\n            <!-- Breadcrumbs and header -->\n            <div class=\"page-header-title-container\">\n\n                <ux-breadcrumbs *ngIf=\"crumbs && crumbs.length > 0\"\n                    [class.ux-breadcrumbs-small]=\"crumbsStyle === 'small'\"\n                    [crumbs]=\"crumbs\"></ux-breadcrumbs>\n\n                <h1 class=\"page-header-title\">{{header}}</h1>\n\n            </div>\n\n        </div>\n\n        <!-- Primary navigation -->\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <!-- Icon menus -->\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n    </div>\n\n    <!-- Display This Section Optimized for Condensed Mode -->\n    <div class=\"page-header-condensed-content\" *ngIf=\"condensed\">\n\n        <div class=\"page-header-breadcrumbs\" role=\"navigation\">\n            <ux-breadcrumbs [crumbs]=\"crumbs\"></ux-breadcrumbs>\n        </div>\n\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n\n            <!-- The Top Navigation Options -->\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n\n    </div>\n\n</div>\n\n<div *ngIf=\"secondaryNavigation && ((selectedRoot$ | async) !== (selected$ | async))\"\n    class=\"page-header-secondary\" [ngClass]=\"secondaryNavigationAlignment\" role=\"navigation\">\n\n    <ux-tabset *ngIf=\"(selectedRoot$ | async)?.children; let children\" [manual]=\"true\">\n        <ux-tab *ngFor=\"let child of children\"\n            [heading]=\"child.title\"\n            [active]=\"child === (selected$ | async)\"\n            (select)=\"select(child)\"\n            [uxPageHeaderNavigationSecondaryItem]=\"child\"\n            [disabled]=\"child.disabled\">\n        </ux-tab>\n    </ux-tabset>\n\n</div>\n",
+                        template: "<div class=\"ux-page-header\" [class.page-header-condensed]=\"condensed\" role=\"banner\">\n\n    <div *ngIf=\"!condensed\" class=\"page-header-content\">\n\n        <!-- Logo/product acronym -->\n        <div uxFocusIndicator (keydown.enter)=\"logoClick.emit($event)\" [attr.tabindex]=\"_hasLogoClick ? 0: -1\"\n             [class.page-header-logo-template]=\"logoTemplate\" [class.clickable]=\"_hasLogoClick\"\n             class=\"page-header-logo-container\"\n             role=\"presentation\" [style.backgroundColor]=\"logoBackground\" [style.color]=\"logoForeground\" (click)=\"logoClick.emit($event)\">\n            <img *ngIf=\"logo && !logoTemplate\" [attr.src]=\"logo\" [alt]=\"header\" class=\"page-header-logo\">\n            <h1 *ngIf=\"header && !logo && !logoTemplate\" class=\"page-header-acronym\">{{header}}</h1>\n            <ng-container *ngIf=\"logoTemplate\" [ngTemplateOutlet]=\"logoTemplate\"></ng-container>\n        </div>\n\n        <!-- Sub-title -->\n        <div *ngIf=\"subheader || subheaderTemplate || titleTemplate\" class=\"page-header-subtitle-container\">\n            <span *ngIf=\"subheader\" class=\"page-header-subtitle\">{{subheader}}</span>\n            <ng-container [ngTemplateOutlet]=\"subheaderTemplate || titleTemplate\"></ng-container>\n        </div>\n\n        <div class=\"page-header-state-container\" role=\"navigation\">\n\n            <!-- Back button -->\n            <button *ngIf=\"backVisible === true\" uxFocusIndicator type=\"button\" class=\"page-header-back-button\" (click)=\"backClick.emit($event)\" aria-label=\"Go Back\">\n                <ux-icon name=\"previous\" class=\"text-primary\"></ux-icon>\n            </button>\n\n            <!-- Breadcrumbs and header -->\n            <div class=\"page-header-title-container\">\n\n                <ux-breadcrumbs *ngIf=\"crumbs && crumbs.length > 0\"\n                    [class.ux-breadcrumbs-small]=\"crumbsStyle === 'small'\"\n                    [crumbs]=\"crumbs\"></ux-breadcrumbs>\n\n                <h1 class=\"page-header-title\">{{header}}</h1>\n\n            </div>\n\n        </div>\n\n        <!-- Primary navigation -->\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <!-- Icon menus -->\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n    </div>\n\n    <!-- Display This Section Optimized for Condensed Mode -->\n    <div class=\"page-header-condensed-content\" *ngIf=\"condensed\">\n\n        <div class=\"page-header-breadcrumbs\" role=\"navigation\">\n            <ux-breadcrumbs [crumbs]=\"crumbs\"></ux-breadcrumbs>\n        </div>\n\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n\n            <!-- The Top Navigation Options -->\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n\n    </div>\n\n</div>\n\n<div *ngIf=\"secondaryNavigation && ((selectedRoot$ | async) !== (selected$ | async))\"\n    class=\"page-header-secondary\" [ngClass]=\"secondaryNavigationAlignment\" role=\"navigation\">\n\n    <ux-tabset *ngIf=\"(selectedRoot$ | async)?.children; let children\" [manual]=\"true\">\n        <ux-tab *ngFor=\"let child of children\"\n            [heading]=\"child.title\"\n            [active]=\"child === (selected$ | async)\"\n            (select)=\"select(child)\"\n            [uxPageHeaderNavigationSecondaryItem]=\"child\"\n            [disabled]=\"child.disabled\">\n        </ux-tab>\n    </ux-tabset>\n\n</div>\n",
                         providers: [PageHeaderService]
                     }] }
         ];
@@ -32179,6 +32453,7 @@
             logoClick: [{ type: i0.Output }],
             titleTemplate: [{ type: i0.ContentChild, args: ['title', { static: false },] }],
             subheaderTemplate: [{ type: i0.ContentChild, args: ['subheader', { static: false },] }],
+            logoTemplate: [{ type: i0.ContentChild, args: ['logoTemplate', { static: false },] }],
             customMenus: [{ type: i0.ContentChildren, args: [PageHeaderCustomMenuDirective, { read: i0.TemplateRef },] }]
         };
         return PageHeaderComponent;
@@ -34381,6 +34656,7 @@
          * @this {THIS}
          * @param {?} minWidth
          * @param {?} maxWidth
+         * @param {?} minHeight
          * @return {THIS}
          */
         SankeyChart.prototype.size = /**
@@ -34389,11 +34665,13 @@
          * @this {THIS}
          * @param {?} minWidth
          * @param {?} maxWidth
+         * @param {?} minHeight
          * @return {THIS}
          */
-            function (minWidth, maxWidth) {
+            function (minWidth, maxWidth, minHeight) {
                 ( /** @type {?} */(this))._minWidth = minWidth;
                 ( /** @type {?} */(this))._maxWidth = maxWidth;
+                ( /** @type {?} */(this))._minHeight = minHeight;
                 return ( /** @type {?} */(this));
             };
         /** Get the sizes of each column */
@@ -34543,7 +34821,7 @@
                     var inputs = _this._links.filter(function (link) { return link.target === node.id; });
                     /** @type {?} */
                     var outputs = _this._links.filter(function (link) { return link.source === node.id; });
-                    return ( /** @type {?} */({ node: node, inputs: inputs, outputs: outputs, value: 0, column: 0, x: 0, y: 0, width: 0, height: 0, falloff: 0, active: false, focus: false }));
+                    return ( /** @type {?} */({ node: node, inputs: inputs, outputs: outputs, value: 0, column: 0, x: 0, y: 0, width: 0, height: 0, naturalHeight: 0, falloff: 0, active: false, focus: false }));
                 });
             };
         /** Get the value for the node based on all its inputs and outputs */
@@ -34659,37 +34937,203 @@
          * @return {?}
          */
             function () {
-                var e_3, _a;
+                var e_3, _a, e_4, _b;
                 // get columns by group
                 /** @type {?} */
                 var groups = this.getColumnGroups();
+                /** @type {?} */
+                var groupList = Object.keys(groups).map(function (group) { return groups[group]; });
                 // get the column with the largest total value
                 /** @type {?} */
-                var total = Object.keys(groups).map(function (group) { return groups[group]; }).reduce(function (count, nodes) {
-                    return Math.max(count, nodes.reduce(function (accumulation, node) { return accumulation + node.value; }, 0));
-                }, 0);
-                for (var column in groups) {
-                    /** @type {?} */
-                    var nodeLinks = groups[column];
-                    try {
-                        // get the proportional size of each node based on the available space
-                        for (var nodeLinks_2 = __values(nodeLinks), nodeLinks_2_1 = nodeLinks_2.next(); !nodeLinks_2_1.done; nodeLinks_2_1 = nodeLinks_2.next()) {
-                            var nodeLink = nodeLinks_2_1.value;
-                            nodeLink.height = ((nodeLink.value / total) * this._height) - this._spacing;
+                var total = groupList.reduce(function (count, nodes) { return Math.max(count, nodes.reduce(function (accumulation, node) { return accumulation + node.value; }, 0)); }, 0);
+                try {
+                    // Calculate node heights
+                    for (var groupList_1 = __values(groupList), groupList_1_1 = groupList_1.next(); !groupList_1_1.done; groupList_1_1 = groupList_1.next()) {
+                        var nodeLinks = groupList_1_1.value;
+                        try {
+                            // get the proportional size of each node based on the available space
+                            for (var nodeLinks_2 = __values(nodeLinks), nodeLinks_2_1 = nodeLinks_2.next(); !nodeLinks_2_1.done; nodeLinks_2_1 = nodeLinks_2.next()) {
+                                var nodeLink = nodeLinks_2_1.value;
+                                nodeLink.naturalHeight = ((nodeLink.value / total) * this._height) - this._spacing;
+                                nodeLink.height = Math.max(nodeLink.naturalHeight, this._minHeight);
+                            }
+                        }
+                        catch (e_4_1) {
+                            e_4 = { error: e_4_1 };
+                        }
+                        finally {
+                            try {
+                                if (nodeLinks_2_1 && !nodeLinks_2_1.done && (_b = nodeLinks_2.return))
+                                    _b.call(nodeLinks_2);
+                            }
+                            finally {
+                                if (e_4)
+                                    throw e_4.error;
+                            }
                         }
                     }
-                    catch (e_3_1) {
-                        e_3 = { error: e_3_1 };
+                }
+                catch (e_3_1) {
+                    e_3 = { error: e_3_1 };
+                }
+                finally {
+                    try {
+                        if (groupList_1_1 && !groupList_1_1.done && (_a = groupList_1.return))
+                            _a.call(groupList_1);
+                    }
+                    finally {
+                        if (e_3)
+                            throw e_3.error;
+                    }
+                }
+                // If minHeight is defined, it might cause some columns to exceed the height of the chart following the
+                // initial height calculation.
+                if (this._minHeight > 0) {
+                    try {
+                        // Recalculate node heights until they fit (if possible)
+                        this.adjustNodeHeightsToFit(groupList);
+                    }
+                    catch (error) {
+                        // If the above recalculation fails, give up and use the naturalHeight (ignore minHeight)
+                        this.setNodesToNaturalHeight(groupList);
+                    }
+                }
+            };
+        /**
+         * Recalculate node heights within height limits until they fit (if possible).
+         * @throws If it is not possible to fit all nodes in the chart due to `minHeight`.
+         */
+        /**
+         * Recalculate node heights within height limits until they fit (if possible).
+         * @throws If it is not possible to fit all nodes in the chart due to `minHeight`.
+         * @param {?} groupList
+         * @return {?}
+         */
+        SankeyChart.prototype.adjustNodeHeightsToFit = /**
+         * Recalculate node heights within height limits until they fit (if possible).
+         * @throws If it is not possible to fit all nodes in the chart due to `minHeight`.
+         * @param {?} groupList
+         * @return {?}
+         */
+            function (groupList) {
+                var _this = this;
+                var e_5, _a, e_6, _b;
+                /** @type {?} */
+                var largestColumn = this.getLargestColumn(groupList);
+                while (largestColumn.height > this._height) {
+                    // Get the list of nodes whose height cannot be reduced
+                    /** @type {?} */
+                    var fixedNodes = largestColumn.nodes.filter(function (nodeLink) { return nodeLink.height <= _this._minHeight; });
+                    // Get the total height in the column which cannot shrink (including spacing)
+                    /** @type {?} */
+                    var fixedHeight = fixedNodes.length * this._minHeight + largestColumn.nodes.length * this._spacing;
+                    // If the unshrinkable height is greater than the available height, we can't continue
+                    if (fixedHeight > this._height) {
+                        throw new Error("Cannot fit data into chart with minHeight = " + this._minHeight + "px (need " + fixedHeight + "px; " + this._height + "px available)");
+                    }
+                    // Find the amount of height which can potentially be reduced
+                    /** @type {?} */
+                    var flexibleHeight = largestColumn.height - fixedHeight;
+                    // Find the amount of height that the above needs to fit into
+                    /** @type {?} */
+                    var availableHeight = this._height - fixedHeight;
+                    // Get the multiplier to reduce the nodes in order to fit the available height
+                    /** @type {?} */
+                    var ratio = availableHeight / flexibleHeight;
+                    try {
+                        // Adjust the nodes and reapply the minHeight
+                        for (var groupList_2 = __values(groupList), groupList_2_1 = groupList_2.next(); !groupList_2_1.done; groupList_2_1 = groupList_2.next()) {
+                            var group = groupList_2_1.value;
+                            try {
+                                for (var group_1 = __values(group), group_1_1 = group_1.next(); !group_1_1.done; group_1_1 = group_1.next()) {
+                                    var nodeLink = group_1_1.value;
+                                    if (nodeLink.height > this._minHeight) {
+                                        nodeLink.height *= ratio;
+                                    }
+                                    if (nodeLink.height < this._minHeight) {
+                                        nodeLink.height = this._minHeight;
+                                    }
+                                }
+                            }
+                            catch (e_6_1) {
+                                e_6 = { error: e_6_1 };
+                            }
+                            finally {
+                                try {
+                                    if (group_1_1 && !group_1_1.done && (_b = group_1.return))
+                                        _b.call(group_1);
+                                }
+                                finally {
+                                    if (e_6)
+                                        throw e_6.error;
+                                }
+                            }
+                        }
+                    }
+                    catch (e_5_1) {
+                        e_5 = { error: e_5_1 };
                     }
                     finally {
                         try {
-                            if (nodeLinks_2_1 && !nodeLinks_2_1.done && (_a = nodeLinks_2.return))
-                                _a.call(nodeLinks_2);
+                            if (groupList_2_1 && !groupList_2_1.done && (_a = groupList_2.return))
+                                _a.call(groupList_2);
                         }
                         finally {
-                            if (e_3)
-                                throw e_3.error;
+                            if (e_5)
+                                throw e_5.error;
                         }
+                    }
+                    largestColumn = this.getLargestColumn(groupList);
+                }
+            };
+        /** Set all nodes height to be the same as the naturalHeight. */
+        /**
+         * Set all nodes height to be the same as the naturalHeight.
+         * @param {?} groupList
+         * @return {?}
+         */
+        SankeyChart.prototype.setNodesToNaturalHeight = /**
+         * Set all nodes height to be the same as the naturalHeight.
+         * @param {?} groupList
+         * @return {?}
+         */
+            function (groupList) {
+                var e_7, _a, e_8, _b;
+                try {
+                    for (var groupList_3 = __values(groupList), groupList_3_1 = groupList_3.next(); !groupList_3_1.done; groupList_3_1 = groupList_3.next()) {
+                        var group = groupList_3_1.value;
+                        try {
+                            for (var group_2 = __values(group), group_2_1 = group_2.next(); !group_2_1.done; group_2_1 = group_2.next()) {
+                                var nodeLink = group_2_1.value;
+                                nodeLink.height = nodeLink.naturalHeight;
+                            }
+                        }
+                        catch (e_8_1) {
+                            e_8 = { error: e_8_1 };
+                        }
+                        finally {
+                            try {
+                                if (group_2_1 && !group_2_1.done && (_b = group_2.return))
+                                    _b.call(group_2);
+                            }
+                            finally {
+                                if (e_8)
+                                    throw e_8.error;
+                            }
+                        }
+                    }
+                }
+                catch (e_7_1) {
+                    e_7 = { error: e_7_1 };
+                }
+                finally {
+                    try {
+                        if (groupList_3_1 && !groupList_3_1.done && (_a = groupList_3.return))
+                            _a.call(groupList_3);
+                    }
+                    finally {
+                        if (e_7)
+                            throw e_7.error;
                     }
                 }
             };
@@ -34738,7 +35182,7 @@
          * @return {?}
          */
             function () {
-                var e_4, _a;
+                var e_9, _a;
                 // get all nodes by group
                 /** @type {?} */
                 var groups = this.getColumnGroups();
@@ -34759,8 +35203,8 @@
                             .reduce(function (top, _node) { return top + _node.height; }, 0) + (this._spacing * groups[nodeLink.column].indexOf(nodeLink));
                     }
                 }
-                catch (e_4_1) {
-                    e_4 = { error: e_4_1 };
+                catch (e_9_1) {
+                    e_9 = { error: e_9_1 };
                 }
                 finally {
                     try {
@@ -34768,8 +35212,8 @@
                             _a.call(_b);
                     }
                     finally {
-                        if (e_4)
-                            throw e_4.error;
+                        if (e_9)
+                            throw e_9.error;
                     }
                 }
             };
@@ -34799,7 +35243,7 @@
          * @return {?}
          */
             function () {
-                var e_5, _a, e_6, _b, e_7, _c;
+                var e_10, _a, e_11, _b, e_12, _c;
                 try {
                     for (var _d = __values(this._nodeLinks), _e = _d.next(); !_e.done; _e = _d.next()) {
                         var nodeLink = _e.value;
@@ -34814,8 +35258,8 @@
                                 link.bottomRight = [nodeLink.x, inputY];
                             }
                         }
-                        catch (e_6_1) {
-                            e_6 = { error: e_6_1 };
+                        catch (e_11_1) {
+                            e_11 = { error: e_11_1 };
                         }
                         finally {
                             try {
@@ -34823,8 +35267,8 @@
                                     _b.call(_f);
                             }
                             finally {
-                                if (e_6)
-                                    throw e_6.error;
+                                if (e_11)
+                                    throw e_11.error;
                             }
                         }
                         /** @type {?} */
@@ -34841,8 +35285,8 @@
                                 outputValue += link.value;
                             }
                         }
-                        catch (e_7_1) {
-                            e_7 = { error: e_7_1 };
+                        catch (e_12_1) {
+                            e_12 = { error: e_12_1 };
                         }
                         finally {
                             try {
@@ -34850,16 +35294,16 @@
                                     _c.call(_h);
                             }
                             finally {
-                                if (e_7)
-                                    throw e_7.error;
+                                if (e_12)
+                                    throw e_12.error;
                             }
                         }
                         // determine how much falloff there is
                         nodeLink.falloff = nodeLink.value - outputValue;
                     }
                 }
-                catch (e_5_1) {
-                    e_5 = { error: e_5_1 };
+                catch (e_10_1) {
+                    e_10 = { error: e_10_1 };
                 }
                 finally {
                     try {
@@ -34867,8 +35311,8 @@
                             _a.call(_d);
                     }
                     finally {
-                        if (e_5)
-                            throw e_5.error;
+                        if (e_10)
+                            throw e_10.error;
                     }
                 }
             };
@@ -34900,6 +35344,52 @@
                 /** @type {?} */
                 var width = (this._width - (this._padding * 2)) / ((this.getColumnCount() * 2) - 1);
                 return Math.min(this._maxWidth, Math.max(this._minWidth, width));
+            };
+        /** Get the column with the greatest height (along with its height) */
+        /**
+         * Get the column with the greatest height (along with its height)
+         * @param {?} groupList
+         * @return {?}
+         */
+        SankeyChart.prototype.getLargestColumn = /**
+         * Get the column with the greatest height (along with its height)
+         * @param {?} groupList
+         * @return {?}
+         */
+            function (groupList) {
+                var e_13, _a;
+                /** @type {?} */
+                var largestColumn = null;
+                /** @type {?} */
+                var largestColumnHeight = 0;
+                try {
+                    for (var groupList_4 = __values(groupList), groupList_4_1 = groupList_4.next(); !groupList_4_1.done; groupList_4_1 = groupList_4.next()) {
+                        var group = groupList_4_1.value;
+                        /** @type {?} */
+                        var totalHeight = group.reduce(function (acc, node) { return acc += node.height; }, 0) + group.length * this._spacing;
+                        if (totalHeight > largestColumnHeight) {
+                            largestColumnHeight = totalHeight;
+                            largestColumn = group;
+                        }
+                    }
+                }
+                catch (e_13_1) {
+                    e_13 = { error: e_13_1 };
+                }
+                finally {
+                    try {
+                        if (groupList_4_1 && !groupList_4_1.done && (_a = groupList_4.return))
+                            _a.call(groupList_4);
+                    }
+                    finally {
+                        if (e_13)
+                            throw e_13.error;
+                    }
+                }
+                return {
+                    nodes: largestColumn,
+                    height: largestColumnHeight
+                };
             };
         return SankeyChart;
     }());
@@ -35237,6 +35727,10 @@
              */
             this.maxWidth = Infinity;
             /**
+             * The minimum height of a node.
+             */
+            this.minHeight = 0;
+            /**
              * Define the function to get the contents of a link tooltip
              */
             this.linkTooltip = this.getLinkTooltip;
@@ -35324,7 +35818,7 @@
                     .nodes(this.nodes)
                     .links(this.links)
                     .spacing(14)
-                    .size(this.minWidth, this.maxWidth)
+                    .size(this.minWidth, this.maxWidth, this.minHeight)
                     .width(this._width || this.nodeContainer.nativeElement.offsetWidth)
                     .height(this._height || this.nodeContainer.nativeElement.offsetHeight)
                     .layout();
@@ -35810,6 +36304,7 @@
             columns: [{ type: i0.Input }],
             minWidth: [{ type: i0.Input }],
             maxWidth: [{ type: i0.Input }],
+            minHeight: [{ type: i0.Input }],
             linkTooltip: [{ type: i0.Input }],
             falloffTooltip: [{ type: i0.Input }],
             color: [{ type: i0.Input }],
@@ -36466,6 +36961,10 @@
              */
             this.pageSize = 20;
             /**
+             * The placeholder text which appears in the text input area when it is empty.
+             */
+            this.placeholder = '';
+            /**
              * Defines the `autocomplete` property on the `input` element which can be used to prevent the browser from
              * displaying autocomplete suggestions.
              */
@@ -36495,16 +36994,18 @@
              */
             this.dropdownOpenChange = new i0.EventEmitter();
             this.propagateChange = function (_) { };
-            this._value$ = new rxjs.BehaviorSubject(null);
+            this._value$ = new rxjs.ReplaySubject(1);
+            this._hasValue = false;
             this._input$ = new rxjs.BehaviorSubject('');
             this._dropdownOpen = false;
+            this._userInput = false;
             this._onDestroy = new rxjs.Subject();
         }
         Object.defineProperty(SelectComponent.prototype, "value", {
             get: /**
              * @return {?}
              */ function () {
-                return this._value$.value;
+                return this._value;
             },
             /** The selected option (for single select) or array of options (for multiple select). */
             set: /**
@@ -36560,10 +37061,13 @@
          */
             function () {
                 var _this = this;
+                this._value$.pipe(operators.skip(1), operators.distinctUntilChanged(), operators.takeUntil(this._onDestroy))
+                    .subscribe(function (value) { return _this.valueChange.emit(value); });
                 // Emit change events
                 this._value$.pipe(operators.takeUntil(this._onDestroy), operators.distinctUntilChanged()).subscribe(function (value) {
-                    _this.valueChange.emit(value);
+                    _this._value = value;
                     _this.propagateChange(value);
+                    _this._hasValue = !!value;
                 });
                 this._input$.pipe(operators.takeUntil(this._onDestroy), operators.distinctUntilChanged()).subscribe(function (value) {
                     _this.inputChange.emit(value);
@@ -36572,8 +37076,12 @@
                 this._input$.pipe(operators.filter(function () { return _this.allowNull; }), operators.filter(function (value) { return !_this.multiple && value !== _this.getDisplay(_this.value); }), operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.value = null; });
                 // Set up filter from input
                 this.filter$ = this._input$.pipe(operators.map(function (input) { return !_this.multiple && input === _this.getDisplay(_this.value) ? '' : input; }), operators.debounceTime(200));
-                // Open the dropdown when filter is nonempty.
-                this.filter$.pipe(operators.filter(function (value) { return value && value.length > 0; }), operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.dropdownOpen = true; });
+                // open the dropdown once the filter debounce has elapsed
+                this.filter$.pipe(operators.filter(function () { return _this._userInput; }), operators.take(1), operators.takeUntil(this._onDestroy))
+                    .subscribe(function () {
+                    _this.dropdownOpen = true;
+                    _this._userInput = false;
+                });
                 // Update the single-select input when the model changes
                 this._value$.pipe(operators.distinctUntilChanged(), operators.delay(0), operators.filter(function (value) { return value !== null && !_this.multiple; }), operators.takeUntil(this._onDestroy)).subscribe(function (value) {
                     _this.input = _this.getDisplay(value);
@@ -36696,20 +37204,22 @@
             function (event) {
                 // Standard keys for typeahead (up/down/esc)
                 this._typeaheadKeyService.handleKey(event, this.singleTypeahead);
-                switch (event.keyCode) {
-                    case keycodes.ENTER:
-                        if (this._dropdownOpen) {
-                            // Set the highlighted option as the value and close
-                            this.value = this.singleTypeahead.highlighted;
-                            this.dropdownOpen = false;
-                        }
-                        else {
-                            this.dropdownOpen = true;
-                        }
-                        // Update the input field. If dropdown isn't open then reset it to the previous value.
-                        this.input = this.getDisplay(this.value);
-                        event.preventDefault();
-                        break;
+                if (event.keyCode === keycodes.ENTER) {
+                    if (this._dropdownOpen) {
+                        // Set the highlighted option as the value and close
+                        this.value = this.singleTypeahead.highlighted;
+                        this.dropdownOpen = false;
+                    }
+                    else {
+                        this.dropdownOpen = true;
+                    }
+                    // Update the input field. If dropdown isn't open then reset it to the previous value.
+                    this.input = this.getDisplay(this.value);
+                    event.preventDefault();
+                }
+                // when the user types and the value is not empty then we should open the dropdown
+                if (event.keyCode !== keycodes.ESCAPE) {
+                    this._userInput = true;
                 }
             };
         /**
@@ -36820,7 +37330,7 @@
         SelectComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-select, ux-combobox, ux-dropdown',
-                        template: "<ux-tag-input *ngIf=\"multiple\"\r\n    #tagInput=\"ux-tag-input\"\r\n    [id]=\"id + '-input'\"\r\n    [(tags)]=\"value\"\r\n    [(input)]=\"input\"\r\n    [ariaLabel]=\"ariaLabel\"\r\n    [autocomplete]=\"autocomplete\"\r\n    [addOnPaste]=\"false\"\r\n    [disabled]=\"disabled\"\r\n    [display]=\"display\"\r\n    [freeInput]=\"false\"\r\n    [placeholder]=\"placeholder\"\r\n    [showTypeaheadOnClick]=\"true\"\r\n    [readonlyInput]=\"readonlyInput\"\r\n    [icon]=\"icon\"\r\n    [clearButton]=\"clearButton\"\r\n    [clearButtonAriaLabel]=\"clearButtonAriaLabel\">\r\n\r\n    <ux-typeahead #multipleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [disabledOptions]=\"value\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"true\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\">\r\n    </ux-typeahead>\r\n\r\n</ux-tag-input>\r\n\r\n<div *ngIf=\"!multiple\"\r\n    class=\"ux-select-container\"\r\n    [class.disabled]=\"disabled\"\r\n    role=\"combobox\"\r\n    [attr.aria-expanded]=\"dropdownOpen\"\r\n    aria-haspopup=\"listbox\">\r\n\r\n    <ng-container *ngIf=\"icon\" [ngTemplateOutlet]=\"icon\"></ng-container>\r\n\r\n    <input #singleInput type=\"text\"\r\n        [attr.id]=\"id + '-input'\"\r\n        class=\"form-control\"\r\n        [attr.aria-activedescendant]=\"highlightedElement?.id\"\r\n        aria-autocomplete=\"list\"\r\n        [attr.aria-controls]=\"singleTypeahead.id\"\r\n        [attr.aria-label]=\"ariaLabel\"\r\n        aria-multiline=\"false\"\r\n        [autocomplete]=\"autocomplete\"\r\n        [(ngModel)]=\"input\"\r\n        [placeholder]=\"placeholder\"\r\n        [disabled]=\"disabled\"\r\n        (click)=\"toggle()\"\r\n        (focus)=\"onFocus()\"\r\n        (blur)=\"inputBlurHandler()\"\r\n        (keydown)=\"inputKeyHandler($event)\"\r\n        [readonly]=\"readonlyInput\">\r\n\r\n    <div class=\"ux-select-icons\">\r\n        <i *ngIf=\"clearButton && allowNull && value\"\r\n           uxFocusIndicator\r\n           [attr.tabindex]=\"disabled ? -1 : 0\"\r\n           [attr.aria-label]=\"clearButtonAriaLabel\"\r\n           class=\"ux-select-icon ux-icon ux-icon-close ux-select-clear-icon\"\r\n           (click)=\"clear(); $event.stopPropagation()\"\r\n           (keydown.enter)=\"clear(); $event.stopPropagation()\">\r\n        </i>\r\n        <i *ngIf=\"!icon\"\r\n           class=\"ux-select-icon ux-icon ux-select-chevron-icon\"\r\n           [class.ux-icon-up]=\"dropDirection === 'up'\"\r\n           [class.ux-icon-down]=\"dropDirection === 'down'\"\r\n           (click)=\"toggle(); $event.stopPropagation()\">\r\n        </i>\r\n    </div>\r\n\r\n    <ux-typeahead #singleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [active]=\"value\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"false\"\r\n        [openOnFilterChange]=\"false\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\"\r\n        (optionSelected)=\"singleOptionSelected($event)\"\r\n        (highlightedElementChange)=\"highlightedElement = $event\">\r\n    </ux-typeahead>\r\n\r\n</div>\r\n",
+                        template: "<ux-tag-input\r\n    *ngIf=\"multiple\"\r\n    #tagInput=\"ux-tag-input\"\r\n    [id]=\"id + '-input'\"\r\n    [tags]=\"_value$ | async\"\r\n    (tagsChange)=\"_value$.next($event)\"\r\n    [(input)]=\"input\"\r\n    [ariaLabel]=\"ariaLabel\"\r\n    [autocomplete]=\"autocomplete\"\r\n    [addOnPaste]=\"false\"\r\n    [disabled]=\"disabled\"\r\n    [display]=\"display\"\r\n    [freeInput]=\"false\"\r\n    [placeholder]=\"placeholder || ''\"\r\n    [tagTemplate]=\"tagTemplate\"\r\n    [showTypeaheadOnClick]=\"true\"\r\n    [readonlyInput]=\"readonlyInput\"\r\n    [icon]=\"icon\"\r\n    [clearButton]=\"clearButton\"\r\n    [clearButtonAriaLabel]=\"clearButtonAriaLabel\"\r\n>\r\n    <ux-typeahead #multipleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [disabledOptions]=\"_value$ | async\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"true\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\">\r\n    </ux-typeahead>\r\n\r\n</ux-tag-input>\r\n\r\n<div *ngIf=\"!multiple\"\r\n    class=\"ux-select-container\"\r\n    [class.disabled]=\"disabled\"\r\n    role=\"combobox\"\r\n    [attr.aria-expanded]=\"dropdownOpen\"\r\n    aria-haspopup=\"listbox\">\r\n\r\n    <input #singleInput type=\"text\"\r\n        [attr.id]=\"id + '-input'\"\r\n        class=\"form-control\"\r\n        [class.ux-tag-input-clear-inset]=\"clearButton && allowNull && _hasValue\"\r\n        [attr.aria-activedescendant]=\"highlightedElement?.id\"\r\n        aria-autocomplete=\"list\"\r\n        [attr.aria-controls]=\"singleTypeahead.id\"\r\n        [attr.aria-label]=\"ariaLabel\"\r\n        aria-multiline=\"false\"\r\n        [autocomplete]=\"autocomplete\"\r\n        [(ngModel)]=\"input\"\r\n        [placeholder]=\"placeholder || ''\"\r\n        [disabled]=\"disabled\"\r\n        (click)=\"toggle()\"\r\n        (focus)=\"onFocus()\"\r\n        (blur)=\"inputBlurHandler()\"\r\n        (keydown)=\"inputKeyHandler($event)\"\r\n        [readonly]=\"readonlyInput\">\r\n\r\n    <div class=\"ux-select-icons\">\r\n        <i *ngIf=\"clearButton && allowNull && _hasValue\"\r\n           uxFocusIndicator\r\n           [attr.tabindex]=\"disabled ? -1 : 0\"\r\n           [attr.aria-label]=\"clearButtonAriaLabel\"\r\n           class=\"ux-select-icon ux-icon ux-icon-close ux-select-clear-icon\"\r\n           (click)=\"clear(); $event.stopPropagation()\"\r\n           (keydown.enter)=\"clear(); $event.stopPropagation()\">\r\n        </i>\r\n        <i *ngIf=\"!icon\"\r\n           class=\"ux-select-icon ux-icon ux-select-chevron-icon\"\r\n           [class.ux-icon-up]=\"dropDirection === 'up'\"\r\n           [class.ux-icon-down]=\"dropDirection === 'down'\"\r\n           (click)=\"toggle(); $event.stopPropagation()\">\r\n        </i>\r\n        <div *ngIf=\"icon\" class=\"ux-custom-icon\">\r\n            <ng-container [ngTemplateOutlet]=\"icon\"></ng-container>\r\n        </div>\r\n        \r\n    </div>\r\n\r\n    <ux-typeahead #singleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [active]=\"_value$ | async\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"false\"\r\n        [openOnFilterChange]=\"false\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\"\r\n        (optionSelected)=\"singleOptionSelected($event)\"\r\n        (highlightedElementChange)=\"highlightedElement = $event\">\r\n    </ux-typeahead>\r\n\r\n</div>",
                         providers: [SELECT_VALUE_ACCESSOR],
                         host: {
                             '[class.ux-select-custom-icon]': '!!icon',
@@ -36853,6 +37363,7 @@
             multiple: [{ type: i0.Input }],
             pageSize: [{ type: i0.Input }],
             placeholder: [{ type: i0.Input }],
+            tagTemplate: [{ type: i0.Input }],
             autocomplete: [{ type: i0.Input }],
             loadingTemplate: [{ type: i0.Input }],
             noOptionsTemplate: [{ type: i0.Input }],
@@ -36930,6 +37441,10 @@
              * Specify a unique Id for the component
              */
             this.id = "ux-tag-input-" + ++uniqueId$9;
+            /**
+             * The editable text appearing in the tag input.
+             */
+            this.input = '';
             /**
              * Controls whether pasting text into the text input area automatically converts that text into one or more tags.
              */
@@ -37049,7 +37564,6 @@
             };
             this.valid = true;
             this.inputValid = true;
-            this._input = '';
             this._tags = [];
             this._onChangeHandler = function () { };
             this._onTouchedHandler = function () { };
@@ -37074,27 +37588,7 @@
              * @param {?} value
              * @return {?}
              */ function (value) {
-                this._tags = value;
-                this._onChangeHandler(this._tags);
-                this.tagsChange.emit(this._tags);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TagInputComponent.prototype, "input", {
-            /** The editable text appearing in the tag input. */
-            get: /**
-             * The editable text appearing in the tag input.
-             * @return {?}
-             */ function () {
-                return this._input;
-            },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
-                this._input = value;
-                this.inputChange.emit(value);
+                this._tags = Array.isArray(value) ? value : [];
             },
             enumerable: true,
             configurable: true
@@ -37354,6 +37848,10 @@
          * @return {?}
          */
             function () {
+                // Prevent error if you click input when at max tag limit
+                if (this.tagInput === undefined) {
+                    return;
+                }
                 // focus the input element
                 this.tagInput.nativeElement.focus();
                 // show the typeahead if we need to
@@ -37475,7 +37973,7 @@
             function () {
                 if (this.commit(this.input)) {
                     this.selectInput();
-                    this.input = '';
+                    this.setInputValue('');
                 }
             };
         /**
@@ -37494,7 +37992,7 @@
             function (tag) {
                 if (this.addTag(tag)) {
                     this.selectInput();
-                    this.input = '';
+                    this.setInputValue('');
                 }
             };
         /**
@@ -37724,6 +38222,7 @@
                         this.selectInput();
                         // Remove the tag
                         this.tags = this.tags.filter(function (_tag, index) { return index !== tagIndex; });
+                        this.setTagsValue(this._tags);
                         // Set focus again since indices have changed
                         this.selectInput();
                         this.tagRemoved.emit(new TagInputEvent(tag));
@@ -37795,8 +38294,33 @@
                     return;
                 }
                 this.tags = [];
-                this.input = '';
+                this.setTagsValue(this._tags);
+                this.setInputValue('');
                 this.focus();
+            };
+        /**
+         * @param {?} text
+         * @return {?}
+         */
+        TagInputComponent.prototype.setInputValue = /**
+         * @param {?} text
+         * @return {?}
+         */
+            function (text) {
+                this.input = text;
+                this.inputChange.emit(text);
+            };
+        /**
+         * @param {?} tags
+         * @return {?}
+         */
+        TagInputComponent.prototype.setTagsValue = /**
+         * @param {?} tags
+         * @return {?}
+         */
+            function (tags) {
+                this._onChangeHandler(tags);
+                this.tagsChange.emit(tags);
             };
         /**
          * @param {?} typeahead
@@ -37901,6 +38425,7 @@
                         this.tagAdding.emit(tagAddingEvent);
                         if (!tagAddingEvent.defaultPrevented()) {
                             this.tags = __spread(this.tags, [tag]);
+                            this.setTagsValue(this._tags);
                             this.tagAdded.emit(new TagInputEvent(tag));
                             this.validate();
                             return true;
@@ -37990,7 +38515,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-tag-input',
                         exportAs: 'ux-tag-input',
-                        template: "<ol [attr.role]=\"typeahead ? 'combobox' : 'none'\"\n    [attr.aria-haspopup]=\"typeahead ? 'listbox' : null\"\n    [class.ux-tag-input-clear-inset]=\"_showClearButton\"\n    [class.ux-tag-input-icon-inset]=\"icon\"\n    (click)=\"toggle()\">\n\n    <li *ngFor=\"let tag of tags; let i = index\" class=\"ux-tag\"\n        [class.disabled]=\"disabled\"\n        [ngClass]=\"tagClass(tag, i, isSelected(i))\"\n        [attr.tabindex]=\"disabled ? null : 0\"\n        [focusIf]=\"isSelected(i)\"\n        (click)=\"tagClickHandler($event, tag, i); $event.stopPropagation()\"\n        (focus)=\"selectTagAt(i)\">\n\n        <ng-container [ngTemplateOutlet]=\"tagTemplate || defaultTagTemplate\"\n            [ngTemplateOutletContext]=\"{tag: tag, index: i, disabled: disabled, api: tagApi}\">\n        </ng-container>\n\n    </li>\n    <li *ngIf=\"isInputVisible()\" class=\"ux-tag-input\" role=\"none\">\n        <input #tagInput type=\"text\" [attr.id]=\"id\" class=\"ux-tag-input\"\n            [(ngModel)]=\"input\"\n            [autocomplete]=\"autocomplete\"\n            [class.invalid]=\"!inputValid\"\n            [attr.aria-activedescendant]=\"highlightedElement?.id\"\n            [attr.aria-autocomplete]=\"typeahead ? 'list' : 'none'\"\n            [attr.aria-controls]=\"typeahead?.id\"\n            [attr.aria-label]=\"ariaLabel\"\n            aria-multiline=\"false\"\n            [placeholder]=\"disabled ? '' : (placeholder || '')\"\n            [disabled]=\"disabled\"\n            [focusIf]=\"isSelected(tags.length)\"\n            (click)=\"toggle(); $event.stopPropagation()\"\n            (focus)=\"inputFocusHandler()\"\n            (paste)=\"inputPasteHandler($event)\"\n            [readonly]=\"readonlyInput\">\n    </li>\n</ol>\n\n<!-- Insert the custom icon if provided -->\n<div class=\"ux-tag-icons\" *ngIf=\"icon || _showClearButton\">\n\n    <!-- Clear All Button -->\n    <i uxFocusIndicator\n        class=\"ux-tag-icon ux-icon ux-icon-close ux-select-clear-icon\"\n        [attr.tabindex]=\"disabled ? -1 : 0\"\n        [attr.aria-label]=\"clearButtonAriaLabel\"\n        *ngIf=\"_showClearButton\"\n        (click)=\"clear(); $event.stopPropagation()\"\n        (keydown.enter)=\"clear(); $event.stopPropagation()\">\n    </i>\n\n    <!-- Custom Icon -->\n    <ng-container *ngIf=\"icon\" [ngTemplateOutlet]=\"icon\"></ng-container>\n</div>\n\n<ng-content #typeahead></ng-content>\n\n<ng-template #defaultTagTemplate let-tag=\"tag\" let-index=\"index\" let-disabled=\"disabled\" let-api=\"api\">\n    <span class=\"ux-tag-text\">{{ api.getTagDisplay(tag) }}</span>\n    <button *ngIf=\"api.canRemoveTagAt(index)\"\n        uxFocusIndicator\n        type=\"button\"\n        class=\"ux-tag-remove\"\n        aria-label=\"Remove Item\"\n        [disabled]=\"disabled\"\n        (click)=\"api.removeTagAt(index); $event.stopPropagation();\">\n        <ux-icon name=\"close\"></ux-icon>\n    </button>\n</ng-template>",
+                        template: "<ol [attr.role]=\"typeahead ? 'combobox' : 'none'\"\n    [attr.aria-haspopup]=\"typeahead ? 'listbox' : null\"\n    [class.ux-tag-input-clear-inset]=\"_showClearButton\"\n    [class.ux-tag-input-icon-inset]=\"icon\"\n    (click)=\"toggle()\">\n\n    <li *ngFor=\"let tag of tags; let i = index\" class=\"ux-tag\"\n        [class.disabled]=\"disabled\"\n        [ngClass]=\"tagClass(tag, i, isSelected(i))\"\n        [attr.tabindex]=\"disabled ? null : 0\"\n        [focusIf]=\"isSelected(i)\"\n        (click)=\"tagClickHandler($event, tag, i); $event.stopPropagation()\"\n        (focus)=\"selectTagAt(i)\">\n\n        <ng-container [ngTemplateOutlet]=\"tagTemplate || defaultTagTemplate\"\n                      [ngTemplateOutletContext]=\"{tag: tag, index: i, disabled: disabled, api: tagApi}\">\n        </ng-container>\n\n    </li>\n    <li *ngIf=\"isInputVisible()\" class=\"ux-tag-input\" role=\"none\">\n        <input #tagInput type=\"text\" [attr.id]=\"id\" class=\"ux-tag-input\"\n               [ngModel]=\"input\"\n               (ngModelChange)=\"setInputValue($event)\"\n               [autocomplete]=\"autocomplete\"\n               [class.invalid]=\"!inputValid\"\n               [attr.aria-activedescendant]=\"highlightedElement?.id\"\n               [attr.aria-autocomplete]=\"typeahead ? 'list' : 'none'\"\n               [attr.aria-controls]=\"typeahead?.id\"\n               [attr.aria-label]=\"ariaLabel\"\n               aria-multiline=\"false\"\n               [placeholder]=\"disabled ? '' : (placeholder || '')\"\n               [disabled]=\"disabled\"\n               [focusIf]=\"isSelected(tags.length)\"\n               (click)=\"toggle(); $event.stopPropagation()\"\n               (focus)=\"inputFocusHandler()\"\n               (paste)=\"inputPasteHandler($event)\"\n               [readonly]=\"readonlyInput\">\n    </li>\n</ol>\n\n<!-- Insert the custom icon if provided -->\n<div class=\"ux-tag-icons\" *ngIf=\"icon || _showClearButton\">\n\n    <!-- Clear All Button -->\n    <i uxFocusIndicator\n       class=\"ux-tag-icon ux-icon ux-icon-close ux-select-clear-icon\"\n       [attr.tabindex]=\"disabled ? -1 : 0\"\n       [attr.aria-label]=\"clearButtonAriaLabel\"\n       *ngIf=\"_showClearButton\"\n       (click)=\"clear(); $event.stopPropagation()\"\n       (keydown.enter)=\"clear(); $event.stopPropagation()\">\n    </i>\n\n    <!-- Custom Icon -->\n    <div *ngIf=\"icon\" class=\"ux-custom-icon\">\n        <ng-container [ngTemplateOutlet]=\"icon\"></ng-container>\n    </div>\n</div>\n\n<ng-content #typeahead></ng-content>\n\n<ng-template #defaultTagTemplate let-tag=\"tag\" let-index=\"index\" let-disabled=\"disabled\" let-api=\"api\">\n    <span class=\"ux-tag-text\">{{ api.getTagDisplay(tag) }}</span>\n    <button *ngIf=\"api.canRemoveTagAt(index)\"\n            uxFocusIndicator\n            type=\"button\"\n            class=\"ux-tag-remove\"\n            aria-label=\"Remove Item\"\n            [disabled]=\"disabled\"\n            (click)=\"api.removeTagAt(index); $event.stopPropagation();\">\n        <ux-icon name=\"close\"></ux-icon>\n    </button>\n</ng-template>",
                         providers: [TAGINPUT_VALUE_ACCESSOR, TAGINPUT_VALIDATOR],
                         host: {
                             '[class.disabled]': 'disabled',
@@ -40735,9 +41260,10 @@
          */
             function (changes) {
                 if (changes.selected) {
-                    if (this.menuTrigger) {
+                    if (this.menuTrigger && !changes.selected.firstChange) {
                         this.menuTrigger.closeMenu();
                     }
+                    this.selectedChange.emit(changes.selected.currentValue);
                     this.onChange(changes.selected.currentValue);
                     this.onTouched();
                 }
@@ -40798,7 +41324,6 @@
          */
             function (value) {
                 this.selected = value;
-                this.selectedChange.emit(value);
             };
         /**
          * @param {?} event
@@ -40812,10 +41337,21 @@
                 this.writeValue(undefined);
                 event.stopPropagation();
             };
+        /**
+         * @return {?}
+         */
+        InputDropdownComponent.prototype._focusFilter = /**
+         * @return {?}
+         */
+            function () {
+                if (this.filterInputElement) {
+                    this.filterInputElement.nativeElement.focus();
+                }
+            };
         InputDropdownComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-input-dropdown',
-                        template: "<div class=\"ux-select-container\">\n    <button #button type=\"button\" class=\"form-control\"\n            [uxMenuTriggerFor]=\"menu\">\n        <ng-template #defaultDisplayContent>{{selected ? (selected | json) : '-'}}</ng-template>\n        <ng-container [ngTemplateOutlet]=\"displayContentRef || defaultDisplayContent\"></ng-container>\n    </button>\n    <div class=\"ux-select-icons\">\n        <ux-icon name=\"close\"\n                 uxFocusIndicator\n                 class=\"ux-select-icon ux-select-clear-icon\"\n                 *ngIf=\"allowNull && selected\"\n                 (click)=\"resetValue($event)\"\n                 (keydown.enter)=\"resetValue($event)\"\n                 tabindex=\"0\">\n        </ux-icon>\n        <ux-icon name=\"chevron-down\"\n                 class=\"ux-select-icon ux-select-chevron-icon\"\n                 (click)=\"menuTrigger.toggleMenu(); $event.stopPropagation()\">\n        </ux-icon>\n    </div>\n</div>\n\n<ux-menu #menu menuClass=\"select-menu\"\n         (opened)=\"filterInputElement.nativeElement.focus()\">\n\n    <div [style.max-height]=\"_maxHeightString\"\n         [style.width.px]=\"button.offsetWidth\">\n\n        <div *ngIf=\"!hideFilter\"\n             class=\"filter-container\">\n\n            <input #filterInput\n                    type=\"text\"\n                    [placeholder]=\"placeholder\"\n                    class=\"form-control\"\n                    [(ngModel)]=\"filterText\"\n                    (input)=\"filterChange.emit(filterText)\"\n                    (click)=\"$event.stopPropagation()\"\n                    [attr.aria-label]=\"ariaLabel || placeholder\"/>\n\n            <button type=\"button\"\n                    class=\"btn btn-flat filter-button\"\n                    (click)=\"resetFilter($event)\"\n                    [tabindex]=\"filterText.length > 0 ? 0 : -1\">\n                <ux-icon [name]=\"filterText.length === 0 ? 'search' : 'close'\"></ux-icon>\n            </button>\n        </div>\n\n        <ng-content></ng-content>\n\n    </div>\n</ux-menu>",
+                        template: "<div class=\"ux-select-container\">\n    <button #button type=\"button\" class=\"form-control\"\n            [uxMenuTriggerFor]=\"menu\">\n        <ng-template #defaultDisplayContent>{{selected ? (selected | json) : '-'}}</ng-template>\n        <ng-container [ngTemplateOutlet]=\"displayContentRef || defaultDisplayContent\"></ng-container>\n    </button>\n    <div class=\"ux-select-icons\">\n        <ux-icon name=\"close\"\n                 uxFocusIndicator\n                 class=\"ux-select-icon ux-select-clear-icon\"\n                 *ngIf=\"allowNull && selected\"\n                 (click)=\"resetValue($event)\"\n                 (keydown.enter)=\"resetValue($event)\"\n                 tabindex=\"0\">\n        </ux-icon>\n        <ux-icon name=\"chevron-down\"\n                 class=\"ux-select-icon ux-select-chevron-icon\"\n                 (click)=\"menuTrigger.toggleMenu(); $event.stopPropagation()\">\n        </ux-icon>\n    </div>\n</div>\n\n<ux-menu #menu menuClass=\"select-menu\"\n         (opened)=\"_focusFilter()\">\n\n    <div [style.max-height]=\"_maxHeightString\"\n         [style.width.px]=\"button.offsetWidth\">\n\n        <div *ngIf=\"!hideFilter\"\n             class=\"filter-container\">\n\n            <input #filterInput\n                    type=\"text\"\n                    [placeholder]=\"placeholder\"\n                    class=\"form-control\"\n                    [(ngModel)]=\"filterText\"\n                    (input)=\"filterChange.emit(filterText)\"\n                    (click)=\"$event.stopPropagation()\"\n                    [attr.aria-label]=\"ariaLabel || placeholder\"/>\n\n            <button type=\"button\"\n                    class=\"btn btn-flat filter-button\"\n                    (click)=\"resetFilter($event)\"\n                    [tabindex]=\"filterText.length > 0 ? 0 : -1\">\n                <ux-icon [name]=\"filterText.length === 0 ? 'search' : 'close'\"></ux-icon>\n            </button>\n        </div>\n\n        <ng-content></ng-content>\n\n    </div>\n</ux-menu>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         providers: [
                             {
@@ -41453,41 +41989,116 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-    var ResizableTableService = /** @class */ (function () {
-        function ResizableTableService() {
+    /**
+     * @abstract
+     */
+    var /**
+     * @abstract
+     */ BaseResizableTableService = /** @class */ (function () {
+        function BaseResizableTableService() {
             /**
-             * Indicate when the columns are ready
+             * Emit an event whenever a column is resized
              */
-            this.isInitialised$ = new rxjs.BehaviorSubject(false);
-            /**
-             * Determine if we are currently resizing
-             */
-            this.isResizing$ = new rxjs.BehaviorSubject(false);
-            /**
-             * Store the percentage widths of each column
-             */
-            this.columns = [];
+            this.onResize$ = new rxjs.Subject();
             /**
              * Store the current width of the table
              */
             this.tableWidth = 0;
             /**
-             * Emit an event whenever a column is resized
+             * Determine if we are currently resizing
              */
-            this.onResize$ = new rxjs.Subject();
+            this.isResizing$ = new rxjs.BehaviorSubject(false);
+            /**
+             * Indicate when the columns are ready
+             */
+            this.isInitialised$ = new rxjs.BehaviorSubject(false);
+            /**
+             * Store the percentage widths of each column
+             */
+            this.columns = [];
         }
         /** Cleanup when service is disposed */
         /**
          * Cleanup when service is disposed
          * @return {?}
          */
-        ResizableTableService.prototype.ngOnDestroy = /**
+        BaseResizableTableService.prototype.ngOnDestroy = /**
          * Cleanup when service is disposed
          * @return {?}
          */
             function () {
                 this.onResize$.complete();
             };
+        /** Update the resizing state */
+        /**
+         * Update the resizing state
+         * @param {?} isResizing
+         * @return {?}
+         */
+        BaseResizableTableService.prototype.setResizing = /**
+         * Update the resizing state
+         * @param {?} isResizing
+         * @return {?}
+         */
+            function (isResizing) {
+                this.isResizing$.next(isResizing);
+            };
+        /** Get the width of a column in a specific unit */
+        /**
+         * Get the width of a column in a specific unit
+         * @param {?} index
+         * @param {?} unit
+         * @param {?=} columns
+         * @return {?}
+         */
+        BaseResizableTableService.prototype.getColumnWidth = /**
+         * Get the width of a column in a specific unit
+         * @param {?} index
+         * @param {?} unit
+         * @param {?=} columns
+         * @return {?}
+         */
+            function (index, unit, columns) {
+                if (columns === void 0) {
+                    columns = this.columns;
+                }
+                switch (unit) {
+                    case ColumnUnit.Percentage:
+                        return columns[index];
+                    case ColumnUnit.Pixel:
+                        return (this.tableWidth / 100) * columns[index];
+                }
+            };
+        return BaseResizableTableService;
+    }());
+    /** @enum {number} */
+    var ColumnUnit = {
+        Pixel: 0,
+        Percentage: 1,
+    };
+    ColumnUnit[ColumnUnit.Pixel] = 'Pixel';
+    ColumnUnit[ColumnUnit.Percentage] = 'Percentage';
+    /** @enum {number} */
+    var ResizableTableType = {
+        Standard: 0,
+        Expand: 1,
+    };
+    ResizableTableType[ResizableTableType.Standard] = 'Standard';
+    ResizableTableType[ResizableTableType.Expand] = 'Expand';
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var ResizableTableService = /** @class */ (function (_super) {
+        __extends(ResizableTableService, _super);
+        function ResizableTableService() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            /**
+             * Define the type of resizing we should use
+             */
+            _this.type = ResizableTableType.Standard;
+            return _this;
+        }
         /** Store the size of each column */
         /**
          * Store the size of each column
@@ -41574,17 +42185,17 @@
                 }
                 // if there is overflow identify which columns can be resized
                 /** @type {?} */
-                var variableColumns = this._columns.filter(function (column) { return !column.disabled && _this.getColumnWidth(column.getCellIndex(), ColumnUnit.Pixel, columns) > column.minWidth; });
+                var variableColumns = this._columns.filter(function (column) { return !column.disabled && _this.getColumnWidth(column.getCellIndex(), ColumnUnit$1.Pixel, columns) > column.minWidth; });
                 // if there are no columns that can be resized then stop here
                 if (variableColumns.length === 0) {
                     return columns;
                 }
                 // determine the total width of the variable columns
                 /** @type {?} */
-                var totalWidth = this._columns.reduce(function (width, column) { return width + _this.getColumnWidth(column.getCellIndex(), ColumnUnit.Pixel, columns); }, 0);
+                var totalWidth = this._columns.reduce(function (width, column) { return width + _this.getColumnWidth(column.getCellIndex(), ColumnUnit$1.Pixel, columns); }, 0);
                 // determine to the width of all the variable columns
                 /** @type {?} */
-                var variableColumnsWidth = variableColumns.reduce(function (width, column) { return width + _this.getColumnWidth(column.getCellIndex(), ColumnUnit.Pixel, columns); }, 0);
+                var variableColumnsWidth = variableColumns.reduce(function (width, column) { return width + _this.getColumnWidth(column.getCellIndex(), ColumnUnit$1.Pixel, columns); }, 0);
                 // determine how much the columns are currently too large (ignoring fixed columns)
                 /** @type {?} */
                 var targetWidth = this.tableWidth - (totalWidth - variableColumnsWidth);
@@ -41595,58 +42206,18 @@
                 /** @type {?} */
                 var target = variableColumns.reduce(function (widest, column) {
                     /** @type {?} */
-                    var columnWidth = _this.getColumnWidth(column.getCellIndex(), ColumnUnit.Pixel, columns);
+                    var columnWidth = _this.getColumnWidth(column.getCellIndex(), ColumnUnit$1.Pixel, columns);
                     /** @type {?} */
-                    var widestWidth = _this.getColumnWidth(widest.getCellIndex(), ColumnUnit.Pixel, columns);
+                    var widestWidth = _this.getColumnWidth(widest.getCellIndex(), ColumnUnit$1.Pixel, columns);
                     return columnWidth > widestWidth ? column : widest;
                 });
                 // perform the resize
-                columns = this.setColumnWidth(target.getCellIndex(), this.getColumnWidth(target.getCellIndex(), ColumnUnit.Pixel, columns) - difference, ColumnUnit.Pixel, columns);
+                columns = this.setColumnWidth(target.getCellIndex(), this.getColumnWidth(target.getCellIndex(), ColumnUnit$1.Pixel, columns) - difference, ColumnUnit$1.Pixel, columns);
                 // check if we are still over the limit (allow some variance for javascript double precision)
                 if (columns.reduce(function (width, column) { return width + column; }) > 100.01) {
                     return this.ensureNoOverflow(columns);
                 }
                 return columns;
-            };
-        /** Update the resizing state */
-        /**
-         * Update the resizing state
-         * @param {?} isResizing
-         * @return {?}
-         */
-        ResizableTableService.prototype.setResizing = /**
-         * Update the resizing state
-         * @param {?} isResizing
-         * @return {?}
-         */
-            function (isResizing) {
-                this.isResizing$.next(isResizing);
-            };
-        /** Get the width of a column in a specific unit */
-        /**
-         * Get the width of a column in a specific unit
-         * @param {?} index
-         * @param {?} unit
-         * @param {?=} columns
-         * @return {?}
-         */
-        ResizableTableService.prototype.getColumnWidth = /**
-         * Get the width of a column in a specific unit
-         * @param {?} index
-         * @param {?} unit
-         * @param {?=} columns
-         * @return {?}
-         */
-            function (index, unit, columns) {
-                if (columns === void 0) {
-                    columns = this.columns;
-                }
-                switch (unit) {
-                    case ColumnUnit.Percentage:
-                        return columns[index];
-                    case ColumnUnit.Pixel:
-                        return (this.tableWidth / 100) * columns[index];
-                }
             };
         /** Allow setting the column size in any unit */
         /**
@@ -41673,10 +42244,10 @@
                 /** @type {?} */
                 var sizes = __spread(columns);
                 switch (unit) {
-                    case ColumnUnit.Percentage:
+                    case ColumnUnit$1.Percentage:
                         sizes[index] = value;
                         break;
-                    case ColumnUnit.Pixel:
+                    case ColumnUnit$1.Pixel:
                         sizes[index] = (value / this.tableWidth) * 100;
                         break;
                 }
@@ -41713,10 +42284,10 @@
                 /** @type {?} */
                 var columns = ( /** @type {?} */(__spread(this.columns)));
                 // resize the column to the desired size
-                columns = ( /** @type {?} */(this.setColumnWidth(index, Math.round(this.getColumnWidth(index, ColumnUnit.Pixel) + delta), ColumnUnit.Pixel, columns)));
-                columns = ( /** @type {?} */(this.setColumnWidth(sibling, Math.round(this.getColumnWidth(sibling, ColumnUnit.Pixel) - delta), ColumnUnit.Pixel, columns)));
+                columns = ( /** @type {?} */(this.setColumnWidth(index, Math.round(this.getColumnWidth(index, ColumnUnit$1.Pixel) + delta), ColumnUnit$1.Pixel, columns)));
+                columns = ( /** @type {?} */(this.setColumnWidth(sibling, Math.round(this.getColumnWidth(sibling, ColumnUnit$1.Pixel) - delta), ColumnUnit$1.Pixel, columns)));
                 // if the move is not possible then stop here
-                if (!this.isWidthValid(index, this.getColumnWidth(index, ColumnUnit.Pixel, columns)) || !this.isWidthValid(sibling, this.getColumnWidth(sibling, ColumnUnit.Pixel, columns))) {
+                if (!this.isWidthValid(index, this.getColumnWidth(index, ColumnUnit$1.Pixel, columns)) || !this.isWidthValid(sibling, this.getColumnWidth(sibling, ColumnUnit$1.Pixel, columns))) {
                     return;
                 }
                 // check that we add up to exactly 100%
@@ -41753,7 +42324,7 @@
                 /** @type {?} */
                 var variableColumns = this._columns.filter(function (column) { return !column.isFixedWidth && !column.disabled; });
                 // find one that is greater than its min width by enough
-                return variableColumns.reverse().find(function (column) { return _this.getColumnWidth(column.getCellIndex(), ColumnUnit.Pixel) >= column.minWidth + delta; });
+                return variableColumns.reverse().find(function (column) { return _this.getColumnWidth(column.getCellIndex(), ColumnUnit$1.Pixel) >= column.minWidth + delta; });
             };
         /**
          * @param {?} index
@@ -41837,14 +42408,20 @@
             { type: i0.Injectable }
         ];
         return ResizableTableService;
-    }());
+    }(BaseResizableTableService));
     /** @enum {number} */
-    var ColumnUnit = {
+    var ColumnUnit$1 = {
         Pixel: 0,
         Percentage: 1,
     };
-    ColumnUnit[ColumnUnit.Pixel] = 'Pixel';
-    ColumnUnit[ColumnUnit.Percentage] = 'Percentage';
+    ColumnUnit$1[ColumnUnit$1.Pixel] = 'Pixel';
+    ColumnUnit$1[ColumnUnit$1.Percentage] = 'Percentage';
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var RESIZABLE_TABLE_SERVICE_TOKEN = new i0.InjectionToken('RESIZABLE_TABLE_SERVICE_TOKEN');
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -41867,8 +42444,9 @@
          */
             function () {
                 var _this = this;
+                this._minWidth = parseFloat(getComputedStyle(this._elementRef.nativeElement).minWidth);
                 // update the sizes when columns are resized
-                rxjs.combineLatest(this._table.onResize$, this._table.isResizing$).pipe(operators.takeUntil(this._onDestroy)).subscribe(function () {
+                rxjs.combineLatest([this._table.onResize$, this._table.isResizing$]).pipe(operators.takeUntil(this._onDestroy)).subscribe(function () {
                     _this.setColumnWidth();
                     _this.setColumnFlex();
                 });
@@ -41907,8 +42485,13 @@
             function () {
                 /** @type {?} */
                 var width = this._table.isResizing$.value || this._table.getColumnDisabled(this.getCellIndex()) ?
-                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit.Pixel) + "px" :
-                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit.Percentage) + "%";
+                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Pixel) + "px" :
+                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Percentage) + "%";
+                if (this._table.type === ResizableTableType.Expand) {
+                    /** @type {?} */
+                    var minWidth = Math.max(this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Pixel), this._minWidth);
+                    this._renderer.setStyle(this._elementRef.nativeElement, 'min-width', minWidth + "px");
+                }
                 this._renderer.setStyle(this._elementRef.nativeElement, 'width', width);
             };
         /** Set the flex value of the column */
@@ -41927,7 +42510,7 @@
                     return;
                 }
                 /** @type {?} */
-                var flex = this._table.isInitialised$.value ? "0 1 " + this._table.getColumnWidth(this.getCellIndex(), ColumnUnit.Percentage) + "%" : '';
+                var flex = this._table.isInitialised$.value ? "0 1 " + this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Percentage) + "%" : '';
                 this._renderer.setStyle(this._elementRef.nativeElement, 'flex', flex);
             };
         ResizableTableCellDirective.decorators = [
@@ -41940,7 +42523,7 @@
             return [
                 { type: i0.ElementRef },
                 { type: i0.Renderer2 },
-                { type: ResizableTableService }
+                { type: BaseResizableTableService, decorators: [{ type: i0.Inject, args: [RESIZABLE_TABLE_SERVICE_TOKEN,] }] }
             ];
         };
         return ResizableTableCellDirective;
@@ -41973,14 +42556,18 @@
             this._onDestroy = new rxjs.Subject();
             // initially emit the size when we have initialised
             _table.isInitialised$.pipe(operators.takeUntil(this._onDestroy), operators.filter(function (isInitialised) { return isInitialised; }))
-                .subscribe(function () { return _this.widthChange.emit(_table.getColumnWidth(_this.getCellIndex(), ColumnUnit.Pixel)); });
+                .subscribe(function () {
+                // get the current min-width
+                _this._minWidth = parseFloat(getComputedStyle(_this._elementRef.nativeElement).minWidth);
+                _this.widthChange.emit(_table.getColumnWidth(_this.getCellIndex(), ColumnUnit$1.Pixel));
+            });
             // ensure the correct width gets emitted on column size change
             _table.onResize$.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () {
                 _this.setColumnWidth();
                 _this.setColumnFlex();
                 // get the current table width
                 /** @type {?} */
-                var width = _table.getColumnWidth(_this.getCellIndex(), ColumnUnit.Pixel);
+                var width = _table.getColumnWidth(_this.getCellIndex(), ColumnUnit$1.Pixel);
                 // check if the width actually changed - otherwise don't emit
                 if (_this._width === undefined || Math.max(width, _this._width) - Math.min(width, _this._width) >= 1) {
                     _this.widthChange.emit(width);
@@ -42018,7 +42605,7 @@
                 else {
                     // if it is initialised then resize the column
                     /** @type {?} */
-                    var currentWidth = this._table.getColumnWidth(this.getCellIndex(), ColumnUnit.Pixel);
+                    var currentWidth = this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Pixel);
                     // resize the column by the difference in size
                     this._table.resizeColumn(this.getCellIndex(), this._width - currentWidth, false);
                 }
@@ -42176,8 +42763,13 @@
                 }
                 /** @type {?} */
                 var width = this._table.isResizing$.value ?
-                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit.Pixel) + "px" :
-                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit.Percentage) + "%";
+                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Pixel) + "px" :
+                    this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Percentage) + "%";
+                if (this._table.type === ResizableTableType.Expand) {
+                    /** @type {?} */
+                    var minWidth = Math.max(this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Pixel), this._minWidth);
+                    this._renderer.setStyle(this._elementRef.nativeElement, 'min-width', minWidth + "px");
+                }
                 this._renderer.setStyle(this._elementRef.nativeElement, 'width', width);
                 this._renderer.setStyle(this._elementRef.nativeElement, 'max-width', null);
             };
@@ -42196,13 +42788,14 @@
                     this._renderer.setStyle(this._elementRef.nativeElement, 'flex', 'none');
                 }
                 /** @type {?} */
-                var flex = this._table.isInitialised$.value ? "0 1 " + this._table.getColumnWidth(this.getCellIndex(), ColumnUnit.Percentage) + "%" : '';
+                var flex = this._table.isInitialised$.value ? "0 1 " + this._table.getColumnWidth(this.getCellIndex(), ColumnUnit$1.Percentage) + "%" : '';
                 this._renderer.setStyle(this._elementRef.nativeElement, 'flex', flex);
             };
         ResizableTableColumnComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: '[uxResizableTableColumn]',
                         template: "<ng-content></ng-content>\n\n<div #handle\n     uxDrag\n     uxFocusIndicator\n     tabindex=\"0\"\n     aria-label=\"Column resize handle. Use arrow keys to change the column width.\"\n     class=\"ux-resizable-table-column-handle\"\n     *ngIf=\"!disabled\"\n     (onDragStart)=\"onDragStart($event)\"\n     (onDrag)=\"onDragMove($event, handle)\"\n     (onDragEnd)=\"onDragEnd()\"\n     (keydown.ArrowLeft)=\"onMoveLeft()\"\n     (keydown.ArrowRight)=\"onMoveRight()\">\n\n     <div class=\"ux-resizable-table-column-handle-icon\"></div>\n</div>\n",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         host: {
                             class: 'ux-resizable-table-column'
                         }
@@ -42212,7 +42805,7 @@
         ResizableTableColumnComponent.ctorParameters = function () {
             return [
                 { type: i0.ElementRef },
-                { type: ResizableTableService },
+                { type: BaseResizableTableService, decorators: [{ type: i0.Inject, args: [RESIZABLE_TABLE_SERVICE_TOKEN,] }] },
                 { type: i0.Renderer2 }
             ];
         };
@@ -42227,20 +42820,23 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-    var ResizableTableDirective = /** @class */ (function () {
-        function ResizableTableDirective(_elementRef, _table, _renderer, resize) {
+    /**
+     * @abstract
+     */
+    var BaseResizableTableDirective = /** @class */ (function () {
+        function BaseResizableTableDirective(_elementRef, _table, _renderer, resize) {
             var _this = this;
             this._elementRef = _elementRef;
             this._table = _table;
             this._renderer = _renderer;
             /**
-             * Store the initialised state of the table
-             */
-            this._initialised = false;
-            /**
              * Unsubscribe from the observables
              */
             this._onDestroy = new rxjs.Subject();
+            /**
+             * Store the initialised state of the table
+             */
+            this._initialised = false;
             // watch for the table being resized
             resize.addResizeListener(this._elementRef.nativeElement).pipe(operators.takeUntil(this._onDestroy)).subscribe(function () {
                 // store the latest table size
@@ -42248,15 +42844,13 @@
                 // run the initial logic if the table is fully visible
                 _this.onTableReady();
             });
-            // we should hide any horizontal overflow when we are resizing
-            this._table.isResizing$.pipe(operators.takeUntil(this._onDestroy)).subscribe(this.setOverflow.bind(this));
         }
         /** Once we have the columns make them resizable and watch for changes to columns */
         /**
          * Once we have the columns make them resizable and watch for changes to columns
          * @return {?}
          */
-        ResizableTableDirective.prototype.ngAfterViewInit = /**
+        BaseResizableTableDirective.prototype.ngAfterViewInit = /**
          * Once we have the columns make them resizable and watch for changes to columns
          * @return {?}
          */
@@ -42268,7 +42862,7 @@
          * Cleanup after the component is destroyed
          * @return {?}
          */
-        ResizableTableDirective.prototype.ngOnDestroy = /**
+        BaseResizableTableDirective.prototype.ngOnDestroy = /**
          * Cleanup after the component is destroyed
          * @return {?}
          */
@@ -42276,6 +42870,430 @@
                 this._onDestroy.next();
                 this._onDestroy.complete();
             };
+        /** Set all resizable columns to the same width */
+        /**
+         * Set all resizable columns to the same width
+         * @return {?}
+         */
+        BaseResizableTableDirective.prototype.setUniformWidths = /**
+         * Set all resizable columns to the same width
+         * @return {?}
+         */
+            function () {
+                this._table.setUniformWidths();
+            };
+        /** Get the smallest tbody width taking into account scrollbars (uxFixedHeaderTable) */
+        /**
+         * Get the smallest tbody width taking into account scrollbars (uxFixedHeaderTable)
+         * @return {?}
+         */
+        BaseResizableTableDirective.prototype.getScrollWidth = /**
+         * Get the smallest tbody width taking into account scrollbars (uxFixedHeaderTable)
+         * @return {?}
+         */
+            function () {
+                return Array.from((( /** @type {?} */(this._elementRef.nativeElement))).tBodies)
+                    .reduce(function (width, tbody) { return Math.min(width, tbody.scrollWidth); }, (( /** @type {?} */(this._elementRef.nativeElement))).offsetWidth);
+            };
+        /** @nocollapse */
+        BaseResizableTableDirective.ctorParameters = function () {
+            return [
+                { type: i0.ElementRef },
+                { type: BaseResizableTableService, decorators: [{ type: i0.Inject, args: [RESIZABLE_TABLE_SERVICE_TOKEN,] }] },
+                { type: i0.Renderer2 },
+                { type: ResizeService }
+            ];
+        };
+        return BaseResizableTableDirective;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var ResizableExpandingTableService = /** @class */ (function (_super) {
+        __extends(ResizableExpandingTableService, _super);
+        function ResizableExpandingTableService() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            /**
+             * Define the type of resizing we should use
+             */
+            _this.type = ResizableTableType.Expand;
+            return _this;
+        }
+        /** Store the size of each column */
+        /**
+         * Store the size of each column
+         * @param {?} columns
+         * @return {?}
+         */
+        ResizableExpandingTableService.prototype.setColumns = /**
+         * Store the size of each column
+         * @param {?} columns
+         * @return {?}
+         */
+            function (columns) {
+                var _this = this;
+                // store the current columns
+                this._columns = columns;
+                // store the sizes
+                this.columns = columns.map(function (column) { return (column.getNaturalWidth() / _this.tableWidth) * 100; });
+                // ensure all the columns fit
+                this._columns.forEach(function (column, idx) {
+                    if (!column.disabled) {
+                        _this.columns = _this.setColumnWidth(idx, _this.columns[idx], ColumnUnit$2.Percentage, _this.columns);
+                    }
+                });
+                // indicate we are now initialised
+                if (this.isInitialised$.value === false) {
+                    this.isInitialised$.next(true);
+                }
+            };
+        /** Set all resizable columns to the same width */
+        /**
+         * Set all resizable columns to the same width
+         * @return {?}
+         */
+        ResizableExpandingTableService.prototype.setUniformWidths = /**
+         * Set all resizable columns to the same width
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                // set any disabled columns to their specified width
+                this.columns = this._columns.map(function (column) { return column.disabled ? (column.getNaturalWidth() / _this.tableWidth) * 100 : 0; });
+                // check to see if we've reached 100% of the table width
+                /** @type {?} */
+                var totalWidth = this.columns.reduce(function (partial, columnWidth) { return partial + columnWidth; });
+                if (totalWidth > 98) {
+                    // remove overflow
+                    this.columns = this.ensureNoOverflow(this.columns);
+                }
+                else {
+                    // get the list of resizable columns
+                    /** @type {?} */
+                    var resizableColumns = this._columns.toArray().filter(function (column) { return !column.disabled; });
+                    // work out what we need to add to each column to make up the full width
+                    /** @type {?} */
+                    var newWidth_1 = (98 - totalWidth) / resizableColumns.length;
+                    // set the non-disabled columns to the new width
+                    this.columns = this._columns.map(function (column, idx) { return column.disabled ? _this.columns[idx] : newWidth_1; });
+                }
+                // do the resizing
+                this._columns.forEach(function (column, idx) {
+                    if (!column.disabled) {
+                        _this.resizeColumn(idx, 0, false);
+                    }
+                });
+            };
+        /**
+         * @param {?} columns
+         * @return {?}
+         */
+        ResizableExpandingTableService.prototype.ensureNoOverflow = /**
+         * @param {?} columns
+         * @return {?}
+         */
+            function (columns) {
+                var _this = this;
+                // get the total width
+                /** @type {?} */
+                var total = columns.reduce(function (width, column) { return width + column; });
+                // if we have no overflow then we don't need to do anything
+                if (total <= 100) {
+                    return columns;
+                }
+                // if there is overflow identify which columns can be resized
+                /** @type {?} */
+                var variableColumns = this._columns.filter(function (column) { return !column.disabled && _this.getColumnWidth(column.getCellIndex(), ColumnUnit$2.Pixel, columns) > column.minWidth; });
+                // if there are no columns that can be resized then stop here
+                if (variableColumns.length === 0) {
+                    return columns;
+                }
+                // determine the total width of the variable columns
+                /** @type {?} */
+                var totalWidth = this._columns.reduce(function (width, column) { return width + _this.getColumnWidth(column.getCellIndex(), ColumnUnit$2.Pixel, columns); }, 0);
+                // determine to the width of all the variable columns
+                /** @type {?} */
+                var variableColumnsWidth = variableColumns.reduce(function (width, column) { return width + _this.getColumnWidth(column.getCellIndex(), ColumnUnit$2.Pixel, columns); }, 0);
+                // determine how much the columns are currently too large (ignoring fixed columns)
+                /** @type {?} */
+                var targetWidth = this.tableWidth - (totalWidth - variableColumnsWidth);
+                // determine how much we need to reduce a column by
+                /** @type {?} */
+                var difference = variableColumnsWidth - targetWidth;
+                // find the column with the largest size
+                /** @type {?} */
+                var target = variableColumns.reduce(function (widest, column) {
+                    /** @type {?} */
+                    var columnWidth = _this.getColumnWidth(column.getCellIndex(), ColumnUnit$2.Pixel, columns);
+                    /** @type {?} */
+                    var widestWidth = _this.getColumnWidth(widest.getCellIndex(), ColumnUnit$2.Pixel, columns);
+                    return columnWidth > widestWidth ? column : widest;
+                });
+                // perform the resize
+                columns = this.setColumnWidth(target.getCellIndex(), this.getColumnWidth(target.getCellIndex(), ColumnUnit$2.Pixel, columns) - difference, ColumnUnit$2.Pixel, columns);
+                // check if we are still over the limit (allow some variance for javascript double precision)
+                if (columns.reduce(function (width, column) { return width + column; }) > 100.01) {
+                    return this.ensureNoOverflow(columns);
+                }
+                return columns;
+            };
+        /** Allow setting the column size in any unit */
+        /**
+         * Allow setting the column size in any unit
+         * @param {?} index
+         * @param {?} value
+         * @param {?} unit
+         * @param {?=} columns
+         * @return {?}
+         */
+        ResizableExpandingTableService.prototype.setColumnWidth = /**
+         * Allow setting the column size in any unit
+         * @param {?} index
+         * @param {?} value
+         * @param {?} unit
+         * @param {?=} columns
+         * @return {?}
+         */
+            function (index, value, unit, columns) {
+                if (columns === void 0) {
+                    columns = this.columns;
+                }
+                // create a new array so we keep the instance array immutable
+                /** @type {?} */
+                var sizes = __spread(columns);
+                switch (unit) {
+                    case ColumnUnit$2.Percentage:
+                        sizes[index] = value;
+                        break;
+                    case ColumnUnit$2.Pixel:
+                        sizes[index] = (value / this.tableWidth) * 100;
+                        break;
+                }
+                // update the instance variable
+                return sizes;
+            };
+        /** Resize a column by a specific pixel amount */
+        /**
+         * Resize a column by a specific pixel amount
+         * @param {?} index
+         * @param {?} delta
+         * @param {?=} isDragging
+         * @return {?}
+         */
+        ResizableExpandingTableService.prototype.resizeColumn = /**
+         * Resize a column by a specific pixel amount
+         * @param {?} index
+         * @param {?} delta
+         * @param {?=} isDragging
+         * @return {?}
+         */
+            function (index, delta, isDragging) {
+                if (isDragging === void 0) {
+                    isDragging = true;
+                }
+                /** @type {?} */
+                var columns = ( /** @type {?} */(__spread(this.columns)));
+                // convert the delta to a percentage value
+                /** @type {?} */
+                var percentageDelta = (delta / this.tableWidth) * 100;
+                columns = this.setColumnWidth(index, this.columns[index] + percentageDelta, ColumnUnit$2.Percentage, this.columns);
+                this.columns = columns;
+                // emit the resize event for each column
+                this.onResize$.next();
+            };
+        /**
+         * @param {?} index
+         * @return {?}
+         */
+        ResizableExpandingTableService.prototype.getColumn = /**
+         * @param {?} index
+         * @return {?}
+         */
+            function (index) {
+                return this._columns ? this._columns.toArray()[index] : null;
+            };
+        /**
+         * @param {?} index
+         * @return {?}
+         */
+        ResizableExpandingTableService.prototype.getColumnDisabled = /**
+         * @param {?} index
+         * @return {?}
+         */
+            function (index) {
+                return this.getColumn(index) ? this.getColumn(index).disabled : false;
+            };
+        ResizableExpandingTableService.decorators = [
+            { type: i0.Injectable }
+        ];
+        return ResizableExpandingTableService;
+    }(BaseResizableTableService));
+    /** @enum {number} */
+    var ColumnUnit$2 = {
+        Pixel: 0,
+        Percentage: 1,
+    };
+    ColumnUnit$2[ColumnUnit$2.Pixel] = 'Pixel';
+    ColumnUnit$2[ColumnUnit$2.Percentage] = 'Percentage';
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var ResizableExpandingTableDirective = /** @class */ (function (_super) {
+        __extends(ResizableExpandingTableDirective, _super);
+        function ResizableExpandingTableDirective(elementRef, table, renderer, resize, _platformId) {
+            var _this = _super.call(this, elementRef, table, renderer, resize) || this;
+            _this._platformId = _platformId;
+            /**
+             * Has horizontal overflow
+             */
+            _this._overflowX = false;
+            return _this;
+        }
+        /**
+         * @return {?}
+         */
+        ResizableExpandingTableDirective.prototype.ngAfterViewInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                var e_1, _a;
+                _super.prototype.ngAfterViewInit.call(this);
+                if (common.isPlatformBrowser(this._platformId)) {
+                    /** @type {?} */
+                    var tableHeaders_1 = this._elementRef.nativeElement.querySelectorAll('thead > tr');
+                    var _loop_1 = function (body) {
+                        rxjs.fromEvent(body, 'scroll').pipe(operators.takeUntil(this_1._onDestroy)).subscribe(function () {
+                            Array.from(tableHeaders_1).forEach(function (thead) { return _this._renderer.setStyle(thead, 'margin-left', "-" + body.scrollLeft + "px"); });
+                        });
+                    };
+                    var this_1 = this;
+                    try {
+                        for (var _b = __values(Array.from(this._elementRef.nativeElement.tBodies)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                            var body = _c.value;
+                            _loop_1(body);
+                        }
+                    }
+                    catch (e_1_1) {
+                        e_1 = { error: e_1_1 };
+                    }
+                    finally {
+                        try {
+                            if (_c && !_c.done && (_a = _b.return))
+                                _a.call(_b);
+                        }
+                        finally {
+                            if (e_1)
+                                throw e_1.error;
+                        }
+                    }
+                    /** checks if the table is resizing and allows for a class to be added for when moving from
+                     overflow to no overflow */
+                    this._table.onResize$.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () {
+                        _this._overflowX = _this._elementRef.nativeElement.tBodies[0].scrollWidth > _this._elementRef.nativeElement.tBodies[0].offsetWidth;
+                    });
+                }
+            };
+        /**
+         * If this is being used within a modal the table width may initially be zero. This can cause some issues when it does actually appear
+         * visibily on screen. We should only setup the table once we actually have a width/
+         */
+        /**
+         * If this is being used within a modal the table width may initially be zero. This can cause some issues when it does actually appear
+         * visibily on screen. We should only setup the table once we actually have a width/
+         * @return {?}
+         */
+        ResizableExpandingTableDirective.prototype.onTableReady = /**
+         * If this is being used within a modal the table width may initially be zero. This can cause some issues when it does actually appear
+         * visibily on screen. We should only setup the table once we actually have a width/
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                // if we have already initialised or the table width is currently 0 then do nothing
+                if (this._initialised || this.getScrollWidth() === 0) {
+                    // if the table has been initialized but the width is now 0
+                    // for example, due to the element being hidden (eg. in a collapsed accordion)
+                    // we would need to re-run this logic whenever the width is back over 0
+                    // to do this we can mark the table as not having been initialized
+                    if (this._initialised && this.getScrollWidth() === 0) {
+                        this._initialised = false;
+                    }
+                    return;
+                }
+                // ensure we initially set the table width
+                this._table.tableWidth = this.getScrollWidth();
+                // set the columns - prevent expression changed error
+                Promise.resolve().then(function () {
+                    // initially set the columns
+                    _this._table.setColumns(_this.columns);
+                    // force relayout to occur to ensure the UI is consistent with the internal state
+                    _this.updateLayout();
+                });
+                // watch for any future changes to the columns
+                this.columns.changes.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () {
+                    return Promise.resolve().then(function () { return _this._table.setColumns(_this.columns); });
+                });
+                this._initialised = true;
+            };
+        /** Force the layout to recalculate */
+        /**
+         * Force the layout to recalculate
+         * @return {?}
+         */
+        ResizableExpandingTableDirective.prototype.updateLayout = /**
+         * Force the layout to recalculate
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                Promise.resolve().then(function () { return _this.columns.forEach(function (_column, index) { return _this._table.resizeColumn(index, 0); }); });
+            };
+        ResizableExpandingTableDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[uxResizableExpandingTable]',
+                        exportAs: 'ux-resizable-expanding-table',
+                        providers: [
+                            {
+                                provide: RESIZABLE_TABLE_SERVICE_TOKEN,
+                                useClass: ResizableExpandingTableService
+                            }
+                        ],
+                        host: {
+                            'class': 'ux-resizable-expanding-table',
+                            '[class.ux-resizable-expanding-table-overflow]': '_overflowX'
+                        }
+                    },] }
+        ];
+        /** @nocollapse */
+        ResizableExpandingTableDirective.ctorParameters = function () {
+            return [
+                { type: i0.ElementRef },
+                { type: ResizableExpandingTableService, decorators: [{ type: i0.Inject, args: [RESIZABLE_TABLE_SERVICE_TOKEN,] }] },
+                { type: i0.Renderer2 },
+                { type: ResizeService },
+                { type: Object, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] }
+            ];
+        };
+        ResizableExpandingTableDirective.propDecorators = {
+            columns: [{ type: i0.ContentChildren, args: [ResizableTableColumnComponent, { descendants: true },] }]
+        };
+        return ResizableExpandingTableDirective;
+    }(BaseResizableTableDirective));
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var ResizableTableDirective = /** @class */ (function (_super) {
+        __extends(ResizableTableDirective, _super);
+        function ResizableTableDirective(elementRef, table, renderer, resize) {
+            var _this = _super.call(this, elementRef, table, renderer, resize) || this;
+            // we should hide any horizontal overflow when we are resizing
+            _this._table.isResizing$.pipe(operators.takeUntil(_this._onDestroy)).subscribe(_this.setOverflow.bind(_this));
+            return _this;
+        }
         /**
          * If this is being used within a modal the table width may initially be zero. This can cause some issues when it does actually appear
          * visibily on screen. We should only setup the table once we actually have a width/
@@ -42299,7 +43317,7 @@
                 // ensure we initially set the table width
                 this._table.tableWidth = this.getScrollWidth();
                 // set the columns - prevent expression changed error
-                requestAnimationFrame(function () {
+                Promise.resolve().then(function () {
                     // initially set the columns
                     _this._table.setColumns(_this.columns);
                     // force relayout to occur to ensure the UI is consistent with the internal state
@@ -42307,7 +43325,7 @@
                 });
                 // watch for any future changes to the columns
                 this.columns.changes.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () {
-                    return requestAnimationFrame(function () { return _this._table.setColumns(_this.columns); });
+                    return Promise.resolve().then(function () { return _this._table.setColumns(_this.columns); });
                 });
                 this._initialised = true;
             };
@@ -42322,19 +43340,7 @@
          */
             function () {
                 var _this = this;
-                requestAnimationFrame(function () { return _this.columns.forEach(function (_column, index) { return _this._table.resizeColumn(index, 0); }); });
-            };
-        /** Set all resizable columns to the same width */
-        /**
-         * Set all resizable columns to the same width
-         * @return {?}
-         */
-        ResizableTableDirective.prototype.setUniformWidths = /**
-         * Set all resizable columns to the same width
-         * @return {?}
-         */
-            function () {
-                this._table.setUniformWidths();
+                Promise.resolve().then(function () { return _this.columns.forEach(function (_column, index) { return _this._table.resizeColumn(index, 0); }); });
             };
         /**
          * We should hide any horizontal overflow whenever we are resizing, this is because when we are dragging a column
@@ -42360,24 +43366,16 @@
                 Array.from((( /** @type {?} */(this._elementRef.nativeElement))).tBodies)
                     .forEach(function (tbody) { return _this._renderer.setStyle(tbody, 'overflow-x', isResizing ? 'hidden' : null); });
             };
-        /** Get the smallest tbody width taking into account scrollbars (uxFixedHeaderTable) */
-        /**
-         * Get the smallest tbody width taking into account scrollbars (uxFixedHeaderTable)
-         * @return {?}
-         */
-        ResizableTableDirective.prototype.getScrollWidth = /**
-         * Get the smallest tbody width taking into account scrollbars (uxFixedHeaderTable)
-         * @return {?}
-         */
-            function () {
-                return Array.from((( /** @type {?} */(this._elementRef.nativeElement))).tBodies)
-                    .reduce(function (width, tbody) { return Math.min(width, tbody.scrollWidth); }, (( /** @type {?} */(this._elementRef.nativeElement))).offsetWidth);
-            };
         ResizableTableDirective.decorators = [
             { type: i0.Directive, args: [{
                         selector: '[uxResizableTable]',
                         exportAs: 'ux-resizable-table',
-                        providers: [ResizableTableService],
+                        providers: [
+                            {
+                                provide: RESIZABLE_TABLE_SERVICE_TOKEN,
+                                useClass: ResizableTableService
+                            }
+                        ],
                         host: {
                             class: 'ux-resizable-table'
                         }
@@ -42387,7 +43385,7 @@
         ResizableTableDirective.ctorParameters = function () {
             return [
                 { type: i0.ElementRef },
-                { type: ResizableTableService },
+                { type: ResizableTableService, decorators: [{ type: i0.Inject, args: [RESIZABLE_TABLE_SERVICE_TOKEN,] }] },
                 { type: i0.Renderer2 },
                 { type: ResizeService }
             ];
@@ -42396,7 +43394,7 @@
             columns: [{ type: i0.ContentChildren, args: [ResizableTableColumnComponent, { descendants: true },] }]
         };
         return ResizableTableDirective;
-    }());
+    }(BaseResizableTableDirective));
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -42422,15 +43420,17 @@
                         ],
                         declarations: [
                             ResizableTableDirective,
+                            ResizableExpandingTableDirective,
                             ResizableTableColumnComponent,
                             ResizableTableCellDirective,
-                            ColumnPickerComponent
+                            ColumnPickerComponent,
                         ],
                         exports: [
                             ResizableTableDirective,
+                            ResizableExpandingTableDirective,
                             ResizableTableColumnComponent,
                             ResizableTableCellDirective,
-                            ColumnPickerComponent
+                            ColumnPickerComponent,
                         ]
                     },] }
         ];
@@ -44407,15 +45407,54 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
+    /**
+     * @template T
+     */
     var FloatLabelDirective = /** @class */ (function () {
-        function FloatLabelDirective(_elementRef, _renderer) {
+        function FloatLabelDirective(_elementRef, _renderer, _autofillMonitor) {
             this._elementRef = _elementRef;
             this._renderer = _renderer;
+            this._autofillMonitor = _autofillMonitor;
             this.mode = 'focus';
             this.raised = false;
             this._focused = false;
             this._eventHandles = [];
+            this._subscription = new rxjs.Subscription();
         }
+        Object.defineProperty(FloatLabelDirective.prototype, "input", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._input;
+            },
+            set: /**
+             * @param {?} input
+             * @return {?}
+             */ function (input) {
+                var _this = this;
+                // remove any previous autofill subscriptions
+                if (this._input) {
+                    this._autofillMonitor.stopMonitoring(this._input);
+                }
+                this._subscription.unsubscribe();
+                this._input = input;
+                // if the input is null then don't need to subscribe to autofillMonitor
+                if (!input) {
+                    return;
+                }
+                // create a new autofillMonitor subscription
+                this._subscription = this._autofillMonitor.monitor(input).subscribe(function (event) {
+                    if (!_this.raised && event.isAutofilled) {
+                        _this.raised = true;
+                    }
+                    if (_this.raised && !event.isAutofilled && !_this.hasText()) {
+                        _this.raised = false;
+                    }
+                });
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -44451,6 +45490,8 @@
             function () {
                 // Unsubscribe event handles
                 this._eventHandles.forEach(function (eventHandle) { return eventHandle(); });
+                this._autofillMonitor.stopMonitoring(this._input);
+                this._subscription.unsubscribe();
             };
         /**
          * @return {?}
@@ -44511,7 +45552,8 @@
         FloatLabelDirective.ctorParameters = function () {
             return [
                 { type: i0.ElementRef },
-                { type: i0.Renderer2 }
+                { type: i0.Renderer2 },
+                { type: textField.AutofillMonitor }
             ];
         };
         FloatLabelDirective.propDecorators = {
@@ -48060,6 +49102,7 @@
     exports.ColumnPickerComponent = ColumnPickerComponent;
     exports.ResizableTableCellDirective = ResizableTableCellDirective;
     exports.ResizableTableColumnComponent = ResizableTableColumnComponent;
+    exports.ResizableExpandingTableDirective = ResizableExpandingTableDirective;
     exports.ResizableTableDirective = ResizableTableDirective;
     exports.TableModule = TableModule;
     exports.TabHeadingDirective = TabHeadingDirective;
@@ -48190,6 +49233,8 @@
     exports.FileSizePipe = FileSizePipe;
     exports.StringFilterPipe = StringFilterPipe;
     exports.StringFilterModule = StringFilterModule;
+    exports.DateFormatterPipeModule = DateFormatterPipeModule;
+    exports.DateFormatterPipe = DateFormatterPipe;
     exports.TimelineChartPlugin = TimelineChartPlugin;
     exports.TimelineChartModule = TimelineChartModule;
     exports.TimelineHandle = TimelineHandle;
@@ -48242,12 +49287,17 @@
     exports.ɵbd = SidePanelAnimationState;
     exports.ɵbe = sidePanelStateAnimation;
     exports.ɵbc = SidePanelService;
-    exports.ɵbn = ResizableTableService;
+    exports.ɵbp = BaseResizableTableDirective;
+    exports.ɵbo = BaseResizableTableService;
+    exports.ɵbn = RESIZABLE_TABLE_SERVICE_TOKEN;
+    exports.ɵbr = ResizableExpandingTableService;
+    exports.ɵbs = ResizableTableService;
     exports.ɵq = TypeaheadHighlightDirective;
     exports.ɵp = TypeaheadService;
-    exports.ɵbo = HoverActionService;
-    exports.ɵbp = MenuNavigationService;
-    exports.ɵbq = TreeGridService;
+    exports.ɵbt = HoverActionService;
+    exports.ɵbu = MenuNavigationService;
+    exports.ɵbq = ResizeService;
+    exports.ɵbv = TreeGridService;
     exports.ɵa = KEPPEL_COLOR_SET;
     exports.ɵb = MICRO_FOCUS_COLOR_SET;
     Object.defineProperty(exports, '__esModule', { value: true });
