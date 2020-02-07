@@ -2521,7 +2521,7 @@
              */
             this._focusIndicators = [];
             // update aria values when the a gutter is dragged
-            _splitter.dragProgress
+            _splitter.dragProgress$
                 .pipe(operators.takeUntil(this._onDestroy))
                 .subscribe(function () { return _this.updateGutterAttributes(); });
         }
@@ -2579,7 +2579,7 @@
          */
             function (event) {
                 if (this.isSplitterGutter(( /** @type {?} */(event.target)))) {
-                    (( /** @type {?} */(event.target))).focus();
+                    (( /** @type {?} */(event.target))).parentElement.focus();
                 }
             };
         /** Find all the gutters and set their attributes */
@@ -2686,7 +2686,7 @@
                 /** @type {?} */
                 var area = this._splitter.displayedAreas[index];
                 // indicate the size
-                this._renderer.setAttribute(gutter, 'aria-valuenow', "" + Math.round(area.size * 100));
+                this._renderer.setAttribute(gutter, 'aria-valuenow', "" + Math.round(area.size));
             };
         /** Apply the value min aria attribute */
         /**
@@ -2706,7 +2706,7 @@
                 /** @type {?} */
                 var area = this.areas.toArray()[index];
                 // indicate the minimum size
-                this._renderer.setAttribute(gutter, 'aria-valuemin', "" + Math.round(area.minSize * 100));
+                this._renderer.setAttribute(gutter, 'aria-valuemin', "" + Math.round(area.minSize));
             };
         /** Apply the value max aria attribute */
         /**
@@ -2728,7 +2728,7 @@
                     .filter(function (_area, idx) { return index !== idx; })
                     .reduce(function (total, area) { return total + area.minSize; }, 0);
                 // indicate the minimum size
-                this._renderer.setAttribute(gutter, 'aria-valuemax', "" + (100 - Math.round(availableSize * 100)));
+                this._renderer.setAttribute(gutter, 'aria-valuemax', "" + (100 - Math.round(availableSize)));
             };
         /**
          * @param {?} event
@@ -2754,7 +2754,7 @@
             function (event) {
                 // only perform a move if a gutter is focused
                 if (this.isSplitterGutter(( /** @type {?} */(event.target)))) {
-                    this.setGutterPosition(( /** @type {?} */(event.target)), -0.01);
+                    this.setGutterPosition(( /** @type {?} */(event.target)), -1);
                     // stop the browser from scrolling
                     event.preventDefault();
                 }
@@ -2770,7 +2770,7 @@
             function (event) {
                 // only perform a move if a gutter is focused
                 if (this.isSplitterGutter(( /** @type {?} */(event.target)))) {
-                    this.setGutterPosition(( /** @type {?} */(event.target)), 0.01);
+                    this.setGutterPosition(( /** @type {?} */(event.target)), 1);
                     // stop the browser from scrolling
                     event.preventDefault();
                 }
@@ -2790,7 +2790,7 @@
                     var areas = this.getAreasFromGutter(( /** @type {?} */(event.target)));
                     // set the previous area to it's minimum size
                     /** @type {?} */
-                    var delta = areas.previous.size - areas.previous.comp.minSize;
+                    var delta = areas.previous.size - areas.previous.minSize;
                     // update the sizes accordingly
                     this.setGutterPosition(( /** @type {?} */(event.target)), delta);
                     // stop the browser from scrolling
@@ -2812,7 +2812,7 @@
                     var areas = this.getAreasFromGutter(( /** @type {?} */(event.target)));
                     // set the next area to it's minimum size
                     /** @type {?} */
-                    var delta = areas.next.size - areas.next.comp.minSize;
+                    var delta = areas.next.size - areas.next.minSize;
                     // update the sizes accordingly
                     this.setGutterPosition(( /** @type {?} */(event.target)), -delta);
                     // stop the browser from scrolling
@@ -2831,7 +2831,7 @@
          * @return {?}
          */
             function (element) {
-                return element.tagName === 'SPLIT-GUTTER';
+                return element.classList.contains('as-split-gutter') || element.classList.contains('as-split-gutter-icon');
             };
         /** Update the gutter position */
         /**
@@ -2851,7 +2851,7 @@
                 /** @type {?} */
                 var areas = this.getAreasFromGutter(gutter);
                 // ensure we can perform the resize
-                if (areas.previous.size - delta < areas.previous.comp.minSize || areas.next.size + delta < areas.next.comp.minSize) {
+                if (areas.previous.size - delta < areas.previous.minSize || areas.next.size + delta < areas.next.minSize) {
                     return;
                 }
                 // perform the resize
@@ -2883,7 +2883,7 @@
             };
         SplitterAccessibilityDirective.decorators = [
             { type: i0.Directive, args: [{
-                        selector: 'split'
+                        selector: 'as-split'
                     },] }
         ];
         /** @nocollapse */
@@ -4327,6 +4327,7 @@
         'quick-view',
         'radial-selected',
         'radial',
+        'redo',
         'refresh',
         'resources',
         'rewind-filled',
@@ -4336,6 +4337,7 @@
         'satellite',
         'save-filled',
         'save',
+        'scale-out-repository',
         'schedule-clone',
         'schedule-new',
         'schedule-play',
@@ -4346,6 +4348,7 @@
         'select-left',
         'select',
         'server-cluster',
+        'server-started',
         'server',
         'servers',
         'service-business',
@@ -4416,6 +4419,7 @@
         'trophy-filled',
         'trophy',
         'troubleshooting',
+        'undo',
         'unlock',
         'up',
         'update',
@@ -5749,6 +5753,18 @@
              */
             this.inputMode = 'hex';
             /**
+             * Defines a function that returns an aria-label for ColorPickerColor.
+             */
+            this.colorAriaLabel = this.getColorAriaLabel;
+            /**
+             * Defines a function that returns an aria-label for the button that switches input modes.
+             */
+            this.switchModeAriaLabel = this.getSwitchModeAriaLabel;
+            /**
+             * Define a function that returns an aria-label for the input control.
+             */
+            this.inputAriaLabel = this.getInputAriaLabel;
+            /**
              * Emitted when the user changes the selected color, either by clicking a color swatch button, or entering a valid color value into the input panel text field.
              */
             this.selectedChange = new i0.EventEmitter();
@@ -5915,11 +5931,44 @@
             function () {
                 this.inputMode = (this.inputMode === 'hex') ? 'rgba' : 'hex';
             };
+        /**
+         * @param {?} color
+         * @return {?}
+         */
+        ColorPickerComponent.prototype.getColorAriaLabel = /**
+         * @param {?} color
+         * @return {?}
+         */
+            function (color) {
+                return "Select color " + color.name;
+            };
+        /**
+         * @param {?} mode
+         * @return {?}
+         */
+        ColorPickerComponent.prototype.getSwitchModeAriaLabel = /**
+         * @param {?} mode
+         * @return {?}
+         */
+            function (mode) {
+                return "Switch input mode to " + (mode === 'hex' ? 'RGBA' : 'hex');
+            };
+        /**
+         * @param {?} mode
+         * @return {?}
+         */
+        ColorPickerComponent.prototype.getInputAriaLabel = /**
+         * @param {?} mode
+         * @return {?}
+         */
+            function (mode) {
+                return "Edit " + mode + " color value";
+            };
         ColorPickerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-color-picker',
                         exportAs: 'ux-color-picker',
-                        template: "<div class=\"ux-color-picker\" uxTabbableList direction=\"horizontal\">\n    <div class=\"ux-color-picker-swatch\">\n        <div *ngFor=\"let row of colors\" class=\"ux-color-picker-swatch-row\">\n\n            <div *ngFor=\"let color of row\"\n                class=\"ux-color-picker-color\"\n                [class.ux-small]=\"(buttonSize$ | async) === 'sm'\"\n                [class.ux-large]=\"(buttonSize$ | async) === 'lg'\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\"\n                [class.ux-selected]=\"color === (selected$ | async)\">\n\n                <button type=\"button\"\n                    uxFocusIndicator\n                    attr.aria-label=\"Select color {{color.name}}\"\n                    i18n-aria-label\n                    aria-selected=\"color === (selected$ | async)\"\n                    class=\"btn btn-icon\"\n                    [uxColorContrast]=\"color.hex\"\n                    [style.background-color]=\"color.rgba\"\n                    (click)=\"selected$.next(color)\"\n                    uxTabbableListItem\n                    [uxTooltip]=\"color.name\"\n                    [tooltipDisabled]=\"!showTooltips\">\n\n                    <ux-icon name=\"checkmark\"></ux-icon>\n                </button>\n\n            </div>\n        </div>\n    </div>\n\n    <div *ngIf=\"showInput\" class=\"ux-color-picker-input-panel\">\n        <div class=\"ux-color-picker-input-header\">\n\n            <div class=\"ux-color-picker-preview\"\n                [style.background-color]=\"(selected$ | async).rgba\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\">\n            </div>\n\n            <label *ngIf=\"inputMode === 'hex'\" attr.for=\"{{id}}-input-field\">HEX</label>\n            <label *ngIf=\"inputMode === 'rgba'\" attr.for=\"{{id}}-input-field\">RGBA</label>\n\n            <button type=\"button\"\n                attr.aria-label=\"Switch input mode to {{inputMode === 'hex' ? 'RGBA' : 'hex'}}\" i18n-aria-label\n                class=\"btn btn-link btn-icon button-secondary ux-color-picker-input-toggle\"\n                (click)=\"toggleColorEntryType(); $event.stopPropagation()\">\n                <ux-icon name=\"chevron-right\"></ux-icon>\n            </button>\n        </div>\n\n        <div class=\"ux-color-picker-input\"\n            [class.has-error]=\"inputField.errors\"\n            [class.has-feedback]=\"inputField.errors\">\n\n            <input type=\"text\"\n                attr.id=\"{{id}}-input-field\"\n                attr.aria-description=\"Edit {{inputMode}} color value\" i18n-aria-description\n                class=\"form-control\"\n                #inputField=\"ngModel\"\n                [ngModel]=\"(selected$ | async)[inputMode]\"\n                (ngModelChange)=\"updateColorValue($event, inputMode)\"\n                [pattern]=\"inputPatterns[inputMode].source\"\n                (keyup.enter)=\"inputSubmit.emit()\">\n\n                <ux-icon class=\"form-control-feedback\" name=\"alert\"></ux-icon>\n        </div>\n    </div>\n</div>\n"
+                        template: "<div class=\"ux-color-picker\" uxTabbableList direction=\"horizontal\">\n    <div class=\"ux-color-picker-swatch\">\n        <div *ngFor=\"let row of colors\" class=\"ux-color-picker-swatch-row\">\n\n            <div *ngFor=\"let color of row\"\n                class=\"ux-color-picker-color\"\n                [class.ux-small]=\"(buttonSize$ | async) === 'sm'\"\n                [class.ux-large]=\"(buttonSize$ | async) === 'lg'\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\"\n                [class.ux-selected]=\"color === (selected$ | async)\">\n\n                <button type=\"button\"\n                    uxFocusIndicator\n                    [attr.aria-label]=\"colorAriaLabel(color)\"\n                    aria-selected=\"color === (selected$ | async)\"\n                    class=\"btn btn-icon\"\n                    [uxColorContrast]=\"color.hex\"\n                    [style.background-color]=\"color.rgba\"\n                    (click)=\"selected$.next(color)\"\n                    uxTabbableListItem\n                    [uxTooltip]=\"color.name\"\n                    [tooltipDisabled]=\"!showTooltips\">\n\n                    <ux-icon name=\"checkmark\"></ux-icon>\n                </button>\n\n            </div>\n        </div>\n    </div>\n\n    <div *ngIf=\"showInput\" class=\"ux-color-picker-input-panel\">\n        <div class=\"ux-color-picker-input-header\">\n\n            <div class=\"ux-color-picker-preview\"\n                [style.background-color]=\"(selected$ | async).rgba\"\n                [class.ux-circle]=\"buttonStyle === 'circle'\">\n            </div>\n\n            <label *ngIf=\"inputMode === 'hex'\" attr.for=\"{{ id }}-input-field\">HEX</label>\n            <label *ngIf=\"inputMode === 'rgba'\" attr.for=\"{{ id }}-input-field\">RGBA</label>\n\n            <button type=\"button\"\n                [attr.aria-label]=\"switchModeAriaLabel(inputMode)\"\n                class=\"btn btn-link btn-icon button-secondary ux-color-picker-input-toggle\"\n                (click)=\"toggleColorEntryType(); $event.stopPropagation()\">\n                <ux-icon name=\"chevron-right\"></ux-icon>\n            </button>\n        </div>\n\n        <div class=\"ux-color-picker-input\"\n            [class.has-error]=\"inputField.errors\"\n            [class.has-feedback]=\"inputField.errors\">\n\n            <input type=\"text\"\n                attr.id=\"{{id}}-input-field\"\n                [attr.aria-description]=\"inputAriaLabel(inputMode)\"\n                class=\"form-control\"\n                #inputField=\"ngModel\"\n                [ngModel]=\"(selected$ | async)[inputMode]\"\n                (ngModelChange)=\"updateColorValue($event, inputMode)\"\n                [pattern]=\"inputPatterns[inputMode].source\"\n                (keyup.enter)=\"inputSubmit.emit()\">\n\n                <ux-icon class=\"form-control-feedback\" name=\"alert\"></ux-icon>\n        </div>\n    </div>\n</div>\n"
                     }] }
         ];
         ColorPickerComponent.propDecorators = {
@@ -5932,6 +5981,9 @@
             showTooltips: [{ type: i0.Input }],
             showInput: [{ type: i0.Input }],
             inputMode: [{ type: i0.Input }],
+            colorAriaLabel: [{ type: i0.Input }],
+            switchModeAriaLabel: [{ type: i0.Input }],
+            inputAriaLabel: [{ type: i0.Input }],
             selectedChange: [{ type: i0.Output }],
             inputSubmit: [{ type: i0.Output }],
             cssWidth: [{ type: i0.HostBinding, args: ['style.width',] }]
@@ -5965,6 +6017,7 @@
              */
             this.id = "ux-number-picker-" + uniqueId$2++;
             /**
+             * @deprecated - Use reactive form validation instead.
              * Can be used to show a red outline around the input to indicate an invalid value. By default the error state will appear if the user enters a number below the minimum value or above the maximum value.
              */
             this.valid = true;
@@ -5980,6 +6033,11 @@
              * Store the current valid state
              */
             this._valid = true;
+            /**
+             * This is a flag to indicate when the component has been destroyed to avoid change detection being made after the component
+             *  is no longer instantiated. A workaround for Angular Forms bug (https://github.com/angular/angular/issues/27803)
+             */
+            this._isDestroyed = false;
         }
         Object.defineProperty(NumberPickerComponent.prototype, "value", {
             /** Sets the value displayed in the number picker component. */
@@ -6079,6 +6137,28 @@
             configurable: true
         });
         /**
+         * @return {?}
+         */
+        NumberPickerComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._isDestroyed = true;
+            };
+        /**
+         * @param {?} changes
+         * @return {?}
+         */
+        NumberPickerComponent.prototype.ngOnChanges = /**
+         * @param {?} changes
+         * @return {?}
+         */
+            function (changes) {
+                if (changes.valid && changes.valid.isFirstChange()) {
+                    console.warn("ux-number-picker [valid] property has been deprecated. Instead use reactive form validation.");
+                }
+            };
+        /**
          * @param {?=} event
          * @return {?}
          */
@@ -6153,7 +6233,11 @@
                 if (value !== undefined) {
                     this._value = value;
                     this._valid = this.isValid();
-                    this._changeDetector.detectChanges();
+                    // if the component is not destroyed then run change detection
+                    // workaround for Angular bug (https://portal.digitalsafe.net/browse/EL-3694)
+                    if (!this._isDestroyed) {
+                        this._changeDetector.detectChanges();
+                    }
                 }
             };
         /**
@@ -8431,6 +8515,20 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
+    /** @enum {number} */
+    var DashboardStackMode = {
+        Regular: 0,
+        Stacked: 1,
+        /** Determine the mode automatically based on dashboard width. */
+        Auto: 2,
+    };
+    DashboardStackMode[DashboardStackMode.Regular] = 'Regular';
+    DashboardStackMode[DashboardStackMode.Stacked] = 'Stacked';
+    DashboardStackMode[DashboardStackMode.Auto] = 'Auto';
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
     var DashboardService = /** @class */ (function () {
         function DashboardService() {
             var _this = this;
@@ -8668,25 +8766,32 @@
          * @return {?}
          */
             function () {
-                // iterate through each widget set it's stacked state and
-                this.getWidgetsByOrder().forEach(function (widget, idx) {
+                // iterate through each widget set it's stacked state and retain the rowSpan
+                this.getWidgetsByOrder().forEach(function (widget, idx, widgets) {
+                    /** @type {?} */
+                    var widgetsAbove = widgets.slice(0, idx);
+                    /** @type {?} */
+                    var row = widgetsAbove.reduce(function (currentRow, _widget) { return currentRow + _widget.getRowSpan(); }, 0);
                     widget.setColumn(0);
-                    widget.setRow(idx);
+                    widget.setRow(row);
                 });
             };
+        /** Get widgets in the order they visually appear as the widgets array order does not reflect this */
         /**
+         * Get widgets in the order they visually appear as the widgets array order does not reflect this
          * @return {?}
          */
         DashboardService.prototype.getWidgetsByOrder = /**
+         * Get widgets in the order they visually appear as the widgets array order does not reflect this
          * @return {?}
          */
             function () {
                 var _this = this;
-                return this.widgets.sort(function (w1, w2) {
+                return __spread(this.widgets).sort(function (w1, w2) {
                     /** @type {?} */
-                    var w1Position = w1.getColumn() + (w1.getRow() * _this.options.columns);
+                    var w1Position = w1.getColumn(DashboardStackMode.Regular) + (w1.getRow(DashboardStackMode.Regular) * _this.options.columns);
                     /** @type {?} */
-                    var w2Position = w2.getColumn() + (w2.getRow() * _this.options.columns);
+                    var w2Position = w2.getColumn(DashboardStackMode.Regular) + (w2.getRow(DashboardStackMode.Regular) * _this.options.columns);
                     if (w1Position < w2Position) {
                         return -1;
                     }
@@ -9797,7 +9902,7 @@
                     distance = 1;
                 }
                 // move the widget down one position
-                widget.setRow(widget.getRow() + distance);
+                widget.setRow((widget.getRow(DashboardStackMode.Auto)) + distance);
                 // check every space the widget occupies for collisions
                 this.forEachBlock(widget, function (column, row) {
                     return _this.getWidgetsAtPosition(column, row, true)
@@ -10173,6 +10278,7 @@
             function () {
                 this._columnSpan.regular = this.colSpan;
                 this._rowSpan.regular = this.rowSpan;
+                this._rowSpan.stacked = this.rowSpan;
                 if (!this.id) {
                     console.warn('Dashboard Widget is missing an ID.');
                     // set random id - keeps things working but prevents exporting of positions
@@ -10242,22 +10348,46 @@
                 this.height = this.getRowSpan() * this.dashboardService.getRowHeight();
             };
         /**
+         * @param {?=} mode
          * @return {?}
          */
         DashboardWidgetComponent.prototype.getColumn = /**
+         * @param {?=} mode
          * @return {?}
          */
-            function () {
-                return this.getStackableValue(this._column);
+            function (mode) {
+                if (mode === void 0) {
+                    mode = DashboardStackMode.Auto;
+                }
+                switch (mode) {
+                    case DashboardStackMode.Auto:
+                        return this.getStackableValue(this._column);
+                    case DashboardStackMode.Regular:
+                        return this._column.regular;
+                    case DashboardStackMode.Stacked:
+                        return this._column.stacked;
+                }
             };
         /**
+         * @param {?=} mode
          * @return {?}
          */
         DashboardWidgetComponent.prototype.getRow = /**
+         * @param {?=} mode
          * @return {?}
          */
-            function () {
-                return this.getStackableValue(this._row);
+            function (mode) {
+                if (mode === void 0) {
+                    mode = DashboardStackMode.Auto;
+                }
+                switch (mode) {
+                    case DashboardStackMode.Auto:
+                        return this.getStackableValue(this._row);
+                    case DashboardStackMode.Regular:
+                        return this._row.regular;
+                    case DashboardStackMode.Stacked:
+                        return this._row.stacked;
+                }
             };
         /**
          * @param {?} column
@@ -16427,15 +16557,72 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-    var FacetClearButtonDirective = /** @class */ (function () {
-        function FacetClearButtonDirective() {
+    var FacetHeaderComponent = /** @class */ (function () {
+        function FacetHeaderComponent(focusIndicatorService, elementRef) {
+            /**
+             * Defines whether or not clicking on the header will toggle the expanded state.
+             */
+            this.canExpand = true;
+            /**
+             * Can be used to set the initial expanded state.
+             */
+            this.expanded = true;
+            /**
+             * If two-way binding is used it will be updated when the expanded state changes.
+             */
+            this.expandedChange = new i0.EventEmitter();
+            this._focusIndicator = focusIndicatorService.monitor(elementRef.nativeElement);
         }
-        FacetClearButtonDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[uxFacetClearButton]'
-                    },] }
+        /**
+         * @return {?}
+         */
+        FacetHeaderComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._focusIndicator.destroy();
+            };
+        /**
+         * @return {?}
+         */
+        FacetHeaderComponent.prototype.toggleExpand = /**
+         * @return {?}
+         */
+            function () {
+                // if not expandable then do nothing
+                if (this.canExpand) {
+                    this.expanded = !this.expanded;
+                    this.expandedChange.emit(this.expanded);
+                }
+            };
+        FacetHeaderComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ux-facet-header',
+                        template: "<span class=\"facet-header-title\">{{ header }}</span>\n<ux-icon *ngIf=\"canExpand\" [name]=\"expanded ? 'down' : 'previous'\" class=\"facet-header-icon\"></ux-icon>\n",
+                        host: {
+                            'role': 'button',
+                            'tabindex': '0',
+                            '(click)': 'toggleExpand()',
+                            '(keyup.enter)': 'toggleExpand()',
+                            '[attr.aria-expanded]': 'expanded',
+                            '[attr.aria-label]': 'header + \' Facet: Activate to \' + (expanded ? \'collapse\' : \'expand\')'
+                        }
+                    }] }
         ];
-        return FacetClearButtonDirective;
+        /** @nocollapse */
+        FacetHeaderComponent.ctorParameters = function () {
+            return [
+                { type: FocusIndicatorService },
+                { type: i0.ElementRef }
+            ];
+        };
+        FacetHeaderComponent.propDecorators = {
+            header: [{ type: i0.Input }],
+            canExpand: [{ type: i0.Input }],
+            expanded: [{ type: i0.Input }, { type: i0.HostBinding, args: ['class.expanded',] }],
+            expandedChange: [{ type: i0.Output }]
+        };
+        return FacetHeaderComponent;
     }());
     /**
      * @fileoverview added by tsickle
@@ -16547,489 +16734,6 @@
             { type: i0.Injectable }
         ];
         return FacetService;
-    }());
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    var FacetContainerComponent = /** @class */ (function () {
-        function FacetContainerComponent(_announcer, facetService) {
-            var _this = this;
-            this._announcer = _announcer;
-            this.facetService = facetService;
-            /**
-             * Defines the text displayed at the top of the Facet Container.
-             */
-            this.header = 'Selected';
-            /**
-             * Defines the text to display in the tooltip when hovering over the clear all button.
-             */
-            this.clearTooltip = 'Clear All';
-            /**
-             * Defines the text to display when there are no selected facets.
-             */
-            this.emptyText = 'No Items';
-            /**
-             * Determines if the facets can be reordered.
-             */
-            this.facetsReorderable = false;
-            /**
-             * If using two-way binding this array will update when the selected facets change.
-             */
-            this.facetsChange = new i0.EventEmitter();
-            /**
-             * This will be triggered when a facet is selected, deselected or all facets are deselected.
-             * The event will be an instance of either `FacetSelect`, `FacetDeselect` or `FacetDeselectAll` and
-             * will contain the facet being selected or deselected in a `facet` property
-             * (deselect all will not contain affected facets).
-             */
-            this.events = new i0.EventEmitter();
-            this._onDestroy = new rxjs.Subject();
-            facetService.facets$.subscribe(function (facets) { return _this.facetsChange.next(facets); });
-            facetService.events$.subscribe(function (event) { return _this.triggerEvent(event); });
-            // announce deselection
-            facetService.events$.pipe(operators.filter(function (event) { return event instanceof FacetDeselect; }))
-                .subscribe(function (event) { return _this._announcer.announce("Option " + event.facet.title + " deselected.", 'assertive'); });
-        }
-        Object.defineProperty(FacetContainerComponent.prototype, "facets", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return this.facetService.facets$.value;
-            },
-            /** Allows a predefined set of Facets to be displayed. */
-            set: /**
-             * Allows a predefined set of Facets to be displayed.
-             * @param {?} facets
-             * @return {?}
-             */ function (facets) {
-                this.facetService.facets$.next(facets);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        /**
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._onDestroy.next();
-                this._onDestroy.complete();
-            };
-        /**
-         * @param {?} facet
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.selectFacet = /**
-         * @param {?} facet
-         * @return {?}
-         */
-            function (facet) {
-                this.facetService.select(facet);
-            };
-        /**
-         * @param {?} facet
-         * @param {?=} tag
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.deselectFacet = /**
-         * @param {?} facet
-         * @param {?=} tag
-         * @return {?}
-         */
-            function (facet, tag) {
-                // find the index of the item in the selected array
-                /** @type {?} */
-                var idx = this.facets.findIndex(function (selectedFacet) { return facet === selectedFacet; });
-                // if match there was no match then finish
-                if (idx === -1) {
-                    return;
-                }
-                // remove the last item
-                this.facetService.deselect(facet);
-                // announce the facet removal
-                this._announcer.announce("Option " + facet.title + " deselected.", 'assertive');
-                // focus another tag if there is one
-                if (tag) {
-                    /** @type {?} */
-                    var sibling = tag.previousElementSibling || tag.nextElementSibling;
-                    // if there is a sibling then focus it
-                    if (sibling) {
-                        (( /** @type {?} */(sibling))).focus();
-                    }
-                }
-            };
-        /**
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.deselectAllFacets = /**
-         * @return {?}
-         */
-            function () {
-                // empty the selected array
-                this.facetService.deselectAll();
-                // announce the facet removal
-                this._announcer.announce("All options deselected.", 'assertive');
-            };
-        /**
-         * @param {?} _index
-         * @param {?} facet
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.trackBy = /**
-         * @param {?} _index
-         * @param {?} facet
-         * @return {?}
-         */
-            function (_index, facet) {
-                return facet.id || facet.title;
-            };
-        /**
-         * @param {?} facet
-         * @param {?} element
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.shiftRight = /**
-         * @param {?} facet
-         * @param {?} element
-         * @return {?}
-         */
-            function (facet, element) {
-                // only move the item if reordering is allowed
-                if (this.facetsReorderable === false) {
-                    return;
-                }
-                // perform the movement
-                this.shiftFacet(facet, 1);
-                // the item may become unfocused during the reorder so we should refocus it
-                requestAnimationFrame(function () { return element.focus(); });
-                // announce the move
-                this._announcer.announce("Option " + facet.title + " moved down.");
-            };
-        /**
-         * @param {?} facet
-         * @param {?} element
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.shiftLeft = /**
-         * @param {?} facet
-         * @param {?} element
-         * @return {?}
-         */
-            function (facet, element) {
-                // only move the item if reordering is allowed
-                if (this.facetsReorderable === false) {
-                    return;
-                }
-                // perform the movement
-                this.shiftFacet(facet, -1);
-                // the item may become unfocused during the reorder so we should refocus it
-                requestAnimationFrame(function () { return element.focus(); });
-                // announce the move
-                this._announcer.announce("Option " + facet.title + " moved up.");
-            };
-        /**
-         * @param {?} facet
-         * @param {?} distance
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.shiftFacet = /**
-         * @param {?} facet
-         * @param {?} distance
-         * @return {?}
-         */
-            function (facet, distance) {
-                /** @type {?} */
-                var index = this.facets.indexOf(facet);
-                /** @type {?} */
-                var target = index + distance;
-                // Ensure the move is valid
-                if (target < 0 || target === this.facets.length) {
-                    return;
-                }
-                // Perform the move
-                this.facets.splice(index, 1);
-                this.facets.splice(target, 0, facet);
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        FacetContainerComponent.prototype.triggerEvent = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                this.events.next(event);
-            };
-        FacetContainerComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ux-facet-container',
-                        template: "<!-- Display Any Selected Facets -->\n<div class=\"facets-selected-container\">\n\n    <!-- Display Title an Clear Button -->\n    <div class=\"facets-selected-header-container\">\n\n        <!-- Show The Selected Text -->\n        <span class=\"facets-selected-header-label\">{{ header }}</span>\n\n        <!-- Add a Clear Button -->\n        <ng-container *ngIf=\"(facetService.facets$ | async).length > 0\" [ngTemplateOutlet]=\"clearButton || clearButtonDefault\"></ng-container>\n\n    </div>\n\n    <!-- Display Tags For Selected Items -->\n    <div class=\"facets-selected-list\"\n        uxReorderable\n        role=\"list\"\n        [reorderingDisabled]=\"!facetsReorderable\"\n        [(reorderableModel)]=\"facets\"\n        (reorderableModelChange)=\"facetsChange.emit(facets)\">\n\n        <!-- Show Selected Tags -->\n        <div #tag\n            class=\"facet-selected-tag\"\n            role=\"listitem\"\n            tabindex=\"0\"\n            uxReorderableHandle\n            *ngFor=\"let facet of (facetService.facets$ | async); trackBy: trackBy\"\n            [attr.aria-label]=\"facet.title\"\n            [uxReorderableModel]=\"facet\"\n            (mousedown)=\"tag.focus()\"\n            (keydown.ArrowRight)=\"shiftRight(facet, tag)\"\n            (keydown.ArrowLeft)=\"shiftLeft(facet, tag)\">\n\n            <!-- Display Label -->\n            <span class=\"facet-selected-tag-label\">{{ facet.title }}</span>\n\n            <!-- Display Remove Icon -->\n            <button type=\"button\"\n                uxFocusIndicator\n                class=\"facet-selected-remove-btn\"\n                i18n-aria-label\n                aria-label=\"Deselect Facet\"\n                (click)=\"deselectFacet(facet, tag)\">\n\n                <ux-icon name=\"close\"></ux-icon>\n            </button>\n        </div>\n\n    </div>\n\n    <!-- Show Message Here if No Facets Selected -->\n    <p class=\"facets-selected-none-label\" *ngIf=\"emptyText && (facetService.facets$ | async).length === 0\">{{ emptyText }}</p>\n\n</div>\n\n<!-- Any Facet Elements Should be Added Here By User -->\n<div class=\"facets-region\">\n    <ng-content></ng-content>\n</div>\n\n<ng-template #clearButtonDefault>\n    <button type=\"button\"\n            class=\"btn btn-link btn-icon button-secondary\"\n            tabindex=\"0\"\n            [attr.aria-label]=\"clearTooltip\"\n            [uxTooltip]=\"clearTooltip\"\n            placement=\"left\"\n            (click)=\"deselectAllFacets()\">\n\n            <svg class=\"facets-selected-clear-graphic\" focusable=\"false\" viewBox=\"0 0 19 12\" shape-rendering=\"geometricPrecision\">\n                <rect class=\"light-grey\" x=\"0\" y=\"2\" width=\"7\" height=\"2\"></rect>\n                <rect class=\"dark-grey\" x=\"0\" y=\"5\" width=\"9\" height=\"2\"></rect>\n                <rect class=\"light-grey\" x=\"0\" y=\"8\" width=\"7\" height=\"2\"></rect>\n                <path class=\"dark-grey\" d=\"M9,1 h1 l9,9 v1 h-1 l-9,-9 v-1 Z\"></path>\n                <path class=\"dark-grey\" d=\"M9,11 v-1 l9,-9 h1 v1 l-9,9 h-1 Z\"></path>\n            </svg>\n        </button>\n</ng-template>",
-                        providers: [FacetService]
-                    }] }
-        ];
-        /** @nocollapse */
-        FacetContainerComponent.ctorParameters = function () {
-            return [
-                { type: a11y.LiveAnnouncer },
-                { type: FacetService }
-            ];
-        };
-        FacetContainerComponent.propDecorators = {
-            header: [{ type: i0.Input }],
-            clearTooltip: [{ type: i0.Input }],
-            emptyText: [{ type: i0.Input }],
-            facetsReorderable: [{ type: i0.Input }],
-            facets: [{ type: i0.Input }],
-            facetsChange: [{ type: i0.Output }],
-            events: [{ type: i0.Output }],
-            clearButton: [{ type: i0.ContentChild, args: [FacetClearButtonDirective, { read: i0.TemplateRef, static: false },] }]
-        };
-        return FacetContainerComponent;
-    }());
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    /**
-     * @deprecated - Use Facet Service instead - retained only for backwards compatability
-     */
-    var FacetBaseComponent = /** @class */ (function () {
-        function FacetBaseComponent(facetContainer, _elementRef) {
-            var _this = this;
-            this.facetContainer = facetContainer;
-            this._elementRef = _elementRef;
-            this.selected = [];
-            this.selectedChange = new i0.EventEmitter();
-            this.events = new rxjs.Subject();
-            this._onDestroy = new rxjs.Subject();
-            if (facetContainer) {
-                // subscribe to any deselect events from the facet container
-                facetContainer.events.pipe(operators.filter(function (event) { return event instanceof FacetDeselect; }), operators.filter(function (event) { return !!_this.selected.find(function (facet) { return facet === event.facet; }); }), operators.takeUntil(this._onDestroy)).subscribe(function (event) { return _this.deselectFacet(event.facet); });
-                // subscribe to any deselect all events from facet container
-                facetContainer.events.pipe(operators.filter(function (event) { return event instanceof FacetDeselectAll; }), operators.takeUntil(this._onDestroy)).subscribe(function (_) { return _this.deselectAll(); });
-            }
-        }
-        /**
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // check if there should be any facets initially selected
-                if (this.facetContainer) {
-                    this.selected.forEach(function (facet) { return _this.facetContainer.selectFacet(facet); });
-                }
-            };
-        /**
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._onDestroy.next();
-                this._onDestroy.complete();
-            };
-        /**
-         * @param {?} facet
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.selectFacet = /**
-         * @param {?} facet
-         * @return {?}
-         */
-            function (facet) {
-                // if the facet is disabled it should not be selected
-                if (facet.disabled) {
-                    return;
-                }
-                // add the facet to the list of selected facets
-                this.selected.push(facet);
-                // send the new value to the event emitter
-                this.selectedChange.emit(this.selected);
-                // fire the event to the observable
-                this.triggerEvent(new FacetSelect(facet));
-                // tell the facet container about the selected facet
-                if (this.facetContainer) {
-                    this.facetContainer.selectFacet(facet);
-                }
-            };
-        /**
-         * @param {?} facet
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.deselectFacet = /**
-         * @param {?} facet
-         * @return {?}
-         */
-            function (facet) {
-                // find facet to remove
-                /** @type {?} */
-                var index = this.selected.findIndex(function (selectedFacet) { return selectedFacet === facet; });
-                // only continue if facet is found
-                if (index !== -1) {
-                    // remove the facet from the selected list
-                    this.selected.splice(index, 1);
-                    // emit the changes to selected event emitter
-                    this.selectedChange.emit(this.selected);
-                    // fire the event to the observable
-                    this.triggerEvent(new FacetDeselect(facet));
-                    // deselect the facet in the facet container
-                    if (this.facetContainer) {
-                        this.facetContainer.deselectFacet(facet);
-                    }
-                }
-            };
-        /**
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.deselectAll = /**
-         * @return {?}
-         */
-            function () {
-                // remove all selected facets
-                this.selected = [];
-                // fire the event to the observable
-                this.triggerEvent(new FacetDeselectAll());
-                // emit the changes to the selected event emitter
-                this.selectedChange.emit(this.selected);
-            };
-        /**
-         * @param {?} facet
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.toggleFacetSelection = /**
-         * @param {?} facet
-         * @return {?}
-         */
-            function (facet) {
-                // if the facet is selected then deselect - otherwise select it
-                if (this.isFacetSelected(facet)) {
-                    this.deselectFacet(facet);
-                }
-                else {
-                    this.selectFacet(facet);
-                }
-            };
-        /**
-         * @param {?} facet
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.isFacetSelected = /**
-         * @param {?} facet
-         * @return {?}
-         */
-            function (facet) {
-                // determine if a facet is currently selected
-                return !!this.selected.find(function (selectedFacet) { return selectedFacet === facet; });
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        FacetBaseComponent.prototype.triggerEvent = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                this.events.next(event);
-            };
-        FacetBaseComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ux-facet-base',
-                        template: ''
-                    }] }
-        ];
-        /** @nocollapse */
-        FacetBaseComponent.ctorParameters = function () {
-            return [
-                { type: FacetContainerComponent, decorators: [{ type: i0.Host }] },
-                { type: i0.ElementRef }
-            ];
-        };
-        FacetBaseComponent.propDecorators = {
-            selected: [{ type: i0.Input }],
-            selectedChange: [{ type: i0.Output }],
-            events: [{ type: i0.Output }]
-        };
-        return FacetBaseComponent;
-    }());
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    var FacetHeaderComponent = /** @class */ (function () {
-        function FacetHeaderComponent(focusIndicatorService, elementRef) {
-            /**
-             * Defines whether or not clicking on the header will toggle the expanded state.
-             */
-            this.canExpand = true;
-            /**
-             * Can be used to set the initial expanded state.
-             */
-            this.expanded = true;
-            /**
-             * If two-way binding is used it will be updated when the expanded state changes.
-             */
-            this.expandedChange = new i0.EventEmitter();
-            this._focusIndicator = focusIndicatorService.monitor(elementRef.nativeElement);
-        }
-        /**
-         * @return {?}
-         */
-        FacetHeaderComponent.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._focusIndicator.destroy();
-            };
-        /**
-         * @return {?}
-         */
-        FacetHeaderComponent.prototype.toggleExpand = /**
-         * @return {?}
-         */
-            function () {
-                // if not expandable then do nothing
-                if (this.canExpand) {
-                    this.expanded = !this.expanded;
-                    this.expandedChange.emit(this.expanded);
-                }
-            };
-        FacetHeaderComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ux-facet-header',
-                        template: "<span class=\"facet-header-title\">{{ header }}</span>\n<ux-icon *ngIf=\"canExpand\" [name]=\"expanded ? 'down' : 'previous'\" class=\"facet-header-icon\"></ux-icon>\n",
-                        host: {
-                            'role': 'button',
-                            'tabindex': '0',
-                            '(click)': 'toggleExpand()',
-                            '(keyup.enter)': 'toggleExpand()',
-                            '[attr.aria-expanded]': 'expanded',
-                            '[attr.aria-label]': 'header + \' Facet: Activate to \' + (expanded ? \'collapse\' : \'expand\')'
-                        }
-                    }] }
-        ];
-        /** @nocollapse */
-        FacetHeaderComponent.ctorParameters = function () {
-            return [
-                { type: FocusIndicatorService },
-                { type: i0.ElementRef }
-            ];
-        };
-        FacetHeaderComponent.propDecorators = {
-            header: [{ type: i0.Input }],
-            canExpand: [{ type: i0.Input }],
-            expanded: [{ type: i0.Input }, { type: i0.HostBinding, args: ['class.expanded',] }],
-            expandedChange: [{ type: i0.Output }]
-        };
-        return FacetHeaderComponent;
     }());
     /**
      * @fileoverview added by tsickle
@@ -17261,6 +16965,272 @@
             options: [{ type: i0.ViewChildren, args: [FacetCheckListItemComponent,] }]
         };
         return FacetCheckListComponent;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var FacetClearButtonDirective = /** @class */ (function () {
+        function FacetClearButtonDirective() {
+        }
+        FacetClearButtonDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[uxFacetClearButton]'
+                    },] }
+        ];
+        return FacetClearButtonDirective;
+    }());
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     */
+    var FacetContainerComponent = /** @class */ (function () {
+        function FacetContainerComponent(_announcer, facetService) {
+            var _this = this;
+            this._announcer = _announcer;
+            this.facetService = facetService;
+            /**
+             * Defines the text displayed at the top of the Facet Container.
+             */
+            this.header = 'Selected';
+            /**
+             * Defines the text to display in the tooltip when hovering over the clear all button.
+             */
+            this.clearTooltip = 'Clear All';
+            /**
+             * Defines the text to display when there are no selected facets.
+             */
+            this.emptyText = 'No Items';
+            /**
+             * Determines if the facets can be reordered.
+             */
+            this.facetsReorderable = false;
+            /**
+             * Defines the aria-label for the clear all button.
+             */
+            this.clearAriaLabel = 'Clear All';
+            /**
+             * Defines the aria-label for the deselect facet button..
+             */
+            this.deselectFacetAriaLabel = 'Deselect Facet';
+            /**
+             * If using two-way binding this array will update when the selected facets change.
+             */
+            this.facetsChange = new i0.EventEmitter();
+            /**
+             * This will be triggered when a facet is selected, deselected or all facets are deselected.
+             * The event will be an instance of either `FacetSelect`, `FacetDeselect` or `FacetDeselectAll` and
+             * will contain the facet being selected or deselected in a `facet` property
+             * (deselect all will not contain affected facets).
+             */
+            this.events = new i0.EventEmitter();
+            this._onDestroy = new rxjs.Subject();
+            facetService.facets$.subscribe(function (facets) { return _this.facetsChange.next(facets); });
+            facetService.events$.subscribe(function (event) { return _this.triggerEvent(event); });
+            // announce deselection
+            facetService.events$.pipe(operators.filter(function (event) { return event instanceof FacetDeselect; }))
+                .subscribe(function (event) { return _this._announcer.announce("Option " + event.facet.title + " deselected.", 'assertive'); });
+        }
+        Object.defineProperty(FacetContainerComponent.prototype, "facets", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this.facetService.facets$.value;
+            },
+            /** Allows a predefined set of Facets to be displayed. */
+            set: /**
+             * Allows a predefined set of Facets to be displayed.
+             * @param {?} facets
+             * @return {?}
+             */ function (facets) {
+                this.facetService.facets$.next(facets);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._onDestroy.next();
+                this._onDestroy.complete();
+            };
+        /**
+         * @param {?} facet
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.selectFacet = /**
+         * @param {?} facet
+         * @return {?}
+         */
+            function (facet) {
+                this.facetService.select(facet);
+            };
+        /**
+         * @param {?} facet
+         * @param {?=} tag
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.deselectFacet = /**
+         * @param {?} facet
+         * @param {?=} tag
+         * @return {?}
+         */
+            function (facet, tag) {
+                // find the index of the item in the selected array
+                /** @type {?} */
+                var idx = this.facets.findIndex(function (selectedFacet) { return facet === selectedFacet; });
+                // if match there was no match then finish
+                if (idx === -1) {
+                    return;
+                }
+                // remove the last item
+                this.facetService.deselect(facet);
+                // announce the facet removal
+                this._announcer.announce("Option " + facet.title + " deselected.", 'assertive');
+                // focus another tag if there is one
+                if (tag) {
+                    /** @type {?} */
+                    var sibling = tag.previousElementSibling || tag.nextElementSibling;
+                    // if there is a sibling then focus it
+                    if (sibling) {
+                        (( /** @type {?} */(sibling))).focus();
+                    }
+                }
+            };
+        /**
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.deselectAllFacets = /**
+         * @return {?}
+         */
+            function () {
+                // empty the selected array
+                this.facetService.deselectAll();
+                // announce the facet removal
+                this._announcer.announce("All options deselected.", 'assertive');
+            };
+        /**
+         * @param {?} _index
+         * @param {?} facet
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.trackBy = /**
+         * @param {?} _index
+         * @param {?} facet
+         * @return {?}
+         */
+            function (_index, facet) {
+                return facet.id || facet.title;
+            };
+        /**
+         * @param {?} facet
+         * @param {?} element
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.shiftRight = /**
+         * @param {?} facet
+         * @param {?} element
+         * @return {?}
+         */
+            function (facet, element) {
+                // only move the item if reordering is allowed
+                if (this.facetsReorderable === false) {
+                    return;
+                }
+                // perform the movement
+                this.shiftFacet(facet, 1);
+                // the item may become unfocused during the reorder so we should refocus it
+                requestAnimationFrame(function () { return element.focus(); });
+                // announce the move
+                this._announcer.announce("Option " + facet.title + " moved down.");
+            };
+        /**
+         * @param {?} facet
+         * @param {?} element
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.shiftLeft = /**
+         * @param {?} facet
+         * @param {?} element
+         * @return {?}
+         */
+            function (facet, element) {
+                // only move the item if reordering is allowed
+                if (this.facetsReorderable === false) {
+                    return;
+                }
+                // perform the movement
+                this.shiftFacet(facet, -1);
+                // the item may become unfocused during the reorder so we should refocus it
+                requestAnimationFrame(function () { return element.focus(); });
+                // announce the move
+                this._announcer.announce("Option " + facet.title + " moved up.");
+            };
+        /**
+         * @param {?} facet
+         * @param {?} distance
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.shiftFacet = /**
+         * @param {?} facet
+         * @param {?} distance
+         * @return {?}
+         */
+            function (facet, distance) {
+                /** @type {?} */
+                var index = this.facets.indexOf(facet);
+                /** @type {?} */
+                var target = index + distance;
+                // Ensure the move is valid
+                if (target < 0 || target === this.facets.length) {
+                    return;
+                }
+                // Perform the move
+                this.facets.splice(index, 1);
+                this.facets.splice(target, 0, facet);
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        FacetContainerComponent.prototype.triggerEvent = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                this.events.next(event);
+            };
+        FacetContainerComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ux-facet-container',
+                        template: "<!-- Display Any Selected Facets -->\n<div class=\"facets-selected-container\">\n\n    <!-- Display Title an Clear Button -->\n    <div class=\"facets-selected-header-container\">\n\n        <!-- Show The Selected Text -->\n        <span class=\"facets-selected-header-label\">{{ header }}</span>\n\n        <!-- Add a Clear Button -->\n        <ng-container *ngIf=\"(facetService.facets$ | async).length > 0\" [ngTemplateOutlet]=\"clearButton || clearButtonDefault\"></ng-container>\n\n    </div>\n\n    <!-- Display Tags For Selected Items -->\n    <div class=\"facets-selected-list\"\n        uxReorderable\n        role=\"list\"\n        [reorderingDisabled]=\"!facetsReorderable\"\n        [(reorderableModel)]=\"facets\"\n        (reorderableModelChange)=\"facetsChange.emit(facets)\">\n\n        <!-- Show Selected Tags -->\n        <div #tag\n            class=\"facet-selected-tag\"\n            role=\"listitem\"\n            tabindex=\"0\"\n            uxReorderableHandle\n            *ngFor=\"let facet of (facetService.facets$ | async); trackBy: trackBy\"\n            [attr.aria-label]=\"facet.title\"\n            [uxReorderableModel]=\"facet\"\n            (mousedown)=\"tag.focus()\"\n            (touchmove)=\"$event.preventDefault()\"\n            (keydown.ArrowRight)=\"shiftRight(facet, tag)\"\n            (keydown.ArrowLeft)=\"shiftLeft(facet, tag)\">\n\n            <!-- Display Label -->\n            <span class=\"facet-selected-tag-label\">{{ facet.title }}</span>\n\n            <!-- Display Remove Icon -->\n            <button type=\"button\"\n                uxFocusIndicator\n                class=\"facet-selected-remove-btn\"\n                [attr.aria-label]=\"deselectFacetAriaLabel\"\n                (click)=\"deselectFacet(facet, tag)\">\n\n                <ux-icon name=\"close\"></ux-icon>\n            </button>\n        </div>\n\n    </div>\n\n    <!-- Show Message Here if No Facets Selected -->\n    <p class=\"facets-selected-none-label\" *ngIf=\"emptyText && (facetService.facets$ | async).length === 0\">{{ emptyText }}</p>\n\n</div>\n\n<!-- Any Facet Elements Should be Added Here By User -->\n<div class=\"facets-region\">\n    <ng-content></ng-content>\n</div>\n\n<ng-template #clearButtonDefault>\n    <button type=\"button\"\n            class=\"btn btn-link btn-icon button-secondary\"\n            tabindex=\"0\"\n            [attr.aria-label]=\"clearAriaLabel\"\n            [uxTooltip]=\"clearTooltip\"\n            placement=\"left\"\n            (click)=\"deselectAllFacets()\">\n\n            <svg class=\"facets-selected-clear-graphic\" focusable=\"false\" viewBox=\"0 0 19 12\" shape-rendering=\"geometricPrecision\">\n                <rect class=\"light-grey\" x=\"0\" y=\"2\" width=\"7\" height=\"2\"></rect>\n                <rect class=\"dark-grey\" x=\"0\" y=\"5\" width=\"9\" height=\"2\"></rect>\n                <rect class=\"light-grey\" x=\"0\" y=\"8\" width=\"7\" height=\"2\"></rect>\n                <path class=\"dark-grey\" d=\"M9,1 h1 l9,9 v1 h-1 l-9,-9 v-1 Z\"></path>\n                <path class=\"dark-grey\" d=\"M9,11 v-1 l9,-9 h1 v1 l-9,9 h-1 Z\"></path>\n            </svg>\n        </button>\n</ng-template>",
+                        providers: [FacetService]
+                    }] }
+        ];
+        /** @nocollapse */
+        FacetContainerComponent.ctorParameters = function () {
+            return [
+                { type: a11y.LiveAnnouncer },
+                { type: FacetService }
+            ];
+        };
+        FacetContainerComponent.propDecorators = {
+            header: [{ type: i0.Input }],
+            clearTooltip: [{ type: i0.Input }],
+            emptyText: [{ type: i0.Input }],
+            facetsReorderable: [{ type: i0.Input }],
+            facets: [{ type: i0.Input }],
+            clearAriaLabel: [{ type: i0.Input }],
+            deselectFacetAriaLabel: [{ type: i0.Input }],
+            facetsChange: [{ type: i0.Output }],
+            events: [{ type: i0.Output }],
+            clearButton: [{ type: i0.ContentChild, args: [FacetClearButtonDirective, { read: i0.TemplateRef, static: false },] }]
+        };
+        return FacetContainerComponent;
     }());
     /**
      * @fileoverview added by tsickle
@@ -20033,7 +20003,6 @@
     var DECLARATIONS$1 = [
         FacetContainerComponent,
         FacetHeaderComponent,
-        FacetBaseComponent,
         FacetCheckListComponent,
         FacetCheckListItemComponent,
         FacetTypeaheadListComponent,
@@ -20204,6 +20173,10 @@
             var _this = this;
             this.filterService = filterService;
             /**
+             * Defines the aria-label for the clear all button
+             */
+            this.clearAriaLabel = 'Clear All Filters';
+            /**
              * Emit when the active filters chance
              */
             this.filtersChange = new i0.EventEmitter();
@@ -20248,7 +20221,7 @@
         FilterContainerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-filter-container',
-                        template: "<ng-content></ng-content>\n\n<!-- Add a Clear Button -->\n<button type=\"button\"\n    class=\"btn btn-link btn-icon btn-secondary m-l-xs\"\n    tabindex=\"0\"\n    aria-label=\"Clear all filters\"\n    i18n-aria-label\n    *ngIf=\"(filterService.filters$ | async).length > 0\"\n    [uxTooltip]=\"clearTooltip || 'Clear All'\"\n    (click)=\"filterService.removeAll()\">\n\n    <svg class=\"filter-selected-clear-graphic\" width=\"100%\" viewBox=\"0 0 19 12\" shape-rendering=\"geometricPrecision\">\n        <rect class=\"light-grey\" x=\"0\" y=\"2\" width=\"7\" height=\"2\"></rect>\n        <rect class=\"dark-grey\" x=\"0\" y=\"5\" width=\"9\" height=\"2\"></rect>\n        <rect class=\"light-grey\" x=\"0\" y=\"8\" width=\"7\" height=\"2\"></rect>\n        <path class=\"dark-grey\" d=\"M9,1 h1 l9,9 v1 h-1 l-9,-9 v-1 Z\"></path>\n        <path class=\"dark-grey\" d=\"M9,11 v-1 l9,-9 h1 v1 l-9,9 h-1 Z\"></path>\n    </svg>\n\n</button>",
+                        template: "<ng-content></ng-content>\n\n<!-- Add a Clear Button -->\n<button type=\"button\"\n    class=\"btn btn-link btn-icon btn-secondary m-l-xs\"\n    tabindex=\"0\"\n    [attr.aria-label]=\"clearAriaLabel\"\n    *ngIf=\"(filterService.filters$ | async).length > 0\"\n    [uxTooltip]=\"clearTooltip || 'Clear All'\"\n    (click)=\"filterService.removeAll()\">\n\n    <svg class=\"filter-selected-clear-graphic\" width=\"100%\" viewBox=\"0 0 19 12\" shape-rendering=\"geometricPrecision\">\n        <rect class=\"light-grey\" x=\"0\" y=\"2\" width=\"7\" height=\"2\"></rect>\n        <rect class=\"dark-grey\" x=\"0\" y=\"5\" width=\"9\" height=\"2\"></rect>\n        <rect class=\"light-grey\" x=\"0\" y=\"8\" width=\"7\" height=\"2\"></rect>\n        <path class=\"dark-grey\" d=\"M9,1 h1 l9,9 v1 h-1 l-9,-9 v-1 Z\"></path>\n        <path class=\"dark-grey\" d=\"M9,11 v-1 l9,-9 h1 v1 l-9,9 h-1 Z\"></path>\n    </svg>\n\n</button>",
                         providers: [FilterService]
                     }] }
         ];
@@ -20261,80 +20234,11 @@
         FilterContainerComponent.propDecorators = {
             filters: [{ type: i0.Input }],
             clearTooltip: [{ type: i0.Input }],
+            clearAriaLabel: [{ type: i0.Input }],
             filtersChange: [{ type: i0.Output }],
             events: [{ type: i0.Output }]
         };
         return FilterContainerComponent;
-    }());
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
-     */
-    /**
-     * @deprecated
-     * This should no longer be used as we now have the FilterService
-     * which is easier to use than this base component.
-     */
-    var FilterBaseComponent = /** @class */ (function () {
-        function FilterBaseComponent(filtersContainer, _announcer) {
-            this.filtersContainer = filtersContainer;
-            this._announcer = _announcer;
-            this._subscription = filtersContainer.events.pipe(operators.filter(function (event) { return event instanceof FilterRemoveAllEvent; })).subscribe(this.removeFilter.bind(this));
-        }
-        /**
-         * @return {?}
-         */
-        FilterBaseComponent.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._subscription.unsubscribe();
-            };
-        /**
-         * @param {?} _filter
-         * @return {?}
-         */
-        FilterBaseComponent.prototype.addFilter = /**
-         * @param {?} _filter
-         * @return {?}
-         */
-            function (_filter) {
-                if (!_filter.initial) {
-                    this.filtersContainer.filterService.add(_filter);
-                    this._announcer.announce("Filter " + _filter.name + " selected.");
-                }
-            };
-        /**
-         * @param {?} _filter
-         * @return {?}
-         */
-        FilterBaseComponent.prototype.removeFilter = /**
-         * @param {?} _filter
-         * @return {?}
-         */
-            function (_filter) {
-                if (!_filter) {
-                    return;
-                }
-                this.filtersContainer.filterService.remove(_filter);
-                this._announcer.announce("Filter " + _filter.name + " deselected.");
-            };
-        FilterBaseComponent.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: 'ux-filter-base'
-                    },] }
-        ];
-        /** @nocollapse */
-        FilterBaseComponent.ctorParameters = function () {
-            return [
-                { type: FilterContainerComponent, decorators: [{ type: i0.Host }] },
-                { type: a11y.LiveAnnouncer }
-            ];
-        };
-        FilterBaseComponent.propDecorators = {
-            filters: [{ type: i0.Input }]
-        };
-        return FilterBaseComponent;
     }());
     /**
      * @fileoverview added by tsickle
@@ -21996,7 +21900,6 @@
      */
     /** @type {?} */
     var DECLARATIONS$2 = [
-        FilterBaseComponent,
         FilterContainerComponent,
         FilterDropdownComponent,
         FilterDynamicComponent,
@@ -22402,40 +22305,11 @@
              */
             this.tabindex$ = new rxjs.BehaviorSubject(-1);
             /**
-             * Determine if the icon is from the legacy `hpe` iconset or `ux` iconset
-             */
-            this._isLegacyIcon = false;
-            /**
              * Unsubscribe from all observables on component destroy
              */
             this._onDestroy = new rxjs.Subject();
             this.primary = primary !== null;
         }
-        Object.defineProperty(FloatingActionButtonComponent.prototype, "icon", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return this._icon;
-            },
-            /**
-             * @deprecated - Use ng-content instead
-             * If specified, defines which icon from the icon set to display in the button.
-             * If you wish to display custom content you can simply add children to the
-             * component and they will be displayed within the button. */
-            set: /**
-             * @deprecated - Use ng-content instead
-             * If specified, defines which icon from the icon set to display in the button.
-             * If you wish to display custom content you can simply add children to the
-             * component and they will be displayed within the button.
-             * @param {?} icon
-             * @return {?}
-             */ function (icon) {
-                this._icon = icon;
-                this._isLegacyIcon = this._icon.indexOf('hpe-') === 0;
-            },
-            enumerable: true,
-            configurable: true
-        });
         /**
          * @return {?}
          */
@@ -22444,10 +22318,6 @@
          */
             function () {
                 var _this = this;
-                // warn about use of deprecated input
-                if (this.icon) {
-                    console.warn('ux-floating-action-button - `icon` input is deprecated. Instead add the icon as content of the `ux-floating-action-button` element.');
-                }
                 if (this._tooltip) {
                     // ensure the tooltip gets hidden when the button is hidden
                     this.fab.open$.pipe(operators.takeUntil(this._onDestroy), operators.filter(function (isOpen) { return !isOpen && !_this.primary; }))
@@ -22552,7 +22422,7 @@
         FloatingActionButtonComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-floating-action-button',
-                        template: "<button #button\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        type=\"button\"\n        class=\"btn floating-action-button\"\n        [class.button-primary]=\"primary\"\n        [class.button-secondary]=\"!primary\"\n        [attr.aria-label]=\"ariaLabel\"\n        [tabIndex]=\"tabindex$ | async\"\n        (focus)=\"onFocus()\"\n        (blur)=\"onBlur()\"\n        (click)=\"primary ? fab.toggle() : close()\">\n\n    <span *ngIf=\"icon\"\n          class=\"floating-action-button-icon\"\n          [class.hpe-icon]=\"_isLegacyIcon\"\n          [class.ux-icon]=\"!_isLegacyIcon\"\n          [ngClass]=\"_icon\">\n    </span>\n\n    <ng-content *ngIf=\"!_icon\"></ng-content>\n\n</button>",
+                        template: "<button #button\n        uxFocusIndicator\n        [programmaticFocusIndicator]=\"true\"\n        type=\"button\"\n        class=\"btn floating-action-button\"\n        [class.button-primary]=\"primary\"\n        [class.button-secondary]=\"!primary\"\n        [attr.aria-label]=\"ariaLabel\"\n        [tabIndex]=\"tabindex$ | async\"\n        (focus)=\"onFocus()\"\n        (blur)=\"onBlur()\"\n        (click)=\"primary ? fab.toggle() : close()\">\n\n    <ng-content></ng-content>\n\n</button>",
                         changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         preserveWhitespaces: false
                     }] }
@@ -22566,7 +22436,6 @@
             ];
         };
         FloatingActionButtonComponent.propDecorators = {
-            icon: [{ type: i0.Input }],
             ariaLabel: [{ type: i0.Input, args: ['aria-label',] }],
             button: [{ type: i0.ViewChild, args: ['button', { static: true },] }],
             onKeydown: [{ type: i0.HostListener, args: ['keydown', ['$event'],] }]
@@ -24152,6 +24021,10 @@
             var _this = _super.call(this, service, elementRef, focusOrigin) || this;
             _this.boxShadow = true;
             _this.closeVisible = true;
+            /**
+             * Defines the aria-label for the close button
+             */
+            _this.closeAriaLabel = 'Close';
             _this.shadow = false;
             _this.visibleChange = new i0.EventEmitter();
             _this.animate = false;
@@ -24169,31 +24042,6 @@
              * @return {?}
              */ function (value) {
                 this.closeOnExternalClick = !value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ItemDisplayPanelComponent.prototype, "title", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return this.header;
-            },
-            /**
-             * @deprecated
-             * Title used for adding tooltips and shouldn't be used as an input
-             * instead header will be used. This is here to support backward compatibility only
-             * this property should not be used.
-             */
-            set: /**
-             * @deprecated
-             * Title used for adding tooltips and shouldn't be used as an input
-             * instead header will be used. This is here to support backward compatibility only
-             * this property should not be used.
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
-                this.header = value;
             },
             enumerable: true,
             configurable: true
@@ -24238,7 +24086,7 @@
         ItemDisplayPanelComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-item-display-panel',
-                        template: "<div class=\"ux-side-panel-host ux-item-display-panel\" #panel\n    [class.box-shadow]=\"boxShadow\"\n    [style.position]=\"position\"\n    [style.width]=\"hostWidth\"\n    [style.top]=\"cssTop\"\n    [@panelState]=\"animationPanelState\"\n    [tabindex]=\"open ? 0 : -1\"\n    [focusIf]=\"open && focusOnShow\"\n    *ngIf=\"open\">\n\n    <div class=\"ux-side-panel-header\" [class.item-display-panel-shadow]=\"shadow\">\n        <h3>{{ header }}</h3>\n\n        <button *ngIf=\"closeVisible\"\n                uxFocusIndicator\n                aria-label=\"Close\"\n                i18n-aria-label\n                type=\"button\"\n                class=\"btn btn-lg btn-link btn-icon button-secondary\"\n                (click)=\"visible = false\">\n\n            <ux-icon name=\"close\"></ux-icon>\n        </button>\n    </div>\n\n    <div class=\"ux-side-panel-content\">\n        <ng-content select=\"[uxItemDisplayPanelContent]\"></ng-content>\n    </div>\n\n    <div class=\"ux-side-panel-footer\" *ngIf=\"footer\">\n        <ng-content select=\"[uxItemDisplayPanelFooter]\"></ng-content>\n    </div>\n\n</div>\n",
+                        template: "<div class=\"ux-side-panel-host ux-item-display-panel\" #panel\n    [class.box-shadow]=\"boxShadow\"\n    [style.position]=\"position\"\n    [style.width]=\"hostWidth\"\n    [style.top]=\"cssTop\"\n    [@panelState]=\"animationPanelState\"\n    [tabindex]=\"open ? 0 : -1\"\n    [focusIf]=\"open && focusOnShow\"\n    *ngIf=\"open\">\n\n    <div class=\"ux-side-panel-header\" [class.item-display-panel-shadow]=\"shadow\">\n        <h3>{{ header }}</h3>\n\n        <button *ngIf=\"closeVisible\"\n                uxFocusIndicator\n                [attr.aria-label]=\"closeAriaLabel\"\n                type=\"button\"\n                class=\"btn btn-lg btn-link btn-icon button-secondary\"\n                (click)=\"visible = false\">\n\n            <ux-icon name=\"close\"></ux-icon>\n        </button>\n    </div>\n\n    <div class=\"ux-side-panel-content\">\n        <ng-content select=\"[uxItemDisplayPanelContent]\"></ng-content>\n    </div>\n\n    <div class=\"ux-side-panel-footer\" *ngIf=\"footer\">\n        <ng-content select=\"[uxItemDisplayPanelFooter]\"></ng-content>\n    </div>\n\n</div>\n",
                         providers: [SidePanelService],
                         animations: [sidePanelStateAnimation],
                         host: {
@@ -24259,11 +24107,11 @@
             boxShadow: [{ type: i0.Input }],
             closeVisible: [{ type: i0.Input }],
             preventClose: [{ type: i0.Input }],
+            closeAriaLabel: [{ type: i0.Input }],
             shadow: [{ type: i0.Input }],
             visibleChange: [{ type: i0.Output }],
             footer: [{ type: i0.ContentChild, args: [ItemDisplayPanelFooterDirective, { static: false },] }],
             panel: [{ type: i0.ViewChild, args: ['panel', { static: true },] }],
-            title: [{ type: i0.Input }],
             visible: [{ type: i0.Input }]
         };
         return ItemDisplayPanelComponent;
@@ -24396,6 +24244,7 @@
         };
         WizardStepComponent.propDecorators = {
             header: [{ type: i0.Input }],
+            disableNextWhenInvalid: [{ type: i0.Input }],
             valid: [{ type: i0.Input }],
             visitedChange: [{ type: i0.Input }],
             visited: [{ type: i0.Input }],
@@ -24504,6 +24353,10 @@
              * If set to `true` the 'Finish' button will be visible on all steps of the wizard. By default this button will only be visible on the final step of the wizard.
              */
             this.finishAlwaysVisible = false;
+            /**
+             * If set to `true` the 'Next' or 'Finish' button will become disabled when the current step is invalid.
+             */
+            this.disableNextWhenInvalid = false;
             /**
              * Emits when the wizard has moved to the next step. It will receive the current step index as a parameter.
              */
@@ -24639,6 +24492,25 @@
                     // emit the current step
                     this.onNext.next(this.step);
                 }
+            };
+        /**
+         * Whether the Next or Finish button should be disabled.
+         */
+        /**
+         * Whether the Next or Finish button should be disabled.
+         * @return {?}
+         */
+        WizardComponent.prototype.isNextDisabled = /**
+         * Whether the Next or Finish button should be disabled.
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var step = this.getCurrentStep();
+                // Use the `disableNextWhenInvalid` setting to determine whether to disable the Next/Finish button
+                // based on validation.
+                // If not defined on the WizardStepComponent, use the value from WizardComponent.
+                return (step.disableNextWhenInvalid === undefined ? this.disableNextWhenInvalid : step.disableNextWhenInvalid) && !step.valid;
             };
         /**
          * Navigate to the previous step
@@ -24809,7 +24681,7 @@
         WizardComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-wizard',
-                        template: "<div class=\"wizard-body\">\n\n    <div class=\"wizard-steps\"\n        uxTabbableList\n        [direction]=\"orientation\"\n        role=\"tablist\"\n        [attr.aria-orientation]=\"orientation\">\n\n        <div *ngFor=\"let stp of steps; let index = index\"\n            role=\"tab\"\n            class=\"wizard-step\"\n            [class.active]=\"stp.active\"\n            [class.visited]=\"stp.visited\"\n            [class.invalid]=\"stp.active && !stp.valid && invalidIndicator\"\n            [attr.aria-posinset]=\"index + 1\"\n            [attr.aria-setsize]=\"steps.length\"\n            [attr.aria-selected]=\"stp.active\"\n            [attr.aria-controls]=\"stp.id\"\n            [id]=\"stp.id + '-label'\"\n            uxFocusIndicator\n            uxTabbableListItem\n            [programmaticFocusIndicator]=\"true\"\n            [disabled]=\"index !== 0 && !stp.visited\"\n            (click)=\"gotoStep(stp)\"\n            (keydown.enter)=\"gotoStep(stp)\">\n            <span class=\"wizard-step-text\">{{ stp.header }}</span>\n            <ux-icon *ngIf=\"stp.visited && !stp.active\" class=\"wizard-step-icon\" name=\"checkmark\"></ux-icon>\n        </div>\n\n    </div>\n\n    <div class=\"wizard-content\">\n        <ng-content></ng-content>\n    </div>\n\n</div>\n\n<div class=\"wizard-footer\">\n\n    <ng-container *ngIf=\"footerTemplate\"\n                  [ngTemplateOutlet]=\"footerTemplate\"\n                  [ngTemplateOutletContext]=\"{ step: step }\">\n    </ng-container>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"previousVisible\"\n            [uxTooltip]=\"previousTooltip\"\n            [disabled]=\"previousDisabled || step === 0\"\n            [attr.aria-label]=\"previousAriaLabel\"\n            (click)=\"previous(); tip.hide()\">\n        {{ previousText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"nextVisible && !isLastStep()\"\n            [uxTooltip]=\"nextTooltip\"\n            [disabled]=\"nextDisabled\"\n            [attr.aria-label]=\"nextAriaLabel\"\n            (click)=\"next(); tip.hide()\">\n        {{ nextText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n            [uxTooltip]=\"finishTooltip\"\n            [disabled]=\"finishDisabled\"\n            [attr.aria-label]=\"finishAriaLabel\"\n            (click)=\"finish(); tip.hide()\">\n        {{ finishText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n            [uxTooltip]=\"cancelTooltip\"\n            [disabled]=\"cancelDisabled\"\n            [attr.aria-label]=\"cancelAriaLabel\"\n            (click)=\"cancel(); tip.hide()\">\n        {{ cancelText }}\n    </button>\n\n</div>\n",
+                        template: "<div class=\"wizard-body\">\n\n    <div class=\"wizard-steps\"\n        uxTabbableList\n        [direction]=\"orientation\"\n        role=\"tablist\"\n        [attr.aria-orientation]=\"orientation\">\n\n        <div *ngFor=\"let stp of steps; let index = index\"\n            role=\"tab\"\n            class=\"wizard-step\"\n            [class.active]=\"stp.active\"\n            [class.visited]=\"stp.visited\"\n            [class.invalid]=\"stp.active && !stp.valid && invalidIndicator\"\n            [attr.aria-posinset]=\"index + 1\"\n            [attr.aria-setsize]=\"steps.length\"\n            [attr.aria-selected]=\"stp.active\"\n            [attr.aria-controls]=\"stp.id\"\n            [id]=\"stp.id + '-label'\"\n            uxFocusIndicator\n            uxTabbableListItem\n            [programmaticFocusIndicator]=\"true\"\n            [disabled]=\"index !== 0 && !stp.visited\"\n            (click)=\"gotoStep(stp)\"\n            (keydown.enter)=\"gotoStep(stp)\">\n            <span class=\"wizard-step-text\">{{ stp.header }}</span>\n            <ux-icon *ngIf=\"stp.visited && !stp.active\" class=\"wizard-step-icon\" name=\"checkmark\"></ux-icon>\n        </div>\n\n    </div>\n\n    <div class=\"wizard-content\">\n        <ng-content></ng-content>\n    </div>\n\n</div>\n\n<div class=\"wizard-footer\">\n\n    <ng-container *ngIf=\"footerTemplate\"\n                  [ngTemplateOutlet]=\"footerTemplate\"\n                  [ngTemplateOutletContext]=\"{ step: step }\">\n    </ng-container>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"previousVisible\"\n            [uxTooltip]=\"previousTooltip\"\n            [disabled]=\"previousDisabled || step === 0\"\n            [attr.aria-label]=\"previousAriaLabel\"\n            (click)=\"previous(); tip.hide()\">\n        {{ previousText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"nextVisible && !isLastStep()\"\n            [uxTooltip]=\"nextTooltip\"\n            [disabled]=\"nextDisabled || isNextDisabled()\"\n            [attr.aria-label]=\"nextAriaLabel\"\n            (click)=\"next(); tip.hide()\">\n        {{ nextText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-primary\"\n            *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n            [uxTooltip]=\"finishTooltip\"\n            [disabled]=\"finishDisabled || isNextDisabled()\"\n            [attr.aria-label]=\"finishAriaLabel\"\n            (click)=\"finish(); tip.hide()\">\n        {{ finishText }}\n    </button>\n\n    <button #tip=\"ux-tooltip\"\n            type=\"button\"\n            class=\"btn button-secondary\"\n            *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n            [uxTooltip]=\"cancelTooltip\"\n            [disabled]=\"cancelDisabled\"\n            [attr.aria-label]=\"cancelAriaLabel\"\n            (click)=\"cancel(); tip.hide()\">\n        {{ cancelText }}\n    </button>\n\n</div>\n",
                         host: {
                             '[class]': 'orientation'
                         }
@@ -24839,6 +24711,7 @@
             finishVisible: [{ type: i0.Input }],
             cancelAlwaysVisible: [{ type: i0.Input }],
             finishAlwaysVisible: [{ type: i0.Input }],
+            disableNextWhenInvalid: [{ type: i0.Input }],
             onNext: [{ type: i0.Output }],
             onPrevious: [{ type: i0.Output }],
             onCancel: [{ type: i0.Output }],
@@ -24932,24 +24805,6 @@
             _this._valid = true;
             return _this;
         }
-        Object.defineProperty(MarqueeWizardStepComponent.prototype, "icon", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return this._icon;
-            },
-            /** @deprecated Define the icon to display - use `uxMarqueeWizardStepIcon directive instead */
-            set: /**
-             * @deprecated Define the icon to display - use `uxMarqueeWizardStepIcon directive instead
-             * @param {?} icon
-             * @return {?}
-             */ function (icon) {
-                this._icon = icon;
-                this._iconType = getIconType(icon);
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(MarqueeWizardStepComponent.prototype, "valid", {
             get: /**
              * @return {?}
@@ -24968,17 +24823,6 @@
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        MarqueeWizardStepComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                if (this.icon) {
-                    console.warn("Marquee wizard step [icon] property has been deprecated. Instead use the '*uxMarqueeWizardStepIcon' directive.");
-                }
-            };
         /**
          * Update the completed state and emit the latest value
          * @param completed whether or not the step is completed
@@ -25012,7 +24856,6 @@
             ];
         };
         MarqueeWizardStepComponent.propDecorators = {
-            icon: [{ type: i0.Input }],
             completed: [{ type: i0.Input }],
             completedChange: [{ type: i0.Output }],
             _iconTemplate: [{ type: i0.ContentChild, args: [MarqueeWizardStepIconDirective, { read: i0.TemplateRef, static: false },] }]
@@ -25210,7 +25053,7 @@
         MarqueeWizardComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-marquee-wizard',
-                        template: "<ng-container *ngIf=\"resizable && _isInitialised\">\n    <split direction=\"horizontal\"\n           [gutterSize]=\"gutterSize\"\n           (dragEnd)=\"onDragEnd($event)\">\n        <split-area [size]=\"sidePanelWidth\">\n            <ng-container [ngTemplateOutlet]=\"sidePanel\"></ng-container>\n        </split-area>\n        <split-area [size]=\"100 - sidePanelWidth\">\n            <ng-container [ngTemplateOutlet]=\"mainContentPanel\"></ng-container>\n        </split-area>\n    </split>\n</ng-container>\n\n<ng-container *ngIf=\"!resizable\">\n    <ng-container [ngTemplateOutlet]=\"sidePanel\"></ng-container>\n    <ng-container [ngTemplateOutlet]=\"mainContentPanel\"></ng-container>\n</ng-container>\n\n<ng-template #sidePanel>\n    <div class=\"marquee-wizard-side-panel\" [class.marquee-wizard-side-panel-resize]=\"resizable\">\n\n        <div class=\"marquee-wizard-description-container\" *ngIf=\"description\">\n            <!-- If a template was provided display it -->\n            <ng-container *ngIf=\"isTemplate\" [ngTemplateOutlet]=\"description\"></ng-container>\n\n            <!-- Otherwise wimply display the string -->\n            <ng-container *ngIf=\"!isTemplate\">\n                <p>{{ description }}</p>\n            </ng-container>\n        </div>\n\n        <ul class=\"marquee-wizard-steps\"\n            uxTabbableList\n            direction=\"vertical\"\n            role=\"tablist\"\n            aria-orientation=\"vertical\">\n\n            <li *ngFor=\"let step of steps; let index = index\"\n                role=\"tab\"\n                uxTabbableListItem\n                [disabled]=\"!step.visited\"\n                class=\"marquee-wizard-step\"\n                [class.active]=\"step.active\"\n                [class.visited]=\"step.visited\"\n                [class.invalid]=\"!step.valid\"\n                [attr.aria-posinset]=\"index + 1\"\n                [attr.aria-setsize]=\"steps.length\"\n                [attr.aria-selected]=\"step.active\"\n                [attr.aria-controls]=\"step.id\"\n                [id]=\"step.id + '-label'\"\n                (click)=\"gotoStep(step)\"\n                (keydown.enter)=\"gotoStep(step)\">\n\n                <ng-container [ngTemplateOutlet]=\"stepTemplate || defaultStepTemplate\" [ngTemplateOutletContext]=\"{ $implicit: step }\"></ng-container>\n            </li>\n\n        </ul>\n    </div>\n</ng-template>\n\n\n<ng-template #mainContentPanel>\n    <div class=\"marquee-wizard-content-panel\" [class.marquee-wizard-content-panel-resize]=\"resizable\">\n        <div class=\"marquee-wizard-content\">\n            <ng-content></ng-content>\n        </div>\n\n        <div class=\"modal-footer\">\n\n            <ng-container *ngIf=\"footerTemplate\"\n                          [ngTemplateOutlet]=\"footerTemplate\"\n                          [ngTemplateOutletContext]=\"{ step: step }\">\n            </ng-container>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-secondary\"\n                    *ngIf=\"previousVisible\"\n                    [uxTooltip]=\"previousTooltip\"\n                    [attr.aria-label]=\"previousAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"previousDisabled || step === 0\"\n                    (click)=\"previous(); tip.hide()\">\n                {{ previousText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-primary\"\n                    *ngIf=\"nextVisible && !isLastStep()\"\n                    [uxTooltip]=\"nextTooltip\"\n                    [attr.aria-label]=\"nextAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"nextDisabled\"\n                    (click)=\"next(); tip.hide()\">\n                {{ nextText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-primary\"\n                    *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n                    [uxTooltip]=\"finishTooltip\"\n                    [attr.aria-label]=\"finishAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"finishDisabled\"\n                    (click)=\"finish(); tip.hide()\">\n                {{ finishText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-secondary\"\n                    *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n                    [uxTooltip]=\"cancelTooltip\"\n                    [attr.aria-label]=\"cancelAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"cancelDisabled\"\n                    (click)=\"cancel(); tip.hide()\">\n                {{ cancelText }}\n            </button>\n\n        </div>\n    </div>\n</ng-template>\n\n<ng-template #defaultStepTemplate let-step>\n\n    <!-- Show an icon based on a string (deprecated) -->\n    <ng-container *ngIf=\"step._icon\">\n        <i *ngIf=\"step._iconType !== 'component'\" class=\"marquee-wizard-step-icon\" [ngClass]=\"[step._iconType, step._icon]\"></i>\n        <ux-icon *ngIf=\"step._iconType === 'component'\" class=\"marquee-wizard-step-icon\" [name]=\"step._icon\"></ux-icon>\n    </ng-container>\n\n    <!-- Insert the icon -->\n    <div *ngIf=\"step._iconTemplate\" class=\"marquee-wizard-step-icon\">\n        <ng-container [ngTemplateOutlet]=\"step._iconTemplate\"></ng-container>\n    </div>\n\n    <span class=\"marquee-wizard-step-title\">{{ step.header }}</span>\n    <ux-icon *ngIf=\"step.completed\" class=\"marquee-wizard-step-status\" name=\"checkmark\"></ux-icon>\n</ng-template>",
+                        template: "<ng-container *ngIf=\"resizable && _isInitialised\">\n    <as-split direction=\"horizontal\"\n           [gutterSize]=\"gutterSize\"\n           (dragEnd)=\"onDragEnd($event)\">\n        <as-split-area [size]=\"sidePanelWidth\">\n            <ng-container [ngTemplateOutlet]=\"sidePanel\"></ng-container>\n        </as-split-area>\n        <as-split-area [size]=\"100 - sidePanelWidth\">\n            <ng-container [ngTemplateOutlet]=\"mainContentPanel\"></ng-container>\n        </as-split-area>\n    </as-split>\n</ng-container>\n\n<ng-container *ngIf=\"!resizable\">\n    <ng-container [ngTemplateOutlet]=\"sidePanel\"></ng-container>\n    <ng-container [ngTemplateOutlet]=\"mainContentPanel\"></ng-container>\n</ng-container>\n\n<ng-template #sidePanel>\n    <div class=\"marquee-wizard-side-panel\" [class.marquee-wizard-side-panel-resize]=\"resizable\">\n\n        <div class=\"marquee-wizard-description-container\" *ngIf=\"description\">\n            <!-- If a template was provided display it -->\n            <ng-container *ngIf=\"isTemplate\" [ngTemplateOutlet]=\"description\"></ng-container>\n\n            <!-- Otherwise wimply display the string -->\n            <ng-container *ngIf=\"!isTemplate\">\n                <p>{{ description }}</p>\n            </ng-container>\n        </div>\n\n        <ul class=\"marquee-wizard-steps\"\n            uxTabbableList\n            direction=\"vertical\"\n            role=\"tablist\"\n            aria-orientation=\"vertical\">\n\n            <li *ngFor=\"let step of steps; let index = index\"\n                role=\"tab\"\n                uxTabbableListItem\n                [disabled]=\"!step.visited\"\n                class=\"marquee-wizard-step\"\n                [class.active]=\"step.active\"\n                [class.visited]=\"step.visited\"\n                [class.invalid]=\"!step.valid\"\n                [attr.aria-posinset]=\"index + 1\"\n                [attr.aria-setsize]=\"steps.length\"\n                [attr.aria-selected]=\"step.active\"\n                [attr.aria-controls]=\"step.id\"\n                [id]=\"step.id + '-label'\"\n                (click)=\"gotoStep(step)\"\n                (keydown.enter)=\"gotoStep(step)\">\n\n                <ng-container [ngTemplateOutlet]=\"stepTemplate || defaultStepTemplate\" [ngTemplateOutletContext]=\"{ $implicit: step }\"></ng-container>\n            </li>\n\n        </ul>\n    </div>\n</ng-template>\n\n\n<ng-template #mainContentPanel>\n    <div class=\"marquee-wizard-content-panel\" [class.marquee-wizard-content-panel-resize]=\"resizable\">\n        <div class=\"marquee-wizard-content\">\n            <ng-content></ng-content>\n        </div>\n\n        <div class=\"modal-footer\">\n\n            <ng-container *ngIf=\"footerTemplate\"\n                          [ngTemplateOutlet]=\"footerTemplate\"\n                          [ngTemplateOutletContext]=\"{ step: step }\">\n            </ng-container>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-secondary\"\n                    *ngIf=\"previousVisible\"\n                    [uxTooltip]=\"previousTooltip\"\n                    [attr.aria-label]=\"previousAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"previousDisabled || step === 0\"\n                    (click)=\"previous(); tip.hide()\">\n                {{ previousText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-primary\"\n                    *ngIf=\"nextVisible && !isLastStep()\"\n                    [uxTooltip]=\"nextTooltip\"\n                    [attr.aria-label]=\"nextAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"nextDisabled || isNextDisabled()\"\n                    (click)=\"next(); tip.hide()\">\n                {{ nextText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-primary\"\n                    *ngIf=\"finishVisible && isLastStep() || finishAlwaysVisible\"\n                    [uxTooltip]=\"finishTooltip\"\n                    [attr.aria-label]=\"finishAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"finishDisabled || isNextDisabled()\"\n                    (click)=\"finish(); tip.hide()\">\n                {{ finishText }}\n            </button>\n\n            <button #tip=\"ux-tooltip\"\n                    type=\"button\"\n                    class=\"btn button-secondary\"\n                    *ngIf=\"cancelVisible && !isLastStep() || cancelAlwaysVisible\"\n                    [uxTooltip]=\"cancelTooltip\"\n                    [attr.aria-label]=\"cancelAriaLabel\"\n                    container=\"body\"\n                    [disabled]=\"cancelDisabled\"\n                    (click)=\"cancel(); tip.hide()\">\n                {{ cancelText }}\n            </button>\n        </div>\n    </div>\n</ng-template>\n\n<ng-template #defaultStepTemplate let-step>\n\n    <!-- Insert the icon -->\n    <div *ngIf=\"step._iconTemplate\" class=\"marquee-wizard-step-icon\">\n        <ng-container [ngTemplateOutlet]=\"step._iconTemplate\"></ng-container>\n    </div>\n\n    <span class=\"marquee-wizard-step-title\">{{ step.header }}</span>\n    <ux-icon *ngIf=\"step.completed\" class=\"marquee-wizard-step-status\" name=\"checkmark\"></ux-icon>\n</ng-template>",
                         providers: [MarqueeWizardService]
                     }] }
         ];
@@ -25464,6 +25307,20 @@
             this._frameExtractionService = _frameExtractionService;
             this.type = 'video';
             this.loaded = false;
+            /**
+             * Aria Labels
+             */
+            this.muteAriaLabel = this.getMuteAriaLabel;
+            this.playAriaLabel = this.getPlayAriaLabel;
+            this.fullscreenAriaLabel = this.getFullscreenAriaLabel;
+            this.selectSubtitlesAriaLabel = this.getSubtitlesAriaLabel;
+            this.goToStartAriaLabel = 'Go to start';
+            this.goToEndAriaLabel = 'Go to end';
+            this.subtitlesTitleAriaLabel = 'Subtitles';
+            this.subtitlesOffAriaLabel = 'Subtitles Off';
+            this.noSubtitlesAriaLabel = 'No subtitles';
+            this.mediaPlayerAriaLabel = 'Media Player';
+            this.seekAriaLabel = 'Seek Slider';
             /*
                     Create observables for media player events
                 */
@@ -25667,7 +25524,7 @@
             get: /**
              * @return {?}
              */ function () {
-                return this._mediaPlayer ? this._mediaPlayer.duration : 0;
+                return this._mediaPlayer && !isNaN(this.mediaPlayer.duration) ? this._mediaPlayer.duration : 0;
             },
             enumerable: true,
             configurable: true
@@ -26090,6 +25947,50 @@
                 for (var index = 0; index < this.textTracks.length; index++) {
                     this.textTracks[index].mode = 'hidden';
                 }
+            };
+        /**
+         * @param {?} volume
+         * @return {?}
+         */
+        MediaPlayerService.prototype.getMuteAriaLabel = /**
+         * @param {?} volume
+         * @return {?}
+         */
+            function (volume) {
+                return volume === 0 ? 'Unmute' : 'Mute';
+            };
+        /**
+         * @param {?} isPlaying
+         * @return {?}
+         */
+        MediaPlayerService.prototype.getPlayAriaLabel = /**
+         * @param {?} isPlaying
+         * @return {?}
+         */
+            function (isPlaying) {
+                return isPlaying ? 'Pause' : 'Play';
+            };
+        /**
+         * @param {?} isFullscreen
+         * @return {?}
+         */
+        MediaPlayerService.prototype.getFullscreenAriaLabel = /**
+         * @param {?} isFullscreen
+         * @return {?}
+         */
+            function (isFullscreen) {
+                return isFullscreen ? 'Exit full screen' : 'Full screen';
+            };
+        /**
+         * @param {?} track
+         * @return {?}
+         */
+        MediaPlayerService.prototype.getSubtitlesAriaLabel = /**
+         * @param {?} track
+         * @return {?}
+         */
+            function (track) {
+                return "Select subtitles, " + track + " currently selected.";
             };
         MediaPlayerService.decorators = [
             { type: i0.Injectable }
@@ -27224,18 +27125,17 @@
      */
     /** @type {?} */
     var uniqueId$7 = 1;
-    var MediaPlayerControlsExtensionComponent = /** @class */ (function (_super) {
-        __extends(MediaPlayerControlsExtensionComponent, _super);
-        function MediaPlayerControlsExtensionComponent() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.volumeActive = false;
-            _this.volumeFocus = false;
-            _this.returnFocus = true;
-            _this.subtitlesId = "ux-media-player-subtitle-popover-" + uniqueId$7++;
-            _this.subtitlesOpen = false;
-            _this.mouseEnterVolume = new rxjs.Subject();
-            _this.mouseLeaveVolume = new rxjs.Subject();
-            _this.options = {
+    var MediaPlayerControlsExtensionComponent = /** @class */ (function () {
+        function MediaPlayerControlsExtensionComponent(mediaPlayerService) {
+            this.mediaPlayerService = mediaPlayerService;
+            this.volumeActive = false;
+            this.volumeFocus = false;
+            this.returnFocus = true;
+            this.subtitlesId = "ux-media-player-subtitle-popover-" + uniqueId$7++;
+            this.subtitlesOpen = false;
+            this.mouseEnterVolume = new rxjs.Subject();
+            this.mouseLeaveVolume = new rxjs.Subject();
+            this.options = {
                 handles: {
                     aria: {
                         thumb: 'Volume'
@@ -27256,10 +27156,9 @@
                     }
                 }
             };
-            _this._volume = 50;
-            _this._previousVolume = 50;
-            _this._onDestroy = new rxjs.Subject();
-            return _this;
+            this._volume = 100;
+            this._previousVolume = 100;
+            this._onDestroy = new rxjs.Subject();
         }
         Object.defineProperty(MediaPlayerControlsExtensionComponent.prototype, "volume", {
             get: /**
@@ -27376,19 +27275,26 @@
                         return this.mediaPlayerService.textTracks[idx].label;
                     }
                 }
-                return 'No subtitles';
+                return this.mediaPlayerService.noSubtitlesAriaLabel;
             };
         MediaPlayerControlsExtensionComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-media-player-controls',
-                        template: "<div class=\"volume-container\">\n\n    <div class=\"volume-slider-container\"\n        #volumeContainer\n        [class.active]=\"volumeActive || volumeFocus\"\n        (mouseenter)=\"mouseEnterVolume.next()\"\n        (mouseleave)=\"mouseLeaveVolume.next()\"\n        (uxFocusWithin)=\"volumeFocus = true\"\n        (uxBlurWithin)=\"volumeFocus = false\">\n\n        <button #volumeIcon\n                uxFocusIndicator\n                type=\"button\"\n                class=\"volume-slider-icon\"\n                attr.aria-label=\"{{ volume === 0 ? 'Unmute' : 'Mute' }}\"\n                i18n-aria-label\n                [uxTooltip]=\"muteTooltip\"\n                [showTriggers]=\"['mouseenter']\"\n                [hideTriggers]=\"['mouseleave']\"\n                (click)=\"toggleMute()\"\n                (mouseup)=\"volumeIcon.blur()\">\n\n            <ux-icon *ngIf=\"volume === 0\" name=\"volume-mute\"></ux-icon>\n            <ux-icon *ngIf=\"volume > 0 && volume <= 70\" name=\"volume-low\"></ux-icon>\n            <ux-icon *ngIf=\"volume > 70\" name=\"volume\"></ux-icon>\n        </button>\n\n        <div class=\"volume-slider-node\">\n            <ux-slider [(value)]=\"volume\" [options]=\"options\"></ux-slider>\n        </div>\n    </div>\n</div>\n\n<button #startButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToStart()\"\n    (mouseup)=\"startButton.blur()\"\n    aria-label=\"Go to start\"\n    i18n-aria-label>\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"0\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"51.5,64 51.5,0 7.4,32 \" />\n    </svg>\n</button>\n\n<button #playButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    attr.aria-label=\"{{ (mediaPlayerService.playing | async) ? 'Pause' : 'Play' }}\"\n    i18n-aria-label\n    (click)=\"mediaPlayerService.togglePlay()\"\n    (mouseup)=\"playButton.blur()\">\n\n    <svg *ngIf=\"!(mediaPlayerService.playing | async)\" viewBox=\"0 0 45 64\" width=\"20\" height=\"29\" focusable=\"false\">\n        <polygon points=\"0.4,0 0.4,64 44.6,32\" />\n    </svg>\n    <svg *ngIf=\"mediaPlayerService.playing | async\" viewBox=\"0 0 43 56.9\" width=\"20\" height=\"29\" focusable=\"false\">\n        <rect y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n        <rect x=\"27.3\" y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n    </svg>\n</button>\n\n<button #endButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToEnd()\"\n    (mouseup)=\"endButton.blur()\"\n    aria-label=\"Go to end\"\n    i18n-aria-label>\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"44.1\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"0,64 0,0 44.1,32\" />\n    </svg>\n</button>\n\n<div class=\"actions-list\">\n\n    <ng-content></ng-content>\n\n    <div class=\"action-button-container\" *ngIf=\"mediaPlayerService.textTracks.length > 0 && mediaPlayerService.type === 'video'\">\n        <button #subtitlesButton\n            uxFocusIndicator\n            type=\"button\"\n            class=\"action-button\"\n            (keydown)=\"returnFocus = true\"\n            (click)=\"subtitlesOpen = !subtitlesOpen\"\n            (mouseup)=\"subtitlesButton.blur(); returnFocus = false\"\n            i18n-aria-label\n            attr.aria-label=\"Select subtitles, {{ getSubtitleTrack() }} currently selected.\"\n            [attr.aria-expanded]=\"subtitlesOpen\"\n            [attr.aria-describedby]=\"subtitlesId\"\n            aria-haspopup=\"true\">\n\n            <ux-icon name=\"subtitles\"></ux-icon>\n        </button>\n\n        <div #subtitles\n            [style.top.px]=\"-subtitles.offsetHeight\"\n            class=\"popover top media-player-subtitles-popover show\"\n            [id]=\"subtitlesId\"\n            (keydown.escape)=\"subtitlesOpen = false\"\n            (uxClickOutside)=\"subtitlesOpen = false\"\n            *ngIf=\"subtitlesOpen\">\n            <div class=\"arrow\"></div>\n            <h3 class=\"popover-title\" i18n>Subtitles</h3>\n            <div class=\"popover-content\">\n                <ul class=\"subtitles-list\" uxTabbableList [focusOnShow]=\"returnFocus\" [returnFocus]=\"returnFocus\">\n                    <li uxTabbableListItem\n                        tabindex=\"0\"\n                        class=\"subtitles-list-item\"\n                        [class.active]=\"!isSubtitleActive()\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false\"\n                        (keydown.enter)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false; returnFocus = true\">\n\n                        <ux-icon name=\"checkmark\" class=\"subtitles-list-item-checkmark\"></ux-icon>\n                        <span i18n>Subtitles Off</span>\n                    </li>\n                    <li uxTabbableListItem\n                        class=\"subtitles-list-item\"\n                        *ngFor=\"let track of mediaPlayerService.textTracks\"\n                        [class.active]=\"track.mode === 'showing'\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"setSubtitleTrack(track); subtitlesOpen = false\"\n                        (keydown.enter)=\"setSubtitleTrack(track); subtitlesOpen = false; returnFocus = true\">\n\n                        <ux-icon name=\"checkmark\" class=\"subtitles-list-item-checkmark\"></ux-icon>\n                        <span>{{ track.label }}</span>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"action-button-container\">\n        <button #fullscreenButton\n            uxFocusIndicator\n            *ngIf=\"mediaPlayerService.type !== 'audio'\"\n            type=\"button\"\n            class=\"action-button\"\n            attr.aria-label=\"{{ mediaPlayerService.fullscreen ? 'Exit full screen' : 'Full screen' }}\"\n            i18n-aria-label\n            (click)=\"mediaPlayerService.toggleFullscreen()\"\n            (mouseup)=\"fullscreenButton.blur()\">\n\n            <ux-icon [name]=\"mediaPlayerService.fullscreen ? 'contract' : 'expand'\"></ux-icon>\n        </button>\n    </div>\n</div>\n\n\n\n<ng-template #muteTooltip>\n    <span aria-hidden=\"true\">{{ volume === 0 ? 'Unmute' : 'Mute' }}</span>\n</ng-template>",
+                        template: "<div class=\"volume-container\">\n\n    <div class=\"volume-slider-container\"\n        #volumeContainer\n        [class.active]=\"volumeActive || volumeFocus\"\n        (mouseenter)=\"mouseEnterVolume.next()\"\n        (mouseleave)=\"mouseLeaveVolume.next()\"\n        (uxFocusWithin)=\"volumeFocus = true\"\n        (uxBlurWithin)=\"volumeFocus = false\">\n\n        <button #volumeIcon\n                uxFocusIndicator\n                type=\"button\"\n                class=\"volume-slider-icon\"\n                [attr.aria-label]=\"mediaPlayerService.muteAriaLabel(volume)\"\n                [uxTooltip]=\"muteTooltip\"\n                [showTriggers]=\"['mouseenter']\"\n                [hideTriggers]=\"['mouseleave']\"\n                (click)=\"toggleMute()\"\n                (mouseup)=\"volumeIcon.blur()\">\n\n            <ux-icon *ngIf=\"volume === 0\" name=\"volume-mute\"></ux-icon>\n            <ux-icon *ngIf=\"volume > 0 && volume <= 70\" name=\"volume-low\"></ux-icon>\n            <ux-icon *ngIf=\"volume > 70\" name=\"volume\"></ux-icon>\n        </button>\n\n        <div class=\"volume-slider-node\">\n            <ux-slider [(value)]=\"volume\" [options]=\"options\"></ux-slider>\n        </div>\n    </div>\n</div>\n\n<button #startButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToStart()\"\n    (mouseup)=\"startButton.blur()\"\n    [attr.aria-label]=\"mediaPlayerService.goToStartAriaLabel\">\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"0\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"51.5,64 51.5,0 7.4,32 \" />\n    </svg>\n</button>\n\n<button #playButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    [attr.aria-label]=\"mediaPlayerService.playAriaLabel(mediaPlayerService.playing | async)\"\n    (click)=\"mediaPlayerService.togglePlay()\"\n    (mouseup)=\"playButton.blur()\">\n\n    <svg *ngIf=\"!(mediaPlayerService.playing | async)\" viewBox=\"0 0 45 64\" width=\"20\" height=\"29\" focusable=\"false\">\n        <polygon points=\"0.4,0 0.4,64 44.6,32\" />\n    </svg>\n    <svg *ngIf=\"mediaPlayerService.playing | async\" viewBox=\"0 0 43 56.9\" width=\"20\" height=\"29\" focusable=\"false\">\n        <rect y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n        <rect x=\"27.3\" y=\"0.1\" width=\"15.7\" height=\"56.9\" />\n    </svg>\n</button>\n\n<button #endButton\n    uxFocusIndicator\n    type=\"button\"\n    class=\"control-button\"\n    (click)=\"goToEnd()\"\n    (mouseup)=\"endButton.blur()\"\n    [attr.aria-label]=\"mediaPlayerService.goToEndAriaLabel\">\n\n    <svg viewBox=\"0 0 51.5 64\" width=\"14\" height=\"17\" focusable=\"false\">\n        <rect x=\"44.1\" y=\"0\" width=\"7.5\" height=\"64\" />\n        <polygon points=\"0,64 0,0 44.1,32\" />\n    </svg>\n</button>\n\n<div class=\"actions-list\">\n\n    <ng-content></ng-content>\n\n    <div class=\"action-button-container\" *ngIf=\"mediaPlayerService.textTracks.length > 0 && mediaPlayerService.type === 'video'\">\n        <button #subtitlesButton\n            uxFocusIndicator\n            type=\"button\"\n            class=\"action-button\"\n            (keydown)=\"returnFocus = true\"\n            (click)=\"subtitlesOpen = !subtitlesOpen\"\n            (mouseup)=\"subtitlesButton.blur(); returnFocus = false\"\n            [attr.aria-label]=\"mediaPlayerService.selectSubtitlesAriaLabel(getSubtitleTrack())\"\n            [attr.aria-expanded]=\"subtitlesOpen\"\n            [attr.aria-describedby]=\"subtitlesId\"\n            aria-haspopup=\"true\">\n\n            <ux-icon name=\"subtitles\"></ux-icon>\n        </button>\n\n        <div #subtitles\n            [style.top.px]=\"-subtitles.offsetHeight\"\n            class=\"popover top media-player-subtitles-popover show\"\n            [id]=\"subtitlesId\"\n            (keydown.escape)=\"subtitlesOpen = false\"\n            (uxClickOutside)=\"subtitlesOpen = false\"\n            *ngIf=\"subtitlesOpen\">\n            <div class=\"arrow\"></div>\n            <h3 class=\"popover-title\">{{ mediaPlayerService.subtitlesTitleAriaLabel }}</h3>\n            <div class=\"popover-content\">\n                <ul class=\"subtitles-list\" uxTabbableList [focusOnShow]=\"returnFocus\" [returnFocus]=\"returnFocus\">\n                    <li uxTabbableListItem\n                        tabindex=\"0\"\n                        class=\"subtitles-list-item\"\n                        [class.active]=\"!isSubtitleActive()\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false\"\n                        (keydown.enter)=\"mediaPlayerService.hideSubtitleTracks(); subtitlesOpen = false; returnFocus = true\">\n\n                        <ux-icon name=\"checkmark\" class=\"subtitles-list-item-checkmark\"></ux-icon>\n                        <span>{{ mediaPlayerService.subtitlesOffAriaLabel }}</span>\n                    </li>\n                    <li uxTabbableListItem\n                        class=\"subtitles-list-item\"\n                        *ngFor=\"let track of mediaPlayerService.textTracks\"\n                        [class.active]=\"track.mode === 'showing'\"\n                        [attr.aria-selected]=\"isSubtitleActive()\"\n                        (click)=\"setSubtitleTrack(track); subtitlesOpen = false\"\n                        (keydown.enter)=\"setSubtitleTrack(track); subtitlesOpen = false; returnFocus = true\">\n\n                        <ux-icon name=\"checkmark\" class=\"subtitles-list-item-checkmark\"></ux-icon>\n                        <span>{{ track.label }}</span>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"action-button-container\">\n        <button #fullscreenButton\n            uxFocusIndicator\n            *ngIf=\"mediaPlayerService.type !== 'audio'\"\n            type=\"button\"\n            class=\"action-button\"\n            [attr.aria-label]=\"mediaPlayerService.fullscreenAriaLabel(mediaPlayerService.fullscreen)\"\n            (click)=\"mediaPlayerService.toggleFullscreen()\"\n            (mouseup)=\"fullscreenButton.blur()\">\n\n            <ux-icon [name]=\"mediaPlayerService.fullscreen ? 'contract' : 'expand'\"></ux-icon>\n        </button>\n    </div>\n</div>\n\n\n\n<ng-template #muteTooltip>\n    <span aria-hidden=\"true\">{{ volume === 0 ? 'Unmute' : 'Mute' }}</span>\n</ng-template>",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
                         host: {
                             '[class.quiet]': 'mediaPlayerService.quietMode || mediaPlayerService.fullscreen'
                         }
                     }] }
         ];
+        /** @nocollapse */
+        MediaPlayerControlsExtensionComponent.ctorParameters = function () {
+            return [
+                { type: MediaPlayerService }
+            ];
+        };
         return MediaPlayerControlsExtensionComponent;
-    }(MediaPlayerBaseExtensionDirective));
+    }());
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27407,17 +27313,15 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
-    var MediaPlayerTimelineExtensionComponent = /** @class */ (function (_super) {
-        __extends(MediaPlayerTimelineExtensionComponent, _super);
-        function MediaPlayerTimelineExtensionComponent() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.current = 0;
-            _this.position = 0;
-            _this.buffered = [];
-            _this.mouseDown = false;
-            _this.scrub = { visible: false, position: 0, time: 0 };
-            _this._onDestroy = new rxjs.Subject();
-            return _this;
+    var MediaPlayerTimelineExtensionComponent = /** @class */ (function () {
+        function MediaPlayerTimelineExtensionComponent(mediaPlayerService) {
+            this.mediaPlayerService = mediaPlayerService;
+            this.current = 0;
+            this.position = 0;
+            this.buffered = [];
+            this.mouseDown = false;
+            this.scrub = { visible: false, position: 0, time: 0 };
+            this._onDestroy = new rxjs.Subject();
         }
         /**
          * @return {?}
@@ -27522,19 +27426,25 @@
         MediaPlayerTimelineExtensionComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-media-player-timeline',
-                        template: "<p class=\"current-time\">{{ current | duration }}</p>\n\n<div #timeline\n     class=\"timeline-bar\"\n     tabindex=\"0\"\n     role=\"slider\"\n     aria-label=\"Seek slider\"\n     i18n-aria-label\n     aria-valuemin=\"0\"\n     [attr.aria-valuemax]=\"mediaPlayerService.duration | number: '0.0-0'\"\n     [attr.aria-valuenow]=\"mediaPlayerService.currentTime | number: '0.0-0'\"\n     attr.aria-valuetext=\"{{ mediaPlayerService.currentTime | duration }} of {{ mediaPlayerService.duration | duration }}\"\n     (keydown.ArrowLeft)=\"skip(-5)\"\n     (keydown.ArrowRight)=\"skip(5)\"\n     (mouseenter)=\"scrub.visible = true; tooltip.show()\"\n     (mouseleave)=\"scrub.visible = false; tooltip.hide()\"\n     (mousemove)=\"updateScrub($event); tooltip.reposition()\"\n     (mouseup)=\"updateScrub($event)\"\n     (mousedown)=\"mouseDown = true; $event.preventDefault()\">\n\n    <div class=\"buffered-bar\"\n         *ngFor=\"let buffer of buffered\"\n         [style.left.%]=\"buffer.start\"\n         [style.width.%]=\"buffer.end - buffer.start\">\n    </div>\n\n    <div class=\"media-progress-bar\" [style.width.%]=\"position\">\n        <div #progressThumb\n             class=\"media-progress-bar-thumb\"\n             (mouseenter)=\"scrub.visible = false; tooltip.hide(); $event.stopPropagation()\"\n             (mouseleave)=\"scrub.visible = true; tooltip.show(); $event.stopPropagation()\">\n        </div>\n    </div>\n\n    <div #tooltip=\"ux-tooltip\"\n         class=\"scrub-handle\"\n         [class.scrub-handle-hidden]=\"!scrub.visible\"\n         [style.left.px]=\"scrub.position\"\n         [uxTooltip]=\"popTemplate\"\n         tooltipClass=\"ux-media-player-timeline-tooltip\"\n         placement=\"top\"\n         [showTriggers]=\"[]\"\n         [hideTriggers]=\"[]\"\n         [tooltipDelay]=\"100\"\n         [tooltipDisabled]=\"mediaPlayerService.duration === 0\"></div>\n</div>\n\n<p class=\"duration-time\">{{ mediaPlayerService.duration | duration }}</p>\n\n<ng-template #popTemplate>\n    <span>{{ scrub.time | duration }}</span>\n</ng-template>",
+                        template: "<p class=\"current-time\">{{ current | duration }}</p>\n\n<div #timeline\n     class=\"timeline-bar\"\n     tabindex=\"0\"\n     role=\"slider\"\n     [attr.aria-label]=\"mediaPlayerService.seekAriaLabel\"\n     aria-valuemin=\"0\"\n     [attr.aria-valuemax]=\"mediaPlayerService.duration | number: '0.0-0'\"\n     [attr.aria-valuenow]=\"mediaPlayerService.currentTime | number: '0.0-0'\"\n     attr.aria-valuetext=\"{{ mediaPlayerService.currentTime | duration }} of {{ mediaPlayerService.duration | duration }}\"\n     (keydown.ArrowLeft)=\"skip(-5)\"\n     (keydown.ArrowRight)=\"skip(5)\"\n     (mouseenter)=\"scrub.visible = true; tooltip.show()\"\n     (mouseleave)=\"scrub.visible = false; tooltip.hide()\"\n     (mousemove)=\"updateScrub($event); tooltip.reposition()\"\n     (mouseup)=\"updateScrub($event)\"\n     (mousedown)=\"mouseDown = true; $event.preventDefault()\">\n\n    <div class=\"buffered-bar\"\n         *ngFor=\"let buffer of buffered\"\n         [style.left.%]=\"buffer.start\"\n         [style.width.%]=\"buffer.end - buffer.start\">\n    </div>\n\n    <div class=\"media-progress-bar\" [style.width.%]=\"position\">\n        <div #progressThumb\n             class=\"media-progress-bar-thumb\"\n             (mouseenter)=\"scrub.visible = false; tooltip.hide(); $event.stopPropagation()\"\n             (mouseleave)=\"scrub.visible = true; tooltip.show(); $event.stopPropagation()\">\n        </div>\n    </div>\n\n    <div #tooltip=\"ux-tooltip\"\n         class=\"scrub-handle\"\n         [class.scrub-handle-hidden]=\"!scrub.visible\"\n         [style.left.px]=\"scrub.position\"\n         [uxTooltip]=\"popTemplate\"\n         tooltipClass=\"ux-media-player-timeline-tooltip\"\n         placement=\"top\"\n         [showTriggers]=\"[]\"\n         [hideTriggers]=\"[]\"\n         [tooltipDelay]=\"100\"\n         [tooltipDisabled]=\"mediaPlayerService.duration === 0\"></div>\n</div>\n\n<p class=\"duration-time\">{{ mediaPlayerService.duration | duration }}</p>\n\n<ng-template #popTemplate>\n    <span>{{ scrub.time | duration }}</span>\n</ng-template>",
                         host: {
                             '(document:mouseup)': 'mouseDown = false',
                             '[class.quiet]': 'mediaPlayerService.quietMode || mediaPlayerService.fullscreen'
                         }
                     }] }
         ];
+        /** @nocollapse */
+        MediaPlayerTimelineExtensionComponent.ctorParameters = function () {
+            return [
+                { type: MediaPlayerService }
+            ];
+        };
         MediaPlayerTimelineExtensionComponent.propDecorators = {
             thumb: [{ type: i0.ViewChild, args: ['progressThumb', { static: true },] }],
             timelineRef: [{ type: i0.ViewChild, args: ['timeline', { static: true },] }]
         };
         return MediaPlayerTimelineExtensionComponent;
-    }(MediaPlayerBaseExtensionDirective));
+    }());
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
@@ -27556,11 +27466,11 @@
                 return rxjs.Observable.create(function (observer) {
                     _this._http.get(mediaElement.src, { responseType: 'blob' }).subscribe(function (response) {
                         /** @type {?} */
-                        var filename = mediaElement.src.substring(mediaElement.src.lastIndexOf('/') + 1);
+                        var description;
                         /** @type {?} */
                         var extension = mediaElement.src.substring(mediaElement.src.lastIndexOf('.') + 1).toLowerCase();
                         /** @type {?} */
-                        var description;
+                        var filename = mediaElement.src.indexOf('base64') !== -1 ? '' : mediaElement.src.substring(mediaElement.src.lastIndexOf('/') + 1);
                         switch (extension) {
                             case 'mp3':
                                 description = 'MPEG audio layer 3 file';
@@ -27850,6 +27760,154 @@
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(MediaPlayerComponent.prototype, "muteAriaLabel", {
+            /**
+             * If specified the function will be called passing the current volume as an argument.
+             * It should return an appropriate aria-label for the mute/unmute button.
+             */
+            set: /**
+             * If specified the function will be called passing the current volume as an argument.
+             * It should return an appropriate aria-label for the mute/unmute button.
+             * @param {?} fn
+             * @return {?}
+             */ function (fn) {
+                this.mediaPlayerService.muteAriaLabel = fn;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "playAriaLabel", {
+            /**
+             * If specified the function will be called passing the current playing state as an argument.
+             * It should return an appropriate aria-label for the play/pause button.
+             */
+            set: /**
+             * If specified the function will be called passing the current playing state as an argument.
+             * It should return an appropriate aria-label for the play/pause button.
+             * @param {?} fn
+             * @return {?}
+             */ function (fn) {
+                this.mediaPlayerService.playAriaLabel = fn;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "fullscreenAriaLabel", {
+            /**
+             * If specified the function will be called passing the current fullscreen state as an argument.
+             * It should return an appropriate aria-label for the fullscreen toggle button.
+             */
+            set: /**
+             * If specified the function will be called passing the current fullscreen state as an argument.
+             * It should return an appropriate aria-label for the fullscreen toggle button.
+             * @param {?} fn
+             * @return {?}
+             */ function (fn) {
+                this.mediaPlayerService.fullscreenAriaLabel = fn;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "selectSubtitlesAriaLabel", {
+            /**
+             * If specified the function will be called passing the current track as an argument.
+             * It should return an appropriate aria-label for the subtitle selection button.
+             */
+            set: /**
+             * If specified the function will be called passing the current track as an argument.
+             * It should return an appropriate aria-label for the subtitle selection button.
+             * @param {?} fn
+             * @return {?}
+             */ function (fn) {
+                this.mediaPlayerService.selectSubtitlesAriaLabel = fn;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "goToStartAriaLabel", {
+            /** Defines an aria-label for the go to start button. */
+            set: /**
+             * Defines an aria-label for the go to start button.
+             * @param {?} ariaLabel
+             * @return {?}
+             */ function (ariaLabel) {
+                this.mediaPlayerService.goToStartAriaLabel = ariaLabel;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "goToEndAriaLabel", {
+            /** Defines an aria-label for the go to end button. */
+            set: /**
+             * Defines an aria-label for the go to end button.
+             * @param {?} ariaLabel
+             * @return {?}
+             */ function (ariaLabel) {
+                this.mediaPlayerService.goToEndAriaLabel = ariaLabel;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "subtitlesTitleAriaLabel", {
+            /** Defines an aria-label for the title displayed in the subtitle selection popover. */
+            set: /**
+             * Defines an aria-label for the title displayed in the subtitle selection popover.
+             * @param {?} ariaLabel
+             * @return {?}
+             */ function (ariaLabel) {
+                this.mediaPlayerService.subtitlesTitleAriaLabel = ariaLabel;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "subtitlesOffAriaLabel", {
+            /** Defines an aria-label to indicate subtitle are not currently enabled. */
+            set: /**
+             * Defines an aria-label to indicate subtitle are not currently enabled.
+             * @param {?} ariaLabel
+             * @return {?}
+             */ function (ariaLabel) {
+                this.mediaPlayerService.subtitlesOffAriaLabel = ariaLabel;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "noSubtitlesAriaLabel", {
+            /** Define an aria-label to indicate there are no subtitles available. */
+            set: /**
+             * Define an aria-label to indicate there are no subtitles available.
+             * @param {?} ariaLabel
+             * @return {?}
+             */ function (ariaLabel) {
+                this.mediaPlayerService.noSubtitlesAriaLabel = ariaLabel;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "mediaPlayerAriaLabel", {
+            /** Define an aria-label for the media player. */
+            set: /**
+             * Define an aria-label for the media player.
+             * @param {?} ariaLabel
+             * @return {?}
+             */ function (ariaLabel) {
+                this.mediaPlayerService.mediaPlayerAriaLabel = ariaLabel;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MediaPlayerComponent.prototype, "seekAriaLabel", {
+            /** Define an aria-label for the the seek element. */
+            set: /**
+             * Define an aria-label for the the seek element.
+             * @param {?} ariaLabel
+             * @return {?}
+             */ function (ariaLabel) {
+                this.mediaPlayerService.seekAriaLabel = ariaLabel;
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -27880,7 +27938,7 @@
         MediaPlayerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-media-player',
-                        template: "<div class=\"player-container\"\n     uxFocusIndicator\n     tabindex=\"0\"\n     aria-label=\"Media Player\"\n     i18n-aria-label\n     [cdkTrapFocus]=\"mediaPlayerService.fullscreen\">\n\n    <div class=\"video-player-container\" *ngIf=\"type === 'video'\">\n\n        <video class=\"video-player\"\n            #player\n            tabindex=\"-1\"\n            [src]=\"source\"\n            [crossOrigin]=\"crossorigin\"\n            (abort)=\"mediaPlayerService.abortEvent.next()\"\n            (canplay)=\"mediaPlayerService.canPlayEvent.next(true)\"\n            (canplaythrough)=\"mediaPlayerService.canPlayThroughEvent.next(true)\"\n            (durationchange)=\"mediaPlayerService.durationChangeEvent.next(player.duration)\"\n            (ended)=\"mediaPlayerService.endedEvent.next()\"\n            (error)=\"mediaPlayerService.errorEvent.next($event)\"\n            (loadeddata)=\"mediaPlayerService.loadedDataEvent.next($event)\"\n            (loadedmetadata)=\"mediaPlayerService.loadedMetadataEvent.next($event)\"\n            (loadstart)=\"mediaPlayerService.loadStartEvent.next()\"\n            (pause)=\"mediaPlayerService.pauseEvent.next()\"\n            (play)=\"mediaPlayerService.playEvent.next()\"\n            (playing)=\"mediaPlayerService.playingEvent.next(!player.paused)\"\n            (ratechange)=\"mediaPlayerService.rateChangeEvent.next(player.playbackRate)\"\n            (seeked)=\"mediaPlayerService.seekedEvent.next(player.currentTime)\"\n            (seeking)=\"mediaPlayerService.seekingEvent.next(player.currentTime)\"\n            (stalled)=\"mediaPlayerService.stalledEvent.next()\"\n            (suspend)=\"mediaPlayerService.suspendEvent.next()\"\n            (timeupdate)=\"mediaPlayerService.timeUpdateEvent.next(player.currentTime)\"\n            (volumechange)=\"mediaPlayerService.volumeChangeEvent.next(player.volume)\"\n            (waiting)=\"mediaPlayerService.waitingEvent.next()\"\n            (click)=\"mediaPlayerService.mediaClickEvent.next($event)\">\n\n            <ng-content select=\"track\"></ng-content>\n        </video>\n\n        <div class=\"video-overlay\" [class.playing]=\"mediaPlayerService.playing | async\">\n            <svg class=\"play-graphic\" x=\"0px\" y=\"0px\" viewBox=\"0 0 64 64\">\n                <circle class=\"play-circle\" cx=\"32.2\" cy=\"31.8\" r=\"31.8\" />\n                <polygon class=\"play-triangle\" points=\"23,14.1 23,50.8 48.3,32.5\" />\n            </svg>\n        </div>\n\n    </div>\n\n    <div class=\"audio-player\" *ngIf=\"type === 'audio'\">\n\n        <svg width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\">\n            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                <g transform=\"translate(-98.000000, -458.000000)\">\n                    <g transform=\"translate(98.000000, 458.000000)\">\n                        <path d=\"M4.5,0.5 L18.0435308,0.5 L23.5,6.22251502 L23.5,23.5 L4.5,23.5 L4.5,0.5 Z\" fill=\"#CCEAE2\"></path>\n                        <path d=\"M4.5,8 L4.5,0.5 L18,0.5 L23.5,6 L23.5,23.5 L18,23.5\" stroke=\"#60798D\" fill=\"#CCEAE2\"></path>\n                        <path d=\"M4,13.5 L0.5,13.5 L0.5,18.5 L4,18.5 L9.5,22.5 L9.5,9.5 L4,13.5 Z\" stroke=\"#60798D\" fill=\"#85D2BE\"></path>\n                        <path d=\"M11.5,12.5137939 C13.7576225,12.5137939 14.5,14.3709236 14.5,16 C14.5,17.6849236 13.7089152,19.5420532 11.5,19.5420532\"\n                            stroke=\"#60798D\"></path>\n                        <path d=\"M11.5,9 C15.8037643,9.04168701 18.5,11.6604805 18.5,16 C18.5,20.3395195 15.8804302,23.0079956 11.5,23\" stroke=\"#60798D\"></path>\n                        <path d=\"M17.5219116,0.761413574 L17.5219116,6 L23,6\" stroke=\"#60798D\" fill=\"#85D2BE\"></path>\n                    </g>\n                </g>\n            </g>\n        </svg>\n\n        <p class=\"audio-file-name\">{{ (audioMetadata | async)?.filename }}</p>\n        <p class=\"audio-file-format\">{{ (audioMetadata | async)?.description }}</p>\n        <p class=\"audio-file-size\">{{ (audioMetadata | async)?.size | fileSize }}</p>\n\n        <audio #player\n            [src]=\"source\"\n            (abort)=\"mediaPlayerService.abortEvent.next()\"\n            (canplay)=\"mediaPlayerService.canPlayEvent.next(true)\"\n            (canplaythrough)=\"mediaPlayerService.canPlayThroughEvent.next(true)\"\n            (durationchange)=\"mediaPlayerService.durationChangeEvent.next(player.duration)\"\n            (ended)=\"mediaPlayerService.endedEvent.next()\"\n            (error)=\"mediaPlayerService.errorEvent.next($event)\"\n            (loadeddata)=\"mediaPlayerService.loadedDataEvent.next($event)\"\n            (loadedmetadata)=\"mediaPlayerService.loadedMetadataEvent.next($event)\"\n            (loadstart)=\"mediaPlayerService.loadStartEvent.next()\"\n            (pause)=\"mediaPlayerService.pauseEvent.next()\"\n            (play)=\"mediaPlayerService.playEvent.next()\"\n            (playing)=\"mediaPlayerService.playingEvent.next(!player.paused)\"\n            (ratechange)=\"mediaPlayerService.rateChangeEvent.next(player.playbackRate)\"\n            (seeked)=\"mediaPlayerService.seekedEvent.next(player.currentTime)\"\n            (seeking)=\"mediaPlayerService.seekingEvent.next(player.currentTime)\"\n            (stalled)=\"mediaPlayerService.stalledEvent.next()\"\n            (suspend)=\"mediaPlayerService.suspendEvent.next()\"\n            (timeupdate)=\"mediaPlayerService.timeUpdateEvent.next(player.currentTime)\"\n            (volumechange)=\"mediaPlayerService.volumeChangeEvent.next(player.volume)\"\n            (waiting)=\"mediaPlayerService.waitingEvent.next()\"\n            (click)=\"mediaPlayerService.mediaClickEvent.next($event)\">\n        </audio>\n    </div>\n\n    <div class=\"control-bar\"\n        (uxFocusWithin)=\"focused = true\"\n        (uxBlurWithin)=\"focused = false\">\n\n        <ux-media-player-timeline></ux-media-player-timeline>\n        <ux-media-player-controls>\n            <ng-content select=\"[uxMediaPlayerCustomControl]\"></ng-content>\n        </ux-media-player-controls>\n    </div>\n</div>",
+                        template: "<div class=\"player-container\"\n     uxFocusIndicator\n     tabindex=\"0\"\n     [attr.aria-label]=\"mediaPlayerService.mediaPlayerAriaLabel\"\n     [cdkTrapFocus]=\"mediaPlayerService.fullscreen\">\n\n    <div class=\"video-player-container\" *ngIf=\"type === 'video'\">\n\n        <video class=\"video-player\"\n            #player\n            tabindex=\"-1\"\n            [src]=\"source\"\n            [crossOrigin]=\"crossorigin\"\n            (abort)=\"mediaPlayerService.abortEvent.next()\"\n            (canplay)=\"mediaPlayerService.canPlayEvent.next(true)\"\n            (canplaythrough)=\"mediaPlayerService.canPlayThroughEvent.next(true)\"\n            (durationchange)=\"mediaPlayerService.durationChangeEvent.next(player.duration)\"\n            (ended)=\"mediaPlayerService.endedEvent.next()\"\n            (error)=\"mediaPlayerService.errorEvent.next($event)\"\n            (loadeddata)=\"mediaPlayerService.loadedDataEvent.next($event)\"\n            (loadedmetadata)=\"mediaPlayerService.loadedMetadataEvent.next($event)\"\n            (loadstart)=\"mediaPlayerService.loadStartEvent.next()\"\n            (pause)=\"mediaPlayerService.pauseEvent.next()\"\n            (play)=\"mediaPlayerService.playEvent.next()\"\n            (playing)=\"mediaPlayerService.playingEvent.next(!player.paused)\"\n            (ratechange)=\"mediaPlayerService.rateChangeEvent.next(player.playbackRate)\"\n            (seeked)=\"mediaPlayerService.seekedEvent.next(player.currentTime)\"\n            (seeking)=\"mediaPlayerService.seekingEvent.next(player.currentTime)\"\n            (stalled)=\"mediaPlayerService.stalledEvent.next()\"\n            (suspend)=\"mediaPlayerService.suspendEvent.next()\"\n            (timeupdate)=\"mediaPlayerService.timeUpdateEvent.next(player.currentTime)\"\n            (volumechange)=\"mediaPlayerService.volumeChangeEvent.next(player.volume)\"\n            (waiting)=\"mediaPlayerService.waitingEvent.next()\"\n            (click)=\"mediaPlayerService.mediaClickEvent.next($event)\">\n\n            <ng-content select=\"track\"></ng-content>\n        </video>\n\n        <div class=\"video-overlay\" [class.playing]=\"mediaPlayerService.playing | async\">\n            <svg class=\"play-graphic\" x=\"0px\" y=\"0px\" viewBox=\"0 0 64 64\">\n                <circle class=\"play-circle\" cx=\"32.2\" cy=\"31.8\" r=\"31.8\" />\n                <polygon class=\"play-triangle\" points=\"23,14.1 23,50.8 48.3,32.5\" />\n            </svg>\n        </div>\n\n    </div>\n\n    <div class=\"audio-player\" *ngIf=\"type === 'audio'\">\n\n        <svg width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\">\n            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                <g transform=\"translate(-98.000000, -458.000000)\">\n                    <g transform=\"translate(98.000000, 458.000000)\">\n                        <path d=\"M4.5,0.5 L18.0435308,0.5 L23.5,6.22251502 L23.5,23.5 L4.5,23.5 L4.5,0.5 Z\" fill=\"#CCEAE2\"></path>\n                        <path d=\"M4.5,8 L4.5,0.5 L18,0.5 L23.5,6 L23.5,23.5 L18,23.5\" stroke=\"#60798D\" fill=\"#CCEAE2\"></path>\n                        <path d=\"M4,13.5 L0.5,13.5 L0.5,18.5 L4,18.5 L9.5,22.5 L9.5,9.5 L4,13.5 Z\" stroke=\"#60798D\" fill=\"#85D2BE\"></path>\n                        <path d=\"M11.5,12.5137939 C13.7576225,12.5137939 14.5,14.3709236 14.5,16 C14.5,17.6849236 13.7089152,19.5420532 11.5,19.5420532\"\n                            stroke=\"#60798D\"></path>\n                        <path d=\"M11.5,9 C15.8037643,9.04168701 18.5,11.6604805 18.5,16 C18.5,20.3395195 15.8804302,23.0079956 11.5,23\" stroke=\"#60798D\"></path>\n                        <path d=\"M17.5219116,0.761413574 L17.5219116,6 L23,6\" stroke=\"#60798D\" fill=\"#85D2BE\"></path>\n                    </g>\n                </g>\n            </g>\n        </svg>\n\n        <p class=\"audio-file-name\">{{ this.filename ? this.filename :  (audioMetadata | async)?.filename }}</p>\n        <p class=\"audio-file-format\">{{ (audioMetadata | async)?.description }}</p>\n        <p class=\"audio-file-size\">{{ (audioMetadata | async)?.size | fileSize }}</p>\n\n        <audio #player\n            [src]=\"source\"\n            (abort)=\"mediaPlayerService.abortEvent.next()\"\n            (canplay)=\"mediaPlayerService.canPlayEvent.next(true)\"\n            (canplaythrough)=\"mediaPlayerService.canPlayThroughEvent.next(true)\"\n            (durationchange)=\"mediaPlayerService.durationChangeEvent.next(player.duration)\"\n            (ended)=\"mediaPlayerService.endedEvent.next()\"\n            (error)=\"mediaPlayerService.errorEvent.next($event)\"\n            (loadeddata)=\"mediaPlayerService.loadedDataEvent.next($event)\"\n            (loadedmetadata)=\"mediaPlayerService.loadedMetadataEvent.next($event)\"\n            (loadstart)=\"mediaPlayerService.loadStartEvent.next()\"\n            (pause)=\"mediaPlayerService.pauseEvent.next()\"\n            (play)=\"mediaPlayerService.playEvent.next()\"\n            (playing)=\"mediaPlayerService.playingEvent.next(!player.paused)\"\n            (ratechange)=\"mediaPlayerService.rateChangeEvent.next(player.playbackRate)\"\n            (seeked)=\"mediaPlayerService.seekedEvent.next(player.currentTime)\"\n            (seeking)=\"mediaPlayerService.seekingEvent.next(player.currentTime)\"\n            (stalled)=\"mediaPlayerService.stalledEvent.next()\"\n            (suspend)=\"mediaPlayerService.suspendEvent.next()\"\n            (timeupdate)=\"mediaPlayerService.timeUpdateEvent.next(player.currentTime)\"\n            (volumechange)=\"mediaPlayerService.volumeChangeEvent.next(player.volume)\"\n            (waiting)=\"mediaPlayerService.waitingEvent.next()\"\n            (click)=\"mediaPlayerService.mediaClickEvent.next($event)\">\n        </audio>\n    </div>\n\n    <div class=\"control-bar\"\n        (uxFocusWithin)=\"focused = true\"\n        (uxBlurWithin)=\"focused = false\">\n\n        <ux-media-player-timeline></ux-media-player-timeline>\n        <ux-media-player-controls>\n            <ng-content select=\"[uxMediaPlayerCustomControl]\"></ng-content>\n        </ux-media-player-controls>\n    </div>\n</div>",
                         providers: [MediaPlayerService],
                         host: {
                             '(keydown.Space)': 'mediaPlayerService.togglePlay(); $event.preventDefault()',
@@ -27910,9 +27968,21 @@
         MediaPlayerComponent.propDecorators = {
             _playerRef: [{ type: i0.ViewChild, args: ['player', { static: false },] }],
             crossorigin: [{ type: i0.Input }],
+            filename: [{ type: i0.Input }],
             source: [{ type: i0.Input }],
             type: [{ type: i0.Input }],
-            quietMode: [{ type: i0.Input }]
+            quietMode: [{ type: i0.Input }],
+            muteAriaLabel: [{ type: i0.Input }],
+            playAriaLabel: [{ type: i0.Input }],
+            fullscreenAriaLabel: [{ type: i0.Input }],
+            selectSubtitlesAriaLabel: [{ type: i0.Input }],
+            goToStartAriaLabel: [{ type: i0.Input }],
+            goToEndAriaLabel: [{ type: i0.Input }],
+            subtitlesTitleAriaLabel: [{ type: i0.Input }],
+            subtitlesOffAriaLabel: [{ type: i0.Input }],
+            noSubtitlesAriaLabel: [{ type: i0.Input }],
+            mediaPlayerAriaLabel: [{ type: i0.Input }],
+            seekAriaLabel: [{ type: i0.Input }]
         };
         return MediaPlayerComponent;
     }());
@@ -31155,18 +31225,9 @@
              */
             this.disabled = false;
             /**
-             * @deprecated Emit when this tab is selected - use activated output instead
-             */
-            // tslint:disable-next-line
-            this.select = new i0.EventEmitter();
-            /**
              * Emit when this tab is selected
              */
             this.activated = new i0.EventEmitter();
-            /**
-             * @deprecated Emit when this tab is deselected - - use deactivated output instead
-             */
-            this.deselect = new i0.EventEmitter();
             /**
              * Emit when this tab is deselected
              */
@@ -31176,27 +31237,6 @@
              */
             this._onDestroy = new rxjs.Subject();
         }
-        /**
-         * @return {?}
-         */
-        TabComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // warn anyone using the select output that it is deprecated
-                if (this.select.observers.length > 0) {
-                    console.warn('Tab Component - (select) output is deprecated use activated instead');
-                }
-                // warn anyone using the deselect output that it is deprecated
-                if (this.deselect.observers.length > 0) {
-                    console.warn('Tab Component - (deselect) output is deprecated use deactivated instead');
-                }
-                // for backwards compatibility emit deprecated select event
-                this.activated.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.select.emit(); });
-                // for backwards compatibility emit deprecated deselect event
-                this.deactivated.pipe(operators.takeUntil(this._onDestroy)).subscribe(function () { return _this.deselect.emit(); });
-            };
         /**
          * @return {?}
          */
@@ -31261,9 +31301,7 @@
             disabled: [{ type: i0.Input }],
             heading: [{ type: i0.Input }],
             customClass: [{ type: i0.Input }],
-            select: [{ type: i0.Output }],
             activated: [{ type: i0.Output }],
-            deselect: [{ type: i0.Output }],
             deactivated: [{ type: i0.Output }],
             headingRef: [{ type: i0.ContentChild, args: [TabHeadingDirective, { read: i0.TemplateRef, static: false },] }]
         };
@@ -32259,19 +32297,6 @@
             this.selectedRoot$ = this._pageHeaderService.selectedRoot$;
             this._crumbs = [];
         }
-        Object.defineProperty(PageHeaderComponent.prototype, "title", {
-            /** @deprecated */
-            set: /**
-             * @deprecated
-             * @param {?} subheader
-             * @return {?}
-             */ function (subheader) {
-                this.subheader = subheader;
-                console.warn("The 'title' @Input of the ux-page-header component has been deprecated. Please change to use the 'subheader' @Input instead.");
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(PageHeaderComponent.prototype, "secondaryNavigationAutoselect", {
             get: /**
              * @return {?}
@@ -32369,32 +32394,6 @@
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(PageHeaderComponent.prototype, "familyBackground", {
-            /** @deprecated - Use logoBackground instead */
-            set: /**
-             * @deprecated - Use logoBackground instead
-             * @param {?} color
-             * @return {?}
-             */ function (color) {
-                this.logoBackground = color;
-                console.warn("The 'familyBackground' @Input of the ux-page-header component has been deprecated. Please change to use the 'logoBackground' @Input instead.");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(PageHeaderComponent.prototype, "familyForeground", {
-            /** @deprecated - Use logoForeground instead */
-            set: /**
-             * @deprecated - Use logoForeground instead
-             * @param {?} color
-             * @return {?}
-             */ function (color) {
-                this.logoForeground = color;
-                console.warn("The 'familyForeground' @Input of the ux-page-header component has been deprecated. Please change to use the 'logoForeground' @Input instead.");
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(PageHeaderComponent.prototype, "_hasLogoClick", {
             get: /**
              * @return {?}
@@ -32419,7 +32418,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-page-header',
                         exportAs: 'ux-page-header',
-                        template: "<div class=\"ux-page-header\" [class.page-header-condensed]=\"condensed\" role=\"banner\">\n\n    <div *ngIf=\"!condensed\" class=\"page-header-content\">\n\n        <!-- Logo/product acronym -->\n        <div uxFocusIndicator (keydown.enter)=\"logoClick.emit($event)\" [attr.tabindex]=\"_hasLogoClick ? 0: -1\"\n             [class.page-header-logo-template]=\"logoTemplate\" [class.clickable]=\"_hasLogoClick\"\n             class=\"page-header-logo-container\"\n             role=\"presentation\" [style.backgroundColor]=\"logoBackground\" [style.color]=\"logoForeground\" (click)=\"logoClick.emit($event)\">\n            <img *ngIf=\"logo && !logoTemplate\" [attr.src]=\"logo\" [alt]=\"header\" class=\"page-header-logo\">\n            <h1 *ngIf=\"header && !logo && !logoTemplate\" class=\"page-header-acronym\">{{header}}</h1>\n            <ng-container *ngIf=\"logoTemplate\" [ngTemplateOutlet]=\"logoTemplate\"></ng-container>\n        </div>\n\n        <!-- Sub-title -->\n        <div *ngIf=\"subheader || subheaderTemplate || titleTemplate\" class=\"page-header-subtitle-container\">\n            <span *ngIf=\"subheader\" class=\"page-header-subtitle\">{{subheader}}</span>\n            <ng-container [ngTemplateOutlet]=\"subheaderTemplate || titleTemplate\"></ng-container>\n        </div>\n\n        <div class=\"page-header-state-container\" role=\"navigation\">\n\n            <!-- Back button -->\n            <button *ngIf=\"backVisible === true\" uxFocusIndicator type=\"button\" class=\"page-header-back-button\" (click)=\"backClick.emit($event)\" aria-label=\"Go Back\">\n                <ux-icon name=\"previous\" class=\"text-primary\"></ux-icon>\n            </button>\n\n            <!-- Breadcrumbs and header -->\n            <div class=\"page-header-title-container\">\n\n                <ux-breadcrumbs *ngIf=\"crumbs && crumbs.length > 0\"\n                    [class.ux-breadcrumbs-small]=\"crumbsStyle === 'small'\"\n                    [crumbs]=\"crumbs\"></ux-breadcrumbs>\n\n                <h1 class=\"page-header-title\">{{header}}</h1>\n\n            </div>\n\n        </div>\n\n        <!-- Primary navigation -->\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <!-- Icon menus -->\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n    </div>\n\n    <!-- Display This Section Optimized for Condensed Mode -->\n    <div class=\"page-header-condensed-content\" *ngIf=\"condensed\">\n\n        <div class=\"page-header-breadcrumbs\" role=\"navigation\">\n            <ux-breadcrumbs [crumbs]=\"crumbs\"></ux-breadcrumbs>\n        </div>\n\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n\n            <!-- The Top Navigation Options -->\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n\n    </div>\n\n</div>\n\n<div *ngIf=\"secondaryNavigation && ((selectedRoot$ | async) !== (selected$ | async))\"\n    class=\"page-header-secondary\" [ngClass]=\"secondaryNavigationAlignment\" role=\"navigation\">\n\n    <ux-tabset *ngIf=\"(selectedRoot$ | async)?.children; let children\" [manual]=\"true\">\n        <ux-tab *ngFor=\"let child of children\"\n            [heading]=\"child.title\"\n            [active]=\"child === (selected$ | async)\"\n            (select)=\"select(child)\"\n            [uxPageHeaderNavigationSecondaryItem]=\"child\"\n            [disabled]=\"child.disabled\">\n        </ux-tab>\n    </ux-tabset>\n\n</div>\n",
+                        template: "<div class=\"ux-page-header\" [class.page-header-condensed]=\"condensed\" role=\"banner\">\n\n    <div *ngIf=\"!condensed\" class=\"page-header-content\">\n\n        <!-- Logo/product acronym -->\n        <div uxFocusIndicator (keydown.enter)=\"logoClick.emit($event)\" [attr.tabindex]=\"_hasLogoClick ? 0: -1\"\n             [class.page-header-logo-template]=\"logoTemplate\" [class.clickable]=\"_hasLogoClick\"\n             class=\"page-header-logo-container\"\n             role=\"presentation\" [style.backgroundColor]=\"logoBackground\" [style.color]=\"logoForeground\" (click)=\"logoClick.emit($event)\">\n            <img *ngIf=\"logo && !logoTemplate\" [attr.src]=\"logo\" [alt]=\"header\" class=\"page-header-logo\">\n            <h1 *ngIf=\"header && !logo && !logoTemplate\" class=\"page-header-acronym\">{{header}}</h1>\n            <ng-container *ngIf=\"logoTemplate\" [ngTemplateOutlet]=\"logoTemplate\"></ng-container>\n        </div>\n\n        <!-- Sub-title -->\n        <div *ngIf=\"subheader || subheaderTemplate\" class=\"page-header-subtitle-container\">\n            <span *ngIf=\"subheader\" class=\"page-header-subtitle\">{{subheader}}</span>\n            <ng-container [ngTemplateOutlet]=\"subheaderTemplate\"></ng-container>\n        </div>\n\n        <div class=\"page-header-state-container\" role=\"navigation\">\n\n            <!-- Back button -->\n            <button *ngIf=\"backVisible === true\" uxFocusIndicator type=\"button\" class=\"page-header-back-button\" (click)=\"backClick.emit($event)\" aria-label=\"Go Back\">\n                <ux-icon name=\"previous\" class=\"text-primary\"></ux-icon>\n            </button>\n\n            <!-- Breadcrumbs and header -->\n            <div class=\"page-header-title-container\">\n\n                <ux-breadcrumbs *ngIf=\"crumbs && crumbs.length > 0\"\n                    [class.ux-breadcrumbs-small]=\"crumbsStyle === 'small'\"\n                    [crumbs]=\"crumbs\"></ux-breadcrumbs>\n\n                <h1 class=\"page-header-title\">{{header}}</h1>\n\n            </div>\n\n        </div>\n\n        <!-- Primary navigation -->\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <!-- Icon menus -->\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n    </div>\n\n    <!-- Display This Section Optimized for Condensed Mode -->\n    <div class=\"page-header-condensed-content\" *ngIf=\"condensed\">\n\n        <div class=\"page-header-breadcrumbs\" role=\"navigation\">\n            <ux-breadcrumbs [crumbs]=\"crumbs\"></ux-breadcrumbs>\n        </div>\n\n        <div class=\"page-header-navigation\" [ngClass]=\"alignment\" role=\"navigation\" aria-label=\"Primary Navigation\">\n\n            <!-- The Top Navigation Options -->\n            <ux-page-header-horizontal-navigation></ux-page-header-horizontal-navigation>\n        </div>\n\n        <div class=\"page-header-icon-menus\" role=\"toolbar\">\n            <ng-container *ngFor=\"let menu of customMenus\" [ngTemplateOutlet]=\"menu\"></ng-container>\n            <ux-page-header-icon-menu *ngFor=\"let menu of iconMenus\" [menu]=\"menu\"></ux-page-header-icon-menu>\n        </div>\n\n    </div>\n\n</div>\n\n<div *ngIf=\"secondaryNavigation && ((selectedRoot$ | async) !== (selected$ | async))\"\n    class=\"page-header-secondary\" [ngClass]=\"secondaryNavigationAlignment\" role=\"navigation\">\n\n    <ux-tabset *ngIf=\"(selectedRoot$ | async)?.children; let children\" [manual]=\"true\">\n        <ux-tab *ngFor=\"let child of children\"\n            [heading]=\"child.title\"\n            [active]=\"child === (selected$ | async)\"\n            (activated)=\"select(child)\"\n            [uxPageHeaderNavigationSecondaryItem]=\"child\"\n            [disabled]=\"child.disabled\">\n        </ux-tab>\n    </ux-tabset>\n\n</div>\n",
                         providers: [PageHeaderService]
                     }] }
         ];
@@ -32439,7 +32438,6 @@
             iconMenus: [{ type: i0.Input }],
             backVisible: [{ type: i0.Input }],
             secondaryNavigationAlignment: [{ type: i0.Input }],
-            title: [{ type: i0.Input }],
             secondaryNavigationAutoselect: [{ type: i0.Input }],
             items: [{ type: i0.Input }],
             secondaryNavigation: [{ type: i0.Input }],
@@ -32447,11 +32445,8 @@
             crumbsStyle: [{ type: i0.Input }],
             logoBackground: [{ type: i0.Input }],
             logoForeground: [{ type: i0.Input }],
-            familyBackground: [{ type: i0.Input }],
-            familyForeground: [{ type: i0.Input }],
             backClick: [{ type: i0.Output }],
             logoClick: [{ type: i0.Output }],
-            titleTemplate: [{ type: i0.ContentChild, args: ['title', { static: false },] }],
             subheaderTemplate: [{ type: i0.ContentChild, args: ['subheader', { static: false },] }],
             logoTemplate: [{ type: i0.ContentChild, args: ['logoTemplate', { static: false },] }],
             customMenus: [{ type: i0.ContentChildren, args: [PageHeaderCustomMenuDirective, { read: i0.TemplateRef },] }]
@@ -36993,12 +36988,13 @@
              * Emits when `dropdownOpen` changes.
              */
             this.dropdownOpenChange = new i0.EventEmitter();
-            this.propagateChange = function (_) { };
             this._value$ = new rxjs.ReplaySubject(1);
             this._hasValue = false;
             this._input$ = new rxjs.BehaviorSubject('');
             this._dropdownOpen = false;
             this._userInput = false;
+            this._onChange = function (_) { };
+            this._onTouched = function () { };
             this._onDestroy = new rxjs.Subject();
         }
         Object.defineProperty(SelectComponent.prototype, "value", {
@@ -37066,7 +37062,7 @@
                 // Emit change events
                 this._value$.pipe(operators.takeUntil(this._onDestroy), operators.distinctUntilChanged()).subscribe(function (value) {
                     _this._value = value;
-                    _this.propagateChange(value);
+                    _this._onChange(value);
                     _this._hasValue = !!value;
                 });
                 this._input$.pipe(operators.takeUntil(this._onDestroy), operators.distinctUntilChanged()).subscribe(function (value) {
@@ -37132,7 +37128,7 @@
          * @return {?}
          */
             function (fn) {
-                this.propagateChange = fn;
+                this._onChange = fn;
             };
         /**
          * @param {?} fn
@@ -37142,7 +37138,9 @@
          * @param {?} fn
          * @return {?}
          */
-            function (fn) { };
+            function (fn) {
+                this._onTouched = fn;
+            };
         /**
          * @param {?} isDisabled
          * @return {?}
@@ -37217,9 +37215,10 @@
                     this.input = this.getDisplay(this.value);
                     event.preventDefault();
                 }
-                // when the user types and the value is not empty then we should open the dropdown
-                if (event.keyCode !== keycodes.ESCAPE) {
+                // when the user types and the value is not empty then we should open the dropdown except for non printable keys.
+                if (event.key.length === 1) {
                     this._userInput = true;
+                    this._dropdownOpen = true;
                 }
             };
         /**
@@ -37292,6 +37291,8 @@
          * @return {?}
          */
             function () {
+                // mark form control as touched
+                this._onTouched();
                 // if the input is readonly we do not want to select the text on focus
                 if (this.readonlyInput) {
                     // cast the select input element
@@ -37330,7 +37331,7 @@
         SelectComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ux-select, ux-combobox, ux-dropdown',
-                        template: "<ux-tag-input\r\n    *ngIf=\"multiple\"\r\n    #tagInput=\"ux-tag-input\"\r\n    [id]=\"id + '-input'\"\r\n    [tags]=\"_value$ | async\"\r\n    (tagsChange)=\"_value$.next($event)\"\r\n    [(input)]=\"input\"\r\n    [ariaLabel]=\"ariaLabel\"\r\n    [autocomplete]=\"autocomplete\"\r\n    [addOnPaste]=\"false\"\r\n    [disabled]=\"disabled\"\r\n    [display]=\"display\"\r\n    [freeInput]=\"false\"\r\n    [placeholder]=\"placeholder || ''\"\r\n    [tagTemplate]=\"tagTemplate\"\r\n    [showTypeaheadOnClick]=\"true\"\r\n    [readonlyInput]=\"readonlyInput\"\r\n    [icon]=\"icon\"\r\n    [clearButton]=\"clearButton\"\r\n    [clearButtonAriaLabel]=\"clearButtonAriaLabel\"\r\n>\r\n    <ux-typeahead #multipleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [disabledOptions]=\"_value$ | async\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"true\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\">\r\n    </ux-typeahead>\r\n\r\n</ux-tag-input>\r\n\r\n<div *ngIf=\"!multiple\"\r\n    class=\"ux-select-container\"\r\n    [class.disabled]=\"disabled\"\r\n    role=\"combobox\"\r\n    [attr.aria-expanded]=\"dropdownOpen\"\r\n    aria-haspopup=\"listbox\">\r\n\r\n    <input #singleInput type=\"text\"\r\n        [attr.id]=\"id + '-input'\"\r\n        class=\"form-control\"\r\n        [class.ux-tag-input-clear-inset]=\"clearButton && allowNull && _hasValue\"\r\n        [attr.aria-activedescendant]=\"highlightedElement?.id\"\r\n        aria-autocomplete=\"list\"\r\n        [attr.aria-controls]=\"singleTypeahead.id\"\r\n        [attr.aria-label]=\"ariaLabel\"\r\n        aria-multiline=\"false\"\r\n        [autocomplete]=\"autocomplete\"\r\n        [(ngModel)]=\"input\"\r\n        [placeholder]=\"placeholder || ''\"\r\n        [disabled]=\"disabled\"\r\n        (click)=\"toggle()\"\r\n        (focus)=\"onFocus()\"\r\n        (blur)=\"inputBlurHandler()\"\r\n        (keydown)=\"inputKeyHandler($event)\"\r\n        [readonly]=\"readonlyInput\">\r\n\r\n    <div class=\"ux-select-icons\">\r\n        <i *ngIf=\"clearButton && allowNull && _hasValue\"\r\n           uxFocusIndicator\r\n           [attr.tabindex]=\"disabled ? -1 : 0\"\r\n           [attr.aria-label]=\"clearButtonAriaLabel\"\r\n           class=\"ux-select-icon ux-icon ux-icon-close ux-select-clear-icon\"\r\n           (click)=\"clear(); $event.stopPropagation()\"\r\n           (keydown.enter)=\"clear(); $event.stopPropagation()\">\r\n        </i>\r\n        <i *ngIf=\"!icon\"\r\n           class=\"ux-select-icon ux-icon ux-select-chevron-icon\"\r\n           [class.ux-icon-up]=\"dropDirection === 'up'\"\r\n           [class.ux-icon-down]=\"dropDirection === 'down'\"\r\n           (click)=\"toggle(); $event.stopPropagation()\">\r\n        </i>\r\n        <div *ngIf=\"icon\" class=\"ux-custom-icon\">\r\n            <ng-container [ngTemplateOutlet]=\"icon\"></ng-container>\r\n        </div>\r\n        \r\n    </div>\r\n\r\n    <ux-typeahead #singleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [active]=\"_value$ | async\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"false\"\r\n        [openOnFilterChange]=\"false\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\"\r\n        (optionSelected)=\"singleOptionSelected($event)\"\r\n        (highlightedElementChange)=\"highlightedElement = $event\">\r\n    </ux-typeahead>\r\n\r\n</div>",
+                        template: "<ux-tag-input\r\n    *ngIf=\"multiple\"\r\n    #tagInput=\"ux-tag-input\"\r\n    [id]=\"id + '-input'\"\r\n    [tags]=\"_value$ | async\"\r\n    (tagsChange)=\"_value$.next($event)\"\r\n    [(input)]=\"input\"\r\n    [ariaLabel]=\"ariaLabel\"\r\n    [autocomplete]=\"autocomplete\"\r\n    [addOnPaste]=\"false\"\r\n    [disabled]=\"disabled\"\r\n    [display]=\"display\"\r\n    [freeInput]=\"false\"\r\n    [placeholder]=\"placeholder || ''\"\r\n    [tagTemplate]=\"tagTemplate\"\r\n    (inputFocus)=\"onFocus()\"\r\n    [showTypeaheadOnClick]=\"true\"\r\n    [readonlyInput]=\"readonlyInput\"\r\n    [icon]=\"icon\"\r\n    [clearButton]=\"clearButton\"\r\n    [clearButtonAriaLabel]=\"clearButtonAriaLabel\"\r\n>\r\n    <ux-typeahead #multipleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [disabledOptions]=\"_value$ | async\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"true\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\">\r\n    </ux-typeahead>\r\n\r\n</ux-tag-input>\r\n\r\n<div *ngIf=\"!multiple\"\r\n    class=\"ux-select-container\"\r\n    [class.disabled]=\"disabled\"\r\n    role=\"combobox\"\r\n    [attr.aria-expanded]=\"dropdownOpen\"\r\n    aria-haspopup=\"listbox\">\r\n\r\n    <input #singleInput type=\"text\"\r\n        [attr.id]=\"id + '-input'\"\r\n        class=\"form-control\"\r\n        [class.ux-tag-input-clear-inset]=\"clearButton && allowNull && _hasValue\"\r\n        [attr.aria-activedescendant]=\"highlightedElement?.id\"\r\n        aria-autocomplete=\"list\"\r\n        [attr.aria-controls]=\"singleTypeahead.id\"\r\n        [attr.aria-label]=\"ariaLabel\"\r\n        aria-multiline=\"false\"\r\n        [autocomplete]=\"autocomplete\"\r\n        [(ngModel)]=\"input\"\r\n        [placeholder]=\"placeholder || ''\"\r\n        [disabled]=\"disabled\"\r\n        (click)=\"toggle()\"\r\n        (focus)=\"onFocus()\"\r\n        (blur)=\"inputBlurHandler()\"\r\n        (keydown)=\"inputKeyHandler($event)\"\r\n        [readonly]=\"readonlyInput\">\r\n\r\n    <div class=\"ux-select-icons\">\r\n        <i *ngIf=\"clearButton && allowNull && _hasValue\"\r\n           uxFocusIndicator\r\n           [attr.tabindex]=\"disabled ? -1 : 0\"\r\n           [attr.aria-label]=\"clearButtonAriaLabel\"\r\n           class=\"ux-select-icon ux-icon ux-icon-close ux-select-clear-icon\"\r\n           (click)=\"clear(); $event.stopPropagation()\"\r\n           (keydown.enter)=\"clear(); $event.stopPropagation()\">\r\n        </i>\r\n        <i *ngIf=\"!icon\"\r\n           class=\"ux-select-icon ux-icon ux-select-chevron-icon\"\r\n           [class.ux-icon-up]=\"dropDirection === 'up'\"\r\n           [class.ux-icon-down]=\"dropDirection === 'down'\"\r\n           (click)=\"toggle(); $event.stopPropagation()\">\r\n        </i>\r\n        <div *ngIf=\"icon\" class=\"ux-custom-icon\">\r\n            <ng-container [ngTemplateOutlet]=\"icon\"></ng-container>\r\n        </div>\r\n    </div>\r\n\r\n    <ux-typeahead #singleTypeahead\r\n        [id]=\"id + '-typeahead'\"\r\n        [active]=\"_value$ | async\"\r\n        [options]=\"options\"\r\n        [filter]=\"filter$ | async\"\r\n        [(open)]=\"dropdownOpen\"\r\n        [display]=\"display\"\r\n        [key]=\"key\"\r\n        [dropDirection]=\"dropDirection\"\r\n        [maxHeight]=\"maxHeight\"\r\n        [multiselectable]=\"false\"\r\n        [openOnFilterChange]=\"false\"\r\n        [pageSize]=\"pageSize\"\r\n        [selectFirst]=\"true\"\r\n        [loadingTemplate]=\"loadingTemplate\"\r\n        [optionTemplate]=\"optionTemplate\"\r\n        [noOptionsTemplate]=\"noOptionsTemplate\"\r\n        (optionSelected)=\"singleOptionSelected($event)\"\r\n        (highlightedElementChange)=\"highlightedElement = $event\">\r\n    </ux-typeahead>\r\n\r\n</div>",
                         providers: [SELECT_VALUE_ACCESSOR],
                         host: {
                             '[class.ux-select-custom-icon]': '!!icon',
@@ -37512,11 +37513,6 @@
              */
             this.autocomplete = 'off';
             /**
-             * @deprecated
-             * Workaround for EL-3224 - No longer needed
-             */
-            this.trackAriaDescendant = true;
-            /**
              * Determine if we should show the clear all button
              */
             this.clearButton = false;
@@ -37556,6 +37552,8 @@
              * Raised when a tag has been clicked. The `tag` property of the event contains the clicked tag. Call `preventDefault()` on the event to prevent the default behaviour of selecting the tag.
              */
             this.tagClick = new i0.EventEmitter();
+            // When clicking on the input during mutliple mode it will send a on touched event to the parent component
+            this.inputFocus = new i0.EventEmitter();
             this.selectedIndex = -1;
             this.tagApi = {
                 getTagDisplay: this.getTagDisplay.bind(this),
@@ -38515,7 +38513,7 @@
             { type: i0.Component, args: [{
                         selector: 'ux-tag-input',
                         exportAs: 'ux-tag-input',
-                        template: "<ol [attr.role]=\"typeahead ? 'combobox' : 'none'\"\n    [attr.aria-haspopup]=\"typeahead ? 'listbox' : null\"\n    [class.ux-tag-input-clear-inset]=\"_showClearButton\"\n    [class.ux-tag-input-icon-inset]=\"icon\"\n    (click)=\"toggle()\">\n\n    <li *ngFor=\"let tag of tags; let i = index\" class=\"ux-tag\"\n        [class.disabled]=\"disabled\"\n        [ngClass]=\"tagClass(tag, i, isSelected(i))\"\n        [attr.tabindex]=\"disabled ? null : 0\"\n        [focusIf]=\"isSelected(i)\"\n        (click)=\"tagClickHandler($event, tag, i); $event.stopPropagation()\"\n        (focus)=\"selectTagAt(i)\">\n\n        <ng-container [ngTemplateOutlet]=\"tagTemplate || defaultTagTemplate\"\n                      [ngTemplateOutletContext]=\"{tag: tag, index: i, disabled: disabled, api: tagApi}\">\n        </ng-container>\n\n    </li>\n    <li *ngIf=\"isInputVisible()\" class=\"ux-tag-input\" role=\"none\">\n        <input #tagInput type=\"text\" [attr.id]=\"id\" class=\"ux-tag-input\"\n               [ngModel]=\"input\"\n               (ngModelChange)=\"setInputValue($event)\"\n               [autocomplete]=\"autocomplete\"\n               [class.invalid]=\"!inputValid\"\n               [attr.aria-activedescendant]=\"highlightedElement?.id\"\n               [attr.aria-autocomplete]=\"typeahead ? 'list' : 'none'\"\n               [attr.aria-controls]=\"typeahead?.id\"\n               [attr.aria-label]=\"ariaLabel\"\n               aria-multiline=\"false\"\n               [placeholder]=\"disabled ? '' : (placeholder || '')\"\n               [disabled]=\"disabled\"\n               [focusIf]=\"isSelected(tags.length)\"\n               (click)=\"toggle(); $event.stopPropagation()\"\n               (focus)=\"inputFocusHandler()\"\n               (paste)=\"inputPasteHandler($event)\"\n               [readonly]=\"readonlyInput\">\n    </li>\n</ol>\n\n<!-- Insert the custom icon if provided -->\n<div class=\"ux-tag-icons\" *ngIf=\"icon || _showClearButton\">\n\n    <!-- Clear All Button -->\n    <i uxFocusIndicator\n       class=\"ux-tag-icon ux-icon ux-icon-close ux-select-clear-icon\"\n       [attr.tabindex]=\"disabled ? -1 : 0\"\n       [attr.aria-label]=\"clearButtonAriaLabel\"\n       *ngIf=\"_showClearButton\"\n       (click)=\"clear(); $event.stopPropagation()\"\n       (keydown.enter)=\"clear(); $event.stopPropagation()\">\n    </i>\n\n    <!-- Custom Icon -->\n    <div *ngIf=\"icon\" class=\"ux-custom-icon\">\n        <ng-container [ngTemplateOutlet]=\"icon\"></ng-container>\n    </div>\n</div>\n\n<ng-content #typeahead></ng-content>\n\n<ng-template #defaultTagTemplate let-tag=\"tag\" let-index=\"index\" let-disabled=\"disabled\" let-api=\"api\">\n    <span class=\"ux-tag-text\">{{ api.getTagDisplay(tag) }}</span>\n    <button *ngIf=\"api.canRemoveTagAt(index)\"\n            uxFocusIndicator\n            type=\"button\"\n            class=\"ux-tag-remove\"\n            aria-label=\"Remove Item\"\n            [disabled]=\"disabled\"\n            (click)=\"api.removeTagAt(index); $event.stopPropagation();\">\n        <ux-icon name=\"close\"></ux-icon>\n    </button>\n</ng-template>",
+                        template: "<ol [attr.role]=\"typeahead ? 'combobox' : 'none'\"\n    [attr.aria-haspopup]=\"typeahead ? 'listbox' : null\"\n    [class.ux-tag-input-clear-inset]=\"_showClearButton\"\n    [class.ux-tag-input-icon-inset]=\"icon\"\n    (click)=\"toggle()\">\n\n    <li *ngFor=\"let tag of tags; let i = index\" class=\"ux-tag\"\n        [class.disabled]=\"disabled\"\n        [ngClass]=\"tagClass(tag, i, isSelected(i))\"\n        [attr.tabindex]=\"disabled ? null : 0\"\n        [focusIf]=\"isSelected(i)\"\n        (click)=\"tagClickHandler($event, tag, i); $event.stopPropagation()\"\n        (focus)=\"selectTagAt(i)\">\n\n        <ng-container [ngTemplateOutlet]=\"tagTemplate || defaultTagTemplate\"\n                      [ngTemplateOutletContext]=\"{tag: tag, index: i, disabled: disabled, api: tagApi}\">\n        </ng-container>\n\n    </li>\n    <li *ngIf=\"isInputVisible()\" class=\"ux-tag-input\" role=\"none\">\n        <input #tagInput type=\"text\" [attr.id]=\"id\" class=\"ux-tag-input\"\n               [ngModel]=\"input\"\n               (ngModelChange)=\"setInputValue($event)\"\n               [autocomplete]=\"autocomplete\"\n               [class.invalid]=\"!inputValid\"\n               [attr.aria-activedescendant]=\"highlightedElement?.id\"\n               [attr.aria-autocomplete]=\"typeahead ? 'list' : 'none'\"\n               [attr.aria-controls]=\"typeahead?.id\"\n               [attr.aria-label]=\"ariaLabel\"\n               aria-multiline=\"false\"\n               [placeholder]=\"disabled ? '' : (placeholder || '')\"\n               [disabled]=\"disabled\"\n               [focusIf]=\"isSelected(tags.length)\"\n               (click)=\"toggle(); $event.stopPropagation()\"\n               (focus)=\"inputFocusHandler(); inputFocus.emit($event)\"\n               (paste)=\"inputPasteHandler($event)\"\n               [readonly]=\"readonlyInput\">\n    </li>\n</ol>\n\n<!-- Insert the custom icon if provided -->\n<div class=\"ux-tag-icons\" *ngIf=\"icon || _showClearButton\" (click)=\"toggle(); $event.stopPropagation()\">\n\n    <!-- Clear All Button -->\n    <i uxFocusIndicator\n       class=\"ux-tag-icon ux-icon ux-icon-close ux-select-clear-icon\"\n       [attr.tabindex]=\"disabled ? -1 : 0\"\n       [attr.aria-label]=\"clearButtonAriaLabel\"\n       *ngIf=\"_showClearButton\"\n       (click)=\"clear(); $event.stopPropagation()\"\n       (keydown.enter)=\"clear(); $event.stopPropagation()\">\n    </i>\n\n    <!-- Custom Icon -->\n    <div *ngIf=\"icon\" class=\"ux-custom-icon\">\n        <ng-container [ngTemplateOutlet]=\"icon\"></ng-container>\n    </div>\n</div>\n\n<ng-content #typeahead></ng-content>\n\n<ng-template #defaultTagTemplate let-tag=\"tag\" let-index=\"index\" let-disabled=\"disabled\" let-api=\"api\">\n    <span class=\"ux-tag-text\">{{ api.getTagDisplay(tag) }}</span>\n    <button *ngIf=\"api.canRemoveTagAt(index)\"\n            uxFocusIndicator\n            type=\"button\"\n            class=\"ux-tag-remove\"\n            aria-label=\"Remove Item\"\n            [disabled]=\"disabled\"\n            (click)=\"api.removeTagAt(index); $event.stopPropagation();\">\n        <ux-icon name=\"close\"></ux-icon>\n    </button>\n</ng-template>",
                         providers: [TAGINPUT_VALUE_ACCESSOR, TAGINPUT_VALIDATOR],
                         host: {
                             '[class.disabled]': 'disabled',
@@ -38554,7 +38552,6 @@
             validationErrors: [{ type: i0.Input }],
             autocomplete: [{ type: i0.Input }],
             createTagHandler: [{ type: i0.Input, args: ['createTag',] }],
-            trackAriaDescendant: [{ type: i0.Input }],
             icon: [{ type: i0.Input }],
             clearButton: [{ type: i0.Input }],
             clearButtonAriaLabel: [{ type: i0.Input }],
@@ -38566,6 +38563,7 @@
             tagRemoving: [{ type: i0.Output }],
             tagRemoved: [{ type: i0.Output }],
             tagClick: [{ type: i0.Output }],
+            inputFocus: [{ type: i0.Output }],
             typeaheadQuery: [{ type: i0.ContentChildren, args: [TypeaheadComponent,] }],
             tagInput: [{ type: i0.ViewChild, args: ['tagInput', { static: false },] }],
             keyHandler: [{ type: i0.HostListener, args: ['keydown', ['$event'],] }],
@@ -48961,7 +48959,6 @@
     exports.EboxComponent = EboxComponent;
     exports.EboxHeaderDirective = EboxHeaderDirective;
     exports.EboxContentDirective = EboxContentDirective;
-    exports.FacetBaseComponent = FacetBaseComponent;
     exports.FacetHeaderComponent = FacetHeaderComponent;
     exports.FacetCheckListComponent = FacetCheckListComponent;
     exports.FacetClearButtonDirective = FacetClearButtonDirective;
@@ -48977,7 +48974,6 @@
     exports.FilterAddEvent = FilterAddEvent;
     exports.FilterRemoveAllEvent = FilterRemoveAllEvent;
     exports.FilterRemoveEvent = FilterRemoveEvent;
-    exports.FilterBaseComponent = FilterBaseComponent;
     exports.FilterContainerComponent = FilterContainerComponent;
     exports.FilterDropdownComponent = FilterDropdownComponent;
     exports.FilterDynamicComponent = FilterDynamicComponent;
@@ -49212,7 +49208,6 @@
     exports.ResizeService = ResizeService;
     exports.ResizeDirective = ResizeDirective;
     exports.ResizeModule = ResizeModule;
-    exports.ScrollIntoViewIfModule = ScrollModule;
     exports.ScrollIntoViewIfDirective = ScrollIntoViewIfDirective;
     exports.ScrollIntoViewDirective = ScrollIntoViewDirective;
     exports.ScrollIntoViewService = ScrollIntoViewService;
